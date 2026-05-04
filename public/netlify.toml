@@ -1,0 +1,7 @@
+[build]
+  command = "echo 'No build step required'"
+  publish = "public"
+  functions = "netlify/functions"
+
+[dev]
+  port = 8888

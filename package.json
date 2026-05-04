@@ -1,0 +1,13 @@
+{
+  "name": "irs-resolution-service",
+  "version": "1.0.0",
+  "description": "IRS Notice Resolution Service — Stripe + IRS Transcript + AI Letter Drafting",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0",
+    "@netlify/blobs": "^8.2.0",
+    "@netlify/identity": "^1.0.0",
+    "axios": "^1.7.2",
+    "stripe": "^16.1.0",
+    "xml2js": "^0.6.2"
+  }
+}

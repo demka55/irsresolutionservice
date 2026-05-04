@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><!-- deploy: 20260417164620944895865 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRS Notice Decoder — IRS Resolution Service</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── THEME ────────────────────────────────────────────────────────────── */
+:root {
+  --gold:       #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-dim:   #8a6e2f;
+  --gold-muted: #f5ecd8;
+  --cream:      #f5f0e8;
+  --cream-warm: #ede5d5;
+  --cream-dark: #d9cdb8;
+  --ink:        #1a1410;
+  --ink-soft:   #4a3f32;
+  --ink-muted:  #7a6e60;
+  --white:      #ffffff;
+  --red:        #8b1a1a;
+  --red-light:  #fdf0f0;
+  --amber:      #92500a;
+  --amber-light:#fef5e7;
+  --green:      #1a5c2a;
+  --green-light:#f0f7f2;
+  --blue:       #1a3a5c;
+  --blue-light: #eef3f8;
+  /* Severity colours (used in urgency banners) */
+  --sev-critical-bg:#fdf0f0; --sev-critical-border:#e8b0b0; --sev-critical-text:#8b1a1a; --sev-critical-color:#c0392b;
+  --sev-high-bg:#fef5e7;    --sev-high-border:#f0c98a;    --sev-high-text:#92500a;    --sev-high-color:#d4830a;
+  --sev-medium-bg:#fefce8;  --sev-medium-border:#f0e070;  --sev-medium-text:#7a5800;  --sev-medium-color:#a07800;
+  --sev-low-bg:#f0f7f2;     --sev-low-border:#b8d9c3;     --sev-low-text:#1a5c2a;     --sev-low-color:#1a5c2a;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'Outfit', system-ui, sans-serif;
+  --radius: 4px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.65; overflow-x: hidden; min-height: 100vh; }
+
+/* ── HEADER ──────────────────────────────────────────────────────────── */
+.site-header { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--cream-dark); backdrop-filter: blur(12px); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-mark { width: 36px; height: 36px; border: 1.5px solid var(--gold); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--gold); letter-spacing: -0.02em; }
+.logo-text { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+.logo-text span { color: var(--gold); }
+.header-right { display: flex; align-items: center; gap: 1rem; }
+.user-email { font-size: 13px; color: var(--ink-muted); }
+.btn-logout { background: none; border: 1px solid var(--cream-dark); color: var(--ink-soft); padding: 7px 16px; border-radius: 2px; font-family: var(--sans); font-size: 13px; cursor: pointer; transition: all 0.15s; }
+.btn-logout:hover { border-color: var(--ink); color: var(--ink); }
+.btn-start-over { background: none; border: 1px solid var(--cream-dark); color: var(--ink-soft); padding: 7px 14px; border-radius: 2px; font-family: var(--sans); font-size: 13px; cursor: pointer; transition: all 0.15s; display: none; }
+.btn-start-over:hover { border-color: var(--gold-dim); color: var(--gold-dim); }
+
+/* ── PROGRESS BAR ─────────────────────────────────────────────────────── */
+.top-progress { height: 3px; background: var(--cream-dark); }
+.top-progress-bar { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); width: 0%; transition: width 0.5s ease; }
+
+/* ── MAIN LAYOUT ─────────────────────────────────────────────────────── */
+main { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── STAGES ──────────────────────────────────────────────────────────── */
+.stage { display: none; }
+.stage.active { display: block; animation: fadeUp 0.3s ease forwards; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+@keyframes spin  { to { transform: rotate(360deg); } }
+
+/* ── TYPOGRAPHY ──────────────────────────────────────────────────────── */
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dim); display: block; margin-bottom: 0.75rem; }
+.stage-title { font-family: var(--serif); font-size: clamp(2rem,4vw,3rem); font-weight: 600; color: var(--ink); line-height: 1.1; margin-bottom: 0.75rem; }
+.stage-title em { font-style: italic; color: var(--gold-dim); }
+.stage-sub { font-size: 1rem; color: var(--ink-soft); line-height: 1.7; max-width: 560px; }
+
+/* ── CARDS ────────────────────────────────────────────────────────────── */
+.card { background: var(--white); border: 1px solid var(--cream-dark); border-radius: var(--radius); padding: 1.5rem 1.75rem; margin-bottom: 1rem; }
+.card-gold { border-top: 3px solid var(--gold); }
+
+/* ── BUTTONS ─────────────────────────────────────────────────────────── */
+.btn-primary { background: var(--gold); color: var(--white); border: none; padding: 13px 28px; border-radius: 2px; font-family: var(--sans); font-size: 15px; font-weight: 600; cursor: pointer; letter-spacing: 0.04em; transition: all 0.2s; }
+.btn-primary:hover:not(:disabled) { background: var(--gold-dim); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary.full { width: 100%; }
+.btn-ink { background: var(--ink); color: var(--white); border: none; padding: 13px 28px; border-radius: 2px; font-family: var(--sans); font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.btn-ink:hover:not(:disabled) { background: #2a2420; }
+.btn-ink:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-ink.full { width: 100%; }
+.btn-ghost { background: transparent; border: 1px solid var(--cream-dark); color: var(--ink-soft); padding: 10px 20px; border-radius: 2px; font-family: var(--sans); font-size: 14px; cursor: pointer; transition: all 0.15s; }
+.btn-ghost:hover { border-color: var(--gold-dim); color: var(--gold-dim); }
+
+/* ── TOGGLE TABS ─────────────────────────────────────────────────────── */
+.tab-bar { display: flex; background: var(--cream-warm); border: 1px solid var(--cream-dark); border-radius: 3px; padding: 3px; gap: 3px; margin-bottom: 1.5rem; max-width: 460px; }
+.tab-btn { flex: 1; padding: 9px 4px; border-radius: 2px; border: none; background: transparent; color: var(--ink-muted); cursor: pointer; font-family: var(--sans); font-size: 13px; font-weight: 500; transition: all 0.15s; }
+.tab-btn.active { background: var(--white); color: var(--gold-dim); font-weight: 600; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
+/* ── DROPZONE ────────────────────────────────────────────────────────── */
+#dropzone { border: 2px dashed var(--cream-dark); border-radius: var(--radius); padding: 48px 32px; text-align: center; cursor: pointer; background: var(--white); transition: all 0.2s; }
+#dropzone:hover, #dropzone.dragover { border-color: var(--gold); background: var(--gold-muted); }
+.dz-icon { font-size: 40px; margin-bottom: 10px; }
+.dz-title { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+.dz-hint { font-size: 13px; color: var(--ink-muted); margin-bottom: 16px; }
+.dz-btn { display: inline-block; background: var(--cream-warm); border: 1px solid var(--cream-dark); border-radius: 2px; padding: 8px 20px; font-size: 13px; color: var(--ink-soft); }
+
+/* ── TEXTAREA ────────────────────────────────────────────────────────── */
+textarea { width: 100%; min-height: 160px; background: var(--white); border: 1.5px solid var(--cream-dark); border-radius: var(--radius); padding: 13px 16px; color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.65; resize: vertical; outline: none; transition: border-color 0.15s; }
+textarea:focus { border-color: var(--gold); }
+textarea::placeholder { color: var(--ink-muted); }
+
+/* ── NOTICE DROPDOWN ─────────────────────────────────────────────────── */
+select { width: 100%; padding: 13px 16px; border: 1.5px solid var(--cream-dark); border-radius: var(--radius); background: var(--white); color: var(--ink); font-family: var(--sans); font-size: 14px; outline: none; transition: border-color 0.15s; cursor: pointer; }
+select:focus { border-color: var(--gold); }
+
+/* ── PROGRESS STEPS ──────────────────────────────────────────────────── */
+.steps-card { background: var(--white); border: 1px solid var(--cream-dark); border-radius: var(--radius); overflow: hidden; }
+.pstep { display: flex; align-items: flex-start; gap: 14px; padding: 14px 18px; border-bottom: 1px solid var(--cream-warm); transition: background 0.3s; }
+.pstep:last-child { border-bottom: none; }
+.pstep.pending { opacity: 0.38; }
+.pstep.active  { background: var(--blue-light); }
+.pstep.done    { background: var(--green-light); }
+.pstep-icon { width: 34px; height: 34px; border-radius: 50%; background: var(--cream-warm); border: 1px solid var(--cream-dark); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; transition: all 0.3s; }
+.pstep.active .pstep-icon { background: #dbeafe; border-color: #93c5fd; }
+.pstep.done   .pstep-icon { background: #dcfce7; border-color: #86efac; }
+.pstep-body { flex: 1; }
+.pstep-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 1px; }
+.pstep.pending .pstep-title { color: var(--ink-muted); }
+.pstep-desc  { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+.pstep.active .pstep-desc { color: var(--ink-soft); }
+.pstep-status { flex-shrink: 0; width: 22px; display: flex; align-items: center; justify-content: center; }
+.pstep-spinner { width: 15px; height: 15px; border: 2px solid #bfdbfe; border-top-color: var(--blue); border-radius: 50%; animation: spin 0.7s linear infinite; }
+.pstep-check { color: var(--green); font-size: 15px; font-weight: 700; }
+.loading-head { text-align: center; margin-bottom: 1.5rem; }
+.loading-icon { font-size: 42px; margin-bottom: 10px; }
+.loading-title { font-family: var(--serif); font-size: 1.6rem; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.loading-sub { font-size: 13px; color: var(--ink-muted); }
+.elapsed { text-align: center; margin-top: 12px; font-size: 13px; color: var(--ink-muted); }
+
+/* ── QUESTION CARDS ──────────────────────────────────────────────────── */
+.q-card { background: var(--white); border: 1px solid var(--cream-dark); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 0.75rem; }
+.q-text { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 1rem; line-height: 1.5; }
+.q-num { color: var(--ink-muted); font-size: 13px; margin-right: 5px; }
+.opt { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 3px; border: 1.5px solid var(--cream-dark); cursor: pointer; transition: all 0.12s; margin-bottom: 6px; background: var(--cream); }
+.opt:hover { border-color: var(--gold); background: var(--gold-muted); }
+.opt.sel  { border-color: var(--gold); background: var(--gold-muted); }
+.opt-dot  { width: 18px; height: 18px; border: 2px solid var(--cream-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.12s; }
+.opt.sel .opt-dot { border-color: var(--gold-dim); }
+.opt.sel .opt-dot::after { content:''; display:block; width:8px; height:8px; background:var(--gold-dim); border-radius:50%; }
+.opt-label { font-size: 14px; color: var(--ink-soft); }
+.opt.sel .opt-label { color: var(--gold-dim); font-weight: 500; }
+
+/* ── NOTICE BANNER ───────────────────────────────────────────────────── */
+.notice-banner { background: var(--blue-light); border: 1px solid #b8cfe0; border-radius: var(--radius); padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1.5rem; }
+.notice-banner .nb-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.nb-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); margin-bottom: 2px; }
+.nb-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); }
+.nb-meta  { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+
+/* ── RESULT SECTIONS ─────────────────────────────────────────────────── */
+.urgency-banner { border-radius: var(--radius); padding: 16px 20px; margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 14px; }
+.ub-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+.ub-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px; }
+.ub-reason { font-size: 14px; line-height: 1.55; }
+.deadline-pill { background: var(--amber-light); border: 1px solid #e8c98a; border-radius: 3px; padding: 8px 14px; text-align: center; flex-shrink: 0; }
+.dl-label { font-size: 10px; color: var(--amber); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 2px; }
+.dl-value { font-size: 13px; color: var(--amber); font-weight: 700; }
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.6rem; display: block; }
+.tldr-box { background: var(--blue-light); border: 1px solid #b8cfe0; border-radius: var(--radius); padding: 16px 20px; margin-bottom: 1rem; }
+.irm-box { background: var(--white); border: 1px solid var(--cream-dark); border-left: 4px solid var(--gold); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 18px; margin-bottom: 1rem; }
+.rights-wrap { display: flex; flex-wrap: wrap; gap: 7px; }
+.right-tag { background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 2px; padding: 5px 11px; font-size: 13px; color: var(--ink-soft); }
+.action-step { display: flex; gap: 14px; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--cream-warm); }
+.action-step:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: none; }
+.step-circle { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--cream-dark); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--ink-muted); margin-top: 3px; background: var(--cream); }
+.priority-pill { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 2px 8px; border-radius: 20px; margin-left: 8px; }
+.cant-pay-box { background: var(--amber-light); border: 1px solid #e8c98a; border-radius: var(--radius); padding: 16px 20px; margin-bottom: 1rem; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+@media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+.redact-bar { background: var(--green-light); border: 1px solid #b8d9c3; border-radius: var(--radius); padding: 10px 16px; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--green); }
+.plain-list { list-style: disc; padding-left: 18px; }
+.plain-list li { font-size: 14px; color: var(--ink-soft); line-height: 1.65; margin-bottom: 4px; }
+.red-list li { color: var(--red); }
+
+/* ── ASK ROMEO CTA ───────────────────────────────────────────────────── */
+.romeo-cta { background: var(--ink); border-radius: var(--radius); padding: 2rem; margin: 2rem 0 1rem; text-align: center; }
+.romeo-cta .premium-tag { display: inline-block; background: var(--gold); color: var(--white); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; margin-bottom: 1rem; }
+.romeo-cta h3 { font-family: var(--serif); font-size: 1.8rem; font-weight: 600; color: var(--white); margin-bottom: 0.5rem; line-height: 1.2; }
+.romeo-cta h3 em { font-style: italic; color: var(--gold-light); }
+.romeo-cta p { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.65; max-width: 420px; margin: 0 auto 1.5rem; }
+.romeo-benefits { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+.romeo-benefit { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 2px; padding: 6px 14px; font-size: 12px; color: rgba(255,255,255,0.8); }
+.romeo-btn { background: var(--gold); color: var(--white); border: none; padding: 14px 32px; border-radius: 2px; font-family: var(--sans); font-size: 15px; font-weight: 600; cursor: pointer; letter-spacing: 0.04em; transition: all 0.2s; }
+.romeo-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+/* ── WAITLIST MODAL ───────────────────────────────────────────────────── */
+.modal-overlay { position: fixed; inset: 0; background: rgba(26,20,16,0.6); z-index: 999; display: none; align-items: center; justify-content: center; padding: 1rem; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--white); border-radius: 4px; max-width: 540px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 32px 64px -20px rgba(0,0,0,0.4); }
+.modal-header { padding: 1.75rem 2rem 0; }
+.modal-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.5rem; }
+.modal-title { font-family: var(--serif); font-size: 1.8rem; font-weight: 600; color: var(--ink); line-height: 1.15; margin-bottom: 0.5rem; }
+.modal-sub { font-size: 14px; color: var(--ink-muted); line-height: 1.65; margin-bottom: 1.5rem; }
+.modal-body { padding: 0 2rem 2rem; }
+.mfield { margin-bottom: 1rem; }
+.mfield label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 5px; }
+.mfield input, .mfield textarea { width: 100%; padding: 11px 14px; border: 1.5px solid var(--cream-dark); border-radius: var(--radius); background: var(--white); color: var(--ink); font-family: var(--sans); font-size: 14px; outline: none; transition: border-color 0.15s; }
+.mfield input:focus, .mfield textarea:focus { border-color: var(--gold); }
+.mfield textarea { resize: vertical; min-height: 80px; }
+.modal-footer { display: flex; gap: 10px; align-items: center; margin-top: 0.5rem; }
+.mstatus { font-size: 13px; padding: 10px 14px; border-radius: 2px; display: none; }
+.mstatus.success { display: block; background: var(--green-light); border: 1px solid #b8d9c3; color: var(--green); }
+.mstatus.error   { display: block; background: var(--red-light); border: 1px solid #e8b0b0; color: var(--red); }
+
+/* ── DISCLAIMER ──────────────────────────────────────────────────────── */
+.disclaimer { text-align: center; font-size: 12px; color: var(--ink-muted); margin-top: 2.5rem; line-height: 1.7; }
+
+/* ── ERROR ────────────────────────────────────────────────────────────── */
+.error-box { background: var(--red-light); border: 1px solid #e8b0b0; border-radius: var(--radius); padding: 14px 18px; margin-bottom: 1.25rem; }
+
+/* ── FOOTER ───────────────────────────────────────────────────────────── */
+footer { background: var(--cream-warm); border-top: 1px solid var(--cream-dark); padding: 2.5rem 2rem 2rem; margin-top: 4rem; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+.footer-copy { font-size: 13px; color: var(--ink-muted); }
+.footer-links { display: flex; gap: 1.25rem; }
+.footer-links a { font-size: 14px; color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--gold-dim); }
+
+@media (max-width: 640px) {
+  main { padding: 2rem 1rem 4rem; }
+  .modal-header, .modal-body { padding-left: 1.25rem; padding-right: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ─────────────────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <div class="header-right">
+      <span class="user-email" id="userEmail"></span>
+      <button class="btn-start-over" id="startOverBtn" onclick="resetApp()">← Start Over</button>
+      <button class="btn-logout" id="logoutBtn">Sign out</button>
+    </div>
+  </div>
+</header>
+<div class="top-progress"><div class="top-progress-bar" id="topBar"></div></div>
+
+<!-- ── APP ────────────────────────────────────────────────────────────── -->
+<main>
+
+  <!-- AUTH GATE — shown while checking login -->
+  <div id="stage-authcheck" class="stage active" style="text-align:center;padding:5rem 0">
+    <div style="font-size:36px;margin-bottom:1rem">⚖️</div>
+    <p style="color:var(--ink-muted);font-size:14px">Checking your session…</p>
+  </div>
+
+  <!-- NOT LOGGED IN -->
+  <div id="stage-noauth" class="stage" style="text-align:center;padding:5rem 0">
+    <div style="font-size:44px;margin-bottom:1rem">🔒</div>
+    <span class="eyebrow">Access Required</span>
+    <h1 class="stage-title" style="text-align:center;margin-bottom:1rem">Sign in to <em>decode your notice</em></h1>
+    <p class="stage-sub" style="margin:0 auto 2rem">Create a free account or sign in to access the IRS Notice Decoder — powered by an ex-IRS auditor's knowledge.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <a href="/login" class="btn-primary" style="text-decoration:none;display:inline-block">Sign in</a>
+      <a href="/signup" class="btn-ghost" style="text-decoration:none;display:inline-block">Create free account</a>
+    </div>
+  </div>
+
+  <!-- STAGE: UPLOAD ───────────────────────────────────────────────────── -->
+  <div id="stage-upload" class="stage">
+    <span class="eyebrow">IRS Notice Decoder</span>
+    <h1 class="stage-title">Decode your <em>IRS notice.</em></h1>
+    <p class="stage-sub" style="margin-bottom:2rem">Upload, paste, or select your notice type. We'll identify what it means, cross-reference the IRS Internal Revenue Manual, and give you a personalized action plan.</p>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" id="tab-upload" onclick="switchTab('upload')">📎 Upload File</button>
+      <button class="tab-btn" id="tab-paste"  onclick="switchTab('paste')">✏️ Paste Text</button>
+      <button class="tab-btn" id="tab-select" onclick="switchTab('select')">📋 Common Notices</button>
+    </div>
+
+    <!-- Upload panel -->
+    <div id="panel-upload">
+      <div id="dropzone"
+        ondragover="event.preventDefault();this.classList.add('dragover')"
+        ondragleave="this.classList.remove('dragover')"
+        ondrop="handleDrop(event)"
+        onclick="document.getElementById('file-input').click()">
+        <div class="dz-icon">📄</div>
+        <div class="dz-title">Drop your IRS notice here</div>
+        <div class="dz-hint">JPG, PNG, or PDF — a phone photo works fine</div>
+        <div class="dz-btn">Choose file</div>
+        <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/gif,application/pdf"
+          style="display:none" onchange="handleFileInput(event)">
+      </div>
+    </div>
+
+    <!-- Paste panel -->
+    <div id="panel-paste" style="display:none">
+      <textarea id="text-input" placeholder="Paste the full text of your IRS notice — include the notice number, dates, dollar amounts, and any explanation of what the IRS is asking for…"></textarea>
+      <button class="btn-primary full" style="margin-top:0.75rem" onclick="handleTextSubmit()">Analyze Notice →</button>
+    </div>
+
+    <!-- Select panel -->
+    <div id="panel-select" style="display:none">
+      <div class="card" style="margin-bottom:1rem">
+        <label for="notice-select" style="font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dim);display:block;margin-bottom:0.6rem">Select Your Notice Type</label>
+        <select id="notice-select">
+          <option value="">— Choose a notice type —</option>
+          <optgroup label="Underreported Income / Balance Due">
+            <option value="CP2000">CP2000 — Proposed Changes to Your Return (underreported income)</option>
+            <option value="CP2501">CP2501 — Review Your Return (possible discrepancy)</option>
+            <option value="CP14">CP14 — Balance Due, No Math Error (first notice)</option>
+            <option value="CP501">CP501 — Reminder — Balance Due</option>
+            <option value="CP502">CP502 — Second Reminder — Balance Due</option>
+            <option value="CP503">CP503 — Third Reminder — Balance Due</option>
+          </optgroup>
+          <optgroup label="Collections / Levy / Lien">
+            <option value="CP504">CP504 — Final Notice Before Levy (state refund)</option>
+            <option value="CP523">CP523 — Intent to Terminate Installment Agreement</option>
+            <option value="LT11">LT11 — Final Notice of Intent to Levy</option>
+            <option value="Letter 1058">Letter 1058 — Final Notice, Right to a Hearing</option>
+            <option value="Letter 3172">Letter 3172 — Notice of Federal Tax Lien</option>
+          </optgroup>
+          <optgroup label="Audit / Examination">
+            <option value="CP75">CP75 — Examination of EITC / Refund on Hold</option>
+            <option value="Letter 525">Letter 525 — General 30-Day Letter (proposed changes)</option>
+            <option value="Letter 531">Letter 531 — Notice of Deficiency (90-Day Letter)</option>
+            <option value="Letter 2205">Letter 2205 — Audit Appointment Letter</option>
+          </optgroup>
+          <optgroup label="Returns / Refunds">
+            <option value="CP12">CP12 — Overpayment / Changed Your Refund</option>
+            <option value="CP21B">CP21B — Changes to Your Return — Refund Due</option>
+            <option value="CP53">CP53 — Can't Find Direct Deposit Refund</option>
+          </optgroup>
+          <optgroup label="Identity / Fraud">
+            <option value="CP01A">CP01A — Identity Protection PIN Issued</option>
+            <option value="CP5071C">CP5071C — Identity Verification Required</option>
+            <option value="Letter 4883C">Letter 4883C — Verify Your Identity</option>
+          </optgroup>
+          <optgroup label="Business / Payroll">
+            <option value="CP161">CP161 — Balance Due for Business Return</option>
+            <option value="Letter 1153">Letter 1153 — Trust Fund Recovery Penalty Proposal</option>
+          </optgroup>
+        </select>
+        <p style="font-size:12px;color:var(--ink-muted);margin-top:0.5rem">Don't see yours? Use Upload or Paste Text above for any notice type.</p>
+      </div>
+      <button class="btn-primary full" onclick="handleSelectSubmit()">Analyze This Notice →</button>
+    </div>
+
+    <p class="disclaimer" style="margin-top:1.25rem">General guidance only — not legal or tax advice</p>
+  </div>
+
+  <!-- STAGE: LOADING ───────────────────────────────────────────────────── -->
+  <div id="stage-loading" class="stage">
+    <div class="loading-head">
+      <div class="loading-icon" id="loadingIcon">📄</div>
+      <div class="loading-title" id="loadingTitle">Processing…</div>
+      <div class="loading-sub" id="loadingSub">Please wait a moment</div>
+    </div>
+    <div class="steps-card">
+      <div class="pstep pending" id="pstep-privacy">
+        <div class="pstep-icon">🛡️</div>
+        <div class="pstep-body">
+          <div class="pstep-title">Removing personal information</div>
+          <div class="pstep-desc">Stripping your name, SSN, address, and other identifying details before any analysis</div>
+        </div>
+        <div class="pstep-status"></div>
+      </div>
+      <div class="pstep pending" id="pstep-send">
+        <div class="pstep-icon">☁️</div>
+        <div class="pstep-body">
+          <div class="pstep-title">Sending anonymized document for analysis</div>
+          <div class="pstep-desc">Only the redacted notice is transmitted — no personal data leaves your device</div>
+        </div>
+        <div class="pstep-status"></div>
+      </div>
+      <div class="pstep pending" id="pstep-ocr">
+        <div class="pstep-icon">🔍</div>
+        <div class="pstep-body">
+          <div class="pstep-title">Reading the notice</div>
+          <div class="pstep-desc">Extracting every word, number, date, and IRS code from the document</div>
+        </div>
+        <div class="pstep-status"></div>
+      </div>
+      <div class="pstep pending" id="pstep-identify">
+        <div class="pstep-icon">🏷️</div>
+        <div class="pstep-body">
+          <div class="pstep-title">Identifying notice type</div>
+          <div class="pstep-desc">Matching against IRS notice codes (CP2000, LT11, CP504, etc.)</div>
+        </div>
+        <div class="pstep-status"></div>
+      </div>
+      <div class="pstep pending" id="pstep-questions">
+        <div class="pstep-icon">🗂️</div>
+        <div class="pstep-body">
+          <div class="pstep-title">Generating clarifying questions</div>
+          <div class="pstep-desc">Tailoring questions based on this specific notice type</div>
+        </div>
+        <div class="pstep-status"></div>
+      </div>
+      <div class="pstep pending" id="pstep-irm" style="display:none">
+        <div class="pstep-icon">📖</div>
+        <div class="pstep-body">
+          <div class="pstep-title">Cross-referencing IRS Internal Revenue Manual</div>
+          <div class="pstep-desc">Looking up IRM procedures, your rights, and IRS obligations for this notice type</div>
+        </div>
+        <div class="pstep-status"></div>
+      </div>
+      <div class="pstep pending" id="pstep-advice" style="display:none">
+        <div class="pstep-icon">✍️</div>
+        <div class="pstep-body">
+          <div class="pstep-title">Building your personalized action plan</div>
+          <div class="pstep-desc">Writing step-by-step guidance tailored to your situation and IRM references</div>
+        </div>
+        <div class="pstep-status"></div>
+      </div>
+    </div>
+    <div class="elapsed"><span id="elapsedText">0s elapsed</span> · Analysis typically takes 30–60 seconds</div>
+  </div>
+
+  <!-- STAGE: QUESTIONS ─────────────────────────────────────────────────── -->
+  <div id="stage-questions" class="stage">
+    <div class="notice-banner">
+      <div class="nb-icon">📨</div>
+      <div>
+        <div class="nb-eyebrow">Notice Identified</div>
+        <div class="nb-title" id="noticeTitleLabel">—</div>
+        <div class="nb-meta"  id="noticeMetaLabel">—</div>
+      </div>
+    </div>
+    <h2 style="font-family:var(--serif);font-size:1.7rem;font-weight:600;margin-bottom:0.35rem">A few quick questions</h2>
+    <p style="font-size:14px;color:var(--ink-soft);margin-bottom:1.5rem;line-height:1.65">Your answers help us tailor the advice to your exact situation.</p>
+    <div id="questionsContainer"></div>
+    <button class="btn-primary full" id="submitBtn" disabled onclick="submitAnswers()" style="margin-top:0.5rem;padding:15px;font-size:15px">
+      Get My Personalized Action Plan →
+    </button>
+  </div>
+
+  <!-- STAGE: RESULTS ───────────────────────────────────────────────────── -->
+  <div id="stage-results" class="stage">
+    <div id="resultsContainer"></div>
+    <p class="disclaimer">General guidance based on IRM procedures and common tax practice — not legal or tax advice.<br>Consult a licensed EA, CPA, or tax attorney for your specific situation.</p>
+  </div>
+
+  <!-- STAGE: ERROR ─────────────────────────────────────────────────────── -->
+  <div id="stage-error" class="stage" style="text-align:center;padding:4rem 0">
+    <div style="font-size:42px;margin-bottom:1rem">⚠️</div>
+    <h2 style="font-family:var(--serif);font-size:1.8rem;font-weight:600;color:var(--red);margin-bottom:1rem">Something went wrong</h2>
+    <div class="error-box" style="max-width:540px;margin:0 auto 1.5rem;text-align:left">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:5px">Error details</div>
+      <div style="font-size:14px;line-height:1.65" id="errorMsg"></div>
+    </div>
+    <button class="btn-primary" onclick="resetApp()">Try Again</button>
+  </div>
+
+</main>
+
+<!-- ── WAITLIST MODAL ──────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="waitlistModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-eyebrow">Premium — Ask Romeo</div>
+      <h2 class="modal-title">Get expert advice from an<br><em style="color:var(--gold-dim)">ex-IRS auditor</em></h2>
+      <p class="modal-sub">Romeo Razi personally reviews your notice, verifies the IRS's math, and drafts your response. Join the waitlist and we'll reach out to schedule your consultation.</p>
+    </div>
+    <div class="modal-body">
+      <div class="mstatus" id="wlStatus"></div>
+      <div id="wlForm">
+        <div class="mfield">
+          <label for="wlName">Full Name *</label>
+          <input type="text" id="wlName" placeholder="Jane Smith" required>
+        </div>
+        <div class="mfield">
+          <label for="wlEmail">Email Address *</label>
+          <input type="email" id="wlEmail" placeholder="jane@company.com" required>
+        </div>
+        <div class="mfield">
+          <label for="wlCompany">Company Name</label>
+          <input type="text" id="wlCompany" placeholder="Acme Corp">
+        </div>
+        <div class="mfield">
+          <label for="wlUrl">Company Website</label>
+          <input type="url" id="wlUrl" placeholder="https://yourdomain.com">
+        </div>
+        <div class="mfield">
+          <label for="wlAddress">Your Address</label>
+          <input type="text" id="wlAddress" placeholder="123 Main St, City, State, ZIP">
+        </div>
+        <div class="mfield">
+          <label for="wlNote">Notice text or additional notes</label>
+          <textarea id="wlNote" rows="4" placeholder="Paste your notice text here or describe your situation…"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-primary" id="wlSubmitBtn" onclick="submitWaitlist()" style="flex:1">Join the Waitlist</button>
+          <button class="btn-ghost" onclick="closeWaitlist()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 Criminally Prolific LLC. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+import { getUser, logout, onAuthChange } from 'https://esm.sh/@netlify/identity@1';
+
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+// This path matches the Netlify function we created
+const API = '/.netlify/functions/anthropic';
+const WAITLIST_API = '/.netlify/functions/waitlist';
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let state = { noticeData: null, questions: [], answers: {}, noticeText: '' };
+let elapsedTimer = null, elapsedSecs = 0;
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+async function init() {
+  try {
+    const user = await getUser();
+    if (!user) { showStage('noauth'); return; }
+    document.getElementById('userEmail').textContent = user.email || '';
+    document.getElementById('logoutBtn').onclick = async () => { await logout(); window.location.href = '/login'; };
+    showStage('upload');
+    setProgress(10);
+  } catch(e) {
+    showStage('noauth');
+  }
+}
+onAuthChange(() => init());
+init();
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+window.switchTab = function(tab) {
+  ['upload','paste','select'].forEach(t => {
+    document.getElementById('panel-'+t).style.display = t===tab ? '' : 'none';
+    document.getElementById('tab-'+t).classList.toggle('active', t===tab);
+  });
+};
+
+// ── FILE HANDLING ─────────────────────────────────────────────────────────────
+window.handleDrop = function(e) {
+  e.preventDefault();
+  document.getElementById('dropzone').classList.remove('dragover');
+  const f = e.dataTransfer.files[0]; if (f) processFile(f);
+};
+window.handleFileInput = function(e) { const f = e.target.files[0]; if (f) processFile(f); };
+
+function processFile(file) {
+  const isPDF = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+  const isImg = ['image/jpeg','image/png','image/gif','image/webp'].includes(file.type);
+  if (!isPDF && !isImg) { showError('Please upload a JPG, PNG, or PDF file.'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    const base64 = e.target.result.split(',')[1];
+    extractNotice({ base64, mediaType: file.type, isPDF }, null, null);
+  };
+  reader.onerror = () => showError('Could not read file. Please try again.');
+  reader.readAsDataURL(file);
+}
+
+window.handleTextSubmit = function() {
+  const t = document.getElementById('text-input').value.trim();
+  if (!t) return;
+  state.noticeText = t;
+  extractNotice(null, t, null);
+};
+
+window.handleSelectSubmit = function() {
+  const val = document.getElementById('notice-select').value;
+  if (!val) return;
+  const syntheticText = `IRS Notice Type: ${val}\n\nI received this IRS notice and need help understanding what it means, what my rights are, what the IRS requires of me, and what steps I should take. Please provide guidance based on the IRS Internal Revenue Manual procedures for this notice type.`;
+  state.noticeText = syntheticText;
+  extractNotice(null, syntheticText, val);
+};
+
+// ── AI PROMPTS ────────────────────────────────────────────────────────────────
+const OCR_SYSTEM = `You are an expert at reading IRS documents. First, identify and list all personal information found (names, SSNs, addresses, phone numbers, EINs). Then extract the full notice content with personal info replaced by [REDACTED].
+
+Return ONLY valid JSON (no markdown, no backticks):
+{
+  "redactedItems": ["list of what was redacted e.g. Taxpayer name, SSN ending in 4521"],
+  "extractedText": "full notice text with personal info replaced by [REDACTED]",
+  "noticeType": "e.g. CP2000",
+  "noticeTitle": "e.g. Notice of Underreported Income",
+  "taxYear": "e.g. 2022 or null",
+  "amountOwed": "e.g. $3,412.00 or null",
+  "responseDeadline": "e.g. March 15, 2025 or null",
+  "irsPhoneNumber": "string or null"
+}`;
+
+function buildQuestionsPrompt(nd) {
+  return `You are a CPA helping a taxpayer respond to an IRS notice. Generate 4-5 targeted clarifying questions based on this notice.
+
+NOTICE DETAILS: ${JSON.stringify(nd, null, 2)}
+
+Return ONLY valid JSON (no markdown):
+{"questions":[{"id":"q1","question":"text","type":"radio","options":["opt1","opt2"],"required":true}]}
+
+Rules: type can be "radio" (single choice) or "text" (open). Always provide options for radio questions. Keep questions practical and specific to this notice type.`;
+}
+
+function buildAdvicePrompt(nd, answers) {
+  return `You are a CPA and enrolled agent with 25 years of experience and deep IRS Internal Revenue Manual knowledge. An ex-IRS auditor reviewed this notice type extensively.
+
+NOTICE (personal info redacted): ${JSON.stringify(nd, null, 2)}
+TAXPAYER ANSWERS: ${JSON.stringify(answers, null, 2)}
+
+Provide comprehensive personalized advice. Reference specific IRM sections. Use plain English, be honest about urgency.
+
+Return ONLY valid JSON (no markdown):
+{
+  "urgencyLevel": "CRITICAL|HIGH|MEDIUM|LOW",
+  "urgencyReason": "one sentence",
+  "tldr": "2-3 sentence plain-English summary — like texting a CPA friend what this really means",
+  "whatIRSReallyMeans": "plain language explanation, strip the legalese",
+  "irmReference": "specific IRM sections and what they say about this notice, 2-3 sentences",
+  "taxpayerRights": ["right 1", "right 2", "right 3"],
+  "actionPlan": [{"step":1,"title":"","what":"","how":"","timing":"","priority":"immediate|this week|this month"}],
+  "ifYouCantPay": "payment options explanation or null",
+  "documentsNeeded": ["doc1", "doc2"],
+  "redFlags": ["common mistake to avoid 1", "common mistake to avoid 2"],
+  "professionalHelp": {"needed":true,"level":"CPA|Enrolled Agent|Tax Attorney","reason":"","urgency":"before responding|if you disagree|optional"},
+  "timeline": "realistic resolution timeframe",
+  "noticeType": "string"
+}`;
+}
+
+// ── MAIN FLOW ─────────────────────────────────────────────────────────────────
+async function extractNotice(imgData, text, knownType) {
+  showStage('loading');
+  initSteps(false);
+  startElapsedTimer();
+
+  try {
+    activateStep('pstep-privacy', '🛡️');
+    setLoading('Removing personal information…', 'Scanning for names, SSNs, addresses, and identifying details');
+    await tick(400);
+
+    let extracted;
+
+    if (knownType) {
+      // Common notice selected — build structured data directly, skip OCR
+      completeStep('pstep-privacy');
+      activateStep('pstep-send', '☁️');
+      setLoading('Preparing notice for analysis…', 'Building structured context for ' + knownType);
+      await tick(300);
+      completeStep('pstep-send');
+      activateStep('pstep-ocr', '🔍');
+      setLoading('Reading the notice type…', 'Identifying ' + knownType + ' — matching IRS notice codes');
+      extracted = await callClaude(OCR_SYSTEM, [{type:'text', text:'Analyze this IRS notice type and provide details:\n\n'+text}]);
+      if (!extracted.noticeType) extracted.noticeType = knownType;
+    } else if (imgData) {
+      const fileBlock = imgData.isPDF
+        ? {type:'document', source:{type:'base64', media_type:'application/pdf', data:imgData.base64}}
+        : {type:'image',    source:{type:'base64', media_type:imgData.mediaType,  data:imgData.base64}};
+      completeStep('pstep-privacy');
+      activateStep('pstep-send', '☁️');
+      setLoading('Sending anonymized document…', 'Only the redacted notice is transmitted');
+      await tick(300);
+      completeStep('pstep-send');
+      activateStep('pstep-ocr', '🔍');
+      setLoading('Reading the notice…', 'Extracting every word, number, date, and IRS code');
+      extracted = await callClaude(OCR_SYSTEM, [fileBlock, {type:'text', text:'Extract and redact personal info, then analyze this IRS notice.'}]);
+    } else {
+      state.noticeText = text;
+      completeStep('pstep-privacy');
+      activateStep('pstep-send', '☁️');
+      setLoading('Sending anonymized text…', 'Personal identifiers will be redacted before processing');
+      await tick(300);
+      completeStep('pstep-send');
+      activateStep('pstep-ocr', '🔍');
+      setLoading('Reading the notice…', 'Parsing notice type, dates, amounts, and deadlines');
+      extracted = await callClaude(OCR_SYSTEM, [{type:'text', text:'Extract and redact personal info from this IRS notice:\n\n'+text}]);
+      extracted.extractedText = text;
+    }
+
+    completeStep('pstep-ocr');
+
+    if (extracted.redactedItems?.length) {
+      setLoading('Personal info removed ✓', 'Redacted: ' + extracted.redactedItems.slice(0,3).join(', ') + (extracted.redactedItems.length > 3 ? ` + ${extracted.redactedItems.length-3} more` : ''));
+      await tick(700);
+    }
+
+    activateStep('pstep-identify', '🏷️');
+    setLoading('Notice identified: ' + (extracted.noticeType || 'analyzing…'), extracted.noticeTitle || 'Understanding the IRS\'s intent');
+    await tick(500);
+    completeStep('pstep-identify');
+
+    state.noticeData = extracted;
+
+    activateStep('pstep-questions', '🗂️');
+    setLoading('Generating questions…', 'Tailoring questions to the ' + (extracted.noticeType||'notice'));
+    const qr = await callClaude('You are a CPA. Return ONLY valid JSON, no markdown.', [{type:'text', text: buildQuestionsPrompt(extracted)}]);
+    completeStep('pstep-questions');
+    stopElapsedTimer();
+
+    state.questions = qr.questions || [];
+    renderQuestions();
+    showStage('questions');
+  } catch(e) { stopElapsedTimer(); showError(e.message); }
+}
+
+async function submitAnswers() {
+  showStage('loading');
+  initSteps(true);
+  startElapsedTimer();
+  ['pstep-privacy','pstep-send','pstep-ocr','pstep-identify','pstep-questions'].forEach(completeStep);
+
+  try {
+    activateStep('pstep-irm', '📖');
+    setLoading('Cross-referencing IRS Internal Revenue Manual…', 'Looking up IRM procedures for ' + (state.noticeData?.noticeType||'this notice'));
+    await tick(800);
+    completeStep('pstep-irm');
+
+    activateStep('pstep-advice', '✍️');
+    setLoading('Building your personalized action plan…', 'Combining your answers with IRM procedures and CPA-level analysis');
+    const result = await callClaude('You are a CPA and enrolled agent. Return ONLY valid JSON, no markdown.', [{type:'text', text: buildAdvicePrompt(state.noticeData, state.answers)}]);
+    completeStep('pstep-advice');
+    stopElapsedTimer();
+    await tick(300);
+
+    renderResults(result);
+    showStage('results');
+  } catch(e) { stopElapsedTimer(); showError(e.message); }
+}
+
+window.submitAnswers = submitAnswers;
+
+// ── RENDER QUESTIONS ──────────────────────────────────────────────────────────
+function renderQuestions() {
+  const nd = state.noticeData;
+  document.getElementById('noticeTitleLabel').textContent =
+    (nd.noticeType||'Unknown') + (nd.noticeTitle ? ' — '+nd.noticeTitle : '');
+  document.getElementById('noticeMetaLabel').textContent =
+    [nd.taxYear && 'Tax Year: '+nd.taxYear, nd.amountOwed && 'Amount: '+nd.amountOwed, nd.responseDeadline && 'Deadline: '+nd.responseDeadline]
+      .filter(Boolean).join(' · ') || ' ';
+
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+  state.questions.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'q-card';
+    div.innerHTML = `<div class="q-text"><span class="q-num">${qi+1}.</span>${esc(q.question)}${q.required?'<span style="color:var(--red);font-size:11px;margin-left:3px">*</span>':''}</div>`;
+    if (q.type === 'text') {
+      const ta = document.createElement('textarea');
+      ta.style.minHeight = '80px'; ta.placeholder = 'Your answer…';
+      ta.oninput = () => { state.answers[q.id] = ta.value; updateSubmitBtn(); };
+      div.appendChild(ta);
+    } else {
+      (q.options||[]).forEach(opt => {
+        const row = document.createElement('div');
+        row.className = 'opt';
+        row.innerHTML = `<div class="opt-dot"></div><span class="opt-label">${esc(opt)}</span>`;
+        row.onclick = () => {
+          state.answers[q.id] = opt;
+          div.querySelectorAll('.opt').forEach(r => r.classList.remove('sel'));
+          row.classList.add('sel');
+          updateSubmitBtn();
+        };
+        div.appendChild(row);
+      });
+    }
+    container.appendChild(div);
+  });
+  updateSubmitBtn();
+}
+
+function updateSubmitBtn() {
+  const ok = state.questions.filter(q=>q.required).every(q => {
+    const a = state.answers[q.id];
+    return a && String(a).trim() !== '';
+  });
+  document.getElementById('submitBtn').disabled = !ok;
+}
+
+// ── RENDER RESULTS ────────────────────────────────────────────────────────────
+const URGENCY = {
+  CRITICAL: { bg:'var(--sev-critical-bg)', border:'var(--sev-critical-border)', text:'var(--sev-critical-text)', color:'var(--sev-critical-color)', label:'Act Immediately', icon:'🚨' },
+  HIGH:     { bg:'var(--sev-high-bg)',     border:'var(--sev-high-border)',     text:'var(--sev-high-text)',     color:'var(--sev-high-color)',     label:'High Priority',  icon:'⚠️' },
+  MEDIUM:   { bg:'var(--sev-medium-bg)',   border:'var(--sev-medium-border)',   text:'var(--sev-medium-text)',   color:'var(--sev-medium-color)',   label:'Action Required', icon:'📋' },
+  LOW:      { bg:'var(--sev-low-bg)',      border:'var(--sev-low-border)',      text:'var(--sev-low-text)',      color:'var(--sev-low-color)',      label:'Informational',   icon:'ℹ️' },
+};
+const PRIORITY = {
+  'immediate':  { color:'var(--sev-critical-color)', bg:'var(--sev-critical-bg)', label:'Do Now' },
+  'this week':  { color:'var(--sev-high-color)',     bg:'var(--sev-high-bg)',     label:'This Week' },
+  'this month': { color:'var(--sev-low-color)',      bg:'var(--sev-low-bg)',      label:'This Month' },
+};
+
+function renderResults(a) {
+  const nd = state.noticeData;
+  const u = URGENCY[a.urgencyLevel] || URGENCY.MEDIUM;
+  let html = '';
+
+  // Urgency banner
+  html += `<div class="urgency-banner" style="background:${u.bg};border:1px solid ${u.border}">
+    <div class="ub-icon">${u.icon}</div>
+    <div style="flex:1">
+      <div class="ub-label" style="color:${u.color}">${u.label} · ${esc(a.noticeType||'')}</div>
+      <div class="ub-reason" style="color:${u.text}">${esc(a.urgencyReason||'')}</div>
+    </div>
+    ${nd?.responseDeadline ? `<div class="deadline-pill"><div class="dl-label">Deadline</div><div class="dl-value">${esc(nd.responseDeadline)}</div></div>` : ''}
+  </div>`;
+
+  // Privacy redaction notice
+  if (nd?.redactedItems?.length) {
+    html += `<div class="redact-bar"><span>🛡️</span><div><strong>Personal info removed before analysis:</strong> ${esc(nd.redactedItems.join(', '))}</div></div>`;
+  }
+
+  // TL;DR
+  html += `<div class="tldr-box"><span class="section-label" style="color:var(--blue)">🗣 The Short Version</span><p style="font-size:16px;line-height:1.72;color:var(--ink-soft);font-style:italic;margin:0;font-family:var(--serif)">${esc(a.tldr||'')}</p></div>`;
+
+  // What IRS means
+  html += `<div class="card"><span class="section-label">🏛️ What the IRS Is Actually Saying</span><p style="color:var(--ink-soft);font-size:15px;line-height:1.72;margin:0">${esc(a.whatIRSReallyMeans||'')}</p></div>`;
+
+  // IRM reference
+  html += `<div class="irm-box"><span class="section-label">📖 IRS Internal Revenue Manual Reference</span><p style="font-size:14px;color:var(--ink-soft);line-height:1.68;margin:0">${esc(a.irmReference||'')}</p></div>`;
+
+  // Rights
+  if (a.taxpayerRights?.length) {
+    html += `<div class="card"><span class="section-label">⚖️ Your Rights as a Taxpayer</span><div class="rights-wrap">${a.taxpayerRights.map(r=>`<div class="right-tag">${esc(r)}</div>`).join('')}</div></div>`;
+  }
+
+  // Action plan
+  html += `<div class="card card-gold"><span class="section-label">✅ Your Personalized Action Plan</span>${(a.actionPlan||[]).map((step,i)=>{
+    const p = PRIORITY[step.priority] || PRIORITY['this month'];
+    const last = i === a.actionPlan.length-1;
+    return `<div class="action-step" style="${last?'padding-bottom:0;margin-bottom:0;border-bottom:none':''}">
+      <div class="step-circle">${step.step}</div>
+      <div style="flex:1">
+        <div><span style="font-size:15px;font-weight:600;color:var(--ink)">${esc(step.title||'')}</span>
+          <span class="priority-pill" style="background:${p.bg};color:${p.color}">${p.label}</span></div>
+        <p style="color:var(--ink-soft);font-size:14px;line-height:1.68;margin:6px 0 7px">${esc(step.what||'')}</p>
+        ${step.how?`<p style="color:var(--ink-soft);font-size:13px;line-height:1.6;margin:0 0 6px;background:var(--cream);border-radius:2px;padding:9px 12px"><strong style="color:var(--ink-muted)">How: </strong>${esc(step.how)}</p>`:''}
+        ${step.timing?`<div style="font-size:12px;color:var(--ink-muted)">⏱ ${esc(step.timing)}</div>`:''}
+      </div></div>`;
+  }).join('')}</div>`;
+
+  // Docs + red flags
+  const hasDocs = a.documentsNeeded?.length, hasFlags = a.redFlags?.length;
+  if (hasDocs || hasFlags) {
+    html += `<div class="grid-2">`;
+    if (hasDocs) html += `<div class="card" style="margin:0"><span class="section-label">📁 Gather These Documents</span><ul class="plain-list">${a.documentsNeeded.map(d=>`<li>${esc(d)}</li>`).join('')}</ul></div>`;
+    if (hasFlags) html += `<div class="card" style="margin:0"><span class="section-label">🚫 Mistakes to Avoid</span><ul class="plain-list red-list">${a.redFlags.map(f=>`<li>${esc(f)}</li>`).join('')}</ul></div>`;
+    html += `</div>`;
+  }
+
+  // Can't pay
+  if (a.ifYouCantPay) {
+    html += `<div class="cant-pay-box"><span class="section-label" style="color:var(--amber)">💰 If You Can't Pay Right Now</span><p style="font-size:14px;color:var(--ink-soft);line-height:1.68;margin:0">${esc(a.ifYouCantPay)}</p></div>`;
+  }
+
+  // Professional help + timeline
+  const ph = a.professionalHelp || {};
+  html += `<div class="grid-2">
+    <div class="card" style="margin:0"><span class="section-label">👤 Professional Help</span>
+      <div style="display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:3px 10px;border-radius:20px;margin-bottom:8px;background:${ph.needed?'var(--amber-light)':'var(--green-light)'};color:${ph.needed?'var(--amber)':'var(--green)'}">${ph.needed?(ph.level||'Professional')+' Recommended':'Optional'}</div>
+      <p style="color:var(--ink-soft);font-size:13px;line-height:1.62;margin:0">${esc(ph.reason||'')}</p>
+      ${ph.urgency?`<div style="font-size:12px;color:var(--ink-muted);margin-top:8px">When: ${esc(ph.urgency)}</div>`:''}
+    </div>
+    <div class="card" style="margin:0"><span class="section-label">⏱️ Resolution Timeline</span>
+      <p style="color:var(--ink-soft);font-size:14px;line-height:1.62;margin:0">${esc(a.timeline||'')}</p>
+    </div>
+  </div>`;
+
+  // ── ASK ROMEO CTA ──────────────────────────────────────────────────────────
+  html += `<div class="romeo-cta">
+    <div class="premium-tag">Premium</div>
+    <h3>Want <em>Romeo</em> to personally review your notice?</h3>
+    <p>As an ex-IRS auditor, Romeo knows exactly how the IRS thinks — and where it makes mistakes. He'll verify the numbers, draft your response, and tell you exactly what to do.</p>
+    <div class="romeo-benefits">
+      <div class="romeo-benefit">✓ IRS transcript pulled & verified</div>
+      <div class="romeo-benefit">✓ Response letter drafted for you</div>
+      <div class="romeo-benefit">✓ Direct consult with ex-IRS auditor</div>
+      <div class="romeo-benefit">✓ Enrolled agent review included</div>
+    </div>
+    <button class="romeo-btn" onclick="openWaitlist()">Join the Waitlist — Ask Romeo →</button>
+  </div>`;
+
+  document.getElementById('resultsContainer').innerHTML = html;
+
+  // Pre-fill notice text in waitlist modal if available
+  const noticeForEmail = state.noticeText || nd?.extractedText || '';
+  document.getElementById('wlNote').value = noticeForEmail ? noticeForEmail.substring(0, 1000) : '';
+}
+
+// ── WAITLIST ──────────────────────────────────────────────────────────────────
+window.openWaitlist = function() {
+  document.getElementById('waitlistModal').classList.add('open');
+};
+window.closeWaitlist = function() {
+  document.getElementById('waitlistModal').classList.remove('open');
+};
+
+window.submitWaitlist = async function() {
+  const name    = document.getElementById('wlName').value.trim();
+  const email   = document.getElementById('wlEmail').value.trim();
+  const company = document.getElementById('wlCompany').value.trim();
+  const url     = document.getElementById('wlUrl').value.trim();
+  const address = document.getElementById('wlAddress').value.trim();
+  const note    = document.getElementById('wlNote').value.trim();
+
+  const statusEl = document.getElementById('wlStatus');
+  statusEl.className = 'mstatus';
+
+  if (!name || !email) {
+    statusEl.textContent = 'Please enter your name and email.';
+    statusEl.classList.add('error');
+    return;
+  }
+
+  const btn = document.getElementById('wlSubmitBtn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+
+  try {
+    const res = await fetch(WAITLIST_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, company, companyUrl: url, address,
+        noticeText: (state.noticeData?.extractedText || state.noticeText || '') + (note ? '\n\nAdditional notes: ' + note : '') }),
+    });
+    const data = await res.json();
+    if (res.ok && data.ok) {
+      document.getElementById('wlForm').style.display = 'none';
+      statusEl.textContent = "You're on the waitlist! Romeo's team will reach out at " + email + " within 1 business day.";
+      statusEl.classList.add('success');
+    } else {
+      throw new Error(data.error || 'Submission failed');
+    }
+  } catch(e) {
+    statusEl.textContent = 'Something went wrong. Please email romeo@taxedright.com directly.';
+    statusEl.classList.add('error');
+    btn.disabled = false; btn.textContent = 'Join the Waitlist';
+  }
+};
+
+// Close modal on overlay click
+document.getElementById('waitlistModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeWaitlist();
+});
+
+// ── API CALL ──────────────────────────────────────────────────────────────────
+async function callClaude(systemPrompt, userContent) {
+  let response;
+  try {
+    response = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userContent }],
+        max_tokens: 4096,
+        stream: true,
+      }),
+    });
+  } catch(e) { throw new Error('Network error — check your connection and try again.'); }
+
+  if (!response.ok) {
+    let msg = 'API error ' + response.status;
+    try { const t = await response.text(); msg = JSON.parse(t)?.error?.message || msg; } catch {}
+    throw new Error(msg);
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let raw = '';
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    const chunk = decoder.decode(value, { stream: true });
+    for (const line of chunk.split('\n')) {
+      if (!line.startsWith('data: ')) continue;
+      const data = line.slice(6).trim();
+      if (data === '[DONE]') break;
+      try {
+        const evt = JSON.parse(data);
+        if (evt.type === 'content_block_delta' && evt.delta?.type === 'text_delta') {
+          raw += evt.delta.text;
+        }
+      } catch {}
+    }
+  }
+
+  if (!raw.trim()) throw new Error('Empty response from AI. Please try again.');
+  const clean = raw.replace(/^```json\s*/i,'').replace(/^```\s*/i,'').replace(/```\s*$/i,'').trim();
+  try { return JSON.parse(clean); } catch {
+    const m = clean.match(/\{[\s\S]*\}/);
+    if (m) try { return JSON.parse(m[0]); } catch {}
+    throw new Error('AI returned an unexpected format. Please try again.');
+  }
+}
+
+// ── PROGRESS STEPS ────────────────────────────────────────────────────────────
+const ALL_STEPS = ['pstep-privacy','pstep-send','pstep-ocr','pstep-identify','pstep-questions','pstep-irm','pstep-advice'];
+
+function initSteps(includeAdvice) {
+  document.getElementById('pstep-irm').style.display   = includeAdvice ? '' : 'none';
+  document.getElementById('pstep-advice').style.display = includeAdvice ? '' : 'none';
+  ALL_STEPS.forEach(id => {
+    const el = document.getElementById(id); if (!el) return;
+    el.className = 'pstep pending';
+    el.querySelector('.pstep-status').innerHTML = '';
+  });
+}
+function activateStep(id, icon) {
+  const el = document.getElementById(id); if (!el) return;
+  el.className = 'pstep active';
+  el.querySelector('.pstep-status').innerHTML = '<div class="pstep-spinner"></div>';
+  if (icon) document.getElementById('loadingIcon').textContent = icon;
+}
+function completeStep(id) {
+  const el = document.getElementById(id); if (!el) return;
+  el.className = 'pstep done';
+  el.querySelector('.pstep-status').innerHTML = '<span class="pstep-check">✓</span>';
+}
+function setLoading(title, sub) {
+  document.getElementById('loadingTitle').textContent = title;
+  document.getElementById('loadingSub').textContent   = sub || '';
+}
+function startElapsedTimer() {
+  elapsedSecs = 0; clearInterval(elapsedTimer);
+  elapsedTimer = setInterval(() => { elapsedSecs++; document.getElementById('elapsedText').textContent = elapsedSecs+'s elapsed'; }, 1000);
+}
+function stopElapsedTimer() { clearInterval(elapsedTimer); }
+function tick(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ── STAGE / PROGRESS ──────────────────────────────────────────────────────────
+function showStage(name) {
+  document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('stage-'+name);
+  if (!el) return;
+  el.style.animation = 'none'; el.offsetHeight; el.style.animation = '';
+  el.classList.add('active');
+  const prog = { authcheck:0, noauth:0, upload:10, loading:50, questions:70, results:100, error:0 };
+  setProgress(prog[name] || 0);
+  document.getElementById('startOverBtn').style.display = ['upload','authcheck','noauth','error'].includes(name) ? 'none' : '';
+}
+function setProgress(pct) { document.getElementById('topBar').style.width = pct+'%'; }
+
+window.resetApp = function() {
+  state = { noticeData: null, questions: [], answers: {}, noticeText: '' };
+  document.getElementById('text-input').value = '';
+  document.getElementById('file-input').value = '';
+  document.getElementById('resultsContainer').innerHTML = '';
+  document.getElementById('questionsContainer').innerHTML = '';
+  document.getElementById('notice-select').value = '';
+  showStage('upload');
+};
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function showError(msg) {
+  stopElapsedTimer();
+  document.getElementById('errorMsg').textContent = msg || 'Unknown error.';
+  showStage('error');
+}
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

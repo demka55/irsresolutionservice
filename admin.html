@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><!-- deploy: 20260417admin001 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — IRS Resolution Service</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#c9a84c; --gold-dim:#8a6e2f; --gold-muted:#f5ecd8;
+  --cream:#f5f0e8; --cream-warm:#ede5d5; --cream-dark:#d9cdb8;
+  --ink:#1a1410; --ink-soft:#4a3f32; --ink-muted:#7a6e60;
+  --white:#ffffff;
+  --red:#8b1a1a; --red-light:#fdf0f0;
+  --green:#1a5c2a; --green-light:#f0f7f2;
+  --amber:#92500a; --amber-light:#fef5e7;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height:100vh;}
+
+/* HEADER */
+.site-header{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--cream-dark);padding:0 2rem;position:sticky;top:0;z-index:20;}
+.header-inner{max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-mark{width:36px;height:36px;border:1.5px solid var(--gold);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;font-weight:700;color:var(--gold);}
+.logo-text{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--ink);}
+.logo-text span{color:var(--gold);}
+.admin-badge{background:var(--ink);color:var(--white);font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:2px;}
+.btn-logout{background:none;border:1px solid var(--cream-dark);color:var(--ink-soft);padding:7px 16px;border-radius:2px;font-family:var(--sans);font-size:13px;cursor:pointer;}
+.btn-logout:hover{border-color:var(--ink);color:var(--ink);}
+
+/* GATE */
+.gate{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;}
+.gate-card{background:var(--white);border:1px solid var(--cream-dark);border-top:4px solid var(--gold);border-radius:4px;padding:2.5rem;width:100%;max-width:400px;box-shadow:0 20px 40px -20px rgba(0,0,0,0.15);}
+.gate-card h1{font-family:var(--serif);font-size:1.8rem;font-weight:600;margin-bottom:0.4rem;}
+.gate-card p{font-size:14px;color:var(--ink-muted);margin-bottom:1.5rem;}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:1rem;}
+.field label{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);}
+.field input{padding:11px 14px;border:1.5px solid var(--cream-dark);border-radius:3px;background:var(--white);font-family:var(--sans);font-size:15px;color:var(--ink);outline:none;transition:border-color 0.15s;}
+.field input:focus{border-color:var(--gold);}
+.btn-gold{width:100%;background:var(--gold);color:var(--white);border:none;padding:13px;border-radius:2px;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;transition:background 0.2s;}
+.btn-gold:hover{background:var(--gold-dim);}
+.error-msg{background:var(--red-light);border:1px solid #e8b0b0;color:var(--red);padding:10px 14px;border-radius:3px;font-size:13px;margin-top:0.75rem;display:none;}
+.error-msg.show{display:block;}
+
+/* MAIN */
+main{max-width:1300px;margin:0 auto;padding:2.5rem 2rem 5rem;}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;}
+.page-title{font-family:var(--serif);font-size:2.2rem;font-weight:600;}
+.page-sub{font-size:14px;color:var(--ink-muted);margin-top:2px;}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem;}
+.stat-card{background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:1.25rem 1.5rem;}
+.stat-n{font-family:var(--serif);font-size:2.2rem;font-weight:600;color:var(--ink);display:block;line-height:1;}
+.stat-l{font-size:12px;color:var(--ink-muted);letter-spacing:0.08em;text-transform:uppercase;font-weight:500;margin-top:4px;display:block;}
+
+/* FILTERS */
+.filters{display:flex;gap:0.75rem;margin-bottom:1.25rem;flex-wrap:wrap;align-items:center;}
+.filter-input{padding:9px 14px;border:1.5px solid var(--cream-dark);border-radius:3px;background:var(--white);font-family:var(--sans);font-size:14px;color:var(--ink);outline:none;transition:border-color 0.15s;min-width:240px;}
+.filter-input:focus{border-color:var(--gold);}
+.filter-select{padding:9px 14px;border:1.5px solid var(--cream-dark);border-radius:3px;background:var(--white);font-family:var(--sans);font-size:14px;color:var(--ink);outline:none;cursor:pointer;}
+.export-btn{background:var(--ink);color:var(--white);border:none;padding:9px 18px;border-radius:2px;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;margin-left:auto;}
+.export-btn:hover{background:#2a2420;}
+
+/* TABLE */
+.table-wrap{background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;overflow:hidden;}
+table{width:100%;border-collapse:collapse;}
+thead tr{background:var(--cream-warm);border-bottom:1px solid var(--cream-dark);}
+th{padding:11px 16px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);text-align:left;white-space:nowrap;}
+tbody tr{border-bottom:1px solid var(--cream-warm);transition:background 0.12s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:var(--cream);}
+td{padding:13px 16px;font-size:14px;color:var(--ink-soft);vertical-align:top;}
+td.name{font-weight:600;color:var(--ink);}
+td.email a{color:var(--gold-dim);text-decoration:none;}
+td.email a:hover{text-decoration:underline;}
+.tag{display:inline-block;font-size:11px;padding:3px 8px;border-radius:2px;font-weight:500;letter-spacing:0.04em;}
+.tag-yes{background:var(--green-light);color:var(--green);}
+.tag-partial{background:var(--amber-light);color:var(--amber);}
+.tag-no{background:var(--red-light);color:var(--red);}
+.tag-unknown{background:var(--cream-warm);color:var(--ink-muted);}
+.detail-btn{background:none;border:1px solid var(--cream-dark);color:var(--ink-soft);padding:5px 12px;border-radius:2px;font-family:var(--sans);font-size:12px;cursor:pointer;white-space:nowrap;}
+.detail-btn:hover{border-color:var(--gold-dim);color:var(--gold-dim);}
+.empty{text-align:center;padding:4rem 1rem;color:var(--ink-muted);font-size:14px;}
+.loading{text-align:center;padding:4rem;color:var(--ink-muted);}
+
+/* DETAIL MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(26,20,16,0.55);z-index:500;display:none;align-items:center;justify-content:center;padding:1rem;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--white);border-radius:4px;max-width:600px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 32px 64px -20px rgba(0,0,0,0.35);}
+.modal-head{padding:1.5rem 2rem;border-bottom:1px solid var(--cream-dark);display:flex;justify-content:space-between;align-items:start;}
+.modal-head h3{font-family:var(--serif);font-size:1.5rem;font-weight:600;}
+.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink-muted);padding:0 4px;}
+.modal-body{padding:1.5rem 2rem;}
+.detail-row{display:flex;gap:1rem;margin-bottom:0.85rem;font-size:14px;border-bottom:1px solid var(--cream-warm);padding-bottom:0.85rem;}
+.detail-row:last-child{border-bottom:none;margin-bottom:0;}
+.detail-key{font-weight:600;color:var(--ink-muted);min-width:140px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding-top:2px;}
+.detail-val{color:var(--ink-soft);flex:1;line-height:1.6;word-break:break-word;}
+.notice-text{background:var(--cream);border-radius:3px;padding:1rem;font-size:13px;line-height:1.65;white-space:pre-wrap;max-height:200px;overflow-y:auto;color:var(--ink-soft);}
+
+@media(max-width:900px){
+  th:nth-child(4),td:nth-child(4),th:nth-child(5),td:nth-child(5){display:none;}
+}
+@media(max-width:640px){
+  main{padding:1.5rem 1rem 4rem;}
+  .filters{flex-direction:column;align-items:stretch;}
+  .filter-input,.filter-select{width:100%;}
+  .export-btn{margin-left:0;}
+}
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div id="gateWrap" class="gate">
+  <div class="gate-card">
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.5rem">Admin Access</div>
+    <h1>Dashboard</h1>
+    <p>Enter the admin password to view signup data.</p>
+    <div class="field">
+      <label for="adminPw">Password</label>
+      <input type="password" id="adminPw" placeholder="Admin password" onkeydown="if(event.key==='Enter')checkGate()">
+    </div>
+    <button class="btn-gold" onclick="checkGate()">Enter Dashboard</button>
+    <div class="error-msg" id="gateError">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<!-- DASHBOARD (hidden until authenticated) -->
+<div id="dashWrap" style="display:none">
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <div class="logo-mark">IRS</div>
+        <span class="logo-text">Resolution <span>Service</span></span>
+      </a>
+      <div style="display:flex;align-items:center;gap:1rem">
+        <span class="admin-badge">Admin</span>
+        <button class="btn-logout" onclick="lockDash()">Lock</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Signups Dashboard</h1>
+        <p class="page-sub">All users who have created an account on IRS Resolution Service</p>
+      </div>
+      <button class="export-btn" onclick="exportCSV()">⬇ Export CSV</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card"><span class="stat-n" id="statTotal">—</span><span class="stat-l">Total Signups</span></div>
+      <div class="stat-card"><span class="stat-n" id="statToday">—</span><span class="stat-l">Today</span></div>
+      <div class="stat-card"><span class="stat-n" id="statWeek">—</span><span class="stat-l">This Week</span></div>
+      <div class="stat-card"><span class="stat-n" id="statFiled">—</span><span class="stat-l">Filed All 3 Years</span></div>
+      <div class="stat-card"><span class="stat-n" id="statNotFiled">—</span><span class="stat-l">Haven't Filed</span></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <input class="filter-input" id="filterSearch" placeholder="Search by name, email, or company…" oninput="renderTable()">
+      <select class="filter-select" id="filterTax" onchange="renderTable()">
+        <option value="">All tax filing status</option>
+        <option value="yes_all">Filed all 3 years</option>
+        <option value="yes_some">Filed some</option>
+        <option value="no">Not filed</option>
+        <option value="not_sure">Not sure</option>
+      </select>
+      <select class="filter-select" id="filterSort" onchange="renderTable()">
+        <option value="newest">Newest first</option>
+        <option value="oldest">Oldest first</option>
+        <option value="name">Name A–Z</option>
+      </select>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <div id="tableArea" class="loading">Loading users…</div>
+    </div>
+  </main>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalName">User Details</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script type="module">
+import { getUser, logout } from 'https://esm.sh/@netlify/identity@1';
+
+// ── SIMPLE PASSWORD GATE ──────────────────────────────────────────────────────
+// Change this password to something only you and Romeo know
+const ADMIN_PASSWORD = 'irsadmin2026romeo';
+
+let allUsers = [];
+
+window.checkGate = function() {
+  const pw = document.getElementById('adminPw').value;
+  if (pw === ADMIN_PASSWORD) {
+    document.getElementById('gateWrap').style.display = 'none';
+    document.getElementById('dashWrap').style.display = '';
+    sessionStorage.setItem('adminAuth', '1');
+    loadUsers();
+  } else {
+    document.getElementById('gateError').classList.add('show');
+    document.getElementById('adminPw').value = '';
+  }
+};
+
+window.lockDash = function() {
+  sessionStorage.removeItem('adminAuth');
+  document.getElementById('gateWrap').style.display = '';
+  document.getElementById('dashWrap').style.display = 'none';
+};
+
+// Auto-unlock if already authed this session
+if (sessionStorage.getItem('adminAuth') === '1') {
+  document.getElementById('gateWrap').style.display = 'none';
+  document.getElementById('dashWrap').style.display = '';
+  loadUsers();
+}
+
+// ── LOAD USERS from Netlify Identity ─────────────────────────────────────────
+async function loadUsers() {
+  document.getElementById('tableArea').innerHTML = '<div class="loading">Loading users…</div>';
+  try {
+    // Netlify Identity Admin API — requires the site's API URL
+    // We call it from the browser using the admin token
+    const siteUrl = 'https://candid-cajeta-d62fb7.netlify.app';
+    
+    // Get admin JWT — requires being logged in as admin or using service role
+    // Since we're password-gating client side, we use the public list endpoint
+    // which returns users for sites with Identity enabled
+    const res = await fetch(`${siteUrl}/.netlify/identity/admin/users?per_page=500`, {
+      headers: {
+        'Authorization': 'Bearer ' + await getAdminToken()
+      }
+    });
+
+    if (!res.ok) {
+      // Fallback: try without token (works if Identity is set to open registration)
+      throw new Error('Need admin token');
+    }
+    const data = await res.json();
+    allUsers = (data.users || []).map(parseUser);
+    renderStats();
+    renderTable();
+  } catch(e) {
+    // Use Netlify Functions to proxy the Identity admin call
+    await loadUsersViaFunction();
+  }
+}
+
+async function getAdminToken() {
+  try {
+    const u = await getUser();
+    return u?.token?.access_token || '';
+  } catch { return ''; }
+}
+
+async function loadUsersViaFunction() {
+  try {
+    const res = await fetch('/.netlify/functions/admin-users');
+    if (!res.ok) throw new Error('Function not available');
+    const data = await res.json();
+    allUsers = (data.users || []).map(parseUser);
+    renderStats();
+    renderTable();
+  } catch(e) {
+    // Final fallback: show mock data notice
+    document.getElementById('tableArea').innerHTML = `
+      <div class="empty">
+        <div style="font-size:32px;margin-bottom:1rem">⚠️</div>
+        <div style="font-weight:600;margin-bottom:0.5rem">Admin API not configured</div>
+        <div style="font-size:13px;color:var(--ink-muted);max-width:400px;margin:0 auto;line-height:1.65">
+          To load real user data, add the <strong>admin-users</strong> Netlify function with your Identity admin token.<br><br>
+          For now, you can view signups at:<br>
+          <a href="https://app.netlify.com/projects/candid-cajeta-d62fb7/identity" target="_blank" style="color:var(--gold-dim)">Netlify Dashboard → Identity</a>
+        </div>
+      </div>`;
+    // Try to load from localStorage cache (populated when users sign up)
+    const cached = getCachedSignups();
+    if (cached.length) {
+      allUsers = cached;
+      renderStats();
+      renderTable();
+    }
+  }
+}
+
+// ── CACHE: populated by signup page via postMessage or localStorage ───────────
+function getCachedSignups() {
+  try {
+    return JSON.parse(localStorage.getItem('irs_signups') || '[]');
+  } catch { return []; }
+}
+
+function parseUser(u) {
+  const meta = u.user_metadata || {};
+  return {
+    id: u.id,
+    email: u.email || '',
+    name: meta.full_name || u.email || '',
+    company: meta.company || '',
+    companyUrl: meta.company_url || '',
+    bizDesc: meta.biz_desc || '',
+    taxFiled: meta.tax_filed || '',
+    createdAt: u.created_at || u.confirmed_at || '',
+    confirmed: !!u.confirmed_at,
+  };
+}
+
+// ── STATS ─────────────────────────────────────────────────────────────────────
+function renderStats() {
+  const now = new Date();
+  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const weekStart  = new Date(todayStart - 6 * 86400000);
+
+  document.getElementById('statTotal').textContent   = allUsers.length;
+  document.getElementById('statToday').textContent   = allUsers.filter(u => new Date(u.createdAt) >= todayStart).length;
+  document.getElementById('statWeek').textContent    = allUsers.filter(u => new Date(u.createdAt) >= weekStart).length;
+  document.getElementById('statFiled').textContent   = allUsers.filter(u => u.taxFiled === 'yes_all').length;
+  document.getElementById('statNotFiled').textContent = allUsers.filter(u => u.taxFiled === 'no').length;
+}
+
+// ── TABLE ─────────────────────────────────────────────────────────────────────
+window.renderTable = function() {
+  const q       = document.getElementById('filterSearch').value.toLowerCase();
+  const taxF    = document.getElementById('filterTax').value;
+  const sortF   = document.getElementById('filterSort').value;
+
+  let list = allUsers.filter(u => {
+    const matchQ = !q || u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q) || u.company.toLowerCase().includes(q);
+    const matchT = !taxF || u.taxFiled === taxF;
+    return matchQ && matchT;
+  });
+
+  list.sort((a,b) => {
+    if (sortF === 'oldest') return new Date(a.createdAt) - new Date(b.createdAt);
+    if (sortF === 'name')   return a.name.localeCompare(b.name);
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+
+  if (!list.length) {
+    document.getElementById('tableArea').innerHTML = '<div class="empty">No users match your filters.</div>';
+    return;
+  }
+
+  const taxLabel = { yes_all:'Filed all 3', yes_some:'Filed some', no:'Not filed', not_sure:'Not sure', '':'—' };
+  const taxClass = { yes_all:'tag-yes', yes_some:'tag-partial', no:'tag-no', not_sure:'tag-unknown', '':'tag-unknown' };
+
+  document.getElementById('tableArea').innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Company</th>
+        <th>Tax Status</th>
+        <th>Signed Up</th>
+        <th></th>
+      </tr></thead>
+      <tbody>
+        ${list.map(u => `
+          <tr>
+            <td class="name">${esc(u.name)}</td>
+            <td class="email"><a href="mailto:${esc(u.email)}">${esc(u.email)}</a></td>
+            <td>${u.company ? `<div>${esc(u.company)}</div>${u.companyUrl?`<div style="font-size:12px;color:var(--ink-muted)">${esc(u.companyUrl)}</div>`:''}` : '<span style="color:var(--ink-muted)">—</span>'}</td>
+            <td><span class="tag ${taxClass[u.taxFiled]||'tag-unknown'}">${taxLabel[u.taxFiled]||'—'}</span></td>
+            <td style="white-space:nowrap">${u.createdAt ? fmtDate(u.createdAt) : '—'}</td>
+            <td><button class="detail-btn" onclick="openDetail('${esc(u.id)}')">Details</button></td>
+          </tr>`).join('')}
+      </tbody>
+    </table>`;
+};
+
+// ── DETAIL MODAL ──────────────────────────────────────────────────────────────
+window.openDetail = function(id) {
+  const u = allUsers.find(u => u.id === id);
+  if (!u) return;
+  document.getElementById('modalName').textContent = u.name || u.email;
+  const taxLabel = { yes_all:'Yes — filed all 3 years', yes_some:'Partially — filed some', no:'No — have not filed', not_sure:'Not sure', '':'Not provided' };
+  document.getElementById('modalBody').innerHTML = `
+    <div class="detail-row"><div class="detail-key">Full Name</div><div class="detail-val">${esc(u.name||'—')}</div></div>
+    <div class="detail-row"><div class="detail-key">Email</div><div class="detail-val"><a href="mailto:${esc(u.email)}" style="color:var(--gold-dim)">${esc(u.email)}</a></div></div>
+    <div class="detail-row"><div class="detail-key">Company</div><div class="detail-val">${esc(u.company||'—')}</div></div>
+    <div class="detail-row"><div class="detail-key">Website</div><div class="detail-val">${u.companyUrl?`<a href="${esc(u.companyUrl)}" target="_blank" style="color:var(--gold-dim)">${esc(u.companyUrl)}</a>`:'—'}</div></div>
+    <div class="detail-row"><div class="detail-key">Business</div><div class="detail-val">${esc(u.bizDesc||'—')}</div></div>
+    <div class="detail-row"><div class="detail-key">Tax Filing</div><div class="detail-val">${taxLabel[u.taxFiled]||'—'}</div></div>
+    <div class="detail-row"><div class="detail-key">Signed Up</div><div class="detail-val">${u.createdAt ? new Date(u.createdAt).toLocaleString() : '—'}</div></div>
+    <div class="detail-row"><div class="detail-key">Confirmed</div><div class="detail-val">${u.confirmed ? '✓ Email confirmed' : '⏳ Pending confirmation'}</div></div>
+    <div style="margin-top:1rem">
+      <a href="mailto:${esc(u.email)}?subject=IRS Resolution Service — Follow Up" style="display:inline-block;background:var(--gold);color:white;padding:10px 20px;border-radius:2px;text-decoration:none;font-size:14px;font-weight:600">📧 Email this user</a>
+    </div>`;
+  document.getElementById('detailModal').classList.add('open');
+};
+
+window.closeModal = function() {
+  document.getElementById('detailModal').classList.remove('open');
+};
+
+document.getElementById('detailModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+// ── EXPORT CSV ────────────────────────────────────────────────────────────────
+window.exportCSV = function() {
+  const headers = ['Name','Email','Company','Company URL','Business Description','Tax Filed','Signed Up','Confirmed'];
+  const rows = allUsers.map(u => [
+    u.name, u.email, u.company, u.companyUrl, u.bizDesc, u.taxFiled,
+    u.createdAt ? new Date(u.createdAt).toLocaleString() : '',
+    u.confirmed ? 'Yes' : 'No'
+  ].map(v => `"${String(v||'').replace(/"/g,'""')}"`));
+  const csv = [headers.join(','), ...rows.map(r=>r.join(','))].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'irs-signups-' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click(); URL.revokeObjectURL(url);
+};
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmtDate(s){
+  try {
+    const d = new Date(s);
+    return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  } catch { return s; }
+}
+</script>
+</body>
+</html>

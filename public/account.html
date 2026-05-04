@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your account — IRS Resolution Service</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#c9a84c; --gold-dim:#8a6e2f; --gold-muted:#f5ecd8;
+  --cream:#f5f0e8; --cream-warm:#ede5d5; --cream-dark:#d9cdb8;
+  --ink:#1a1410; --ink-soft:#4a3f32; --ink-muted:#7a6e60;
+  --red:#8b1a1a; --red-light:#fdf0f0;
+  --amber:#92500a; --amber-light:#fef5e7;
+  --green:#1a5c2a; --green-light:#f0f7f2;
+  --blue:#1a3a5c; --blue-light:#eef3f8;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height:100vh;}
+.site-header{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--cream-dark);padding:0 2rem;position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-mark{width:36px;height:36px;border:1.5px solid var(--gold);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;font-weight:700;color:var(--gold);}
+.logo-text{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--ink);}
+.logo-text span{color:var(--gold);}
+.header-right{display:flex;align-items:center;gap:1.25rem;}
+.user-email{font-size:13px;color:var(--ink-muted);}
+.logout-btn{background:none;border:1px solid var(--cream-dark);color:var(--ink-soft);padding:7px 16px;border-radius:2px;font-family:var(--sans);font-size:13px;cursor:pointer;transition:all 0.15s;}
+.logout-btn:hover{border-color:var(--ink);color:var(--ink);}
+
+main{max-width:1000px;margin:0 auto;padding:3rem 2rem 5rem;}
+.page-header{margin-bottom:2.5rem;}
+.page-title{font-family:var(--serif);font-size:2.5rem;font-weight:600;margin-bottom:0.25rem;}
+.page-sub{font-size:15px;color:var(--ink-muted);}
+
+.loading{text-align:center;padding:4rem 0;color:var(--ink-muted);font-size:14px;}
+
+.section{background:white;border:1px solid var(--cream-dark);border-radius:4px;margin-bottom:1.5rem;padding:1.75rem 2rem;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--cream-warm);}
+.section-title{font-family:var(--serif);font-size:1.35rem;font-weight:600;color:var(--ink);}
+.section-sub{font-size:13px;color:var(--ink-muted);margin-top:3px;}
+.badge{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:2px;font-weight:500;}
+.badge.connected{background:var(--green-light);color:var(--green);border:1px solid #b8d9c3;}
+.badge.not-connected{background:var(--amber-light);color:var(--amber);border:1px solid #e8d0a0;}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field.full{grid-column:1/-1;}
+.field label{font-size:11px;font-weight:500;letter-spacing:0.08em;color:var(--ink-soft);text-transform:uppercase;}
+.field input,.field select{padding:10px 12px;border:1px solid var(--cream-dark);border-radius:3px;background:white;font-family:var(--sans);font-size:14px;color:var(--ink);outline:none;transition:border-color 0.15s;}
+.field input:focus,.field select:focus{border-color:var(--gold);}
+.field-hint{font-size:12px;color:var(--ink-muted);}
+
+.btn-primary{background:var(--ink);color:white;border:none;padding:10px 22px;border-radius:2px;font-family:var(--sans);font-size:14px;font-weight:500;cursor:pointer;transition:background 0.2s;}
+.btn-primary:hover:not(:disabled){background:#2a2420;}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed;}
+.btn-secondary{background:transparent;color:var(--ink);border:1px solid var(--cream-dark);padding:9px 20px;border-radius:2px;font-family:var(--sans);font-size:14px;cursor:pointer;transition:all 0.15s;}
+.btn-secondary:hover{border-color:var(--ink);}
+.btn-gold{background:var(--gold);color:white;border:none;padding:10px 22px;border-radius:2px;font-family:var(--sans);font-size:14px;font-weight:500;cursor:pointer;transition:background 0.2s;}
+.btn-gold:hover:not(:disabled){background:var(--gold-dim);}
+.btn-gold:disabled{opacity:0.5;cursor:not-allowed;}
+
+.actions{display:flex;gap:10px;align-items:center;margin-top:1rem;}
+.save-status{font-size:13px;color:var(--green);display:none;}
+.save-status.show{display:inline;}
+.save-status.error{color:var(--red);}
+
+.transcript-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:1rem;}
+.t-option{border:1.5px solid var(--cream-dark);border-radius:3px;padding:0.85rem 1rem;cursor:pointer;transition:all 0.15s;background:white;user-select:none;}
+.t-option:hover{border-color:var(--gold);}
+.t-option.selected{border-color:var(--gold);background:var(--gold-muted);}
+.t-option input{display:none;}
+.t-option-title{font-size:13px;font-weight:500;color:var(--ink);}
+.t-option-desc{font-size:12px;color:var(--ink-muted);margin-top:2px;line-height:1.4;}
+
+.consent-box{background:var(--blue-light);border:1px solid #b8cfe0;border-radius:3px;padding:1rem;margin-bottom:1rem;font-size:13px;color:var(--ink-soft);line-height:1.6;}
+.consent-box strong{color:var(--blue);}
+.consent-check{display:flex;align-items:flex-start;gap:8px;margin-top:0.6rem;cursor:pointer;}
+.consent-check input{margin-top:3px;accent-color:var(--blue);}
+
+.transcript-list{display:flex;flex-direction:column;gap:10px;}
+.tx-item{border:1px solid var(--cream-dark);border-radius:3px;padding:1rem 1.25rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;background:white;}
+.tx-item:hover{border-color:var(--gold);background:var(--cream-warm);}
+.tx-main{flex:1;min-width:0;}
+.tx-title{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:3px;}
+.tx-meta{font-size:12px;color:var(--ink-muted);display:flex;gap:1rem;flex-wrap:wrap;}
+.tx-meta span strong{color:var(--ink-soft);font-weight:500;}
+.tx-right{display:flex;gap:8px;align-items:center;}
+.tx-badge{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;padding:3px 8px;border-radius:2px;font-weight:500;}
+.tx-badge.warning{background:var(--red-light);color:var(--red);}
+.tx-badge.caution{background:var(--amber-light);color:var(--amber);}
+.tx-badge.clear{background:var(--green-light);color:var(--green);}
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--ink-muted);font-size:14px;border:1px dashed var(--cream-dark);border-radius:3px;}
+
+.banner{padding:11px 14px;border-radius:3px;font-size:13px;margin-bottom:1rem;display:none;}
+.banner.show{display:block;}
+.banner.error{background:var(--red-light);border:1px solid #e8c5c5;color:var(--red);}
+.banner.success{background:var(--green-light);border:1px solid #b8d9c3;color:var(--green);}
+
+.findings-detail{margin-top:0.75rem;padding:0.75rem;background:var(--cream-warm);border-radius:3px;font-size:13px;display:none;}
+.findings-detail.show{display:block;}
+.finding-row{padding:6px 0;border-bottom:1px dashed var(--cream-dark);}
+.finding-row:last-child{border-bottom:none;}
+.finding-row strong{color:var(--ink);}
+
+@media (max-width:640px){
+  .form-grid{grid-template-columns:1fr;}
+  .tx-item{flex-direction:column;align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <div class="header-right">
+      <span class="user-email" id="userEmail"></span>
+      <button class="logout-btn" id="logoutBtn">Sign out</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div id="loadingView" class="loading">Loading your account…</div>
+
+  <div id="dashboardView" style="display:none;">
+    <div class="page-header">
+      <h1 class="page-title">Your account</h1>
+      <p class="page-sub">Manage your IRS connection, pull transcripts, and review verification history.</p>
+    </div>
+
+    <!-- IRS Connection Profile -->
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-title">IRS connection profile</div>
+          <div class="section-sub">Used to request your tax transcripts from the IRS Transcript Delivery System.</div>
+        </div>
+        <span class="badge not-connected" id="profileBadge">Not connected</span>
+      </div>
+
+      <div class="banner error" id="profileError"></div>
+      <div class="banner success" id="profileSuccess"></div>
+
+      <form id="profileForm">
+        <div class="form-grid">
+          <div class="field">
+            <label>Full name (as on tax return)</label>
+            <input type="text" id="pfName" placeholder="Jane A. Smith" required />
+          </div>
+          <div class="field">
+            <label>Last 4 of SSN</label>
+            <input type="text" id="pfSsnLast4" maxlength="4" pattern="\d{4}" placeholder="4521" required />
+            <span class="field-hint">Only the last 4 digits are stored.</span>
+          </div>
+          <div class="field full">
+            <label>Mailing address on IRS records</label>
+            <input type="text" id="pfAddress" placeholder="123 Main St, Springfield, MA 01101" />
+          </div>
+          <div class="field">
+            <label>Primary filing status</label>
+            <select id="pfFilingStatus">
+              <option value="">Select…</option>
+              <option value="SINGLE">Single</option>
+              <option value="MFJ">Married filing jointly</option>
+              <option value="MFS">Married filing separately</option>
+              <option value="HOH">Head of household</option>
+              <option value="QW">Qualifying surviving spouse</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Tax years you file</label>
+            <input type="text" id="pfTaxYears" placeholder="e.g. 2020, 2021, 2022, 2023, 2024" />
+            <span class="field-hint">Comma-separated years available for transcript pulls.</span>
+          </div>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn-primary" id="saveProfileBtn">Save profile</button>
+          <span class="save-status" id="profileSaveStatus">✓ Saved</span>
+        </div>
+      </form>
+    </section>
+
+    <!-- IRS Transcript Pull -->
+    <section class="section" id="transcriptSection">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Pull a tax transcript</div>
+          <div class="section-sub">Retrieve records directly from the IRS for a specific tax year.</div>
+        </div>
+      </div>
+
+      <div class="banner error" id="fetchError"></div>
+      <div class="banner success" id="fetchSuccess"></div>
+
+      <form id="fetchForm">
+        <div class="form-grid">
+          <div class="field">
+            <label>Tax year</label>
+            <select id="txTaxYear" required>
+              <option value="">Select year…</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+              <option value="2020">2020</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Notice code (optional)</label>
+            <select id="txNoticeCode">
+              <option value="">No notice — just pulling records</option>
+              <option value="CP2000">CP2000 — Proposed changes</option>
+              <option value="CP503">CP503 — Balance reminder</option>
+              <option value="CP504">CP504 — Intent to levy</option>
+              <option value="LT11">LT11 — Final notice of intent to levy</option>
+              <option value="CP11">CP11 — Math error correction</option>
+              <option value="CP14">CP14 — Balance due</option>
+              <option value="CP90">CP90 — Intent to levy</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label>Amount shown on notice ($, optional)</label>
+            <input type="number" id="txAmount" step="0.01" min="0" placeholder="Only if you have a notice to verify against" />
+          </div>
+        </div>
+
+        <p style="font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px;">Transcripts to retrieve</p>
+        <div class="transcript-options">
+          <label class="t-option selected" data-type="ACCOUNT">
+            <input type="checkbox" checked>
+            <div class="t-option-title">Account transcript</div>
+            <div class="t-option-desc">Payments, assessments, penalties, balance history</div>
+          </label>
+          <label class="t-option selected" data-type="WAGE">
+            <input type="checkbox" checked>
+            <div class="t-option-title">Wage &amp; income</div>
+            <div class="t-option-desc">W-2s, 1099s, income reported to the IRS</div>
+          </label>
+          <label class="t-option" data-type="RETURN">
+            <input type="checkbox">
+            <div class="t-option-title">Return transcript</div>
+            <div class="t-option-desc">Copy of your filed return data</div>
+          </label>
+        </div>
+
+        <div class="consent-box">
+          <strong>IRS e-Services authorization.</strong> By continuing, you authorize us to retrieve your tax transcripts from the IRS Transcript Delivery System (TDS) via the e-Services API for the sole purpose of reviewing your account and verifying any related notice. This is a read-only action — no changes are made to your IRS account.
+          <label class="consent-check">
+            <input type="checkbox" id="txConsent" required />
+            <span>I authorize the retrieval of my IRS transcript(s) and confirm this is my own tax account.</span>
+          </label>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn-gold" id="fetchBtn">Pull transcript &amp; verify</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- History -->
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Transcript history</div>
+          <div class="section-sub">Every transcript you've pulled and its verification result.</div>
+        </div>
+      </div>
+      <div id="historyList" class="transcript-list"></div>
+    </section>
+  </div>
+</main>
+
+<script type="module">
+import { getUser, logout, onAuthChange, AUTH_EVENTS } from 'https://esm.sh/@netlify/identity@1';
+
+// ── Ensure logged in ──────────────────────────────────────────────────────────
+const user = await getUser();
+if (!user) {
+  window.location.href = '/login';
+  throw new Error('Not authenticated');
+}
+
+document.getElementById('userEmail').textContent = user.email;
+document.getElementById('loadingView').style.display = 'none';
+document.getElementById('dashboardView').style.display = 'block';
+
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  await logout();
+  window.location.href = '/';
+});
+onAuthChange((e) => {
+  if (e === AUTH_EVENTS.LOGOUT) window.location.href = '/';
+});
+
+// ── Auth helper: getUser gives us a token that functions can verify ──────────
+async function authFetch(url, options = {}) {
+  const u = await getUser();
+  const token = u?.accessToken || u?.token?.access_token;
+  const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+  if (token) headers.Authorization = `Bearer ${token}`;
+  return fetch(url, { ...options, headers });
+}
+
+function show(id, msg, type = 'error') {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.classList.remove('error', 'success');
+  el.classList.add(type, 'show');
+}
+function hide(id) { document.getElementById(id).classList.remove('show'); }
+
+// ── Load profile ──────────────────────────────────────────────────────────────
+async function loadProfile() {
+  try {
+    const r = await authFetch('/api/me/profile');
+    if (!r.ok) return;
+    const data = await r.json();
+    const p = data.profile || {};
+    document.getElementById('pfName').value = p.name || user.user_metadata?.full_name || '';
+    document.getElementById('pfSsnLast4').value = p.ssnLast4 || '';
+    document.getElementById('pfAddress').value = p.address || '';
+    document.getElementById('pfFilingStatus').value = p.filingStatus || '';
+    document.getElementById('pfTaxYears').value = (p.taxYears || []).join(', ');
+    if (p.ssnLast4 && p.name) {
+      document.getElementById('profileBadge').textContent = 'Connected';
+      document.getElementById('profileBadge').classList.remove('not-connected');
+      document.getElementById('profileBadge').classList.add('connected');
+    }
+  } catch (e) {
+    // quietly ignore — first-time users have no profile
+  }
+}
+
+document.getElementById('profileForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hide('profileError'); hide('profileSuccess');
+  const btn = document.getElementById('saveProfileBtn');
+  btn.disabled = true;
+  const payload = {
+    name: document.getElementById('pfName').value.trim(),
+    ssnLast4: document.getElementById('pfSsnLast4').value.trim(),
+    address: document.getElementById('pfAddress').value.trim(),
+    filingStatus: document.getElementById('pfFilingStatus').value,
+    taxYears: document.getElementById('pfTaxYears').value.split(',').map(s=>s.trim()).filter(Boolean),
+  };
+  try {
+    const r = await authFetch('/api/me/profile', { method: 'POST', body: JSON.stringify(payload) });
+    if (!r.ok) {
+      const err = await r.json().catch(()=>({error:'Save failed'}));
+      throw new Error(err.error || 'Save failed');
+    }
+    const status = document.getElementById('profileSaveStatus');
+    status.classList.add('show');
+    setTimeout(()=>status.classList.remove('show'), 2000);
+    document.getElementById('profileBadge').textContent = 'Connected';
+    document.getElementById('profileBadge').classList.remove('not-connected');
+    document.getElementById('profileBadge').classList.add('connected');
+  } catch (err) {
+    show('profileError', err.message);
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+// ── Transcript option toggling ────────────────────────────────────────────────
+document.querySelectorAll('.t-option').forEach(el => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    el.classList.toggle('selected');
+    el.querySelector('input').checked = el.classList.contains('selected');
+  });
+});
+
+// ── Pull transcript ───────────────────────────────────────────────────────────
+document.getElementById('fetchForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hide('fetchError'); hide('fetchSuccess');
+
+  if (!document.getElementById('txConsent').checked) {
+    show('fetchError', 'Please authorize transcript retrieval to continue.');
+    return;
+  }
+
+  const selected = [...document.querySelectorAll('.t-option.selected')].map(el => el.dataset.type);
+  if (!selected.length) {
+    show('fetchError', 'Select at least one transcript type.');
+    return;
+  }
+
+  const btn = document.getElementById('fetchBtn');
+  btn.disabled = true;
+  btn.textContent = 'Contacting IRS…';
+
+  const taxYear = document.getElementById('txTaxYear').value;
+  const noticeCode = document.getElementById('txNoticeCode').value || null;
+  const proposedAmount = document.getElementById('txAmount').value || '0';
+
+  try {
+    const r = await authFetch('/api/me/transcript-fetch', {
+      method: 'POST',
+      body: JSON.stringify({ taxYear, transcriptTypes: selected, noticeCode, proposedAmount })
+    });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.error || 'Transcript fetch failed');
+    show('fetchSuccess', 'Transcript retrieved and saved to your history.', 'success');
+    document.getElementById('fetchForm').reset();
+    document.querySelectorAll('.t-option').forEach(el => {
+      const shouldSelect = el.dataset.type === 'ACCOUNT' || el.dataset.type === 'WAGE';
+      el.classList.toggle('selected', shouldSelect);
+      el.querySelector('input').checked = shouldSelect;
+    });
+    loadHistory();
+  } catch (err) {
+    show('fetchError', err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Pull transcript & verify';
+  }
+});
+
+// ── Load history ──────────────────────────────────────────────────────────────
+async function loadHistory() {
+  const listEl = document.getElementById('historyList');
+  listEl.innerHTML = '<div class="empty">Loading…</div>';
+  try {
+    const r = await authFetch('/api/me/transcripts');
+    if (!r.ok) throw new Error('Could not load history');
+    const { transcripts } = await r.json();
+    if (!transcripts || !transcripts.length) {
+      listEl.innerHTML = '<div class="empty">No transcripts yet. Pull your first one above to get started.</div>';
+      return;
+    }
+    listEl.innerHTML = transcripts.map(renderTranscriptItem).join('');
+    document.querySelectorAll('.tx-toggle').forEach(t => {
+      t.addEventListener('click', (e) => {
+        e.preventDefault();
+        const id = t.dataset.id;
+        const detail = document.getElementById(`detail-${id}`);
+        detail.classList.toggle('show');
+      });
+    });
+  } catch (err) {
+    listEl.innerHTML = `<div class="empty">Could not load history: ${err.message}</div>`;
+  }
+}
+
+function renderTranscriptItem(t) {
+  const level = t.verification?.summary?.level || 'clear';
+  const levelLabel = { warning: 'Issues found', caution: 'Review items', clear: 'No issues' }[level] || 'Reviewed';
+  const when = new Date(t.createdAt).toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' });
+  const typesLabel = (t.transcriptTypes || [t.transcriptType]).filter(Boolean).join(' · ');
+  const findings = (t.verification?.findings || []).map(f =>
+    `<div class="finding-row"><strong>${escapeHtml(f.type)}</strong> — ${escapeHtml(f.message)}</div>`
+  ).join('') || '<div class="finding-row">No findings recorded.</div>';
+  return `
+    <div class="tx-item">
+      <div class="tx-main">
+        <div class="tx-title">Tax year ${escapeHtml(t.taxYear)} ${t.noticeCode ? ' · ' + escapeHtml(t.noticeCode) : ''}</div>
+        <div class="tx-meta">
+          <span><strong>Pulled:</strong> ${when}</span>
+          <span><strong>Types:</strong> ${escapeHtml(typesLabel)}</span>
+          ${t.transcript?.balanceDue ? `<span><strong>Balance:</strong> $${Number(t.transcript.balanceDue).toLocaleString()}</span>` : ''}
+        </div>
+        <div class="findings-detail" id="detail-${t.id}">${findings}</div>
+      </div>
+      <div class="tx-right">
+        <span class="tx-badge ${level}">${levelLabel}</span>
+        <button class="btn-secondary tx-toggle" data-id="${t.id}">Details</button>
+      </div>
+    </div>`;
+}
+
+function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+loadProfile();
+loadHistory();
+</script>
+
+</body>
+</html>

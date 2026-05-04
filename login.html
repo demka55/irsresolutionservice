@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in — IRS Resolution Service</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#c9a84c; --gold-dim:#8a6e2f; --gold-muted:#f5ecd8;
+  --cream:#f5f0e8; --cream-warm:#ede5d5; --cream-dark:#d9cdb8;
+  --ink:#1a1410; --ink-soft:#4a3f32; --ink-muted:#7a6e60;
+  --red:#8b1a1a; --red-light:#fdf0f0;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;}
+.site-header{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--cream-dark);padding:0 2rem;}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-mark{width:36px;height:36px;border:1.5px solid var(--gold);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;font-weight:700;color:var(--gold);}
+.logo-text{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--ink);}
+.logo-text span{color:var(--gold);}
+.back-link{font-size:14px;color:var(--ink-muted);text-decoration:none;}
+.back-link:hover{color:var(--gold-dim);}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:4rem 1.5rem;}
+.auth-card{background:white;border:1px solid var(--cream-dark);border-radius:6px;padding:2.5rem 2.5rem 2rem;width:100%;max-width:440px;box-shadow:0 20px 40px -20px rgba(26,20,16,0.15);}
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.4rem;}
+h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;margin-bottom:0.5rem;}
+.sub{font-size:14px;color:var(--ink-muted);margin-bottom:1.75rem;}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:1rem;}
+.field label{font-size:12px;font-weight:500;letter-spacing:0.06em;color:var(--ink-soft);text-transform:uppercase;}
+.field input{padding:11px 14px;border:1px solid var(--cream-dark);border-radius:3px;background:white;font-family:var(--sans);font-size:15px;color:var(--ink);outline:none;transition:border-color 0.15s;}
+.field input:focus{border-color:var(--gold);}
+.btn{width:100%;background:var(--ink);color:white;border:none;padding:13px 24px;border-radius:2px;font-family:var(--sans);font-size:15px;font-weight:500;cursor:pointer;transition:background 0.2s;margin-top:0.5rem;}
+.btn:hover:not(:disabled){background:#2a2420;}
+.btn:disabled{opacity:0.5;cursor:not-allowed;}
+.switch{text-align:center;font-size:14px;color:var(--ink-muted);margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--cream-dark);}
+.switch a{color:var(--gold-dim);text-decoration:none;font-weight:500;}
+.switch a:hover{text-decoration:underline;}
+.forgot{font-size:13px;color:var(--ink-muted);text-decoration:none;}
+.forgot:hover{color:var(--gold-dim);}
+.banner{padding:11px 14px;border-radius:3px;font-size:13px;margin-bottom:1.25rem;display:none;}
+.banner.show{display:block;}
+.banner.error{background:var(--red-light);border:1px solid #e8c5c5;color:var(--red);}
+.banner.info{background:var(--gold-muted);border:1px solid var(--gold);color:var(--ink);}
+.field-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <a href="/" class="back-link">← Back to home</a>
+  </div>
+</header>
+
+<main>
+  <div class="auth-card">
+    <div class="eyebrow">Account access</div>
+    <h1>Sign in to your account</h1>
+    <p class="sub">Access your IRS transcripts, verification history, and response letters.</p>
+
+    <div class="banner info" id="infoBanner"></div>
+    <div class="banner error" id="errorBanner"></div>
+
+    <form id="loginForm">
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" autocomplete="email" required />
+      </div>
+      <div class="field">
+        <div class="field-row">
+          <label for="password">Password</label>
+          <a href="#" class="forgot" id="forgotLink">Forgot password?</a>
+        </div>
+        <input type="password" id="password" autocomplete="current-password" required />
+      </div>
+      <button type="submit" class="btn" id="loginBtn">Sign in</button>
+    </form>
+
+    <div class="switch">
+      Don't have an account? <a href="/signup">Create one</a>
+    </div>
+  </div>
+</main>
+
+<script type="module">
+import { login, handleAuthCallback, requestPasswordRecovery, updateUser, AuthError, MissingIdentityError } from 'https://esm.sh/@netlify/identity@1';
+
+const infoBanner = document.getElementById('infoBanner');
+const errorBanner = document.getElementById('errorBanner');
+
+function showInfo(msg){ infoBanner.textContent = msg; infoBanner.classList.add('show'); errorBanner.classList.remove('show'); }
+function showError(msg){ errorBanner.textContent = msg; errorBanner.classList.add('show'); infoBanner.classList.remove('show'); }
+
+// Handle URL hash callbacks (confirmation, recovery)
+(async function bootstrap(){
+  try {
+    const result = await handleAuthCallback();
+    if (!result) return;
+    if (result.type === 'confirmation') {
+      showInfo('Email confirmed. You are now signed in. Redirecting…');
+      setTimeout(()=>{ window.location.href = '/account'; }, 1200);
+    } else if (result.type === 'recovery') {
+      const np = prompt('Choose a new password (min 8 characters):');
+      if (np && np.length >= 8) {
+        try { await updateUser({ password: np }); showInfo('Password updated. Redirecting…'); setTimeout(()=>{ window.location.href='/account'; },1200); }
+        catch(e){ showError(e.message || 'Could not update password.'); }
+      }
+    }
+  } catch(e) {
+    if (e instanceof AuthError) showError(e.message);
+  }
+})();
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errorBanner.classList.remove('show');
+  const btn = document.getElementById('loginBtn');
+  btn.disabled = true;
+  btn.textContent = 'Signing in…';
+  try {
+    await login(document.getElementById('email').value, document.getElementById('password').value);
+    window.location.href = '/account';
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Sign in';
+    if (err instanceof MissingIdentityError) {
+      showError('Identity is not enabled yet. Run the site via Netlify dev or deploy.');
+      return;
+    }
+    if (err instanceof AuthError) {
+      if (err.status === 401) showError('Invalid email or password.');
+      else if (err.message && err.message.toLowerCase().includes('confirm')) showError('Please confirm your email before signing in.');
+      else showError(err.message);
+      return;
+    }
+    showError('Something went wrong. Please try again.');
+  }
+});
+
+document.getElementById('forgotLink').addEventListener('click', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  if (!email) { showError('Enter your email above, then click "Forgot password?"'); return; }
+  try {
+    await requestPasswordRecovery(email);
+    showInfo('Check your inbox for a password reset link.');
+  } catch (err) {
+    showError(err.message || 'Could not send recovery email.');
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create account — IRS Resolution Service</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#c9a84c; --gold-dim:#8a6e2f; --gold-muted:#f5ecd8;
+  --cream:#f5f0e8; --cream-warm:#ede5d5; --cream-dark:#d9cdb8;
+  --ink:#1a1410; --ink-soft:#4a3f32; --ink-muted:#7a6e60;
+  --red:#8b1a1a; --red-light:#fdf0f0;
+  --green:#1a5c2a;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;}
+.site-header{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--cream-dark);padding:0 2rem;}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-mark{width:36px;height:36px;border:1.5px solid var(--gold);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;font-weight:700;color:var(--gold);}
+.logo-text{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--ink);}
+.logo-text span{color:var(--gold);}
+.back-link{font-size:14px;color:var(--ink-muted);text-decoration:none;}
+.back-link:hover{color:var(--gold-dim);}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:4rem 1.5rem;}
+.auth-card{background:white;border:1px solid var(--cream-dark);border-radius:6px;padding:2.5rem;width:100%;max-width:480px;box-shadow:0 20px 40px -20px rgba(26,20,16,0.15);}
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.4rem;}
+h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;margin-bottom:0.5rem;}
+.sub{font-size:14px;color:var(--ink-muted);margin-bottom:1.5rem;}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:1rem;}
+.field label{font-size:12px;font-weight:500;letter-spacing:0.06em;color:var(--ink-soft);text-transform:uppercase;}
+.field input{padding:11px 14px;border:1px solid var(--cream-dark);border-radius:3px;background:white;font-family:var(--sans);font-size:15px;color:var(--ink);outline:none;transition:border-color 0.15s;}
+.field input:focus{border-color:var(--gold);}
+.field-hint{font-size:12px;color:var(--ink-muted);}
+.btn{width:100%;background:var(--ink);color:white;border:none;padding:13px 24px;border-radius:2px;font-family:var(--sans);font-size:15px;font-weight:500;cursor:pointer;transition:background 0.2s;margin-top:0.5rem;}
+.btn:hover:not(:disabled){background:#2a2420;}
+.btn:disabled{opacity:0.5;cursor:not-allowed;}
+.switch{text-align:center;font-size:14px;color:var(--ink-muted);margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--cream-dark);}
+.switch a{color:var(--gold-dim);text-decoration:none;font-weight:500;}
+.switch a:hover{text-decoration:underline;}
+.banner{padding:11px 14px;border-radius:3px;font-size:13px;margin-bottom:1.25rem;display:none;}
+.banner.show{display:block;}
+.banner.error{background:var(--red-light);border:1px solid #e8c5c5;color:var(--red);}
+.banner.success{background:#f0f7f2;border:1px solid #b8d9c3;color:var(--green);}
+.legal{font-size:12px;color:var(--ink-muted);margin-top:1rem;line-height:1.6;}
+.legal a{color:var(--gold-dim);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <a href="/" class="back-link">← Back to home</a>
+  </div>
+</header>
+
+<main>
+  <div class="auth-card">
+    <div class="eyebrow">Create account</div>
+    <h1>Get started — it's free</h1>
+    <p class="sub">Sign up to track notices, pull IRS transcripts, and save verification history in one place.</p>
+
+    <div class="banner success" id="successBanner"></div>
+    <div class="banner error" id="errorBanner"></div>
+
+    <form id="signupForm">
+      <div class="field">
+        <label for="name">Full name</label>
+        <input type="text" id="name" autocomplete="name" required />
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" autocomplete="email" required />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" autocomplete="new-password" minlength="8" required />
+        <span class="field-hint">At least 8 characters.</span>
+      </div>
+      <button type="submit" class="btn" id="signupBtn">Create account</button>
+      <p class="legal">
+        By creating an account you agree to authorize transcript retrieval from the IRS e-Services Transcript Delivery System for tax accounts you own.
+      </p>
+    </form>
+
+    <div class="switch">
+      Already have an account? <a href="/login">Sign in</a>
+    </div>
+  </div>
+</main>
+
+<script type="module">
+import { signup, AuthError, MissingIdentityError } from 'https://esm.sh/@netlify/identity@1';
+
+const successBanner = document.getElementById('successBanner');
+const errorBanner = document.getElementById('errorBanner');
+
+document.getElementById('signupForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errorBanner.classList.remove('show');
+  successBanner.classList.remove('show');
+  const btn = document.getElementById('signupBtn');
+  btn.disabled = true;
+  btn.textContent = 'Creating account…';
+  try {
+    const user = await signup(
+      document.getElementById('email').value,
+      document.getElementById('password').value,
+      { full_name: document.getElementById('name').value }
+    );
+    if (user.emailVerified) {
+      successBanner.textContent = 'Account created. Redirecting…';
+      successBanner.classList.add('show');
+      setTimeout(()=>{ window.location.href = '/account'; }, 1000);
+    } else {
+      successBanner.textContent = 'Account created. Check your email to confirm your account before signing in.';
+      successBanner.classList.add('show');
+      btn.textContent = 'Confirmation email sent';
+    }
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Create account';
+    if (err instanceof MissingIdentityError) {
+      errorBanner.textContent = 'Identity is not enabled yet. Run the site via Netlify dev or deploy.';
+      errorBanner.classList.add('show');
+      return;
+    }
+    if (err instanceof AuthError) {
+      if (err.status === 403) errorBanner.textContent = 'Signups are disabled. Contact support.';
+      else if (err.status === 422) errorBanner.textContent = 'Check that your email is valid and password is at least 8 characters.';
+      else errorBanner.textContent = err.message;
+      errorBanner.classList.add('show');
+      return;
+    }
+    errorBanner.textContent = 'Something went wrong. Please try again.';
+    errorBanner.classList.add('show');
+  }
+});
+</script>
+
+</body>
+</html>

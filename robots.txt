@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://candid-cajeta-d62fb7.netlify.app/sitemap.xml

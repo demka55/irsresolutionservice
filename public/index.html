@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+// Forward Netlify Identity callback hashes (email confirmation, password recovery,
+// invites, OAuth) to /login, which runs handleAuthCallback().
+(function(){
+  var h = window.location.hash;
+  if (h && /(^|&|#)(confirmation_token|recovery_token|invite_token|email_change_token|access_token|error_description)=/.test(h)) {
+    window.location.replace('/login' + h);
+  }
+})();
+</script>
+<title>IRS Notice Resolution | Ex-IRS Auditor + AI Power</title>
+<meta name="description" content="Stop guessing what your IRS letter means. Use our free tool—built by a former IRS auditor—to decode notices and draft response letters in minutes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:       #f5f0e8;
+  --navy-mid:   #ede5d5;
+  --navy-light: #e8e0d0;
+  --navy-pale:  #d9cdb8;
+  --gold:       #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-dim:   #8a6e2f;
+  --gold-muted: #f5ecd8;
+  --cream:      #f5f0e8;
+  --cream-warm: #ede5d5;
+  --cream-dark: #d9cdb8;
+  --ink:        #1a1410;
+  --ink-soft:   #4a3f32;
+  --ink-muted:  #7a6e60;
+  --white:      #ffffff;
+  --red-light:  #fdf0f0;
+  --amber:      #92500a;
+  --amber-light:#fef5e7;
+  --green:      #1a5c2a;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'Outfit', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 18px; line-height: 1.65; overflow-x: hidden; }
+
+/* HEADER */
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--cream-dark); backdrop-filter: blur(12px); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-mark { width: 36px; height: 36px; border: 1.5px solid var(--gold); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--gold); letter-spacing: -0.02em; }
+.logo-text { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+.logo-text span { color: var(--gold); }
+.nav { display: flex; align-items: center; gap: 1.75rem; }
+.nav a { font-size: 15px; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+.nav a:hover { color: var(--gold-dim); }
+.nav-cta { background: var(--gold); color: var(--white); padding: 9px 22px; border-radius: 2px; font-size: 15px; font-weight: 600; letter-spacing: 0.04em; transition: background 0.2s; }
+.nav-cta:hover { background: var(--gold-dim) !important; color: var(--white) !important; }
+
+/* HERO */
+.hero { background: var(--white); min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding: 120px 2rem 80px; }
+.hero::before { content:''; position:absolute; inset:0; background: repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(201,168,76,0.06) 59px, rgba(201,168,76,0.06) 60px); pointer-events:none; }
+.hero-stamp { position:absolute; right:-80px; top:50%; transform:translateY(-50%) rotate(-10deg); width:560px; height:560px; border:8px solid rgba(201,168,76,0.08); border-radius:50%; display:flex; align-items:center; justify-content:center; pointer-events:none; }
+.hero-stamp::before { content:''; position:absolute; inset:24px; border:3px solid rgba(201,168,76,0.06); border-radius:50%; }
+.hero-stamp-text { font-family:var(--serif); font-size:10px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:rgba(201,168,76,0.1); text-align:center; padding:0 60px; line-height:2.2; }
+.hero-inner { max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 1; display:grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: center; }
+.hero-copy { max-width: 640px; }
+.hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
+.hero-notice-card { position: relative; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; box-shadow: 0 30px 60px -20px rgba(26,20,16,0.22), 0 12px 24px -10px rgba(26,20,16,0.1); padding: 1.75rem 2rem 2rem; width: 100%; max-width: 440px; transform: rotate(-1.2deg); }
+.hero-notice-card::before { content:''; position:absolute; top:-6px; left:-6px; right:-6px; bottom:-6px; border:1px dashed rgba(201,168,76,0.4); border-radius: 8px; pointer-events:none; transform: rotate(0.8deg); }
+.hero-notice-head { display:flex; justify-content:space-between; align-items:flex-start; border-bottom: 1px solid var(--cream-dark); padding-bottom: 1rem; margin-bottom: 1rem; }
+.hero-notice-seal { width:54px; height:54px; border:2px solid var(--gold-dim); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:11px; font-weight:700; color:var(--gold-dim); letter-spacing:0.1em; text-align:center; line-height:1.1; }
+.hero-notice-meta { text-align:right; font-size:12px; color:var(--ink-muted); letter-spacing:0.08em; text-transform:uppercase; font-weight:500; }
+.hero-notice-meta strong { display:block; font-family:var(--serif); font-size:15px; color:var(--ink); letter-spacing:0.04em; text-transform:none; font-weight:600; margin-top:2px; }
+.hero-notice-code { font-family:var(--serif); font-size:2.6rem; font-weight:700; color:var(--ink); line-height:1; margin-bottom:0.25rem; letter-spacing:-0.01em; }
+.hero-notice-title { font-size:14px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.12em; font-weight:600; margin-bottom:1.1rem; }
+.hero-notice-lines { display:flex; flex-direction:column; gap:7px; margin-bottom:1.1rem; }
+.hero-notice-line { height:9px; background: linear-gradient(90deg, var(--cream-dark) 0%, var(--cream-warm) 100%); border-radius: 2px; }
+.hero-notice-line.short { width:60%; }
+.hero-notice-line.medium { width:82%; }
+.hero-notice-amount { background: var(--gold-muted); border: 1px solid var(--gold); border-radius: 3px; padding: 0.85rem 1rem; display:flex; justify-content:space-between; align-items:center; }
+.hero-notice-amount-label { font-size:12px; color:var(--amber); font-weight:600; letter-spacing:0.1em; text-transform:uppercase; }
+.hero-notice-amount-val { font-family:var(--serif); font-size:1.35rem; font-weight:700; color:var(--amber); }
+.hero-decode-tag { position:absolute; bottom:-22px; right:-14px; background: var(--ink); color: var(--white); padding: 10px 18px; border-radius: 3px; font-size: 13px; font-weight: 600; letter-spacing: 0.05em; display:flex; align-items:center; gap:8px; transform: rotate(2.5deg); box-shadow: 0 8px 20px rgba(26,20,16,0.25); }
+.hero-decode-tag::before { content:''; width:8px; height:8px; background: var(--gold); border-radius:50%; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--cream-dark); padding:5px 16px 5px 8px; border-radius:20px; margin-bottom:2rem; }
+.hero-badge-dot { width:6px; height:6px; border-radius:50%; background:var(--gold); animation:pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.hero-badge span { font-size:14px; font-weight:500; color:var(--gold-dim); letter-spacing:0.05em; }
+.hero h1 { font-family:var(--serif); font-size:clamp(3rem,6.2vw,5.3rem); font-weight:600; color:var(--ink); line-height:1.1; letter-spacing:-0.01em; max-width:800px; margin-bottom:1.5rem; }
+.hero h1 em { font-style:italic; color:var(--gold-dim); }
+.hero-sub { font-size:1.2rem; font-weight:400; color:var(--ink-soft); max-width:620px; line-height:1.75; margin-bottom:2.5rem; }
+.hero-actions { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:4rem; }
+.btn-gold { background:var(--gold); color:var(--white); border:none; padding:15px 34px; border-radius:2px; font-family:var(--sans); font-size:16px; font-weight:600; cursor:pointer; letter-spacing:0.04em; transition:all 0.2s; text-decoration:none; display:inline-block; }
+.btn-gold:hover { background:var(--gold-dim); transform:translateY(-1px); }
+.btn-ghost { background:transparent; color:var(--ink-soft); border:1px solid var(--cream-dark); padding:14px 30px; border-radius:2px; font-family:var(--sans); font-size:16px; font-weight:400; cursor:pointer; transition:all 0.2s; text-decoration:none; display:inline-block; }
+.btn-ghost:hover { border-color:var(--gold); color:var(--gold-dim); }
+.hero-stats { display:grid; grid-template-columns:repeat(4,auto); gap:0; border-top:1px solid var(--cream-dark); padding-top:2rem; width:fit-content; }
+.hero-stat { padding:0 2.5rem 0 0; border-right:1px solid var(--cream-dark); margin-right:2.5rem; }
+.hero-stat:last-child { border-right:none; margin-right:0; padding-right:0; }
+.stat-n { font-family:var(--serif); font-size:2.5rem; font-weight:600; color:var(--gold-dim); line-height:1; display:block; }
+.stat-l { font-size:13px; color:var(--ink-muted); letter-spacing:0.07em; margin-top:5px; display:block; }
+
+/* TRUST BAR */
+.trust-bar { background:var(--cream-warm); border-top:1px solid var(--cream-dark); border-bottom:1px solid var(--cream-dark); padding:0.85rem 2rem; }
+.trust-bar-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:center; gap:2.5rem; flex-wrap:wrap; }
+.trust-item { display:flex; align-items:center; gap:8px; font-size:14px; font-weight:500; letter-spacing:0.06em; color:var(--ink-muted); }
+.trust-item::before { content:'◆'; font-size:7px; color:var(--gold-dim); }
+.press-wrap { display:flex; align-items:center; gap:1.25rem; }
+.press-label { font-size:13px; color:var(--ink-muted); letter-spacing:0.08em; }
+.press-logos { display:flex; align-items:center; gap:1.25rem; }
+.press-logo { font-family:var(--serif); font-size:14px; font-weight:600; color:var(--ink-muted); }
+
+/* FOUNDERS */
+.founders-section { background:var(--white); padding:7rem 2rem; position:relative; overflow:hidden; }
+.founders-section::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,var(--cream-dark),transparent); }
+.founders-section::after { content:''; position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,var(--cream-dark),transparent); }
+.founders-inner { max-width:1200px; margin:0 auto; }
+.founders-header { text-align:center; margin-bottom:4rem; }
+.section-eyebrow { font-size:13px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-dim); display:block; margin-bottom:1rem; }
+.founders-header h2 { font-family:var(--serif); font-size:clamp(2.2rem,4.2vw,3.2rem); font-weight:600; color:var(--ink); margin-bottom:0.75rem; line-height:1.2; }
+.founders-header p { font-size:1.15rem; color:var(--ink-muted); max-width:540px; margin:0 auto; font-weight:300; }
+.founders-grid { display:grid; grid-template-columns:1fr 1px 1fr; align-items:start; }
+.founders-divider { background:linear-gradient(180deg,transparent,var(--cream-dark),transparent); min-height:420px; align-self:stretch; }
+.founder-card:first-child { padding-right:4rem; }
+.founder-card:last-child { padding-left:4rem; }
+.founder-identity { display:flex; align-items:flex-start; gap:1.25rem; margin-bottom:1.75rem; }
+.founder-avatar { width:72px; height:72px; border-radius:2px; border:2px solid var(--cream-dark); background:var(--cream); display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden; }
+.founder-avatar img { width:100%; height:100%; object-fit:cover; }
+.founder-avatar-initials { font-family:var(--serif); font-size:1.5rem; font-weight:600; color:var(--gold); }
+.founder-name { font-family:var(--serif); font-size:1.75rem; font-weight:600; color:var(--ink); line-height:1.2; margin-bottom:3px; }
+.founder-title { font-size:15px; color:var(--gold-dim); font-weight:500; letter-spacing:0.03em; }
+.founder-url { font-size:14px; color:var(--ink-muted); margin-top:4px; }
+.founder-role-badge { display:inline-flex; align-items:center; gap:6px; background:var(--gold-muted); border:1px solid var(--cream-dark); padding:5px 14px; border-radius:2px; margin-bottom:1.25rem; font-size:12px; font-weight:600; letter-spacing:0.08em; color:var(--gold-dim); text-transform:uppercase; }
+.founder-bio { font-size:16px; color:var(--ink-soft); line-height:1.8; margin-bottom:1.5rem; font-weight:400; }
+.founder-bio strong { color:var(--ink); font-weight:600; }
+.founder-creds { list-style:none; padding:0; border-top:1px solid var(--cream-dark); padding-top:1.25rem; }
+.founder-creds li { display:flex; align-items:flex-start; gap:10px; font-size:15px; color:var(--ink-muted); padding:7px 0; border-bottom:1px solid var(--cream-warm); line-height:1.55; }
+.founder-creds li:last-child { border-bottom:none; }
+.founder-creds li::before { content:'→'; color:var(--gold-dim); flex-shrink:0; font-size:13px; margin-top:1px; }
+.founder-link { display:inline-flex; align-items:center; gap:6px; font-size:15px; color:var(--gold-dim); text-decoration:none; margin-top:1.25rem; font-weight:500; transition:gap 0.2s; }
+.founder-link:hover { gap:10px; }
+.partnership-banner { background:var(--cream); border:1px solid var(--cream-dark); border-radius:3px; padding:2rem; margin-top:3rem; display:flex; align-items:flex-start; gap:1.5rem; position:relative; overflow:hidden; }
+.partnership-banner::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:linear-gradient(180deg,var(--cream-dark),var(--gold),var(--cream-dark)); }
+.pb-q { font-family:var(--serif); font-size:2.8rem; color:var(--gold-dim); line-height:1; flex-shrink:0; margin-top:-4px; }
+.pb-strong { display:block; font-family:var(--serif); font-size:1.25rem; font-weight:600; color:var(--ink); margin-bottom:0.35rem; }
+.pb-p { font-size:15px; color:var(--ink-soft); line-height:1.75; font-weight:400; }
+
+/* HOW IT WORKS */
+.how-section { background:var(--cream); padding:7rem 2rem; }
+.how-inner { max-width:1200px; margin:0 auto; }
+.how-header { margin-bottom:4rem; max-width:580px; }
+.how-header .section-eyebrow { color:var(--gold-dim); }
+.how-header h2 { font-family:var(--serif); font-size:clamp(2.2rem,3.8vw,3rem); font-weight:600; color:var(--ink); margin-bottom:0.75rem; line-height:1.2; }
+.how-header p { font-size:1.15rem; color:var(--ink-soft); font-weight:400; line-height:1.7; }
+.steps-timeline { position:relative; }
+.steps-timeline::before { content:''; position:absolute; left:27px; top:8px; bottom:8px; width:1px; background:linear-gradient(180deg,var(--gold-dim),var(--cream-dark)); }
+.step-row { display:flex; gap:2rem; margin-bottom:2.5rem; }
+.step-row:last-child { margin-bottom:0; }
+.step-num-wrap { width:56px; height:56px; flex-shrink:0; border-radius:50%; border:1px solid var(--cream-dark); background:var(--cream); display:flex; align-items:center; justify-content:center; position:relative; z-index:1; }
+.step-num-wrap.gold { border-color:var(--gold-dim); background:var(--gold-muted); }
+.step-num { font-family:var(--serif); font-size:1.25rem; font-weight:700; color:var(--ink-muted); }
+.step-num-wrap.gold .step-num { color:var(--gold); }
+.step-content { flex:1; padding-top:10px; }
+.step-content h3 { font-family:var(--serif); font-size:1.4rem; font-weight:600; color:var(--ink); margin-bottom:0.5rem; }
+.step-content p { font-size:16px; color:var(--ink-soft); line-height:1.7; font-weight:400; }
+.premium-tag { display:inline-flex; align-items:center; background:var(--gold-muted); border:1px solid var(--gold-dim); padding:2px 10px; border-radius:2px; margin-left:8px; font-size:10px; font-weight:600; letter-spacing:0.1em; color:var(--gold); text-transform:uppercase; vertical-align:middle; }
+
+/* TOOL SECTION */
+.tool-section { background:var(--cream); padding:7rem 2rem; position:relative; }
+.tool-section::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,var(--cream-dark),transparent); }
+.tool-inner { max-width:860px; margin:0 auto; }
+.tool-header { text-align:center; margin-bottom:3rem; }
+.tool-header .section-eyebrow { color:var(--gold-dim); }
+.tool-header h2 { font-family:var(--serif); font-size:clamp(2rem,3.2vw,2.7rem); font-weight:600; color:var(--ink); margin-bottom:0.75rem; }
+.tool-header p { font-size:16px; color:var(--ink-muted); font-weight:400; }
+.notice-search { display:flex; margin-bottom:1.5rem; border-radius:3px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.08); }
+.notice-search input { flex:1; padding:17px 22px; border:1.5px solid var(--cream-dark); border-right:none; background:var(--white); color:var(--ink); font-family:var(--sans); font-size:17px; outline:none; transition:border-color 0.2s; }
+.notice-search input::placeholder { color:var(--ink-muted); }
+.notice-search input:focus { border-color:var(--gold); background:var(--white); }
+.notice-search button { padding:17px 30px; background:var(--gold); color:var(--white); border:none; font-family:var(--sans); font-size:16px; font-weight:600; cursor:pointer; transition:background 0.2s; letter-spacing:0.03em; white-space:nowrap; }
+.notice-search button:hover { background:var(--gold-dim); }
+.cat-filters { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:2rem; }
+.cat-btn { padding:6px 16px; border:1px solid var(--cream-dark); border-radius:20px; background:transparent; font-size:14px; color:var(--ink-muted); cursor:pointer; font-family:var(--sans); transition:all 0.15s; letter-spacing:0.03em; }
+.cat-btn:hover,.cat-btn.active { background:var(--gold-muted); color:var(--gold-dim); border-color:var(--gold); }
+.notice-card { background:var(--white); border:1px solid var(--cream-dark); border-radius:3px; margin-bottom:8px; overflow:hidden; transition:border-color 0.2s,background 0.2s; }
+.notice-card:hover { border-color:var(--ink-muted); background:var(--white); }
+.notice-card.open { border-color:var(--gold); background:var(--gold-muted); }
+.card-header { display:flex; align-items:center; gap:12px; padding:1rem 1.25rem; cursor:pointer; user-select:none; }
+.notice-code { font-family:var(--serif); font-size:1.2rem; font-weight:600; color:var(--gold-dim); min-width:95px; }
+.notice-title { flex:1; font-size:15px; color:var(--ink-soft); }
+.sev-pill { font-size:12px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:4px 11px; border-radius:2px; }
+.sev-info   { background:var(--blue-light,#eef3f8);  color:#1a3a5c; border:1px solid #b8cfe0; }
+.sev-warn   { background:#fef5e7;  color:#92500a; border:1px solid #f0c890; }
+.sev-danger { background:#fdf0f0;  color:#8b1a1a; border:1px solid #e8b0b0; }
+.chev { width:20px; height:20px; border:1px solid var(--cream-dark); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:9px; color:var(--ink-muted); flex-shrink:0; transition:all 0.2s; }
+.open .chev { transform:rotate(90deg); background:var(--gold); border-color:var(--gold); color:var(--white); }
+.card-detail { display:none; padding:0 1.25rem 1.25rem; border-top:1px solid var(--cream-dark); animation:fadeUp 0.2s ease; }
+.card-detail.open { display:block; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:none} }
+.deadline-row { display:inline-flex; align-items:center; gap:8px; background:var(--amber-light); color:var(--amber); font-size:14px; font-weight:500; padding:7px 15px; border-radius:2px; margin:1rem 0; border:1px solid #f0c890; letter-spacing:0.03em; }
+.detail-heading { font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-muted); margin-bottom:6px; margin-top:1rem; }
+.what-text { font-size:15px; color:var(--ink-soft); line-height:1.75; font-weight:400; }
+.steps-list { list-style:none; padding:0; counter-reset:steps; }
+.steps-list li { counter-increment:steps; display:flex; gap:12px; font-size:15px; color:var(--ink-soft); margin-bottom:10px; line-height:1.6; padding-bottom:10px; border-bottom:1px solid var(--cream-warm); }
+.steps-list li:last-child { border-bottom:none; margin-bottom:0; }
+.steps-list li::before { content:counter(steps); min-width:24px; height:24px; background:var(--gold-muted); color:var(--gold-dim); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; flex-shrink:0; margin-top:2px; }
+.premium-block { margin-top:1.25rem; background:var(--cream); border:1px solid var(--cream-dark); border-radius:3px; padding:1.5rem; }
+.pb-title { font-family:var(--serif); font-size:1.2rem; font-weight:600; color:var(--gold-dim); margin-bottom:0.5rem; }
+.pb-sub { font-size:15px; color:var(--ink-soft); margin-bottom:1rem; line-height:1.65; font-weight:400; }
+.pf-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:8px; margin-bottom:1.25rem; }
+.pf-item { display:flex; align-items:flex-start; gap:8px; font-size:15px; color:var(--ink-soft); }
+.pf-check { width:18px; height:18px; background:var(--gold-dim); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--white); flex-shrink:0; margin-top:2px; }
+.unlock-btn { display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:var(--white); border:none; padding:12px 24px; border-radius:2px; font-family:var(--sans); font-size:15px; font-weight:600; cursor:pointer; transition:all 0.2s; letter-spacing:0.03em; }
+.unlock-btn:hover { background:var(--gold-dim); transform:translateY(-1px); }
+.empty-state { text-align:center; padding:3rem 1rem; color:var(--ink-muted); }
+.empty-state h3 { font-family:var(--serif); font-size:1.2rem; margin-bottom:0.5rem; color:var(--ink-soft); }
+
+/* PRICING */
+.pricing-section { background:var(--cream); padding:7rem 2rem; }
+.pricing-inner { max-width:1100px; margin:0 auto; }
+.pricing-header { margin-bottom:3.5rem; }
+.pricing-header h2 { font-family:var(--serif); font-size:clamp(2.2rem,3.8vw,3rem); font-weight:600; color:var(--ink); margin-bottom:0.5rem; }
+.pricing-header p { font-size:1.15rem; color:var(--ink-soft); font-weight:400; }
+.pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+.pricing-card { border:1px solid var(--cream-dark); border-radius:3px; padding:2rem; background:white; position:relative; }
+.pricing-card.featured { background:var(--cream); border-color:var(--gold); }
+.featured-tag { position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--gold); color:var(--white); font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; padding:5px 18px; border-radius:2px; white-space:nowrap; }
+.plan-name { font-family:var(--serif); font-size:1.4rem; font-weight:600; margin-bottom:0.25rem; color:var(--ink); }
+.featured .plan-name { color:var(--ink); }
+.plan-price { font-family:var(--serif); font-size:2.6rem; font-weight:700; margin:0.75rem 0 0.25rem; color:var(--ink); }
+.featured .plan-price { color:var(--gold-dim); }
+.plan-price sub { font-size:1.1rem; font-weight:400; color:var(--ink-muted); }
+.featured .plan-price sub { color:var(--ink-muted); }
+.plan-desc { font-size:15px; line-height:1.6; padding-bottom:1.25rem; margin-bottom:1.25rem; border-bottom:1px solid var(--cream-dark); color:var(--ink-soft); font-weight:400; }
+.featured .plan-desc { border-color:var(--cream-dark); color:var(--ink-soft); }
+.plan-feats { list-style:none; padding:0; margin-bottom:1.75rem; }
+.plan-feats li { font-size:15px; padding:8px 0; display:flex; gap:10px; border-bottom:1px solid var(--cream-dark); line-height:1.55; color:var(--ink-soft); }
+.featured .plan-feats li { border-color:var(--cream-dark); color:var(--ink-soft); }
+.plan-feats li:last-child { border-bottom:none; }
+.plan-feats li::before { content:'✓'; color:var(--green); font-weight:600; flex-shrink:0; }
+.plan-feats li.na { color:var(--cream-dark); }
+.featured .plan-feats li.na { color:var(--cream-dark); }
+.plan-feats li.na::before { content:'—'; color:var(--cream-dark); }
+.plan-btn { display:block; width:100%; padding:14px; text-align:center; border-radius:2px; font-family:var(--sans); font-size:15px; font-weight:600; cursor:pointer; transition:all 0.2s; text-decoration:none; letter-spacing:0.03em; }
+.plan-btn.outline { background:transparent; border:1.5px solid var(--cream-dark); color:var(--ink); }
+.plan-btn.outline:hover { border-color:var(--ink); }
+.plan-btn.gold { background:var(--gold); border:none; color:var(--white); }
+.plan-btn.gold:hover { background:var(--gold-dim); }
+
+/* COMMUNITY */
+.community-section { background:var(--white); padding:7rem 2rem; position:relative; overflow:hidden; border-top:1px solid var(--cream-dark); border-bottom:1px solid var(--cream-dark); }
+.community-section::before { content:''; position:absolute; inset:0; background: repeating-linear-gradient(45deg, transparent, transparent 80px, rgba(201,168,76,0.04) 80px, rgba(201,168,76,0.04) 81px); pointer-events:none; }
+.community-inner { max-width:1100px; margin:0 auto; position:relative; z-index:1; }
+.community-grid { display:grid; grid-template-columns: 1fr 1fr; gap:4rem; align-items:center; }
+.community-copy .section-eyebrow { color:var(--gold-dim); }
+.community-copy h2 { font-family:var(--serif); font-size:clamp(2.2rem,4vw,3.1rem); font-weight:600; color:var(--ink); line-height:1.2; margin-bottom:1rem; }
+.community-copy h2 em { font-style:italic; color:var(--gold-dim); }
+.community-copy p { font-size:1.1rem; color:var(--ink-soft); line-height:1.75; margin-bottom:1.25rem; font-weight:400; }
+.community-copy .lead { font-size:1.2rem; }
+.community-feats { list-style:none; padding:0; margin:1.5rem 0 2rem; }
+.community-feats li { display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid var(--cream-warm); font-size:15px; color:var(--ink-soft); line-height:1.6; }
+.community-feats li:last-child { border-bottom:none; }
+.community-feats li::before { content:'◆'; color:var(--gold-dim); font-size:10px; margin-top:6px; flex-shrink:0; }
+.community-feats strong { color:var(--ink); font-weight:600; }
+.community-visual { position:relative; display:flex; justify-content:center; align-items:center; min-height:420px; }
+.community-card { background:var(--cream); border:1px solid var(--cream-dark); border-top:4px solid var(--gold); border-radius:4px; padding:2.25rem; width:100%; max-width:420px; box-shadow:0 24px 48px -20px rgba(26,20,16,0.18); position:relative; }
+.community-badge { display:inline-flex; align-items:center; gap:8px; background:var(--gold-muted); border:1px solid var(--gold-dim); padding:5px 14px; border-radius:2px; margin-bottom:1.25rem; font-size:12px; font-weight:600; letter-spacing:0.12em; color:var(--gold-dim); text-transform:uppercase; }
+.community-badge-dot { width:7px; height:7px; border-radius:50%; background:var(--gold); animation:pulse 2s ease-in-out infinite; }
+.community-card h3 { font-family:var(--serif); font-size:1.65rem; font-weight:600; color:var(--ink); line-height:1.25; margin-bottom:0.75rem; }
+.community-card p { font-size:15px; color:var(--ink-soft); line-height:1.7; margin-bottom:1.25rem; font-weight:400; }
+.community-stats { display:grid; grid-template-columns:repeat(2,1fr); gap:0; border-top:1px solid var(--cream-dark); padding-top:1.25rem; margin-bottom:1.5rem; }
+.community-stat { padding-right:1rem; }
+.community-stat:last-child { padding-left:1rem; border-left:1px solid var(--cream-dark); padding-right:0; }
+.community-stat-n { font-family:var(--serif); font-size:1.6rem; font-weight:700; color:var(--gold-dim); line-height:1; display:block; }
+.community-stat-l { font-size:12px; color:var(--ink-muted); letter-spacing:0.06em; margin-top:6px; display:block; text-transform:uppercase; }
+.community-cta { display:inline-block; background:var(--gold); color:var(--white); padding:13px 26px; border-radius:2px; font-size:15px; font-weight:600; letter-spacing:0.04em; text-decoration:none; transition:all 0.2s; }
+.community-cta:hover { background:var(--gold-dim); transform:translateY(-1px); }
+
+/* TESTIMONIALS */
+.testimonials-section { background:var(--cream-warm); padding:6rem 2rem; }
+.testimonials-inner { max-width:1100px; margin:0 auto; }
+.testimonials-header { text-align:center; margin-bottom:3.5rem; }
+.testimonials-header h2 { font-family:var(--serif); font-size:clamp(2rem,3.2vw,2.7rem); font-weight:600; color:var(--ink); }
+.testimonials-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+.t-card { background:var(--white); border:1px solid var(--cream-dark); border-radius:3px; padding:1.75rem; }
+.t-q { font-family:var(--serif); font-size:2.75rem; color:var(--gold-dim); line-height:1; margin-bottom:1rem; }
+.t-text { font-size:16px; color:var(--ink-soft); line-height:1.75; margin-bottom:1.5rem; font-weight:400; font-style:italic; }
+.t-author { display:flex; align-items:center; gap:10px; }
+.t-avatar { width:42px; height:42px; border-radius:50%; background:var(--cream); border:1px solid var(--cream-dark); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:14px; font-weight:600; color:var(--gold-dim); flex-shrink:0; }
+.t-name { font-size:15px; font-weight:500; color:var(--ink); }
+.t-role { font-size:13px; color:var(--ink-muted); }
+
+/* FAQ */
+.faq-section { background:var(--cream); padding:7rem 2rem; }
+.faq-inner { max-width:760px; margin:0 auto; }
+.faq-header { margin-bottom:3rem; }
+.faq-header h2 { font-family:var(--serif); font-size:clamp(2rem,3.2vw,2.7rem); font-weight:600; color:var(--ink); }
+.faq-item { border-bottom:1px solid var(--cream-dark); }
+.faq-q { width:100%; background:none; border:none; text-align:left; padding:1.25rem 0; font-family:var(--sans); font-size:17px; font-weight:500; color:var(--ink); cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:1rem; transition:color 0.2s; }
+.faq-q:hover { color:var(--gold-dim); }
+.faq-icon { font-size:20px; color:var(--ink-muted); flex-shrink:0; transition:transform 0.2s; }
+.faq-q.open .faq-icon { transform:rotate(45deg); color:var(--gold-dim); }
+.faq-a { display:none; font-size:16px; color:var(--ink-soft); line-height:1.75; padding-bottom:1.25rem; font-weight:400; }
+.faq-a.open { display:block; }
+
+/* FOOTER */
+footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); padding:4rem 2rem 2.5rem; }
+.footer-inner { max-width:1200px; margin:0 auto; }
+.footer-top { display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:3rem; margin-bottom:3rem; }
+.footer-brand p { font-size:15px; color:var(--ink-muted); line-height:1.7; font-weight:400; max-width:300px; margin-top:1rem; }
+.footer-partners { display:flex; gap:1.25rem; margin-top:0.75rem; }
+.footer-pl { font-size:14px; color:var(--ink-muted); text-decoration:none; transition:color 0.2s; }
+.footer-pl:hover { color:var(--gold-dim); }
+.footer-col h4 { font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:1rem; }
+.footer-col a { display:block; font-size:15px; color:var(--ink-muted); text-decoration:none; margin-bottom:0.65rem; transition:color 0.2s; }
+.footer-col a:hover { color:var(--ink); }
+.footer-bottom { border-top:1px solid var(--cream-dark); padding-top:2rem; display:flex; align-items:flex-start; justify-content:space-between; gap:2rem; flex-wrap:wrap; }
+.footer-copy { font-size:13px; color:var(--ink-muted); }
+.disclaimer { font-size:12px; color:var(--ink-muted); line-height:1.6; max-width:620px; }
+
+/* MODAL */
+.modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); z-index:1000; align-items:center; justify-content:center; padding:1rem; backdrop-filter:blur(4px); }
+.modal-bg.open { display:flex; }
+.modal { background:var(--white); border:1px solid var(--cream-dark); border-top:3px solid var(--gold); border-radius:3px; padding:2rem; max-width:480px; width:100%; position:relative; }
+.modal h2 { font-family:var(--serif); font-size:1.75rem; color:var(--ink); margin-bottom:0.5rem; }
+.modal p { font-size:15px; color:var(--ink-soft); margin-bottom:1.5rem; line-height:1.65; font-weight:400; }
+.modal-close { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:26px; color:var(--ink-muted); cursor:pointer; line-height:1; transition:color 0.2s; }
+.modal-close:hover { color:var(--ink); }
+.modal-feats { list-style:none; padding:0; margin-bottom:1.5rem; }
+.modal-feats li { font-size:15px; color:var(--ink-soft); padding:8px 0; display:flex; gap:10px; border-bottom:1px solid var(--cream-warm); line-height:1.55; font-weight:400; }
+.modal-feats li:last-child { border-bottom:none; }
+.modal-feats li::before { content:'→'; color:var(--gold-dim); flex-shrink:0; }
+.modal-cta { display:block; width:100%; background:var(--gold); color:var(--white); border:none; padding:15px; font-family:var(--sans); font-size:16px; font-weight:600; border-radius:2px; cursor:pointer; transition:background 0.2s; letter-spacing:0.03em; }
+.modal-cta:hover { background:var(--gold-dim); }
+.modal-sub { text-align:center; font-size:12px; color:var(--ink-muted); margin-top:0.75rem; }
+
+/* RESPONSIVE */
+@media (max-width:900px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .hero-visual { order: -1; margin-bottom: 0.5rem; }
+  .hero-notice-card { max-width: 380px; }
+  .founders-grid { grid-template-columns:1fr; }
+  .founders-divider { display:none; }
+  .founder-card:first-child,.founder-card:last-child { padding:0 0 3rem 0; }
+  .pricing-grid { grid-template-columns:1fr; max-width:420px; }
+  .testimonials-grid { grid-template-columns:1fr; }
+  .footer-top { grid-template-columns:1fr; gap:2rem; }
+  .community-grid { grid-template-columns:1fr; gap:2.5rem; }
+  .community-visual { min-height:auto; order:-1; }
+  .contact-grid { grid-template-columns:1fr; gap:2.5rem; }
+  .hero-stats { grid-template-columns:repeat(2,auto); gap:0; }
+  .hero-stat:nth-child(2) { border-right:none; margin-right:0; padding-right:0; }
+  .hero-stat:nth-child(3) { border-right:1px solid var(--cream-dark); margin-right:2.5rem; padding-right:2.5rem; padding-top:1.5rem; margin-top:1.5rem; border-top:1px solid var(--cream-dark); }
+  .hero-stat:nth-child(4) { padding-top:1.5rem; margin-top:1.5rem; border-top:1px solid var(--cream-dark); }
+  .nav a:not(.nav-cta) { display:none; }
+}
+@media (max-width:640px) {
+  .hero h1 { font-size:2.5rem; }
+  .hero-actions { flex-direction:column; align-items:flex-start; }
+  .notice-search { flex-direction:column; }
+  .notice-search input { border-right:1.5px solid rgba(201,168,76,0.22); border-bottom:none; border-radius:3px 3px 0 0; }
+  .notice-search button { border-radius:0 0 3px 3px; }
+  .card-header { flex-wrap:wrap; }
+  .notice-title { order:3; width:100%; padding-top:4px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <nav class="nav">
+      <a href="#founders">Our Team</a>
+      <a href="#tool">Notice Decoder</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#community">Community</a>
+      <a href="#faq">FAQ</a>
+      <a href="/contact">Contact</a>
+      <a href="/login" id="navLogin">Sign in</a>
+      <a href="/account" id="navAccount" style="display:none;">My account</a>
+      <a href="#tool" class="nav-cta">Decode My Notice</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      <span>Built by a Former IRS Auditor &amp; 4× Acquired SaaS Founder</span>
+    </div>
+    <h1>The IRS sent you<br>a letter.<br><em>We know what<br>it really means.</em></h1>
+    <p class="hero-sub">Romeo Razi spent years inside the IRS. Dmitry Dragilev has built and sold four software companies. Together they built the sharpest IRS notice tool available — connect directly to the IRS, pull your real transcripts, verify if the notice is correct, outdated, or wrong, and draft your response letter in minutes. Free. Still building — try it out.</p>
+    <div class="hero-actions">
+      <a href="#tool" class="btn-gold">Decode My IRS Notice</a>
+      <a href="#founders" class="btn-ghost">Meet the team →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="stat-n">150+</span><span class="stat-l">Notice types</span></div>
+      <div class="hero-stat"><span class="stat-n">$0</span><span class="stat-l">To decode</span></div>
+      <div class="hero-stat"><span class="stat-n">15+</span><span class="stat-l">Yrs IRS experience</span></div>
+      <div class="hero-stat"><span class="stat-n">4×</span><span class="stat-l">SaaS acquisitions</span></div>
+    </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-notice-card">
+        <div class="hero-notice-head">
+          <div class="hero-notice-seal">IRS<br>SEAL</div>
+          <div class="hero-notice-meta">
+            Department of the Treasury
+            <strong>Internal Revenue Service</strong>
+          </div>
+        </div>
+        <div class="hero-notice-code">CP2000</div>
+        <div class="hero-notice-title">Proposed Changes to Your Return</div>
+        <div class="hero-notice-lines">
+          <div class="hero-notice-line"></div>
+          <div class="hero-notice-line medium"></div>
+          <div class="hero-notice-line"></div>
+          <div class="hero-notice-line short"></div>
+        </div>
+        <div class="hero-notice-amount">
+          <span class="hero-notice-amount-label">Amount Due</span>
+          <span class="hero-notice-amount-val">$2,450.00</span>
+        </div>
+        <div class="hero-decode-tag">Decoded in 30 seconds</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <span class="trust-item">Plain English — no tax jargon</span>
+    <span class="trust-item">IRS transcript verification</span>
+    <span class="trust-item">AI-drafted response letters</span>
+    <div class="press-wrap">
+      <span class="press-label">Romeo featured in</span>
+      <div class="press-logos">
+        <span class="press-logo">MarketWatch</span>
+        <span class="press-logo">U.S. News</span>
+        <span class="press-logo">Realtor</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="founders-section" id="founders">
+  <div class="founders-inner">
+    <div class="founders-header">
+      <span class="section-eyebrow">The team behind this</span>
+      <h2>An IRS insider meets a tech builder</h2>
+      <p>Two different skill sets. One shared frustration with how confusing and intimidating the IRS makes everything.</p>
+    </div>
+    <div class="founders-grid">
+      <div class="founder-card">
+        <div class="founder-identity">
+          <div class="founder-avatar"><img src="/person-2.png" alt="Romeo Razi" /></div>
+          <div>
+            <div class="founder-name">Romeo Razi</div>
+            <div class="founder-title">CPA · Former IRS Auditor</div>
+            <div class="founder-url">taxedright.com</div>
+          </div>
+        </div>
+        <div class="founder-role-badge">◆ Tax Expertise &amp; IRS Strategy</div>
+        <p class="founder-bio">As an <strong>ex-IRS Auditor</strong> who audited businesses at the IRS, Romeo knows exactly how the agency thinks, what it looks for, and — critically — where it gets things wrong. He's spent years helping taxpayers, entrepreneurs, and small businesses get the best possible outcome while overcoming their fear of the IRS and state tax authorities.<br><br>He's worked directly with the IRS to secure fair deals for people who hadn't paid or filed — or who made honest mistakes. <strong>His mission is simple: put more money in his clients' hands and help them owe the government the least legal amount possible.</strong></p>
+        <ul class="founder-creds">
+          <li>Former IRS Auditor — audited businesses inside the IRS and knows audit strategy from the inside out</li>
+          <li>Licensed CPA — guides clients through notice response and resolution</li>
+          <li>Featured in MarketWatch, U.S. News &amp; World Report, and Realtor</li>
+          <li>Specializes in IRS negotiations, back taxes, and audit defense</li>
+        </ul>
+        <a href="https://taxedright.com/" target="_blank" class="founder-link">Visit taxedright.com →</a>
+      </div>
+      <div class="founders-divider"></div>
+      <div class="founder-card">
+        <div class="founder-identity">
+          <div class="founder-avatar"><img src="/person-1.png" alt="Dmitry Dragilev" /></div>
+          <div>
+            <div class="founder-name">Dmitry Dragilev</div>
+            <div class="founder-title">4× Acquired SaaS Founder</div>
+            <div class="founder-url">criminallyprolific.com</div>
+          </div>
+        </div>
+        <div class="founder-role-badge">◆ Product, Technology &amp; Scale</div>
+        <p class="founder-bio">Dmitry builds <strong>high-margin, data-proven software companies</strong> that run without him — and has done it four times, with acquisitions by Google, SEOJet, and Semrush (acquired by Adobe in 2025). He brings the product discipline and technical architecture to turn an expert's knowledge into a tool anyone can use.<br><br>This is the intersection of <strong>Romeo's IRS insider knowledge and Dmitry's ability to build software at scale</strong> — a notice tool as sharp as having a former IRS auditor in the room with you.</p>
+        <ul class="founder-creds">
+          <li>Polar Polls — acquired by Google (2014, Alphabet merger #166)</li>
+          <li>JustReachOut — acquired by SEOJet (2021), then ChatRank.ai (2024)</li>
+          <li>SERP Gap Analyzer &amp; Smallbiz.Tools — acquired by Semrush / Adobe (2023–25)</li>
+          <li>Currently: YouTube Gap Analyzer &amp; LLM Gap Analyzer on Semrush App Store</li>
+        </ul>
+        <a href="https://www.criminallyprolific.com/" target="_blank" class="founder-link">Visit criminallyprolific.com →</a>
+      </div>
+    </div>
+    <div class="partnership-banner">
+      <div class="pb-q">"</div>
+      <div>
+        <strong class="pb-strong">Why we built this together</strong>
+        <p class="pb-p">Every year the IRS sends over 200 million notices. Most people panic, ignore them, or pay hundreds to someone to tell them what we can tell them in 30 seconds. Romeo knows what every notice means and exactly what to do about it. Dmitry knows how to build tools that make that knowledge accessible to everyone. This is that tool.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how-section" id="how">
+  <div class="how-inner">
+    <div class="how-header">
+      <span class="section-eyebrow">How it works</span>
+      <h2>From panicked to in control</h2>
+      <p>Most people ignore IRS notices out of fear — which almost always makes things worse. Here's how we change that.</p>
+    </div>
+    <div class="steps-timeline">
+      <div class="step-row">
+        <div class="step-num-wrap"><span class="step-num">01</span></div>
+        <div class="step-content">
+          <h3>Enter your notice number — free</h3>
+          <p>Find the bold code at the top of your IRS letter: usually CP, LT, or a number. Type it in the search box for an instant plain-English explanation.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num-wrap"><span class="step-num">02</span></div>
+        <div class="step-content">
+          <h3>Get your explanation and action plan — free</h3>
+          <p>Know exactly what the notice means, how serious it is, your precise deadline, and the specific steps to take next — built on Romeo's years of IRS-side experience.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num-wrap gold"><span class="step-num">03</span></div>
+        <div class="step-content">
+          <h3>Pull your IRS transcript &amp; verify <span class="premium-tag">Premium</span></h3>
+          <p>We retrieve your official IRS account transcript via the e-Services API and cross-reference the amounts, dates, and income items against your real IRS records — frequently finding IRS errors before you pay a dollar.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num-wrap gold"><span class="step-num">04</span></div>
+        <div class="step-content">
+          <h3>AI drafts your response letter <span class="premium-tag">Premium</span></h3>
+          <p>A professional, notice-specific response letter — the kind Romeo charges hundreds to write — drafted and ready to mail in minutes, citing your transcript findings with the right legal language.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tool-section" id="tool">
+  <div class="tool-inner">
+    <div class="tool-header">
+      <span class="section-eyebrow">Free Notice Decoder</span>
+      <h2>Look up any IRS notice — right now</h2>
+      <p>Search by notice code (CP2000, LT11…) or keyword (audit, balance due, levy…)</p>
+    </div>
+    <div class="notice-search">
+      <input type="text" id="searchInput" placeholder="Enter your notice code: CP2000, LT11, CP503, CP14..." />
+      <button onclick="doSearch()">Decode Notice</button>
+    </div>
+    <div class="cat-filters" id="catFilters"></div>
+    <div id="noticeResults"></div>
+  </div>
+</section>
+
+<section class="pricing-section" id="pricing">
+  <div class="pricing-inner">
+    <div class="pricing-header">
+      <span class="section-eyebrow" style="color:var(--gold-dim);">Plans</span>
+      <h2>From decoding to resolving</h2>
+      <p>The decoder tells you what to do. Premium handles the hard parts automatically.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="plan-name">Free</div>
+        <div class="plan-price">$0 <sub>/ always</sub></div>
+        <p class="plan-desc">Understand any IRS notice instantly, with clear action steps.</p>
+        <ul class="plan-feats">
+          <li>Unlimited notice lookups</li>
+          <li>Plain-English explanations</li>
+          <li>Deadline alerts</li>
+          <li>Step-by-step action plans</li>
+          <li class="na">IRS transcript verification</li>
+          <li class="na">AI response letter drafting</li>
+        </ul>
+        <a href="#tool" class="plan-btn outline">Start for free</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="featured-tag">Most Popular</div>
+        <div class="plan-name">Resolution</div>
+        <div class="plan-price">$29 <sub>/ month</sub></div>
+        <p class="plan-desc">Verify the notice is correct, then respond with confidence.</p>
+        <ul class="plan-feats">
+          <li>Everything in Free</li>
+          <li>30 reports per month</li>
+          <li>IRS transcript pull via API</li>
+          <li>Cross-verify notice accuracy</li>
+          <li>AI-drafted response letter</li>
+          <li>PDF ready to mail</li>
+          <li class="na">Enrolled agent review</li>
+        </ul>
+        <a href="/signup" class="plan-btn gold">Try for free</a>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">Professional</div>
+        <div class="plan-price">$79 <sub>/ month</sub></div>
+        <p class="plan-desc">For enrolled agents and tax pros managing multiple clients.</p>
+        <ul class="plan-feats">
+          <li>Everything in Resolution</li>
+          <li>Unlimited notices</li>
+          <li>Client management dashboard</li>
+          <li>White-label option</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="/signup" class="plan-btn outline">Try for free</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="community-section" id="community">
+  <div class="community-inner">
+    <div class="community-grid">
+      <div class="community-copy">
+        <span class="section-eyebrow">Coming Soon</span>
+        <h2>A private community for <em>tax pros &amp; business owners</em></h2>
+        <p class="lead">We're building a dedicated space where tax professionals and business owners can get real answers and hands-on help with IRS resolution — from Romeo and a community of peers who've been there.</p>
+        <ul class="community-feats">
+          <li><strong>Ask Romeo directly</strong> — post your notice, your situation, or your client's case and get an ex-IRS auditor's read.</li>
+          <li><strong>Peer-to-peer help</strong> — learn how other CPAs, EAs, and owners are resolving CP2000s, LT11s, audits, and collections.</li>
+          <li><strong>Playbooks &amp; templates</strong> — response letters, CDP hearing filings, installment agreement scripts, and audit defense workflows.</li>
+          <li><strong>Live Q&amp;A sessions</strong> — monthly office hours covering the latest IRS guidance, enforcement trends, and real case walkthroughs.</li>
+        </ul>
+        <a href="/contact" class="community-cta">Get early access →</a>
+      </div>
+      <div class="community-visual">
+        <div class="community-card">
+          <div class="community-badge"><span class="community-badge-dot"></span>Building now</div>
+          <h3>Help with IRS resolution, shoulder to shoulder.</h3>
+          <p>Whether you're a tax professional managing a book of clients or a business owner dealing with a stack of notices — you shouldn't have to figure it out alone.</p>
+          <div class="community-stats">
+            <div class="community-stat">
+              <span class="community-stat-n">2</span>
+              <span class="community-stat-l">Audiences served</span>
+            </div>
+            <div class="community-stat">
+              <span class="community-stat-n">1</span>
+              <span class="community-stat-l">Ex-IRS auditor inside</span>
+            </div>
+          </div>
+          <a href="/contact" class="community-cta">Join the waitlist</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials-section">
+  <div class="testimonials-inner">
+    <div class="testimonials-header">
+      <span class="section-eyebrow">Client results</span>
+      <h2>What people say about Romeo's work</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="t-card">
+        <div class="t-q">"</div>
+        <p class="t-text">Romeo helped me with a tax audit with the IRS. He worked for the IRS and his advice was spot on. I finished a normally 2-hour audit in 30 minutes with no charge to my return. I highly recommend him.</p>
+        <div class="t-author"><div class="t-avatar">MB</div><div><div class="t-name">Marinus Baadsgaard</div><div class="t-role">Business Owner</div></div></div>
+      </div>
+      <div class="t-card">
+        <div class="t-q">"</div>
+        <p class="t-text">Romeo is a pleasure to do business with. His business acumen and approachability is beyond reproach. He will go above and beyond to find an answer to all your questions. I could not recommend him more.</p>
+        <div class="t-author"><div class="t-avatar">PT</div><div><div class="t-name">Piotr Tomasik</div><div class="t-role">Co-Founder, Influential · CEO, On Guard Data</div></div></div>
+      </div>
+      <div class="t-card">
+        <div class="t-q">"</div>
+        <p class="t-text">The transcript verification found two errors in my CP2000 before I paid anything. Saved me over $3,000. The response letter it drafted was better than what I'd expected from a $500 enrolled agent consultation.</p>
+        <div class="t-author"><div class="t-avatar">SK</div><div><div class="t-name">Sarah K.</div><div class="t-role">Freelance Designer, Chicago</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section" id="faq">
+  <div class="faq-inner">
+    <div class="faq-header">
+      <span class="section-eyebrow" style="color:var(--gold-dim);">FAQ</span>
+      <h2>Common questions</h2>
+    </div>
+    <div id="faqList"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo"><div class="logo-mark">IRS</div><span class="logo-text">Resolution <span>Service</span></span></a>
+        <p>A joint venture by Romeo Razi, CPA (ex-IRS Auditor) and Dmitry Dragilev (4× SaaS founder). Built to give everyone access to insider IRS knowledge.</p>
+        <div class="footer-partners">
+          <a href="https://taxedright.com/" target="_blank" class="footer-pl">taxedright.com</a>
+          <a href="https://www.criminallyprolific.com/" target="_blank" class="footer-pl">criminallyprolific.com</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Tool</h4>
+        <a href="#tool">Notice Decoder</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#how">How it works</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Team</h4>
+        <a href="https://taxedright.com/" target="_blank">Romeo Razi, CPA</a>
+        <a href="https://www.criminallyprolific.com/" target="_blank">Dmitry Dragilev</a>
+        <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank">LinkedIn</a>
+        <a href="https://irsresolutionservice.com/contact">Send US a message</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Criminally Prolific LLC. All rights reserved.</div>
+      <p class="disclaimer">IRS Resolution Service is not affiliated with the Internal Revenue Service. This tool provides general informational guidance only and does not constitute legal or tax advice. For complex matters, please consult a licensed enrolled agent or tax attorney.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const NOTICES=[{code:"CP2000",title:"Proposed changes to your return",severity:"warn",category:"Underreporter",deadline:"60 days",what:"The IRS received income data from employers or financial institutions that doesn't match what you reported. This is an automated comparison — not a formal audit. But if you don't respond, it becomes a formal assessment.",steps:["Review all income items against your own W-2s, 1099s, and records","If you agree, sign and return the response form with payment if owed","If you disagree, gather documentation and write a clear explanation","Send certified mail by the deadline — keep your tracking number","Do not ignore — non-response results in a formal bill with penalties"]},{code:"CP503",title:"Second reminder — balance due",severity:"warn",category:"Collections",deadline:"10 days",what:"You have an unpaid balance and the IRS has already sent a first notice. Interest and failure-to-pay penalties are accruing daily.",steps:["Pay online at IRS.gov/pay to stop further penalties","If you cannot pay, apply for an installment agreement online","Consider an Offer in Compromise if you qualify based on hardship","Call the notice number before it escalates to CP504","Ignoring leads to CP504 — intent to seize your state refund"]},{code:"CP504",title:"Intent to seize your property",severity:"danger",category:"Collections",deadline:"30 days",what:"Final notice before the IRS can levy your state tax refund, wages, or other property. Collection action is imminent.",steps:["Do not ignore — this authorizes real collection action","Pay immediately at IRS.gov/pay or call 800-829-1040","Request a Collection Due Process hearing within 30 days to halt levy","Apply for Currently Not Collectible status if in financial hardship","Consult an enrolled agent or tax attorney immediately"]},{code:"LT11",title:"Final notice — intent to levy",severity:"danger",category:"Collections",deadline:"30 days",what:"Legal notice that the IRS intends to seize wages, bank accounts, or assets. You have the right to a CDP hearing before action is taken.",steps:["Request a Collection Due Process hearing within 30 days — legally halts the levy","File Form 12153 to formally request the CDP hearing","Explore installment plan, CNC status, or Offer in Compromise","Do not miss the 30-day window — you lose appeal rights permanently","Seek professional help from an enrolled agent or tax attorney"]},{code:"CP11",title:"Math error — balance due",severity:"warn",category:"Math Error",deadline:"60 days",what:"The IRS found a math or data error and recalculated your return, resulting in a balance owed.",steps:["Review what was changed and why","If you agree, pay to stop penalty accrual","If you disagree, call within 60 days to dispute","Gather your original return, W-2s, and supporting documents","Write a letter disputing the change with evidence attached"]},{code:"CP12",title:"Math error — larger refund for you",severity:"info",category:"Math Error",deadline:"No urgent action",what:"Good news — the IRS found an error that increases your refund. Review to confirm it's correct.",steps:["Review to confirm you agree with the recalculation","If correct, wait for the adjusted refund","If you disagree, call the number on the notice","Keep this notice with your tax records","No urgent action required unless you disagree"]},{code:"CP90",title:"Final notice before levy",severity:"danger",category:"Collections",deadline:"30 days",what:"The IRS is about to levy wages, bank accounts, or federal payments. You have a legal right to appeal before seizure.",steps:["File Form 12153 for a CDP hearing within 30 days — stops the levy","The hearing legally pauses collection while pending","Review installment plan, CNC, or Offer in Compromise options","Contact the Taxpayer Advocate Service if facing severe hardship","Rights expire after 30 days — act immediately"]},{code:"CP14",title:"First notice — balance due",severity:"warn",category:"Collections",deadline:"21 days",what:"You filed but didn't pay the full amount. A 0.5%/month failure-to-pay penalty is now accruing.",steps:["Pay at IRS.gov/pay to stop interest and penalty accrual","Set up a payment plan online if you owe under $50k","Even partial payment reduces daily interest","Respond within 21 days to prevent escalation to CP503","Call 800-829-1040 if you believe the amount is wrong"]},{code:"CP75",title:"Audit — EITC or credits under review",severity:"warn",category:"Audit",deadline:"30 days",what:"The IRS is auditing your Earned Income Tax Credit, Child Tax Credit, or other credits. Your refund is on hold.",steps:["Gather supporting docs: birth certificates, school records, lease, utility bills","Prove qualifying child lived with you more than half the year","Send copies — never originals — by the deadline","Respond by deadline or your credit will be disallowed","Consider help from VITA or an enrolled agent"]},{code:"CP2501",title:"Income discrepancy — early inquiry",severity:"info",category:"Underreporter",deadline:"60 days",what:"An early informal inquiry. The IRS received third-party income reports that may not match your return. Responding now prevents escalation.",steps:["Review income items against your records","If you underreported, consider filing Form 1040-X","If reported differently, write a clear explanation","Respond by deadline to prevent a CP2000 escalation","Keep copies of all documentation sent"]},{code:"CP523",title:"Installment agreement — intent to terminate",severity:"danger",category:"Collections",deadline:"30 days",what:"The IRS intends to cancel your installment agreement, usually due to a missed payment or unfiled return. Full balance becomes immediately due if terminated.",steps:["Make missed payments immediately to bring the agreement current","Ensure all required returns are filed","Call 800-829-1040 to request reinstatement","Request a new agreement or hardship status if your situation changed","Act within 30 days — after that the full balance is due immediately"]},{code:"CP161",title:"Balance due — business return",severity:"warn",category:"Collections",deadline:"21 days",what:"Your business return shows an unpaid balance. Interest and penalties are accruing on the business account.",steps:["Verify the notice matches the correct entity EIN and tax year","Pay at IRS.gov/pay using your business EIN","If disputing, gather your filed return and proof of payment","Call 800-829-4933 for business tax help","Set up a business installment agreement if unable to pay in full"]}];
+
+const FAQS=[{q:"Where do I find my notice number?",a:"Your notice number is printed in the upper right corner of the IRS letter, usually labeled 'Notice' followed by a code like CP2000, or 'Letter' followed by a number like LT11. It is different from the document number also shown on the letter."},{q:"Is this tool affiliated with the IRS?",a:"No. IRS Resolution Service is a private tool built by Romeo Razi, CPA (ex-IRS auditor) and Dmitry Dragilev (4× SaaS founder). We are not affiliated with the Internal Revenue Service or any government agency."},{q:"How does Romeo's IRS background help me?",a:"Romeo spent years as an IRS Auditor auditing businesses inside the IRS — he knows exactly how the agency writes notices, what triggers escalation, and where the IRS makes mistakes. The guidance in this tool is built on insider knowledge, not just public IRS publications."},{q:"How does the transcript verification work?",a:"Premium users connect to the IRS e-Services Transcript Delivery System (TDS) API, which allows authorized parties to retrieve official transcripts. We pull your account and wage transcripts and compare the figures in your notice against your actual IRS file — frequently finding discrepancies the IRS made."},{q:"Can the IRS make errors on notices?",a:"Yes — more often than most people realize. Common IRS errors include misapplied payments, income that was already reported being double-counted, and math errors in penalty calculations. The transcript cross-check is specifically designed to catch these before you pay something you don't owe."},{q:"What is a Collection Due Process (CDP) hearing?",a:"A CDP hearing is a formal legal right to appeal certain IRS collection actions before they happen. You must request it within 30 days of certain notices (LT11, CP90, CP504). The IRS cannot take collection action while a CDP hearing is pending — it's one of the most powerful tools a taxpayer has."},{q:"How good is the AI response letter?",a:"The letter is built using Claude AI with prompts informed by Romeo's expertise — the correct legal language, appropriate IRC section citations, and structure matching what a professional enrolled agent would produce. The transcript verification findings are automatically woven in."}];
+
+const cats=[...new Set(NOTICES.map(n=>n.category))];
+let activeCat=null,openCode=null;
+
+function renderFilters(){
+  document.getElementById('catFilters').innerHTML=['All',...cats].map(c=>`<button class="cat-btn${activeCat===c?' active':''}" onclick="filterCat('${c}')">${c}</button>`).join('');
+}
+function filterCat(c){activeCat=(activeCat===c||c==='All')?null:c;renderFilters();renderNotices();}
+function doSearch(){const q=document.getElementById('searchInput').value.trim().toLowerCase();if(!q){renderNotices();return;}renderNotices(NOTICES.filter(n=>n.code.toLowerCase().includes(q)||n.title.toLowerCase().includes(q)||n.category.toLowerCase().includes(q)));}
+document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
+document.getElementById('searchInput').addEventListener('input',e=>{if(!e.target.value.trim())renderNotices();});
+function sevClass(s){return s==='info'?'sev-info':s==='warn'?'sev-warn':'sev-danger';}
+function sevLabel(s){return s==='info'?'Informational':s==='warn'?'Action needed':'Urgent';}
+
+function renderNotices(list){
+  list=list||(activeCat?NOTICES.filter(n=>n.category===activeCat):NOTICES);
+  const el=document.getElementById('noticeResults');
+  if(!list.length){el.innerHTML='<div class="empty-state"><h3>No notices found</h3><p>Try a different code or keyword.</p></div>';return;}
+  el.innerHTML=list.map(n=>`
+    <div class="notice-card${openCode===n.code?' open':''}" id="nc-${n.code}">
+      <div class="card-header" onclick="toggleNotice('${n.code}')">
+        <span class="notice-code">${n.code}</span>
+        <span class="notice-title">${n.title}</span>
+        <span class="sev-pill ${sevClass(n.severity)}">${sevLabel(n.severity)}</span>
+        <span class="chev">▶</span>
+      </div>
+      <div class="card-detail${openCode===n.code?' open':''}">
+        <div class="deadline-row">⏰ Respond within: <strong>${n.deadline}</strong></div>
+        <div class="detail-heading">What this means</div>
+        <p class="what-text">${n.what}</p>
+        <div class="detail-heading" style="margin-top:1.25rem;">Step-by-step action plan</div>
+        <ol class="steps-list">${n.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
+        <div class="premium-block">
+          <div class="pb-title">Is this notice actually correct?</div>
+          <div class="pb-sub">Premium pulls your official IRS transcript via the e-Services API and cross-verifies the amounts in this notice against your real IRS account — catching errors before you pay. Then AI drafts your response letter using Romeo's proven approach.</div>
+          <div class="pf-grid">
+            <div class="pf-item"><span class="pf-check">✓</span>Pull official IRS transcript</div>
+            <div class="pf-item"><span class="pf-check">✓</span>Cross-verify notice accuracy</div>
+            <div class="pf-item"><span class="pf-check">✓</span>AI response letter in minutes</div>
+            <div class="pf-item"><span class="pf-check">✓</span>PDF ready to mail</div>
+          </div>
+          <a href="/signup" class="unlock-btn">Try for free →</a>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleNotice(code){
+  openCode=openCode===code?null:code;renderNotices();
+  if(openCode){setTimeout(()=>{const el=document.getElementById('nc-'+code);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});},50);}
+}
+
+function renderFAQ(){
+  document.getElementById('faqList').innerHTML=FAQS.map((f,i)=>`
+    <div class="faq-item">
+      <button class="faq-q" id="fq-${i}" onclick="toggleFAQ(${i})">${f.q}<span class="faq-icon">+</span></button>
+      <div class="faq-a" id="fa-${i}">${f.a}</div>
+    </div>`).join('');
+}
+function toggleFAQ(i){
+  const btn=document.getElementById('fq-'+i),ans=document.getElementById('fa-'+i),isOpen=ans.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(a=>a.classList.remove('open'));
+  document.querySelectorAll('.faq-q').forEach(b=>b.classList.remove('open'));
+  if(!isOpen){ans.classList.add('open');btn.classList.add('open');}
+}
+
+renderFilters();renderNotices();renderFAQ();
+</script>
+
+<script type="module">
+import { getUser, onAuthChange, AUTH_EVENTS } from 'https://esm.sh/@netlify/identity@1';
+async function refreshNav() {
+  const u = await getUser();
+  const loginEl = document.getElementById('navLogin');
+  const acctEl = document.getElementById('navAccount');
+  if (!loginEl || !acctEl) return;
+  if (u) {
+    loginEl.style.display = 'none';
+    acctEl.style.display = '';
+  } else {
+    loginEl.style.display = '';
+    acctEl.style.display = 'none';
+  }
+}
+refreshNav();
+onAuthChange(() => refreshNav());
+</script>
+</body>
+</html>

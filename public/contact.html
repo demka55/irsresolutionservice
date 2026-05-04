@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | IRS Notice Resolution</title>
+<meta name="description" content="Get in touch with Romeo Razi, CPA and ex-IRS auditor. Send a message, call, or email for help resolving IRS notices and tax matters.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:       #f5f0e8;
+  --navy-mid:   #ede5d5;
+  --navy-light: #e8e0d0;
+  --navy-pale:  #d9cdb8;
+  --gold:       #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-dim:   #8a6e2f;
+  --gold-muted: #f5ecd8;
+  --cream:      #f5f0e8;
+  --cream-warm: #ede5d5;
+  --cream-dark: #d9cdb8;
+  --ink:        #1a1410;
+  --ink-soft:   #4a3f32;
+  --ink-muted:  #7a6e60;
+  --white:      #ffffff;
+  --red-light:  #fdf0f0;
+  --amber:      #92500a;
+  --amber-light:#fef5e7;
+  --green:      #1a5c2a;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'Outfit', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 18px; line-height: 1.65; overflow-x: hidden; }
+
+/* HEADER */
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--cream-dark); backdrop-filter: blur(12px); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-mark { width: 36px; height: 36px; border: 1.5px solid var(--gold); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--gold); letter-spacing: -0.02em; }
+.logo-text { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+.logo-text span { color: var(--gold); }
+.nav { display: flex; align-items: center; gap: 1.75rem; }
+.nav a { font-size: 15px; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+.nav a:hover { color: var(--gold-dim); }
+.nav-cta { background: var(--gold); color: var(--white); padding: 9px 22px; border-radius: 2px; font-size: 15px; font-weight: 600; letter-spacing: 0.04em; transition: background 0.2s; }
+.nav-cta:hover { background: var(--gold-dim) !important; color: var(--white) !important; }
+
+/* PAGE */
+.page-wrap { padding: 140px 2rem 6rem; min-height: 100vh; background: var(--white); position: relative; }
+.page-wrap::before { content:''; position:absolute; inset:0; background: repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(201,168,76,0.05) 59px, rgba(201,168,76,0.05) 60px); pointer-events:none; }
+.page-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.section-eyebrow { font-size:13px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-dim); display:block; margin-bottom:1rem; }
+.page-hero { text-align:center; margin-bottom: 4rem; }
+.page-hero h1 { font-family:var(--serif); font-size:clamp(2.6rem,5vw,4rem); font-weight:600; color:var(--ink); line-height:1.1; letter-spacing:-0.01em; margin-bottom:1rem; }
+.page-hero h1 em { font-style:italic; color:var(--gold-dim); }
+.page-hero p { font-size:1.15rem; color:var(--ink-soft); max-width: 620px; margin: 0 auto; font-weight:400; }
+
+/* CONTACT GRID */
+.contact-grid { display:grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items:start; }
+
+/* FORM */
+.form-card { background: var(--white); border:1px solid var(--cream-dark); border-top: 4px solid var(--gold); border-radius: 4px; padding: 2.5rem; box-shadow: 0 24px 48px -20px rgba(26,20,16,0.12); }
+.form-card h2 { font-family: var(--serif); font-size: 2rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; line-height: 1.2; }
+.form-card .form-lede { font-size: 15px; color: var(--ink-muted); margin-bottom: 1.75rem; line-height: 1.65; }
+.field { margin-bottom: 1.25rem; }
+.field label { display:block; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.5rem; }
+.field input, .field textarea { width: 100%; padding: 13px 16px; border: 1.5px solid var(--cream-dark); border-radius: 3px; background: var(--white); color: var(--ink); font-family: var(--sans); font-size: 16px; outline: none; transition: border-color 0.2s; }
+.field input::placeholder, .field textarea::placeholder { color: var(--ink-muted); }
+.field input:focus, .field textarea:focus { border-color: var(--gold); }
+.field textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
+.honeypot { position: absolute; left: -5000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+.submit-btn { background: var(--gold); color: var(--white); border: none; padding: 15px 34px; border-radius: 2px; font-family: var(--sans); font-size: 16px; font-weight: 600; cursor: pointer; letter-spacing: 0.04em; transition: all 0.2s; width: 100%; }
+.submit-btn:hover { background: var(--gold-dim); transform: translateY(-1px); }
+.submit-btn:disabled { opacity: 0.6; cursor: wait; transform: none; }
+.form-status { margin-top: 1.25rem; padding: 14px 16px; border-radius: 3px; font-size: 15px; line-height: 1.5; display: none; }
+.form-status.success { display:block; background: #edf6ee; border: 1px solid #b7d9be; color: var(--green); }
+.form-status.error { display:block; background: var(--red-light); border: 1px solid #e8b0b0; color: #8b1a1a; }
+
+/* INFO */
+.info-card { padding-top: 0.5rem; }
+.info-card h2 { font-family: var(--serif); font-size: 2rem; font-weight: 600; color: var(--ink); margin-bottom: 0.75rem; line-height: 1.2; }
+.info-card > p { font-size: 16px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 2rem; font-weight: 400; }
+.info-list { list-style: none; padding: 0; }
+.info-list li { padding: 1.25rem 0; border-bottom: 1px solid var(--cream-dark); display: flex; align-items: flex-start; gap: 1rem; }
+.info-list li:last-child { border-bottom: none; }
+.info-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--gold-muted); border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; color: var(--gold-dim); flex-shrink: 0; font-size: 16px; font-weight: 600; }
+.info-label { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 3px; display: block; }
+.info-value { font-family: var(--serif); font-size: 1.2rem; font-weight: 600; color: var(--ink); line-height: 1.3; }
+.info-value a { color: var(--ink); text-decoration: none; transition: color 0.2s; }
+.info-value a:hover { color: var(--gold-dim); }
+
+/* FOOTER */
+footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); padding:3rem 2rem 2rem; }
+.footer-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; }
+.footer-copy { font-size:13px; color:var(--ink-muted); }
+.footer-links { display:flex; gap:1.25rem; }
+.footer-links a { font-size:14px; color:var(--ink-muted); text-decoration:none; transition:color 0.2s; }
+.footer-links a:hover { color:var(--gold-dim); }
+
+@media (max-width:900px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .nav a:not(.nav-cta) { display: none; }
+  .form-card { padding: 1.75rem; }
+}
+@media (max-width:640px) {
+  .page-wrap { padding: 120px 1.25rem 4rem; }
+  .page-hero h1 { font-size: 2.25rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <nav class="nav">
+      <a href="/#founders">Our Team</a>
+      <a href="/#tool">Notice Decoder</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/#community">Community</a>
+      <a href="/contact">Contact</a>
+      <a href="/login" id="navLogin">Sign in</a>
+      <a href="/account" id="navAccount" style="display:none;">My account</a>
+      <a href="/#tool" class="nav-cta">Decode My Notice</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-wrap">
+  <div class="page-inner">
+    <div class="page-hero">
+      <span class="section-eyebrow">Contact</span>
+      <h1>Let's <em>talk.</em></h1>
+      <p>Questions about an IRS notice, your tax situation, or the new community we're building for tax pros and business owners? Reach out — we'll get back to you quickly.</p>
+    </div>
+
+    <div class="contact-grid">
+
+      <div class="form-card">
+        <h2>Send US a message</h2>
+        <p class="form-lede">Fill out the form and I'll get back to you personally.</p>
+
+        <form id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="honeypot">
+            <label>Don't fill this out: <input name="bot-field" /></label>
+          </p>
+
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Name" required />
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Email" required />
+          </div>
+
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Message" required></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
+
+          <div class="form-status" id="formStatus"></div>
+        </form>
+      </div>
+
+      <div class="info-card">
+        <h2>Get In Touch</h2>
+        <p>If you have any questions, feel free to contact me via phone or email. Or you can fill out the form and I will get back to you right away.</p>
+
+        <ul class="info-list">
+          <li>
+            <div class="info-icon">@</div>
+            <div>
+              <span class="info-label">Email Address</span>
+              <div class="info-value"><a href="mailto:romeo@taxedright.com">romeo@taxedright.com</a></div>
+            </div>
+          </li>
+          <li>
+            <div class="info-icon">☏</div>
+            <div>
+              <span class="info-label">Phone</span>
+              <div class="info-value"><a href="tel:+17028291400">702.829.1400</a></div>
+            </div>
+          </li>
+          <li>
+            <div class="info-icon">◷</div>
+            <div>
+              <span class="info-label">Business Hours</span>
+              <div class="info-value">10am – 5pm, M – F</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 Criminally Prolific LLC. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/#community">Community</a>
+      <a href="/#faq">FAQ</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const form = document.getElementById('contact-form');
+const submitBtn = document.getElementById('submitBtn');
+const statusEl = document.getElementById('formStatus');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  statusEl.className = 'form-status';
+  statusEl.textContent = '';
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
+
+  try {
+    const formData = new FormData(form);
+    const response = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString(),
+    });
+
+    if (response.ok) {
+      statusEl.className = 'form-status success';
+      statusEl.textContent = 'Thanks — your message was sent. I\'ll be in touch shortly.';
+      form.reset();
+      submitBtn.textContent = 'Message Sent';
+    } else {
+      throw new Error('Submission failed');
+    }
+  } catch (err) {
+    statusEl.className = 'form-status error';
+    statusEl.textContent = 'Something went wrong sending your message. Please try again or email romeo@taxedright.com directly.';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send Message';
+  }
+});
+</script>
+<script type="module">
+import { getUser, onAuthChange } from 'https://esm.sh/@netlify/identity@1';
+async function refreshNav() {
+  const u = await getUser();
+  const loginEl = document.getElementById('navLogin');
+  const acctEl = document.getElementById('navAccount');
+  if (!loginEl || !acctEl) return;
+  loginEl.style.display = u ? 'none' : '';
+  acctEl.style.display = u ? '' : 'none';
+}
+refreshNav();
+onAuthChange(() => refreshNav());
+</script>
+</body>
+</html>
