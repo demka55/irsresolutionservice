@@ -794,57 +794,6 @@ const NOTICES=[{code:"CP2000",title:"Proposed changes to your return",severity:"
 
 const FAQS=[{q:"Where do I find my notice number?",a:"Your notice number is printed in the upper right corner of the IRS letter, usually labeled 'Notice' followed by a code like CP2000, or 'Letter' followed by a number like LT11. It is different from the document number also shown on the letter."},{q:"Is this tool affiliated with the IRS?",a:"No. IRS Resolution Service is a private tool built by Romeo Razi, CPA (ex-IRS auditor) and Dmitry Dragilev (4× SaaS founder). We are not affiliated with the Internal Revenue Service or any government agency."},{q:"How does Romeo's IRS background help me?",a:"Romeo spent years as an IRS Auditor auditing businesses inside the IRS — he knows exactly how the agency writes notices, what triggers escalation, and where the IRS makes mistakes. The guidance in this tool is built on insider knowledge, not just public IRS publications."},{q:"How does the transcript verification work?",a:"Premium users connect to the IRS e-Services Transcript Delivery System (TDS) API, which allows authorized parties to retrieve official transcripts. We pull your account and wage transcripts and compare the figures in your notice against your actual IRS file — frequently finding discrepancies the IRS made."},{q:"Can the IRS make errors on notices?",a:"Yes — more often than most people realize. Common IRS errors include misapplied payments, income that was already reported being double-counted, and math errors in penalty calculations. The transcript cross-check is specifically designed to catch these before you pay something you don't owe."},{q:"What is a Collection Due Process (CDP) hearing?",a:"A CDP hearing is a formal legal right to appeal certain IRS collection actions before they happen. You must request it within 30 days of certain notices (LT11, CP90, CP504). The IRS cannot take collection action while a CDP hearing is pending — it's one of the most powerful tools a taxpayer has."},{q:"How good is the AI response letter?",a:"The letter is built using Claude AI with prompts informed by Romeo's expertise — the correct legal language, appropriate IRC section citations, and structure matching what a professional enrolled agent would produce. The transcript verification findings are automatically woven in."}];
 
-const cats=[...new Set(NOTICES.map(n=>n.category))];
-let activeCat=null,openCode=null;
-
-function renderFilters(){
-  document.getElementById('catFilters').innerHTML=['All',...cats].map(c=>`<button class="cat-btn${activeCat===c?' active':''}" onclick="filterCat('${c}')">${c}</button>`).join('');
-}
-function filterCat(c){activeCat=(activeCat===c||c==='All')?null:c;renderFilters();renderNotices();}
-function doSearch(){const q=document.getElementById('searchInput').value.trim().toLowerCase();if(!q){renderNotices();return;}renderNotices(NOTICES.filter(n=>n.code.toLowerCase().includes(q)||n.title.toLowerCase().includes(q)||n.category.toLowerCase().includes(q)));}
-document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
-document.getElementById('searchInput').addEventListener('input',e=>{if(!e.target.value.trim())renderNotices();});
-function sevClass(s){return s==='info'?'sev-info':s==='warn'?'sev-warn':'sev-danger';}
-function sevLabel(s){return s==='info'?'Informational':s==='warn'?'Action needed':'Urgent';}
-
-function renderNotices(list){
-  list=list||(activeCat?NOTICES.filter(n=>n.category===activeCat):NOTICES);
-  const el=document.getElementById('noticeResults');
-  if(!list.length){el.innerHTML='<div class="empty-state"><h3>No notices found</h3><p>Try a different code or keyword.</p></div>';return;}
-  el.innerHTML=list.map(n=>`
-    <div class="notice-card${openCode===n.code?' open':''}" id="nc-${n.code}">
-      <div class="card-header" onclick="toggleNotice('${n.code}')">
-        <span class="notice-code">${n.code}</span>
-        <span class="notice-title">${n.title}</span>
-        <span class="sev-pill ${sevClass(n.severity)}">${sevLabel(n.severity)}</span>
-        <span class="chev">▶</span>
-      </div>
-      <div class="card-detail${openCode===n.code?' open':''}">
-        <div class="deadline-row">⏰ Respond within: <strong>${n.deadline}</strong></div>
-        <div class="detail-heading">What this means</div>
-        <p class="what-text">${n.what}</p>
-        <div class="detail-heading" style="margin-top:1.25rem;">Step-by-step action plan</div>
-        <ol class="steps-list">${n.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
-        <div class="premium-block">
-          <div class="pb-title">Is this notice actually correct?</div>
-          <div class="pb-sub">Premium pulls your official IRS transcript via the e-Services API and cross-verifies the amounts in this notice against your real IRS account — catching errors before you pay. Then AI drafts your response letter using Romeo's proven approach.</div>
-          <div class="pf-grid">
-            <div class="pf-item"><span class="pf-check">✓</span>Pull official IRS transcript</div>
-            <div class="pf-item"><span class="pf-check">✓</span>Cross-verify notice accuracy</div>
-            <div class="pf-item"><span class="pf-check">✓</span>AI response letter in minutes</div>
-            <div class="pf-item"><span class="pf-check">✓</span>PDF ready to mail</div>
-          </div>
-          <a href="/signup" class="unlock-btn">Try for free →</a>
-        </div>
-      </div>
-    </div>`).join('');
-}
-
-function toggleNotice(code){
-  openCode=openCode===code?null:code;renderNotices();
-  if(openCode){setTimeout(()=>{const el=document.getElementById('nc-'+code);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});},50);}
-}
-
 function renderFAQ(){
   document.getElementById('faqList').innerHTML=FAQS.map((f,i)=>`
     <div class="faq-item">
