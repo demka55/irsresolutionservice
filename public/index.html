@@ -864,28 +864,9 @@ renderFAQ();
 // ── HOME AI DECODER ────────────────────────────────────────────────────────
 var HOME_API = '/.netlify/functions/anthropic';
 
-var ADVICE_PROMPT = (noticeType) => `You are a CPA and enrolled agent with deep IRS Internal Revenue Manual knowledge, working with an ex-IRS auditor.
-
-NOTICE TYPE: ${noticeType}
-
-Provide comprehensive guidance for this IRS notice type. Reference specific IRM sections. Be honest about urgency.
-
-Return ONLY valid JSON (no markdown, no backticks):
-{
-  "urgencyLevel": "CRITICAL|HIGH|MEDIUM|LOW",
-  "urgencyReason": "one sentence",
-  "tldr": "2-3 sentence plain-English summary",
-  "whatIRSReallyMeans": "plain language explanation, strip the legalese",
-  "irmReference": "specific IRM sections and what they say, 2-3 sentences",
-  "taxpayerRights": ["right 1", "right 2", "right 3"],
-  "actionPlan": [{"step":1,"title":"","what":"","how":"","timing":"","priority":"immediate|this week|this month"}],
-  "ifYouCantPay": "payment options or null",
-  "documentsNeeded": ["doc1", "doc2"],
-  "redFlags": ["mistake to avoid 1", "mistake to avoid 2"],
-  "professionalHelp": {"needed":true,"level":"CPA|Enrolled Agent|Tax Attorney","reason":"","urgency":"before responding|if you disagree|optional"},
-  "timeline": "realistic resolution timeframe",
-  "noticeType": "${noticeType}"
-}`;
+var ADVICE_PROMPT = function(noticeType) {
+  return 'You are a CPA and enrolled agent with deep IRS Internal Revenue Manual knowledge, working with an ex-IRS auditor.\n\nNOTICE TYPE: ' + noticeType + '\n\nProvide comprehensive guidance for this IRS notice type. Reference specific IRM sections. Be honest about urgency.\n\nReturn ONLY valid JSON (no markdown, no backticks):\n{"urgencyLevel":"CRITICAL|HIGH|MEDIUM|LOW","urgencyReason":"one sentence","tldr":"2-3 sentence plain-English summary","whatIRSReallyMeans":"plain language explanation","irmReference":"specific IRM sections, 2-3 sentences","taxpayerRights":["right 1","right 2","right 3"],"actionPlan":[{"step":1,"title":"","what":"","how":"","timing":"","priority":"immediate|this week|this month"}],"ifYouCantPay":"payment options or null","documentsNeeded":["doc1","doc2"],"redFlags":["mistake 1","mistake 2"],"professionalHelp":{"needed":true,"level":"CPA|Enrolled Agent|Tax Attorney","reason":"","urgency":"before responding|if you disagree|optional"},"timeline":"realistic resolution timeframe","noticeType":"' + noticeType + '"}';
+};
 
 var URGENCY_STYLES = {
   CRITICAL: { bg:'#fdf0f0', border:'#e8b0b0', color:'#8b1a1a', label:'Act Immediately', icon:'🚨' },
