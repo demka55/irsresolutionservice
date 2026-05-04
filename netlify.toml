@@ -5,7 +5,7 @@ headers = []
 redirects = []
 
 [build]
-publish = "."
+publish = "public"
 publishOrigin = "config"
 commandOrigin = "config"
 command = "echo 'No build step required'"
