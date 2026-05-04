@@ -66,7 +66,7 @@ h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;margi
   <div class="auth-card">
     <div class="eyebrow">Account access</div>
     <h1>Sign in to your account</h1>
-    <p class="sub">Access your IRS transcripts, verification history, and response letters.</p>
+    <p class="sub">Access your resolution dashboard and IRS notice decoder.</p>
 
     <div class="banner info" id="infoBanner"></div>
     <div class="banner error" id="errorBanner"></div>
@@ -87,7 +87,7 @@ h1{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.2;margi
     </form>
 
     <div class="switch">
-      Don't have an account? <a href="/signup">Create one</a>
+      Need access? <a href="https://buy.stripe.com/00weVd2fefLa1QY9uJbEA00">Get started — $999</a>
     </div>
   </div>
 </main>
@@ -108,11 +108,11 @@ function showError(msg){ errorBanner.textContent = msg; errorBanner.classList.ad
     if (!result) return;
     if (result.type === 'confirmation') {
       showInfo('Email confirmed. You are now signed in. Redirecting…');
-      setTimeout(()=>{ window.location.href = '/account'; }, 1200);
+      setTimeout(()=>{ window.location.href = '/resolve'; }, 1200);
     } else if (result.type === 'recovery') {
       const np = prompt('Choose a new password (min 8 characters):');
       if (np && np.length >= 8) {
-        try { await updateUser({ password: np }); showInfo('Password updated. Redirecting…'); setTimeout(()=>{ window.location.href='/account'; },1200); }
+        try { await updateUser({ password: np }); showInfo('Password updated. Redirecting…'); setTimeout(()=>{ window.location.href='/resolve'; },1200); }
         catch(e){ showError(e.message || 'Could not update password.'); }
       }
     }
@@ -129,7 +129,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   btn.textContent = 'Signing in…';
   try {
     await login(document.getElementById('email').value, document.getElementById('password').value);
-    window.location.href = '/account';
+    window.location.href = '/resolve';
   } catch (err) {
     btn.disabled = false;
     btn.textContent = 'Sign in';
