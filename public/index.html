@@ -862,9 +862,9 @@ function toggleFAQ(i){
 renderFAQ();
 
 // ── HOME AI DECODER ────────────────────────────────────────────────────────
-const HOME_API = '/.netlify/functions/anthropic';
+var HOME_API = '/.netlify/functions/anthropic';
 
-const ADVICE_PROMPT = (noticeType) => `You are a CPA and enrolled agent with deep IRS Internal Revenue Manual knowledge, working with an ex-IRS auditor.
+var ADVICE_PROMPT = (noticeType) => `You are a CPA and enrolled agent with deep IRS Internal Revenue Manual knowledge, working with an ex-IRS auditor.
 
 NOTICE TYPE: ${noticeType}
 
@@ -887,13 +887,13 @@ Return ONLY valid JSON (no markdown, no backticks):
   "noticeType": "${noticeType}"
 }`;
 
-const URGENCY_STYLES = {
+var URGENCY_STYLES = {
   CRITICAL: { bg:'#fdf0f0', border:'#e8b0b0', color:'#8b1a1a', label:'Act Immediately', icon:'🚨' },
   HIGH:     { bg:'#fef5e7', border:'#f0c98a', color:'#92500a', label:'High Priority',   icon:'⚠️' },
   MEDIUM:   { bg:'#fefce8', border:'#f0e070', color:'#7a5800', label:'Action Required',  icon:'📋' },
   LOW:      { bg:'#f0f7f2', border:'#b8d9c3', color:'#1a5c2a', label:'Informational',    icon:'ℹ️' },
 };
-const PRIORITY_STYLES = {
+var PRIORITY_STYLES = {
   'immediate':  { color:'#8b1a1a', bg:'#fdf0f0', label:'Do Now' },
   'this week':  { color:'#92500a', bg:'#fef5e7', label:'This Week' },
   'this month': { color:'#1a5c2a', bg:'#f0f7f2', label:'This Month' },
