@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — IRS Resolution Service</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#c9a84c;--gold-dim:#8a6e2f;--gold-muted:#f5ecd8;
+  --cream:#f5f0e8;--cream-warm:#ede5d5;--cream-dark:#d9cdb8;
+  --ink:#1a1410;--ink-soft:#4a3f32;--ink-muted:#7a6e60;--white:#fff;
+  --green:#1a5c2a;--green-light:#f0f7f2;--blue:#1a3a5c;--blue-light:#eef3f8;
+  --amber:#92500a;--amber-light:#fef5e7;--red:#8b1a1a;--red-light:#fdf0f0;
+  --purple:#4a1a7c;--purple-light:#f3eeff;
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Outfit',system-ui,sans-serif;
+  --sh:0 1px 3px rgba(26,20,16,.08),0 4px 12px rgba(26,20,16,.05);
+  --sh-lg:0 8px 32px rgba(26,20,16,.12);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height:100vh;font-size:14px;line-height:1.5}
+/* LOGIN */
+#login{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.lbox{background:var(--white);border:1px solid var(--cream-dark);border-top:3px solid var(--gold);border-radius:6px;padding:2.5rem;width:100%;max-width:360px;box-shadow:var(--sh-lg)}
+.llogo{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem}
+.lmark{width:32px;height:32px;border:1.5px solid var(--gold);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:12px;font-weight:700;color:var(--gold)}
+.ltext{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--ink)}
+.lh{font-family:var(--serif);font-size:1.5rem;color:var(--ink);margin-bottom:.25rem}
+.ls{font-size:13px;color:var(--ink-muted);margin-bottom:1.25rem}
+.lerr{background:var(--red-light);border:1px solid #e8b0b0;color:var(--red);padding:9px 13px;border-radius:2px;font-size:13px;margin-bottom:.875rem;display:none}
+.linput{width:100%;background:var(--white);border:1.5px solid var(--cream-dark);color:var(--ink);padding:10px 12px;border-radius:3px;font-family:var(--sans);font-size:14px;outline:none;margin-bottom:.75rem;transition:border-color .15s}
+.linput:focus{border-color:var(--gold)}
+.lbtn{width:100%;background:var(--ink);color:white;border:none;padding:12px;border-radius:2px;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;transition:background .2s}
+.lbtn:hover{background:#2a2420}
+/* APP */
+#app{display:none}
+.layout{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+/* SIDEBAR */
+.sb{background:var(--white);border-right:1px solid var(--cream-dark);position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+.sb-logo{padding:1.1rem;border-bottom:1px solid var(--cream-dark);display:flex;align-items:center;gap:9px}
+.sb-m{width:28px;height:28px;border:1.5px solid var(--gold);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:11px;font-weight:700;color:var(--gold);flex-shrink:0}
+.sb-t{font-family:var(--serif);font-size:.95rem;font-weight:600;color:var(--ink);line-height:1.2}
+.sb-b{font-size:9px;background:var(--gold-muted);color:var(--gold-dim);padding:1px 5px;border-radius:7px;font-weight:700;letter-spacing:.06em;display:block}
+.sb-nav{padding:.5rem 0;flex:1}
+.sb-sec{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);padding:.5rem .875rem;display:block;margin-top:.25rem}
+.sb-i{display:flex;align-items:center;gap:8px;padding:7px .875rem;font-size:13px;color:var(--ink-soft);cursor:pointer;transition:all .15s;border-left:2px solid transparent;user-select:none}
+.sb-i:hover{background:var(--cream);color:var(--ink)}
+.sb-i.active{background:var(--gold-muted);color:var(--gold-dim);border-left-color:var(--gold);font-weight:600}
+.sb-ic{font-size:14px;width:17px;text-align:center;flex-shrink:0}
+.sb-cnt{margin-left:auto;background:var(--cream-dark);color:var(--ink-muted);font-size:10px;font-weight:700;padding:1px 6px;border-radius:7px}
+.sb-cnt.r{background:var(--red-light);color:var(--red)}
+.sb-bot{padding:.875rem;border-top:1px solid var(--cream-dark)}
+.sb-usr{font-size:11px;color:var(--ink-muted);margin-bottom:.5rem}
+.sb-out{width:100%;background:none;border:1px solid var(--cream-dark);color:var(--ink-muted);padding:6px;border-radius:2px;font-family:var(--sans);font-size:11px;cursor:pointer;transition:all .15s}
+.sb-out:hover{border-color:var(--red);color:var(--red)}
+/* MAIN */
+.main{overflow-y:auto;display:flex;flex-direction:column}
+.topbar{background:var(--white);border-bottom:1px solid var(--cream-dark);padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.tb-title{font-family:var(--serif);font-size:1.4rem;font-weight:600;color:var(--ink)}
+.tb-sub{font-size:11px;color:var(--ink-muted);margin-top:1px}
+.tb-actions{display:flex;gap:.5rem;align-items:center}
+.body{padding:1.5rem}
+/* PAGES */
+.page{display:none}
+.page.active{display:block}
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:.875rem;margin-bottom:1.5rem}
+.stat{background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;padding:1rem 1.1rem;box-shadow:var(--sh)}
+.stat.g{border-top:3px solid var(--gold)}
+.stat-n{font-family:var(--serif);font-size:1.7rem;font-weight:600;color:var(--gold-dim);display:block;line-height:1}
+.stat-l{font-size:10px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;display:block}
+/* TOOLBAR */
+.toolbar{background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;padding:.75rem 1.1rem;margin-bottom:1.1rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;box-shadow:var(--sh)}
+.tbtn{background:transparent;border:1px solid var(--cream-dark);color:var(--ink-muted);padding:4px 11px;border-radius:20px;font-family:var(--sans);font-size:11px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.tbtn:hover,.tbtn.active{background:var(--gold-muted);color:var(--gold-dim);border-color:var(--gold)}
+.tsearch{margin-left:auto;padding:6px 10px;border:1.5px solid var(--cream-dark);border-radius:3px;font-family:var(--sans);font-size:12px;color:var(--ink);outline:none;width:180px;background:var(--white)}
+.tsearch:focus{border-color:var(--gold)}
+/* TABLE */
+.ctable{background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;box-shadow:var(--sh);overflow:hidden}
+.thead{display:grid;grid-template-columns:24px 2fr 1.5fr 1.4fr 1.1fr 1.1fr 1.3fr 60px;padding:.625rem 1rem;background:var(--cream-warm);border-bottom:1px solid var(--cream-dark);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);gap:.5rem;align-items:center}
+.trow{display:grid;grid-template-columns:24px 2fr 1.5fr 1.4fr 1.1fr 1.1fr 1.3fr 60px;padding:.75rem 1rem;border-bottom:1px solid var(--cream-warm);align-items:center;cursor:pointer;transition:background .12s;gap:.5rem}
+.trow:last-child{border-bottom:none}
+.trow:hover{background:var(--cream)}
+.trow.open{background:var(--gold-muted)}
+.trow-detail{display:none;border-bottom:1px solid var(--cream-dark);background:var(--white)}
+.av{width:22px;height:22px;border-radius:50%;background:var(--cream-warm);border:1px solid var(--cream-dark);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:10px;font-weight:600;color:var(--gold-dim);flex-shrink:0}
+.cn{font-size:13px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ce{font-size:11px;color:var(--ink-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cc{font-size:12px;color:var(--ink-soft)}
+.ct{font-size:11px;color:var(--ink-muted)}
+.cm{font-size:12px;font-weight:600;color:var(--green)}
+.chev{font-size:10px;color:var(--cream-dark);text-align:right;transition:transform .2s;padding-right:4px}
+.trow.open .chev{transform:rotate(90deg);color:var(--gold-dim)}
+/* STATUS BADGES */
+.sbadge{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:20px;white-space:nowrap}
+.sp{background:#fef5e7;color:#92500a;border:1px solid #f0c890}
+.s8{background:var(--blue-light);color:var(--blue);border:1px solid #b8cfe0}
+.sc{background:#fefce8;color:#7a5800;border:1px solid #f0e070}
+.sa{background:var(--green-light);color:var(--green);border:1px solid #b8d9c3}
+.st{background:var(--purple-light);color:var(--purple);border:1px solid #c8b0e8}
+.sps{background:#fff0f8;color:#7a1a5c;border:1px solid #e8b0d0}
+.spa{background:var(--green-light);color:var(--green);border:1px solid #b8d9c3}
+.sf{background:var(--amber-light);color:var(--amber);border:1px solid #e8c98a}
+.sr{background:#e8f8e8;color:#1a5c1a;border:1px solid #a8d8a8}
+/* DETAIL */
+.dw{padding:1.25rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+.dp{background:var(--cream);border:1px solid var(--cream-dark);border-radius:4px;padding:1.1rem}
+.dp.s2{grid-column:span 2}
+.dp.s3{grid-column:span 3}
+.dp-h{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:.875rem;display:flex;align-items:center;gap:6px}
+.dstep{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:3px;font-size:12px;margin-bottom:2px}
+.dstep.done{background:var(--green-light);color:var(--green)}
+.dstep.active{background:var(--blue-light);color:var(--blue)}
+.dstep.pending{color:var(--ink-muted)}
+.dstep-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:currentColor}
+.dstep-t{margin-left:auto;font-size:10px;opacity:.7}
+.f8row{display:flex;gap:8px;padding:5px 0;border-bottom:1px solid var(--cream-dark);font-size:12px}
+.f8row:last-child{border-bottom:none}
+.f8k{font-weight:600;color:var(--ink-muted);min-width:120px;flex-shrink:0;text-transform:uppercase;font-size:9px;letter-spacing:.06em;padding-top:2px}
+.f8v{color:var(--ink-soft)}
+/* INPUTS */
+.inp{width:100%;padding:8px 10px;border:1.5px solid var(--cream-dark);border-radius:3px;font-family:var(--sans);font-size:12px;color:var(--ink);outline:none;background:var(--white);transition:border-color .15s}
+.inp:focus{border-color:var(--gold)}
+.inp.mono{font-family:monospace;font-size:11px}
+.lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dim);display:block;margin-bottom:3px}
+.field{margin-bottom:.75rem}
+.status-sel{padding:5px 8px;border:1.5px solid var(--cream-dark);border-radius:3px;font-family:var(--sans);font-size:12px;color:var(--ink);background:var(--white);outline:none;cursor:pointer}
+.status-sel:focus{border-color:var(--gold)}
+.notes-ta{width:100%;background:var(--white);border:1.5px solid var(--cream-dark);border-radius:3px;padding:8px 10px;font-family:var(--sans);font-size:12px;color:var(--ink);line-height:1.6;resize:vertical;min-height:70px;outline:none;transition:border-color .15s}
+.notes-ta:focus{border-color:var(--gold)}
+/* BUTTONS */
+.btn{padding:7px 13px;border-radius:2px;font-family:var(--sans);font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;border:none;letter-spacing:.03em;display:inline-flex;align-items:center;gap:5px}
+.btn-gold{background:var(--gold);color:white}.btn-gold:hover{background:var(--gold-dim)}
+.btn-ink{background:var(--ink);color:white}.btn-ink:hover{background:#2a2420}
+.btn-ghost{background:transparent;border:1px solid var(--cream-dark);color:var(--ink-soft)}.btn-ghost:hover{border-color:var(--gold-dim);color:var(--gold-dim)}
+.btn-blue{background:var(--blue);color:white}.btn-blue:hover{background:#0f2a4c}
+.btn-green{background:var(--green);color:white}.btn-green:hover{background:#103d1a}
+.btn-sm{padding:4px 9px;font-size:10px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-row{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.625rem}
+/* CREDS PAGE */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:1.5rem}
+.cc-card{background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;padding:1.25rem;box-shadow:var(--sh)}
+.cc-h{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:.2rem}
+.cc-sub{font-size:12px;color:var(--ink-muted);margin-bottom:1.1rem;line-height:1.6}
+.notice-box{background:var(--amber-light);border:1px solid #e8c98a;border-radius:3px;padding:.75rem 1rem;font-size:12px;color:var(--amber);line-height:1.65;margin-bottom:1.1rem}
+/* IRS panel */
+.irs-conn{background:var(--blue-light);border:1px solid #b8cfe0;border-radius:4px;padding:1.25rem;margin-bottom:1.1rem}
+.irs-conn-h{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--blue);margin-bottom:.25rem}
+.irs-conn-s{font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.875rem}
+/* transcript */
+.tf{background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:.875rem;max-height:380px;overflow-y:auto;font-size:11px;color:var(--ink-soft);line-height:1.7;font-family:monospace}
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(26,20,16,.4);z-index:500;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(3px)}
+.modal-bg.open{display:flex}
+.modal{background:var(--white);border-radius:4px;max-width:600px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:var(--sh-lg);border-top:3px solid var(--gold)}
+.modal-h{padding:1.25rem 1.5rem 0}
+.modal-title{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink);margin-bottom:.2rem}
+.modal-sub{font-size:12px;color:var(--ink-muted);margin-bottom:1.1rem;line-height:1.6}
+.modal-body{padding:0 1.5rem 1.5rem}
+.modal-foot{display:flex;gap:.5rem;margin-top:1rem}
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;padding:10px 16px;border-radius:3px;font-size:13px;font-weight:500;z-index:999;display:none;box-shadow:var(--sh-lg);animation:su .25s ease}
+.toast.ok{background:var(--green-light);border:1px solid #b8d9c3;color:var(--green)}
+.toast.er{background:var(--red-light);border:1px solid #e8b0b0;color:var(--red)}
+@keyframes su{from{transform:translateY(10px);opacity:0}to{transform:none;opacity:1}}
+/* EMPTY */
+.empty{text-align:center;padding:3rem 2rem;color:var(--ink-muted)}
+.empty-ic{font-size:36px;margin-bottom:.625rem;opacity:.5}
+.empty h3{font-family:var(--serif);font-size:1.1rem;color:var(--ink-soft);margin-bottom:.3rem}
+.empty p{font-size:12px;line-height:1.65}
+@media(max-width:1024px){.layout{grid-template-columns:1fr}.sb{display:none}.stats{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+
+<div id="login">
+  <div class="lbox">
+    <div class="llogo"><div class="lmark">IRS</div><div class="ltext">Resolution Service</div></div>
+    <h1 class="lh">Admin Dashboard</h1>
+    <p class="ls">Romeo & Dmitry only</p>
+    <div class="lerr" id="lerr">Incorrect password.</div>
+    <input type="password" class="linput" id="pw" placeholder="Admin password">
+    <button class="lbtn" onclick="login()">Sign in →</button>
+  </div>
+</div>
+
+<div id="app">
+<div class="layout">
+<aside class="sb">
+  <div class="sb-logo">
+    <div class="sb-m">IRS</div>
+    <div><div class="sb-t">IRS Resolution</div><span class="sb-b">Admin</span></div>
+  </div>
+  <nav class="sb-nav">
+    <span class="sb-sec">Clients</span>
+    <div class="sb-i active" onclick="goPage('clients',this)"><span class="sb-ic">👥</span>All Clients<span class="sb-cnt" id="cntAll">—</span></div>
+    <div class="sb-i" onclick="goPage('action',this)"><span class="sb-ic">⚡</span>Needs Action<span class="sb-cnt r" id="cntAct">—</span></div>
+    <div class="sb-i" onclick="goPage('resolved',this)"><span class="sb-ic">✅</span>Resolved<span class="sb-cnt" id="cntRes">—</span></div>
+    <span class="sb-sec">IRS Tools</span>
+    <div class="sb-i" onclick="goPage('irs',this)"><span class="sb-ic">🔗</span>IRS Connection</div>
+    <span class="sb-sec">Settings</span>
+    <div class="sb-i" onclick="goPage('creds',this)"><span class="sb-ic">🔑</span>Credentials</div>
+  </nav>
+  <div class="sb-bot">
+    <div class="sb-usr">Logged in as admin</div>
+    <button class="sb-out" onclick="logout()">Sign out</button>
+  </div>
+</aside>
+
+<div class="main">
+
+<!-- CLIENTS PAGE -->
+<div id="pg-clients" class="page active">
+  <div class="topbar">
+    <div><div class="tb-title">All Clients</div><div class="tb-sub" id="clSub">Loading…</div></div>
+    <div class="tb-actions">
+      <button class="btn btn-ghost btn-sm" onclick="loadClients()">↻ Refresh</button>
+      <button class="btn btn-gold btn-sm" onclick="openAdd()">+ Add Client</button>
+    </div>
+  </div>
+  <div class="body">
+    <div class="stats">
+      <div class="stat g"><span class="stat-n" id="sT">—</span><span class="stat-l">Total</span></div>
+      <div class="stat"><span class="stat-n" id="sA">—</span><span class="stat-l">Awaiting 8821</span></div>
+      <div class="stat"><span class="stat-n" id="sI">—</span><span class="stat-l">In Progress</span></div>
+      <div class="stat"><span class="stat-n" id="sR">—</span><span class="stat-l">Revenue</span></div>
+      <div class="stat"><span class="stat-n" id="sD">—</span><span class="stat-l">Resolved</span></div>
+    </div>
+    <div class="toolbar">
+      <span style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)">Filter:</span>
+      <button class="tbtn active" onclick="setF('all',this)">All</button>
+      <button class="tbtn" onclick="setF('paid',this)">Awaiting 8821</button>
+      <button class="tbtn" onclick="setF('8821_signed',this)">8821 Signed</button>
+      <button class="tbtn" onclick="setF('caf_pending',this)">CAF Pending</button>
+      <button class="tbtn" onclick="setF('caf_active',this)">CAF Active</button>
+      <button class="tbtn" onclick="setF('transcripts_pulled',this)">Transcripts</button>
+      <button class="tbtn" onclick="setF('plan_sent',this)">Plan Sent</button>
+      <button class="tbtn" onclick="setF('resolved',this)">Resolved</button>
+      <input class="tsearch" id="srch" placeholder="Search…" oninput="renderTable()">
+    </div>
+    <div class="ctable">
+      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Paid On</div><div>Amount</div><div>Status</div><div>Updated</div><div></div></div>
+      <div id="tbody"><div class="empty"><div class="empty-ic">👥</div><h3>Loading clients…</h3></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ACTION PAGE -->
+<div id="pg-action" class="page">
+  <div class="topbar"><div><div class="tb-title">Needs Action</div><div class="tb-sub">Clients waiting on your team</div></div></div>
+  <div class="body">
+    <div class="ctable">
+      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Paid On</div><div>Amount</div><div>Status</div><div>Updated</div><div></div></div>
+      <div id="tbody-action"><div class="empty"><div class="empty-ic">⚡</div><h3>Loading…</h3></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- RESOLVED PAGE -->
+<div id="pg-resolved" class="page">
+  <div class="topbar"><div><div class="tb-title">Resolved Cases</div><div class="tb-sub">Completed resolutions</div></div></div>
+  <div class="body">
+    <div class="ctable">
+      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Paid On</div><div>Amount</div><div>Status</div><div>Updated</div><div></div></div>
+      <div id="tbody-resolved"><div class="empty"><div class="empty-ic">✅</div><h3>Loading…</h3></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- IRS CONNECTION PAGE -->
+<div id="pg-irs" class="page">
+  <div class="topbar"><div><div class="tb-title">IRS Connection</div><div class="tb-sub">TDS API — pull client transcripts directly from the IRS</div></div></div>
+  <div class="body">
+    <div class="notice-box"><strong>How this works:</strong> Using Romeo's IRS e-Services API credentials (A2A OAuth flow), this connects to the IRS Transcript Delivery System. The system generates two signed JWTs using Romeo's private key, exchanges them for an access token, then requests the client's transcript via CAF authority — exactly as the IRS API documentation specifies. Credentials must be set in the Credentials tab first.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:1.1rem">
+      <div class="irs-conn">
+        <div class="irs-conn-h">Test IRS Connection</div>
+        <div class="irs-conn-s">Verify credentials by requesting a test OAuth access token from the IRS authorization server.</div>
+        <button class="btn btn-blue" id="testBtn" onclick="testConn()">🔗 Test Connection</button>
+        <div id="testRes" style="margin-top:.75rem;font-size:12px;display:none"></div>
+      </div>
+      <div class="cc-card">
+        <div class="cc-h">Check SOR Mailbox</div>
+        <div class="cc-sub">Check the IRS Secure Object Repository for transcript deliveries in Romeo's mailbox.</div>
+        <button class="btn btn-ghost" id="sorBtn" onclick="checkSor()">📬 Check Mailbox</button>
+        <div id="sorRes" style="margin-top:.75rem;font-size:12px;display:none"></div>
+      </div>
+    </div>
+    <div class="cc-card">
+      <div class="cc-h">Pull Client Transcript</div>
+      <div class="cc-sub">Request a client's IRS transcript. Romeo's CAF number is used automatically. Form 8821 must be on file with IRS CAF before pulling.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.625rem;margin-bottom:.75rem">
+        <div><span class="lbl">Client</span><select class="inp" id="irsClient"><option value="">— Select —</option></select></div>
+        <div><span class="lbl">Taxpayer TIN (9 digits)</span><input class="inp" id="irsTin" placeholder="No dashes"></div>
+        <div><span class="lbl">Taxpayer Type</span><select class="inp" id="irsType" onchange="toggleBiz()"><option value="Individual">Individual</option><option value="Business">Business</option></select></div>
+        <div id="fn1"><span class="lbl">First Name</span><input class="inp" id="irsFirst" placeholder="As on return"></div>
+        <div id="fn2"><span class="lbl">Last Name</span><input class="inp" id="irsLast" placeholder="As on return"></div>
+        <div id="fn3" style="display:none"><span class="lbl">Business Name</span><input class="inp" id="irsBiz" placeholder="As on return"></div>
+        <div><span class="lbl">Form Number</span><select class="inp" id="irsForm"><option value="1040">1040 (Individual)</option><option value="1120">1120 (Corp)</option><option value="1065">1065 (Partnership)</option><option value="941">941 (Payroll)</option><option value="940">940 (FUTA)</option></select></div>
+        <div><span class="lbl">Transcript Type</span><select class="inp" id="irsProd"><option value="ACTR">Account Transcript</option><option value="RETR">Return Transcript</option><option value="RECA">Record of Account</option><option value="WAID">Wage &amp; Income</option><option value="VENF">Verification of Non-Filing</option></select></div>
+        <div><span class="lbl">Tax Year</span><select class="inp" id="irsYear"><option value="2023">2023</option><option value="2022">2022</option><option value="2024">2024</option><option value="2021">2021</option><option value="2020">2020</option></select></div>
+      </div>
+      <button class="btn btn-gold" id="pullBtn" onclick="pullTranscript()">📋 Pull Transcript from IRS</button>
+      <div id="pullRes" style="margin-top:.875rem;display:none"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CREDENTIALS PAGE -->
+<div id="pg-creds" class="page">
+  <div class="topbar">
+    <div><div class="tb-title">Credentials & Settings</div><div class="tb-sub">IRS API and service credentials</div></div>
+    <div class="tb-actions"><button class="btn btn-gold btn-sm" onclick="saveCreds()">Save & Show Instructions</button></div>
+  </div>
+  <div class="body">
+    <div class="notice-box"><strong>Security:</strong> Credentials are stored as Netlify environment variables — never in your code. Enter them below to see the exact variable names to add in Netlify. After adding, push a commit to redeploy.</div>
+    <div class="cg">
+      <div class="cc-card">
+        <div class="cc-h">🏛️ IRS e-Services API (TDS)</div>
+        <div class="cc-sub">Romeo's IRS API credentials. Required to pull client transcripts via the A2A OAuth flow described in the IRS e-Services Authorization Guide.</div>
+        <div class="field"><span class="lbl">IRS API Client ID</span><input class="inp" id="cr-cid" placeholder="From IRS e-Services API Client ID Application"></div>
+        <div class="field"><span class="lbl">e-Services Username (JWT sub claim)</span><input class="inp" id="cr-usr" placeholder="Romeo's IRS e-Services login username"></div>
+        <div class="field"><span class="lbl">CAF Number (9 digits, no hyphens)</span><input class="inp" id="cr-caf" placeholder="123456789" maxlength="9"></div>
+        <div class="field"><span class="lbl">JWK Key ID (kid)</span><input class="inp" id="cr-kid" placeholder="key1 (from your JWK registration)"></div>
+        <div class="field"><span class="lbl">Private Key — PEM format</span><textarea class="inp mono" id="cr-pk" rows="5" placeholder="-----BEGIN PRIVATE KEY-----&#10;MIIEvgIBADANBgkq...&#10;-----END PRIVATE KEY-----"></textarea></div>
+        <div style="font-size:11px;color:var(--ink-muted);line-height:1.6;margin-top:.5rem">
+          <strong>How to get these:</strong><br>
+          1. Login to <strong>irs.gov/e-services</strong> → Access API Client ID → Apply<br>
+          2. Generate RSA-2048 key pair → upload public key as JWK during registration<br>
+          3. CAF number: call IRS PPS at <strong>866-860-4259</strong><br>
+          4. Grant A2A consent at <strong>la.www4.irs.gov/esrv/consent/</strong>
+        </div>
+      </div>
+      <div>
+        <div class="cc-card" style="margin-bottom:1rem">
+          <div class="cc-h">📧 Resend (Email)</div>
+          <div class="cc-sub">API key for sending notification emails.</div>
+          <div class="field"><span class="lbl">Resend API Key</span><input class="inp" id="cr-rk" placeholder="re_xxxxxxxxxxxx"></div>
+          <div class="field"><span class="lbl">Romeo's Email</span><input class="inp" id="cr-re" value="romeo@taxedright.com"></div>
+          <div class="field"><span class="lbl">Dmitry's Email</span><input class="inp" id="cr-de" value="dmitry.dragilev@hey.com"></div>
+        </div>
+        <div class="cc-card">
+          <div class="cc-h">💳 Stripe</div>
+          <div class="cc-sub">Webhook secret for payment verification.</div>
+          <div class="field"><span class="lbl">Stripe Webhook Secret</span><input class="inp" id="cr-ws" placeholder="whsec_xxxxxxxxxxxx"></div>
+          <div class="field"><span class="lbl">Netlify Site ID</span><input class="inp" id="cr-sid" placeholder="From Netlify → Site configuration → General"></div>
+          <div class="field"><span class="lbl">Netlify Access Token</span><input class="inp" id="cr-nat" placeholder="From Netlify → User settings → Applications"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+</div><!-- /layout -->
+</div><!-- /app -->
+
+<!-- ADD CLIENT MODAL -->
+<div class="modal-bg" id="addModal">
+  <div class="modal">
+    <div class="modal-h">
+      <div class="modal-title">Add Client Manually</div>
+      <div class="modal-sub">Add a client who paid outside Stripe or create a test record.</div>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.625rem">
+        <div class="field"><span class="lbl">Full Name *</span><input class="inp" id="ac-n" placeholder="Jane Smith"></div>
+        <div class="field"><span class="lbl">Email *</span><input class="inp" id="ac-e" type="email" placeholder="jane@co.com"></div>
+        <div class="field"><span class="lbl">Company</span><input class="inp" id="ac-co" placeholder="Acme Corp"></div>
+        <div class="field"><span class="lbl">Amount Paid</span><input class="inp" id="ac-a" value="$999.00"></div>
+        <div class="field" style="grid-column:span 2"><span class="lbl">Initial Status</span>
+          <select class="inp" id="ac-s">
+            <option value="paid">Paid — Awaiting 8821</option>
+            <option value="8821_signed">8821 Signed</option>
+            <option value="caf_active">CAF Active</option>
+          </select>
+        </div>
+        <div class="field" style="grid-column:span 2"><span class="lbl">Notes</span><textarea class="notes-ta" id="ac-no" placeholder="Notes…" rows="2"></textarea></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-gold" onclick="addClient()">Add Client</button>
+        <button class="btn btn-ghost" onclick="closeM('addModal')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRANSCRIPT MODAL -->
+<div class="modal-bg" id="txModal">
+  <div class="modal" style="max-width:780px">
+    <div class="modal-h">
+      <div class="modal-title">IRS Transcript</div>
+      <div class="modal-sub" id="txSub">Transcript from IRS TDS API</div>
+    </div>
+    <div class="modal-body">
+      <div class="tf" id="txContent"></div>
+      <div class="modal-foot">
+        <button class="btn btn-ghost" onclick="dlTx()">⬇ Download</button>
+        <button class="btn btn-ghost" onclick="closeM('txModal')">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PW='gdhERcgvJfqk3WhiPExi';
+let apw='',clients=[],filt='all',curTx='';
+
+const SL={'paid':'Awaiting 8821','8821_signed':'8821 Signed','caf_pending':'CAF Pending','caf_active':'CAF Active','transcripts_pulled':'Transcripts Pulled','plan_sent':'Plan Sent','plan_approved':'Plan Approved','filed':'Filed','resolved':'Resolved'};
+const SC={'paid':'sp','8821_signed':'s8','caf_pending':'sc','caf_active':'sa','transcripts_pulled':'st','plan_sent':'sps','plan_approved':'spa','filed':'sf','resolved':'sr'};
+const STEPS=[
+  {k:'form8821Signed',l:'Form 8821 signed by client'},
+  {k:'cafSubmitted',l:'8821 submitted to IRS CAF'},
+  {k:'cafActive',l:'CAF confirmed active'},
+  {k:'transcriptsPulled',l:'IRS transcripts pulled'},
+  {k:'planSent',l:'Resolution plan sent to client'},
+  {k:'planApproved',l:'Plan approved by client'},
+  {k:'documentsFiled',l:'Documents filed with IRS'},
+  {k:'resolved',l:'Case fully resolved'},
+];
+
+document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
+
+function login(){
+  if(document.getElementById('pw').value===PW){
+    apw=PW; sessionStorage.setItem('a',PW);
+    document.getElementById('login').style.display='none';
+    document.getElementById('app').style.display='block';
+    loadClients(); loadCredsFromStorage();
+  } else { document.getElementById('lerr').style.display='block'; }
+}
+function logout(){sessionStorage.removeItem('a');location.reload();}
+const sa=sessionStorage.getItem('a');
+if(sa===PW){apw=sa;document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';loadClients();loadCredsFromStorage();}
+
+function goPage(n,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-i').forEach(i=>i.classList.remove('active'));
+  document.getElementById('pg-'+n).classList.add('active');
+  if(el)el.classList.add('active');
+  if(n==='action')renderTBody('tbody-action',clients.filter(needsAction));
+  if(n==='resolved')renderTBody('tbody-resolved',clients.filter(c=>c.status==='resolved'));
+  if(n==='irs')populateIrsSel();
+}
+
+function needsAction(c){return['8821_signed','caf_active','transcripts_pulled','plan_approved','filed'].includes(c.status);}
+
+async function loadClients(){
+  try{
+    const r=await fetch(`/api/admin-clients?password=${encodeURIComponent(apw)}`);
+    const d=await r.json();
+    if(!r.ok)throw new Error(d.error);
+    clients=d.clients||[];
+    updateStats(); renderTable(); populateIrsSel();
+  }catch(e){document.getElementById('tbody').innerHTML=`<div class="empty"><div class="empty-ic">⚠️</div><h3>Error</h3><p>${esc(e.message)}</p></div>`;}
+}
+
+function updateStats(){
+  const t=clients.length,a=clients.filter(c=>c.status==='paid').length,i=clients.filter(c=>!['paid','resolved'].includes(c.status)).length,d=clients.filter(c=>c.status==='resolved').length;
+  const rev=clients.reduce((s,c)=>s+parseFloat((c.amount||'999').replace(/[^0-9.]/g,'')||999),0);
+  document.getElementById('sT').textContent=t;
+  document.getElementById('sA').textContent=a;
+  document.getElementById('sI').textContent=i;
+  document.getElementById('sR').textContent='$'+rev.toLocaleString();
+  document.getElementById('sD').textContent=d;
+  document.getElementById('cntAll').textContent=t;
+  document.getElementById('cntAct').textContent=clients.filter(needsAction).length||'';
+  document.getElementById('cntRes').textContent=d;
+  document.getElementById('clSub').textContent=t+' total client'+(t===1?'':'s');
+}
+
+function setF(f,btn){filt=f;document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderTable();}
+
+function renderTable(){
+  const q=(document.getElementById('srch')?.value||'').toLowerCase();
+  let list=filt==='all'?clients:clients.filter(c=>c.status===filt);
+  if(q)list=list.filter(c=>(c.name||'').toLowerCase().includes(q)||(c.email||'').toLowerCase().includes(q)||(c.company||'').toLowerCase().includes(q));
+  renderTBody('tbody',list);
+}
+
+function renderTBody(id,list){
+  const el=document.getElementById(id);
+  if(!list.length){el.innerHTML=`<div class="empty"><div class="empty-ic">👥</div><h3>No clients here</h3><p>Clients appear after payment.</p></div>`;return;}
+  el.innerHTML=list.map(c=>renderRow(c)).join('');
+}
+
+function renderRow(c){
+  const init=((c.name||c.email||'?').split(' ').map(w=>w[0]).join('').substring(0,2)).toUpperCase();
+  const pd=c.paidAt?new Date(c.paidAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
+  const ud=c.updatedAt?new Date(c.updatedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';
+  const sc=SC[c.status]||'sp', sl=SL[c.status]||c.status;
+  const co=c.company||'—';
+  return `
+<div class="trow" id="row-${esc(c.email)}" onclick="toggleRow('${esc(c.email)}')">
+  <div><div class="av">${init}</div></div>
+  <div><div class="cn">${esc(c.name||'—')}</div><div class="ce">${esc(c.email)}</div></div>
+  <div><div class="cc">${esc(co)}</div></div>
+  <div><div class="ct">${pd}</div></div>
+  <div><div class="cm">${esc(c.amount||'$999')}</div></div>
+  <div><span class="sbadge ${sc}">${sl}</span></div>
+  <div><div class="ct">${ud}</div></div>
+  <div><span class="chev" id="chv-${esc(c.email)}">▶</span></div>
+</div>
+<div class="trow-detail" id="det-${esc(c.email)}">${renderDetail(c)}</div>`;
+}
+
+function renderDetail(c){
+  const s=c.steps||{}, f8=s.form8821Data;
+  const stepsHtml=STEPS.map(st=>{const d=!!s[st.k],t=d&&typeof s[st.k]==='string'?new Date(s[st.k]).toLocaleDateString():'';return`<div class="dstep ${d?'done':'pending'}"><div class="dstep-dot"></div>${st.l}${t?`<span class="dstep-t">${t}</span>`:''}</div>`;}).join('');
+  const f8Html=f8?`
+    <div class="f8row"><div class="f8k">Name</div><div class="f8v">${esc(f8.taxpayerName||'—')}</div></div>
+    <div class="f8row"><div class="f8k">SSN last 4</div><div class="f8v">***-**-${esc(f8.ssnLast4||'—')}</div></div>
+    <div class="f8row"><div class="f8k">Address</div><div class="f8v">${esc(f8.address||'—')}</div></div>
+    <div class="f8row"><div class="f8k">Tax Years</div><div class="f8v">${esc(f8.taxYears||'—')}</div></div>
+    <div class="f8row"><div class="f8k">Filing Status</div><div class="f8v">${esc(f8.filingStatus||'—')}</div></div>
+    <div class="f8row"><div class="f8k">Phone</div><div class="f8v">${esc(f8.phone||'—')}</div></div>
+    <div class="f8row"><div class="f8k">Signed</div><div class="f8v">${f8.signedAt?new Date(f8.signedAt).toLocaleString():'—'}</div></div>
+  `:'<div style="font-size:12px;color:var(--ink-muted)">Awaiting client signature</div>';
+  const txKeys=Object.keys(s).filter(k=>k.startsWith('transcript_'));
+  const txHtml=txKeys.length?txKeys.map(k=>`<button class="btn btn-ghost btn-sm" onclick="viewTx('${esc(c.email)}','${k}')">${k.replace('transcript_','').replace(/_/g,' ')}</button>`).join(' '):'<div style="font-size:12px;color:var(--ink-muted)">No transcripts yet</div>';
+  const actBtns=getActBtns(c);
+  return `<div class="dw">
+  <div class="dp">
+    <div class="dp-h">📊 Resolution Steps</div>
+    ${stepsHtml}
+    <div style="margin-top:.875rem">
+      <span class="lbl">Override Status</span>
+      <div style="display:flex;gap:.4rem;align-items:center;margin-top:3px">
+        <select class="status-sel" id="so-${esc(c.email)}">${Object.entries(SL).map(([v,l])=>`<option value="${v}"${c.status===v?' selected':''}>${l}</option>`).join('')}</select>
+        <button class="btn btn-gold btn-sm" onclick="overrideStatus('${esc(c.email)}')">Save</button>
+      </div>
+    </div>
+  </div>
+  <div class="dp">
+    <div class="dp-h">📋 Form 8821</div>
+    ${f8Html}
+    ${f8?`<button class="btn btn-ghost btn-sm" style="margin-top:.625rem" onclick="dlF8('${esc(c.email)}')">⬇ Download</button>`:''}
+  </div>
+  <div class="dp">
+    <div class="dp-h">⚡ Actions</div>
+    <div class="btn-row">${actBtns}</div>
+    <div style="margin-top:.875rem">
+      <span class="lbl">Quick Transcript Pull</span>
+      <button class="btn btn-blue btn-sm" style="margin-top:3px" onclick="quickPull('${esc(c.email)}')">🔗 Pull from IRS</button>
+    </div>
+    <div style="margin-top:.875rem">
+      <span class="lbl">Email Client</span>
+      <button class="btn btn-ghost btn-sm" style="margin-top:3px" onclick="emailCl('${esc(c.email)}','${esc(c.name||'')}')">✉ Email</button>
+    </div>
+  </div>
+  <div class="dp s2">
+    <div class="dp-h">📄 IRS Transcripts</div>
+    ${txHtml}
+  </div>
+  <div class="dp">
+    <div class="dp-h">📝 Notes</div>
+    <textarea class="notes-ta" id="nt-${esc(c.email)}">${esc(c.notes||'')}</textarea>
+    <button class="btn btn-ghost btn-sm" style="margin-top:.4rem" onclick="saveNotes('${esc(c.email)}')">Save</button>
+  </div>
+  <div class="dp s3" style="background:var(--cream-warm)">
+    <div class="dp-h">👤 Client Info (editable)</div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.625rem">
+      <div><span class="lbl">Name</span><input class="inp" id="ci-n-${esc(c.email)}" value="${esc(c.name||'')}"></div>
+      <div><span class="lbl">Company</span><input class="inp" id="ci-co-${esc(c.email)}" value="${esc(c.company||'')}" placeholder="Company"></div>
+      <div><span class="lbl">Phone</span><input class="inp" id="ci-ph-${esc(c.email)}" value="${esc(c.phone||'')}" placeholder="Phone"></div>
+      <div><span class="lbl">Amount</span><input class="inp" id="ci-am-${esc(c.email)}" value="${esc(c.amount||'$999.00')}"></div>
+      <div><span class="lbl">Session ID</span><input class="inp" id="ci-sid-${esc(c.email)}" value="${esc(c.sessionId||'')}" placeholder="Stripe session"></div>
+    </div>
+    <button class="btn btn-gold btn-sm" style="margin-top:.625rem" onclick="saveInfo('${esc(c.email)}')">Save Client Info</button>
+  </div>
+</div>`;
+}
+
+function getActBtns(c){
+  const e=esc(c.email),s=c.status,b=[];
+  if(s==='8821_signed')   b.push(`<button class="btn btn-gold btn-sm" onclick="adv('${e}','caf_pending','cafSubmitted')">✓ CAF Submitted</button>`);
+  if(s==='caf_pending')   b.push(`<button class="btn btn-gold btn-sm" onclick="adv('${e}','caf_active','cafActive')">✓ CAF Active</button>`);
+  if(s==='caf_active')    b.push(`<button class="btn btn-gold btn-sm" onclick="adv('${e}','transcripts_pulled','transcriptsPulled')">✓ Transcripts Pulled</button>`);
+  if(s==='transcripts_pulled') b.push(`<button class="btn btn-gold btn-sm" onclick="adv('${e}','plan_sent','planSent')">✓ Plan Sent</button>`);
+  if(s==='plan_approved') b.push(`<button class="btn btn-gold btn-sm" onclick="adv('${e}','filed','documentsFiled')">✓ Docs Filed</button>`);
+  if(s==='filed')         b.push(`<button class="btn btn-green btn-sm" onclick="adv('${e}','resolved','resolved')">✓ Mark Resolved</button>`);
+  if(s==='paid')          b.push(`<span style="font-size:11px;color:var(--ink-muted)">Waiting for Form 8821</span>`);
+  if(s==='plan_sent')     b.push(`<span style="font-size:11px;color:var(--ink-muted)">Waiting for plan approval</span>`);
+  return b.join('');
+}
+
+function toggleRow(email){
+  const row=document.getElementById('row-'+email),det=document.getElementById('det-'+email),open=row.classList.contains('open');
+  document.querySelectorAll('.trow.open').forEach(r=>r.classList.remove('open'));
+  document.querySelectorAll('.trow-detail').forEach(d=>d.style.display='none');
+  if(!open){row.classList.add('open');det.style.display='block';}
+}
+
+async function adv(email,status,stepKey){await upd(email,{status,steps:{[stepKey]:new Date().toISOString()}});}
+async function overrideStatus(email){const v=document.getElementById('so-'+email).value;await upd(email,{status:v});toast('Status → '+SL[v]);}
+async function saveNotes(email){await upd(email,{notes:document.getElementById('nt-'+email).value});toast('Notes saved');}
+async function saveInfo(email){
+  await upd(email,{name:document.getElementById('ci-n-'+email).value,company:document.getElementById('ci-co-'+email).value,phone:document.getElementById('ci-ph-'+email).value,amount:document.getElementById('ci-am-'+email).value,sessionId:document.getElementById('ci-sid-'+email).value});
+  toast('Client info saved');
+}
+
+async function upd(email,update){
+  try{
+    const r=await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,adminPassword:apw,update:{...update,adminAction:true}})});
+    const d=await r.json();if(!r.ok)throw new Error(d.error);
+    const i=clients.findIndex(c=>c.email===email);if(i>=0)clients[i]=d.data;
+    updateStats();renderTable();
+    setTimeout(()=>{const rw=document.getElementById('row-'+email),dt=document.getElementById('det-'+email);if(rw&&dt){rw.classList.add('open');dt.style.display='block';}},60);
+    toast('Saved ✓');
+  }catch(e){toast(e.message,true);}
+}
+
+function openAdd(){document.getElementById('addModal').classList.add('open');}
+async function addClient(){
+  const n=document.getElementById('ac-n').value.trim(),e=document.getElementById('ac-e').value.trim();
+  if(!n||!e){toast('Name and email required',true);return;}
+  const co=document.getElementById('ac-co').value.trim(),a=document.getElementById('ac-a').value.trim(),s=document.getElementById('ac-s').value,no=document.getElementById('ac-no').value.trim();
+  try{
+    const r=await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,update:{name:n,company:co,amount:a,status:s,notes:no,paidAt:new Date().toISOString()}})});
+    if(!r.ok)throw new Error((await r.json()).error);
+    closeM('addModal');await loadClients();toast('Client added');
+  }catch(e){toast(e.message,true);}
+}
+
+function populateIrsSel(){
+  const sel=document.getElementById('irsClient');if(!sel)return;
+  sel.innerHTML='<option value="">— Select client —</option>'+clients.map(c=>`<option value="${esc(c.email)}">${esc(c.name||c.email)}</option>`).join('');
+}
+function toggleBiz(){const b=document.getElementById('irsType').value==='Business';['fn1','fn2'].forEach(id=>document.getElementById(id).style.display=b?'none':'');document.getElementById('fn3').style.display=b?'':'none';}
+
+async function testConn(){
+  const btn=document.getElementById('testBtn'),res=document.getElementById('testRes');
+  btn.disabled=true;btn.textContent='⏳ Testing…';res.style.display='block';res.innerHTML='<span style="color:var(--ink-muted)">Requesting IRS OAuth token…</span>';
+  try{
+    const r=await fetch('/api/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,action:'get_token'})});
+    const d=await r.json();
+    if(!r.ok){res.innerHTML=d.missing?`<span style="color:var(--red)">❌ Missing env vars: <strong>${d.missing.join(', ')}</strong> — add in Netlify → Env vars</span>`:`<span style="color:var(--red)">❌ ${esc(d.error)}</span>`;}
+    else{res.innerHTML=`<span style="color:var(--green)">✅ IRS connection successful! Token received.</span>`;}
+  }catch(e){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(e.message)}</span>`;}
+  btn.disabled=false;btn.textContent='🔗 Test Connection';
+}
+
+async function checkSor(){
+  const btn=document.getElementById('sorBtn'),res=document.getElementById('sorRes');
+  btn.disabled=true;res.style.display='block';res.innerHTML='<span style="color:var(--ink-muted)">Checking SOR mailbox…</span>';
+  try{
+    const r=await fetch('/api/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,action:'check_sor'})});
+    const d=await r.json();
+    if(!r.ok){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(d.error)}</span>`;}
+    else{const mb=d.mailbox;res.innerHTML=`<span style="color:var(--green)">✅ Mailbox: <strong>${mb.mailboxSize||0} messages</strong></span>`;}
+  }catch(e){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(e.message)}</span>`;}
+  btn.disabled=false;
+}
+
+async function pullTranscript(){
+  const ce=document.getElementById('irsClient').value,tin=document.getElementById('irsTin').value.trim();
+  if(!ce||!tin){toast('Select client and enter TIN',true);return;}
+  const btn=document.getElementById('pullBtn'),res=document.getElementById('pullRes');
+  btn.disabled=true;btn.textContent='⏳ Pulling…';res.style.display='block';res.innerHTML='<span style="color:var(--ink-muted)">Connecting to IRS TDS API…</span>';
+  const tp=document.getElementById('irsType').value;
+  try{
+    const r=await fetch('/api/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,clientEmail:ce,action:'pull_transcript',transcriptRequest:{tin,taxpayerType:tp,firstName:document.getElementById('irsFirst').value,lastName:document.getElementById('irsLast').value,businessName:document.getElementById('irsBiz').value,formNumber:document.getElementById('irsForm').value,productType:document.getElementById('irsProd').value,taxYear:document.getElementById('irsYear').value,taxPeriod:12}})});
+    const d=await r.json();
+    if(!r.ok){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(d.error||'IRS API error')}</span>`;}
+    else{curTx=d.transcript||'';res.innerHTML=`<span style="color:var(--green)">✅ Transcript pulled! <button class="btn btn-ghost btn-sm" onclick="openTxModal(curTx,'Transcript')">View</button></span>`;await loadClients();}
+  }catch(e){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(e.message)}</span>`;}
+  btn.disabled=false;btn.textContent='📋 Pull Transcript from IRS';
+}
+
+function quickPull(email){const c=clients.find(x=>x.email===email);if(!c)return;goPage('irs',document.querySelectorAll('.sb-i')[3]);if(c.steps?.form8821Data){const f=c.steps.form8821Data,pts=(f.taxpayerName||'').split(' ');document.getElementById('irsClient').value=email;document.getElementById('irsFirst').value=pts[0]||'';document.getElementById('irsLast').value=pts.slice(1).join(' ')||'';document.getElementById('irsYear').value=(f.taxYears||'').split(',')[0]?.trim()||new Date().getFullYear()-2;}}
+
+function viewTx(email,key){const c=clients.find(x=>x.email===email);if(!c)return;openTxModal(c.steps?.[key]||'',key.replace('transcript_',''));}
+function openTxModal(html,title){document.getElementById('txSub').textContent=title;document.getElementById('txContent').innerHTML=html||'No content';curTx=html;document.getElementById('txModal').classList.add('open');}
+function dlTx(){const b=new Blob([curTx],{type:'text/html'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='irs-transcript.html';a.click();}
+
+function dlF8(email){
+  const c=clients.find(x=>x.email===email);if(!c)return;
+  const f=c.steps?.form8821Data;if(!f)return;
+  const txt=`FORM 8821 — TAX INFORMATION AUTHORIZATION\nTaxed Right LLC — Romeo Razi, CPA\n\nTAXPAYER: ${f.taxpayerName||''}\nSSN: ***-**-${f.ssnLast4||''}\nDOB: ${f.dob||''}\nADDRESS: ${f.address||''}\nPHONE: ${f.phone||''}\nFILING STATUS: ${f.filingStatus||''}\n\nDESIGNEE: Romeo Razi, CPA — Taxed Right LLC\nTAX YEARS: ${f.taxYears||''}\nPURPOSE: IRS transcript access\n\nSIGNED: ${f.signedAt?new Date(f.signedAt).toLocaleString():''}\nCLIENT EMAIL: ${email}`;
+  const b=new Blob([txt],{type:'text/plain'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`8821_${email.split('@')[0]}.txt`;a.click();
+}
+
+function emailCl(e,n){window.open(`mailto:${e}?subject=IRS Resolution Update — ${n}`);}
+
+function loadCredsFromStorage(){
+  ['cid','usr','caf','kid','rk'].forEach(f=>{const el=document.getElementById('cr-'+f),v=localStorage.getItem('cr_'+f);if(el&&v)el.value=v;});
+}
+
+function saveCreds(){
+  const fields=['cid','usr','caf','kid','rk','re','de','ws','sid','nat'];
+  fields.forEach(f=>{const el=document.getElementById('cr-'+f);if(el&&el.value.trim())localStorage.setItem('cr_'+f,el.value.trim());});
+  const cid=document.getElementById('cr-cid').value||'(not set)',usr=document.getElementById('cr-usr').value||'(not set)',caf=document.getElementById('cr-caf').value||'(not set)',kid=document.getElementById('cr-kid').value||'key1',rk=document.getElementById('cr-rk').value||'(not set)',ws=document.getElementById('cr-ws').value||'(not set)',sid=document.getElementById('cr-sid').value||'(not set)',nat=document.getElementById('cr-nat').value||'(not set)';
+  alert(`Add these environment variables in Netlify:\nSite configuration → Environment variables → Add variable\n\nIRS_API_CLIENT_ID = ${cid}\nIRS_ESERVICES_USERNAME = ${usr}\nIRS_CAF_NUMBER = ${caf}\nIRS_JWK_KID = ${kid}\nIRS_PRIVATE_KEY_PEM = (paste your PEM private key)\nRESEND_API_KEY = ${rk}\nSTRIPE_WEBHOOK_SECRET = ${ws}\nNETLIFY_SITE_ID = ${sid}\nNETLIFY_ACCESS_TOKEN = ${nat}\n\nThen push a commit to GitHub to redeploy.`);
+  toast('Saved. Check the instructions above.');
+}
+
+function closeM(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
+
+function toast(msg,err){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(err?'er':'ok');t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+</script>
+</body>
+</html>

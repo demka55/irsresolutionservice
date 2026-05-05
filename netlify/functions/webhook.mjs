@@ -30,7 +30,29 @@ export default async (req) => {
 
         console.log(`[Webhook] Payment confirmed — ${customerName} (${customerEmail}) — ${amount}`)
 
-        // 1. Create Netlify Identity account + send invite email
+        // 1. Create client status record in Netlify Blobs
+        if (customerEmail) {
+          try {
+            const { getStore } = await import('@netlify/blobs');
+            const store = getStore('client-status');
+            const clientRecord = {
+              email: customerEmail.toLowerCase(),
+              name: customerName,
+              status: 'paid',
+              paidAt: new Date().toISOString(),
+              amount,
+              sessionId,
+              steps: {},
+              notes: '',
+            };
+            await store.set(customerEmail.toLowerCase(), JSON.stringify(clientRecord));
+            console.log('[Blobs] Client record created for', customerEmail);
+          } catch (err) {
+            console.error('[Blobs] Error creating client record:', err.message);
+          }
+        }
+
+        // 2. Create Netlify Identity account + send invite email
         if (customerEmail) {
           try {
             const identityRes = await fetch(
