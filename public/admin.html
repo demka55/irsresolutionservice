@@ -313,43 +313,25 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 <!-- CREDENTIALS PAGE -->
 <div id="pg-creds" class="page">
   <div class="topbar">
-    <div><div class="tb-title">Credentials & Settings</div><div class="tb-sub">IRS API and service credentials</div></div>
+    <div><div class="tb-title">IRS API Credentials</div><div class="tb-sub">Romeo's IRS e-Services credentials for transcript access</div></div>
     <div class="tb-actions"><button class="btn btn-gold btn-sm" onclick="saveCreds()">Save & Show Instructions</button></div>
   </div>
   <div class="body">
-    <div class="notice-box"><strong>Security:</strong> Credentials are stored as Netlify environment variables — never in your code. Enter them below to see the exact variable names to add in Netlify. After adding, push a commit to redeploy.</div>
-    <div class="cg">
-      <div class="cc-card">
-        <div class="cc-h">🏛️ IRS e-Services API (TDS)</div>
-        <div class="cc-sub">Romeo's IRS API credentials. Required to pull client transcripts via the A2A OAuth flow described in the IRS e-Services Authorization Guide.</div>
-        <div class="field"><span class="lbl">IRS API Client ID</span><input class="inp" id="cr-cid" placeholder="From IRS e-Services API Client ID Application"></div>
-        <div class="field"><span class="lbl">e-Services Username (JWT sub claim)</span><input class="inp" id="cr-usr" placeholder="Romeo's IRS e-Services login username"></div>
-        <div class="field"><span class="lbl">CAF Number (9 digits, no hyphens)</span><input class="inp" id="cr-caf" placeholder="123456789" maxlength="9"></div>
-        <div class="field"><span class="lbl">JWK Key ID (kid)</span><input class="inp" id="cr-kid" placeholder="key1 (from your JWK registration)"></div>
-        <div class="field"><span class="lbl">Private Key — PEM format</span><textarea class="inp mono" id="cr-pk" rows="5" placeholder="-----BEGIN PRIVATE KEY-----&#10;MIIEvgIBADANBgkq...&#10;-----END PRIVATE KEY-----"></textarea></div>
-        <div style="font-size:11px;color:var(--ink-muted);line-height:1.6;margin-top:.5rem">
-          <strong>How to get these:</strong><br>
-          1. Login to <strong>irs.gov/e-services</strong> → Access API Client ID → Apply<br>
-          2. Generate RSA-2048 key pair → upload public key as JWK during registration<br>
-          3. CAF number: call IRS PPS at <strong>866-860-4259</strong><br>
-          4. Grant A2A consent at <strong>la.www4.irs.gov/esrv/consent/</strong>
-        </div>
-      </div>
-      <div>
-        <div class="cc-card" style="margin-bottom:1rem">
-          <div class="cc-h">📧 Resend (Email)</div>
-          <div class="cc-sub">API key for sending notification emails.</div>
-          <div class="field"><span class="lbl">Resend API Key</span><input class="inp" id="cr-rk" placeholder="re_xxxxxxxxxxxx"></div>
-          <div class="field"><span class="lbl">Romeo's Email</span><input class="inp" id="cr-re" value="romeo@taxedright.com"></div>
-          <div class="field"><span class="lbl">Dmitry's Email</span><input class="inp" id="cr-de" value="dmitry.dragilev@hey.com"></div>
-        </div>
-        <div class="cc-card">
-          <div class="cc-h">💳 Stripe</div>
-          <div class="cc-sub">Webhook secret for payment verification.</div>
-          <div class="field"><span class="lbl">Stripe Webhook Secret</span><input class="inp" id="cr-ws" placeholder="whsec_xxxxxxxxxxxx"></div>
-          <div class="field"><span class="lbl">Netlify Site ID</span><input class="inp" id="cr-sid" placeholder="From Netlify → Site configuration → General"></div>
-          <div class="field"><span class="lbl">Netlify Access Token</span><input class="inp" id="cr-nat" placeholder="From Netlify → User settings → Applications"></div>
-        </div>
+    <div class="notice-box"><strong>All other credentials (Resend, Stripe, Netlify) are already configured as environment variables.</strong> This page is only for the IRS API credentials needed to pull client transcripts directly from the IRS.</div>
+    <div class="cc-card" style="max-width:680px">
+      <div class="cc-h">🏛️ IRS e-Services API (TDS)</div>
+      <div class="cc-sub">Romeo's IRS API credentials for the Transcript Delivery System. Required to pull client transcripts via the A2A OAuth flow. Once set, go to the IRS Connection tab to test.</div>
+      <div class="field"><span class="lbl">IRS API Client ID</span><input class="inp" id="cr-cid" placeholder="From IRS e-Services → API Client ID Application"></div>
+      <div class="field"><span class="lbl">e-Services Username (used as JWT sub claim)</span><input class="inp" id="cr-usr" placeholder="Romeo's IRS e-Services login username"></div>
+      <div class="field"><span class="lbl">CAF Number (9 digits, no hyphens or spaces)</span><input class="inp" id="cr-caf" placeholder="123456789" maxlength="9"></div>
+      <div class="field"><span class="lbl">JWK Key ID (kid — from your JWK registration)</span><input class="inp" id="cr-kid" placeholder="key1"></div>
+      <div class="field"><span class="lbl">Private Key — PEM format (RSA-2048)</span><textarea class="inp mono" id="cr-pk" rows="6" placeholder="-----BEGIN PRIVATE KEY-----&#10;MIIEvgIBADANBgkq...&#10;-----END PRIVATE KEY-----"></textarea></div>
+      <div style="background:var(--blue-light);border:1px solid #b8cfe0;border-radius:3px;padding:.875rem 1rem;font-size:12px;color:var(--ink-soft);line-height:1.7;margin-top:.75rem">
+        <strong style="color:var(--blue);display:block;margin-bottom:.4rem">How to get these credentials:</strong>
+        <strong>1. Client ID</strong> — Log in to irs.gov/e-services → Access API Client ID → Complete application. Upload your JWK public key file. Client ID appears on Application Details page.<br>
+        <strong>2. Private Key</strong> — Generate RSA-2048 key pair. Upload the public key (as JWK with x5c/x5t) to IRS during registration. Paste the private key here.<br>
+        <strong>3. CAF Number</strong> — Call IRS Practitioner Priority Service at <strong>866-860-4259</strong> to retrieve it.<br>
+        <strong>4. Grant A2A Consent</strong> — One-time step: log in to <strong>la.www4.irs.gov/esrv/consent/</strong> and authorize your Client ID for A2A access.
       </div>
     </div>
   </div>
@@ -693,11 +675,14 @@ function loadCredsFromStorage(){
 }
 
 function saveCreds(){
-  const fields=['cid','usr','caf','kid','rk','re','de','ws','sid','nat'];
+  const fields=['cid','usr','caf','kid'];
   fields.forEach(f=>{const el=document.getElementById('cr-'+f);if(el&&el.value.trim())localStorage.setItem('cr_'+f,el.value.trim());});
-  const cid=document.getElementById('cr-cid').value||'(not set)',usr=document.getElementById('cr-usr').value||'(not set)',caf=document.getElementById('cr-caf').value||'(not set)',kid=document.getElementById('cr-kid').value||'key1',rk=document.getElementById('cr-rk').value||'(not set)',ws=document.getElementById('cr-ws').value||'(not set)',sid=document.getElementById('cr-sid').value||'(not set)',nat=document.getElementById('cr-nat').value||'(not set)';
-  alert(`Add these environment variables in Netlify:\nSite configuration → Environment variables → Add variable\n\nIRS_API_CLIENT_ID = ${cid}\nIRS_ESERVICES_USERNAME = ${usr}\nIRS_CAF_NUMBER = ${caf}\nIRS_JWK_KID = ${kid}\nIRS_PRIVATE_KEY_PEM = (paste your PEM private key)\nRESEND_API_KEY = ${rk}\nSTRIPE_WEBHOOK_SECRET = ${ws}\nNETLIFY_SITE_ID = ${sid}\nNETLIFY_ACCESS_TOKEN = ${nat}\n\nThen push a commit to GitHub to redeploy.`);
-  toast('Saved. Check the instructions above.');
+  const cid=document.getElementById('cr-cid').value||'(not set)';
+  const usr=document.getElementById('cr-usr').value||'(not set)';
+  const caf=document.getElementById('cr-caf').value||'(not set)';
+  const kid=document.getElementById('cr-kid').value||'key1';
+  alert(`Add these to Netlify → Site configuration → Environment variables:\n\nIRS_API_CLIENT_ID = ${cid}\nIRS_ESERVICES_USERNAME = ${usr}\nIRS_CAF_NUMBER = ${caf}\nIRS_JWK_KID = ${kid}\nIRS_PRIVATE_KEY_PEM = (paste your full PEM private key)\n\nThen push a commit to GitHub to redeploy.`);
+  toast('Saved locally. Add env vars to Netlify to activate.');
 }
 
 function closeM(id){document.getElementById(id).classList.remove('open');}
