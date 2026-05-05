@@ -312,56 +312,66 @@ footer{background:var(--cream-warm);border-top:1px solid var(--cream-dark);paddi
 <script type="module">
 import { getUser, logout, onAuthChange } from 'https://esm.sh/@netlify/identity@1';
 
-let currentUser = null;
-let clientStatus = null;
+// All state lives here — accessible to inline onclick handlers via window
+window._state = { user: null, clientStatus: null };
 
 async function init() {
   const user = await getUser();
+
   if (!user) {
     document.getElementById('stage-auth').style.display = 'block';
+    document.getElementById('stage-dashboard').style.display = 'none';
     return;
   }
-  currentUser = user;
+
+  window._state.user = user;
+  window._currentUserEmail = user.email;
+
+  document.getElementById('stage-auth').style.display = 'none';
   document.getElementById('stage-dashboard').style.display = 'block';
   document.getElementById('userEmail').textContent = user.email || '';
+
   const logoutBtn = document.getElementById('logoutBtn');
   logoutBtn.style.display = '';
   logoutBtn.onclick = async () => { await logout(); window.location.reload(); };
 
+  // Show welcome banner if arriving from Stripe
   const params = new URLSearchParams(window.location.search);
   if (params.get('session_id') || params.get('payment') === 'success') {
     document.getElementById('welcomeBanner').style.display = 'flex';
-    // Create initial record if doesn't exist
-    await fetch('/api/client-status', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: user.email,
-        update: {
-          status: 'paid',
-          name: user.user_metadata?.full_name || '',
-          paidAt: new Date().toISOString(),
-        }
-      })
-    });
+    // Ensure client record exists
+    try {
+      await fetch('/api/client-status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: user.email,
+          update: { status: 'paid', name: user.user_metadata?.full_name || '', paidAt: new Date().toISOString() }
+        })
+      });
+    } catch(e) { console.warn('Could not create initial record:', e.message); }
   }
 
   await loadStatus();
 }
 
 async function loadStatus() {
+  const user = window._state.user;
+  if (!user) return;
   try {
-    const res = await fetch(`/api/client-status?email=${encodeURIComponent(currentUser.email)}`);
-    clientStatus = await res.json();
+    const res = await fetch(`/api/client-status?email=${encodeURIComponent(user.email)}`);
+    window._state.clientStatus = await res.json();
   } catch {
-    clientStatus = { status: 'paid', steps: {} };
+    window._state.clientStatus = { status: 'paid', steps: {} };
   }
-  renderSteps();
+  // renderSteps is defined in the regular script below — call it now
+  if (typeof renderSteps === 'function') renderSteps();
 }
 
+// Expose so submit8821 and approvePlan can trigger a reload
 window._loadStatus = loadStatus;
 
-onAuthChange(() => init());
+onAuthChange(init);
 init();
 </script>
 
@@ -451,7 +461,8 @@ function getStatusIndex(status) {
 }
 
 function renderSteps() {
-  if (!clientStatus) return;
+  if (!window._state || !window._state.clientStatus) return;
+  const clientStatus = window._state.clientStatus;
   const status = clientStatus.status || 'paid';
   const steps = clientStatus.steps || {};
   const statusIdx = getStatusIndex(status);
@@ -695,6 +706,9 @@ async function submit8821() {
   btn.disabled = true;
   btn.textContent = 'Submitting…';
 
+  const email = window._currentUserEmail;
+  if (!email) { btn.disabled = false; btn.textContent = 'Submit Form 8821 →'; alert('Not logged in.'); return; }
+
   const formData = {
     taxpayerName: document.getElementById('f8821-name').value.trim(),
     ssnLast4: document.getElementById('f8821-ssn').value.trim(),
@@ -712,17 +726,9 @@ async function submit8821() {
     const res = await fetch('/api/submit-8821', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: window._currentUserEmail,
-        name: formData.taxpayerName,
-        formData,
-        signatureDataUrl,
-      })
+      body: JSON.stringify({ email, name: formData.taxpayerName, formData, signatureDataUrl })
     });
-
     if (!res.ok) throw new Error('Submission failed');
-
-    // Reload status
     await window._loadStatus();
   } catch(e) {
     btn.disabled = false;
@@ -732,7 +738,8 @@ async function submit8821() {
 }
 
 async function approvePlan() {
-  if (!window._currentUserEmail) return;
+  const email = window._currentUserEmail;
+  if (!email) return;
   try {
     await fetch('/api/client-status', {
       method: 'POST',
@@ -751,13 +758,7 @@ async function approvePlan() {
   }
 }
 
-// Make email available to submit functions
-document.addEventListener('DOMContentLoaded', () => {});
 
-// Expose to module scope
-window._setUserEmail = function(email) {
-  window._currentUserEmail = email;
-};
 
 // ── DECODER ─────────────────────────────────────────────────────────────────
 function dSwitchTab(tab) {
@@ -894,16 +895,6 @@ async function callClaude(systemPrompt, userContent) {
 
 function esc(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-</script>
-
-<script type="module">
-// Bridge module and non-module scripts
-import { getUser } from 'https://esm.sh/@netlify/identity@1';
-const user = await getUser();
-if (user) {
-  window._setUserEmail(user.email);
-  window._currentUser = user;
 }
 </script>
 
