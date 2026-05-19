@@ -80,8 +80,8 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 .tsearch:focus{border-color:var(--gold)}
 /* TABLE */
 .ctable{background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;box-shadow:var(--sh);overflow:hidden}
-.thead{display:grid;grid-template-columns:24px 2fr 1.5fr 1.4fr 1.1fr 1.1fr 1.3fr 60px;padding:.625rem 1rem;background:var(--cream-warm);border-bottom:1px solid var(--cream-dark);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);gap:.5rem;align-items:center}
-.trow{display:grid;grid-template-columns:24px 2fr 1.5fr 1.4fr 1.1fr 1.1fr 1.3fr 60px;padding:.75rem 1rem;border-bottom:1px solid var(--cream-warm);align-items:center;cursor:pointer;transition:background .12s;gap:.5rem}
+.thead{display:grid;grid-template-columns:24px 2.5fr 1.5fr 1.2fr 2fr 60px;padding:.625rem 1rem;background:var(--cream-warm);border-bottom:1px solid var(--cream-dark);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);gap:.5rem;align-items:center}
+.trow{display:grid;grid-template-columns:24px 2.5fr 1.5fr 1.2fr 2fr 60px;padding:.75rem 1rem;border-bottom:1px solid var(--cream-warm);align-items:center;cursor:pointer;transition:background .12s;gap:.5rem}
 .trow:last-child{border-bottom:none}
 .trow:hover{background:var(--cream)}
 .trow.open{background:var(--gold-muted)}
@@ -243,7 +243,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
       <input class="tsearch" id="srch" placeholder="Search…" oninput="renderTable()">
     </div>
     <div class="ctable">
-      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Paid On</div><div>Account</div><div>Status</div><div>Updated</div><div></div></div>
+      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Status</div><div>Actions</div><div></div></div>
       <div id="tbody"><div class="empty"><div class="empty-ic">👥</div><h3>Loading clients…</h3></div></div>
     </div>
   </div>
@@ -254,7 +254,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
   <div class="topbar"><div><div class="tb-title">Needs Action</div><div class="tb-sub">Clients waiting on your team</div></div></div>
   <div class="body">
     <div class="ctable">
-      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Paid On</div><div>Account</div><div>Status</div><div>Updated</div><div></div></div>
+      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Status</div><div>Actions</div><div></div></div>
       <div id="tbody-action"><div class="empty"><div class="empty-ic">⚡</div><h3>Loading…</h3></div></div>
     </div>
   </div>
@@ -265,7 +265,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
   <div class="topbar"><div><div class="tb-title">Resolved Cases</div><div class="tb-sub">Completed resolutions</div></div></div>
   <div class="body">
     <div class="ctable">
-      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Paid On</div><div>Account</div><div>Status</div><div>Updated</div><div></div></div>
+      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Status</div><div>Actions</div><div></div></div>
       <div id="tbody-resolved"><div class="empty"><div class="empty-ic">✅</div><h3>Loading…</h3></div></div>
     </div>
   </div>
@@ -353,7 +353,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
         <div class="field"><span class="lbl">Full Name *</span><input class="inp" id="ac-n" placeholder="Jane Smith"></div>
         <div class="field"><span class="lbl">Email *</span><input class="inp" id="ac-e" type="email" placeholder="jane@co.com"></div>
         <div class="field"><span class="lbl">Company</span><input class="inp" id="ac-co" placeholder="Acme Corp"></div>
-        <div class="field"><span class="lbl">Amount Paid</span><input class="inp" id="ac-a" value="$999.00"></div>
+        <div class="field"><span class="lbl">Phone</span><input class="inp" id="ac-ph" type="tel" placeholder="(555) 555-5555"></div>
         <div class="field" style="grid-column:span 2"><span class="lbl">Initial Status</span>
           <select class="inp" id="ac-s">
             <option value="paid">Paid — Awaiting 8821</option>
@@ -475,7 +475,6 @@ function renderTBody(id,list){
 
 function renderRow(c){
   const init=((c.name||c.email||'?').split(' ').map(w=>w[0]).join('').substring(0,2)).toUpperCase();
-  const pd=c.paidAt?new Date(c.paidAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
   const ud=c.updatedAt?new Date(c.updatedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';
   const sc=SC[c.status]||'sp', sl=SL[c.status]||c.status;
   const co=c.company||'—';
@@ -484,11 +483,12 @@ function renderRow(c){
   <div><div class="av">${init}</div></div>
   <div><div class="cn">${esc(c.name||'—')}</div><div class="ce">${esc(c.email)}</div></div>
   <div><div class="cc">${esc(co)}</div></div>
-  <div><div class="ct">${pd}</div></div>
-  <div><button class="btn btn-ink btn-sm" onclick="event.stopPropagation();viewAsClient('${esc(c.email)}')" style="font-size:11px;padding:5px 10px">👁 View Account</button></div>
   <div><span class="sbadge ${sc}">${sl}</span></div>
-  <div><div class="ct">${ud}</div></div>
-  <div><span class="chev" id="chv-${esc(c.email)}">▶</span></div>
+  <div style="display:flex;gap:5px;align-items:center">
+    <button class="btn btn-ink btn-sm" onclick="event.stopPropagation();viewAsClient('${esc(c.email)}')" style="font-size:10px;padding:4px 8px;white-space:nowrap">👁 View</button>
+    <button class="btn btn-blue btn-sm" onclick="event.stopPropagation();quickPull('${esc(c.email)}')" style="font-size:10px;padding:4px 8px;white-space:nowrap">📋 Transcript</button>
+  </div>
+  <div><div class="ct">${ud}</div><span class="chev" id="chv-${esc(c.email)}">▶</span></div>
 </div>
 <div class="trow-detail" id="det-${esc(c.email)}">${renderDetail(c)}</div>`;
 }
@@ -571,11 +571,10 @@ function renderDetail(c){
   </div>
   <div class="dp s3" style="background:var(--cream-warm)">
     <div class="dp-h">👤 Client Info (editable)</div>
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.625rem">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.625rem">
       <div><span class="lbl">Name</span><input class="inp" id="ci-n-${esc(c.email)}" value="${esc(c.name||'')}"></div>
       <div><span class="lbl">Company</span><input class="inp" id="ci-co-${esc(c.email)}" value="${esc(c.company||'')}" placeholder="Company"></div>
       <div><span class="lbl">Phone</span><input class="inp" id="ci-ph-${esc(c.email)}" value="${esc(c.phone||'')}" placeholder="Phone"></div>
-      <div><span class="lbl">Amount</span><input class="inp" id="ci-am-${esc(c.email)}" value="${esc(c.amount||'$999.00')}"></div>
       <div><span class="lbl">Session ID</span><input class="inp" id="ci-sid-${esc(c.email)}" value="${esc(c.sessionId||'')}" placeholder="Stripe session"></div>
     </div>
     <button class="btn btn-gold btn-sm" style="margin-top:.625rem" onclick="saveInfo('${esc(c.email)}')">Save Client Info</button>
@@ -607,7 +606,7 @@ async function adv(email,status,stepKey){await upd(email,{status,steps:{[stepKey
 async function overrideStatus(email){const v=document.getElementById('so-'+email).value;await upd(email,{status:v});toast('Status → '+SL[v]);}
 async function saveNotes(email){await upd(email,{notes:document.getElementById('nt-'+email).value});toast('Notes saved');}
 async function saveInfo(email){
-  await upd(email,{name:document.getElementById('ci-n-'+email).value,company:document.getElementById('ci-co-'+email).value,phone:document.getElementById('ci-ph-'+email).value,amount:document.getElementById('ci-am-'+email).value,sessionId:document.getElementById('ci-sid-'+email).value});
+  await upd(email,{name:document.getElementById('ci-n-'+email).value,company:document.getElementById('ci-co-'+email).value,phone:document.getElementById('ci-ph-'+email).value,sessionId:document.getElementById('ci-sid-'+email).value});
   toast('Client info saved');
 }
 
@@ -631,13 +630,13 @@ function openAdd(){
 async function addClient(){
   const n=document.getElementById('ac-n').value.trim(),e=document.getElementById('ac-e').value.trim();
   if(!n||!e){toast('Name and email required',true);return;}
-  const co=document.getElementById('ac-co').value.trim(),a=document.getElementById('ac-a').value.trim(),s=document.getElementById('ac-s').value,no=document.getElementById('ac-no').value.trim();
+  const co=document.getElementById('ac-co').value.trim(),ph=document.getElementById('ac-ph').value.trim(),s=document.getElementById('ac-s').value,no=document.getElementById('ac-no').value.trim();
   const btn=document.getElementById('ac-btn');
   btn.disabled=true; btn.textContent='Adding…';
   const res=document.getElementById('ac-result');
   try{
     // 1. Create Blobs record
-    const r=await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,update:{name:n,company:co,amount:a,status:s,notes:no,paidAt:new Date().toISOString()}})});
+    const r=await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,update:{name:n,company:co,phone:ph,status:s,notes:no,paidAt:new Date().toISOString()}})});
     if(!r.ok)throw new Error((await r.json()).error);
 
     // 2. Create Netlify Identity account + send invite email
