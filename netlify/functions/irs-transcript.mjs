@@ -109,31 +109,33 @@ export default async (req) => {
         }), { status: tdsRes.status, headers });
       }
 
-      // Transcript comes back as HTML
+      // Transcript comes back as HTML — return it directly, do NOT store
       const transcriptHtml = await tdsRes.text();
 
-      // Save transcript to Blobs
-      const store = getStore('client-status');
-      let existing = {};
-      try { existing = await store.get(clientEmail.toLowerCase(), { type: 'json' }) || {}; } catch {}
-
-      const transcriptKey = `${formNumber}_${productType}_${taxYear}`;
-      const updated = {
-        ...existing,
-        status: 'transcripts_pulled',
-        updatedAt: new Date().toISOString(),
-        steps: {
-          ...(existing.steps || {}),
-          transcriptsPulled: new Date().toISOString(),
-          [`transcript_${transcriptKey}`]: transcriptHtml,
-        }
-      };
-      await store.set(clientEmail.toLowerCase(), JSON.stringify(updated));
+      // Save only pull metadata (not the transcript content)
+      try {
+        const store = getStore('client-status');
+        let existing = {};
+        try { existing = await store.get(clientEmail.toLowerCase(), { type: 'json' }) || {}; } catch {}
+        const txKey = `${formNumber}_${productType}_${taxYear}`;
+        const updated = {
+          ...existing,
+          status: existing.status === 'caf_active' ? 'transcripts_pulled' : existing.status,
+          updatedAt: new Date().toISOString(),
+          steps: {
+            ...(existing.steps || {}),
+            transcriptsPulled: existing.steps?.transcriptsPulled || new Date().toISOString(),
+            [`txPulled_${txKey}`]: new Date().toISOString(),
+          }
+        };
+        await store.set(clientEmail.toLowerCase(), JSON.stringify(updated));
+      } catch (storeErr) {
+        console.warn('[irs-transcript] Could not update metadata:', storeErr.message);
+      }
 
       return new Response(JSON.stringify({
         ok: true,
-        transcript: transcriptHtml,
-        savedKey: transcriptKey,
+        transcript: transcriptHtml, // returned to admin browser only, never persisted
       }), { status: 200, headers: { ...headers, 'Content-Type': 'application/json' } });
     }
 

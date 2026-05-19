@@ -243,7 +243,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
       <input class="tsearch" id="srch" placeholder="Search…" oninput="renderTable()">
     </div>
     <div class="ctable">
-      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Paid On</div><div>Amount</div><div>Status</div><div>Updated</div><div></div></div>
+      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Paid On</div><div>Account</div><div>Status</div><div>Updated</div><div></div></div>
       <div id="tbody"><div class="empty"><div class="empty-ic">👥</div><h3>Loading clients…</h3></div></div>
     </div>
   </div>
@@ -254,7 +254,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
   <div class="topbar"><div><div class="tb-title">Needs Action</div><div class="tb-sub">Clients waiting on your team</div></div></div>
   <div class="body">
     <div class="ctable">
-      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Paid On</div><div>Amount</div><div>Status</div><div>Updated</div><div></div></div>
+      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Paid On</div><div>Account</div><div>Status</div><div>Updated</div><div></div></div>
       <div id="tbody-action"><div class="empty"><div class="empty-ic">⚡</div><h3>Loading…</h3></div></div>
     </div>
   </div>
@@ -265,7 +265,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
   <div class="topbar"><div><div class="tb-title">Resolved Cases</div><div class="tb-sub">Completed resolutions</div></div></div>
   <div class="body">
     <div class="ctable">
-      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Paid On</div><div>Amount</div><div>Status</div><div>Updated</div><div></div></div>
+      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Paid On</div><div>Account</div><div>Status</div><div>Updated</div><div></div></div>
       <div id="tbody-resolved"><div class="empty"><div class="empty-ic">✅</div><h3>Loading…</h3></div></div>
     </div>
   </div>
@@ -393,7 +393,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 
 <script>
 const PW='gdhERcgvJfqk3WhiPExi';
-let apw='',clients=[],filt='all',curTx='';
+let apw='',clients=[],filt='all',curTx='',curTxEmail='',curTxKey='';
 
 const SL={'paid':'Awaiting 8821','8821_signed':'8821 Signed','caf_pending':'CAF Pending','caf_active':'CAF Active','transcripts_pulled':'Transcripts Pulled','plan_sent':'Plan Sent','plan_approved':'Plan Approved','filed':'Filed','resolved':'Resolved'};
 const SC={'paid':'sp','8821_signed':'s8','caf_pending':'sc','caf_active':'sa','transcripts_pulled':'st','plan_sent':'sps','plan_approved':'spa','filed':'sf','resolved':'sr'};
@@ -485,7 +485,7 @@ function renderRow(c){
   <div><div class="cn">${esc(c.name||'—')}</div><div class="ce">${esc(c.email)}</div></div>
   <div><div class="cc">${esc(co)}</div></div>
   <div><div class="ct">${pd}</div></div>
-  <div><div class="cm">${esc(c.amount||'$999')}</div></div>
+  <div><button class="btn btn-ink btn-sm" onclick="event.stopPropagation();viewAsClient('${esc(c.email)}')" style="font-size:11px;padding:5px 10px">👁 View Account</button></div>
   <div><span class="sbadge ${sc}">${sl}</span></div>
   <div><div class="ct">${ud}</div></div>
   <div><span class="chev" id="chv-${esc(c.email)}">▶</span></div>
@@ -531,8 +531,8 @@ function renderDetail(c){
     <div style="margin-top:.875rem">
       <span class="lbl">View & Access</span>
       <div style="display:flex;gap:.4rem;margin-top:3px;flex-wrap:wrap">
-        <button class="btn btn-ink btn-sm" onclick="viewAsClient('${e}')">👁 View Client Dashboard</button>
-        <button class="btn btn-ghost btn-sm" onclick="resendInvite('${e}','${esc(c.name||'')}')">📧 Resend Invite Email</button>
+        <button class="btn btn-ink btn-sm" onclick="viewAsClient('${esc(c.email)}')">👁 View Client Dashboard</button>
+        <button class="btn btn-ghost btn-sm" onclick="resendInvite('${esc(c.email)}','${esc(c.name||'')}')">📧 Resend Invite Email</button>
       </div>
     </div>
     <div style="margin-top:.875rem">
@@ -546,7 +546,23 @@ function renderDetail(c){
   </div>
   <div class="dp s2">
     <div class="dp-h">📄 IRS Transcripts</div>
-    ${txHtml}
+    ${(()=>{
+      const pulls = Object.keys(s).filter(k=>k.startsWith('txPulled_'));
+      const downloads = Object.keys(s).filter(k=>k.startsWith('txDownloaded_'));
+      if (!pulls.length) return '<div style="font-size:12px;color:var(--ink-muted)">No transcripts pulled yet — use Pull from IRS button</div>';
+      return pulls.map(k=>{
+        const key = k.replace('txPulled_','');
+        const pulledAt = s[k] ? new Date(s[k]).toLocaleString() : '—';
+        const dlKey = 'txDownloaded_'+key;
+        const dlAt = s[dlKey] ? new Date(s[dlKey]).toLocaleString() : null;
+        return `<div style="background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:.75rem;margin-bottom:.5rem">
+          <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:4px">${key.replace(/_/g,' ')}</div>
+          <div style="font-size:11px;color:var(--ink-muted)">Last pulled: ${pulledAt}</div>
+          ${dlAt ? `<div style="font-size:11px;color:var(--green)">Downloaded by Romeo: ${dlAt}</div>` : '<div style="font-size:11px;color:var(--amber)">Not yet downloaded</div>'}
+          <button class="btn btn-blue btn-sm" style="margin-top:.5rem" onclick="rePullAndView('${esc(c.email)}','${key}')">↻ Pull &amp; View</button>
+        </div>`;
+      }).join('');
+    })()}
   </div>
   <div class="dp">
     <div class="dp-h">📝 Notes</div>
@@ -647,6 +663,27 @@ async function addClient(){
   }
 }
 
+async function rePullAndView(email, key){
+  // key format: 1040_ACTR_2023
+  const parts = key.split('_');
+  const formNumber = parts[0], productType = parts[1], taxYear = parts[2];
+  const c = clients.find(x=>x.email===email);
+  if(!c) return;
+  const f8 = c.steps?.form8821Data;
+  // Pre-fill IRS form and switch to IRS page
+  goPage('irs', document.querySelectorAll('.sb-i')[3]);
+  document.getElementById('irsClient').value = email;
+  if(f8){
+    const pts = (f8.taxpayerName||'').split(' ');
+    document.getElementById('irsFirst').value = pts[0]||'';
+    document.getElementById('irsLast').value  = pts.slice(1).join(' ')||'';
+  }
+  document.getElementById('irsForm').value  = formNumber||'1040';
+  document.getElementById('irsProd').value  = productType||'ACTR';
+  document.getElementById('irsYear').value  = taxYear||(new Date().getFullYear()-2);
+  toast('Form pre-filled — enter TIN and click Pull');
+}
+
 function viewAsClient(email){
   window.open('/resolve?adminPreview='+encodeURIComponent(email),'_blank');
 }
@@ -696,20 +733,45 @@ async function pullTranscript(){
   const btn=document.getElementById('pullBtn'),res=document.getElementById('pullRes');
   btn.disabled=true;btn.textContent='⏳ Pulling…';res.style.display='block';res.innerHTML='<span style="color:var(--ink-muted)">Connecting to IRS TDS API…</span>';
   const tp=document.getElementById('irsType').value;
+  const formNumber=document.getElementById('irsForm').value;
+  const productType=document.getElementById('irsProd').value;
+  const taxYear=document.getElementById('irsYear').value;
+  const txKey=`${formNumber}_${productType}_${taxYear}`;
   try{
-    const r=await fetch('/api/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,clientEmail:ce,action:'pull_transcript',transcriptRequest:{tin,taxpayerType:tp,firstName:document.getElementById('irsFirst').value,lastName:document.getElementById('irsLast').value,businessName:document.getElementById('irsBiz').value,formNumber:document.getElementById('irsForm').value,productType:document.getElementById('irsProd').value,taxYear:document.getElementById('irsYear').value,taxPeriod:12}})});
+    const r=await fetch('/api/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,clientEmail:ce,action:'pull_transcript',transcriptRequest:{tin,taxpayerType:tp,firstName:document.getElementById('irsFirst').value,lastName:document.getElementById('irsLast').value,businessName:document.getElementById('irsBiz').value,formNumber,productType,taxYear,taxPeriod:12}})});
     const d=await r.json();
     if(!r.ok){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(d.error||'IRS API error')}</span>`;}
-    else{curTx=d.transcript||'';res.innerHTML=`<span style="color:var(--green)">✅ Transcript pulled! <button class="btn btn-ghost btn-sm" onclick="openTxModal(curTx,'Transcript')">View</button></span>`;await loadClients();}
+    else{
+      curTx=d.transcript||'';
+      curTxEmail=ce;
+      curTxKey=txKey;
+      // Save pull metadata only (not the HTML)
+      await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:ce,adminPassword:apw,update:{adminAction:true,steps:{['txPulled_'+txKey]:new Date().toISOString()}}})});
+      res.innerHTML=`<span style="color:var(--green)">✅ Transcript pulled — not stored. <button class="btn btn-ghost btn-sm" onclick="openTxModal(curTx,'${txKey}')">View</button> <button class="btn btn-green btn-sm" onclick="dlTx()">⬇ Download</button></span>`;
+      await loadClients();
+    }
   }catch(e){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(e.message)}</span>`;}
   btn.disabled=false;btn.textContent='📋 Pull Transcript from IRS';
 }
 
 function quickPull(email){const c=clients.find(x=>x.email===email);if(!c)return;goPage('irs',document.querySelectorAll('.sb-i')[3]);if(c.steps?.form8821Data){const f=c.steps.form8821Data,pts=(f.taxpayerName||'').split(' ');document.getElementById('irsClient').value=email;document.getElementById('irsFirst').value=pts[0]||'';document.getElementById('irsLast').value=pts.slice(1).join(' ')||'';document.getElementById('irsYear').value=(f.taxYears||'').split(',')[0]?.trim()||new Date().getFullYear()-2;}}
 
-function viewTx(email,key){const c=clients.find(x=>x.email===email);if(!c)return;openTxModal(c.steps?.[key]||'',key.replace('transcript_',''));}
 function openTxModal(html,title){document.getElementById('txSub').textContent=title;document.getElementById('txContent').innerHTML=html||'No content';curTx=html;document.getElementById('txModal').classList.add('open');}
-function dlTx(){const b=new Blob([curTx],{type:'text/html'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='irs-transcript.html';a.click();}
+
+async function dlTx(){
+  // Record download date
+  if(curTxEmail&&curTxKey){
+    try{
+      await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:curTxEmail,adminPassword:apw,update:{adminAction:true,steps:{['txDownloaded_'+curTxKey]:new Date().toISOString()}}})});
+      await loadClients();
+    }catch(e){console.warn('Could not record download',e.message);}
+  }
+  const b=new Blob([curTx],{type:'text/html'}),a=document.createElement('a');
+  a.href=URL.createObjectURL(b);
+  a.download='irs-transcript-'+(curTxKey||'download')+'.html';
+  a.click();
+  toast('Transcript downloaded — not stored on server');
+}
 
 function dlF8(email){
   const c=clients.find(x=>x.email===email);if(!c)return;
