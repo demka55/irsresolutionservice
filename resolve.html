@@ -3,166 +3,169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resolution Center — IRS Resolution Service</title>
+<title>Your Resolution Dashboard — IRS Resolution Service</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="https://js.stripe.com/v3/"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #1a1612; --ink-soft: #4a4540; --ink-muted: #8a8580;
-  --paper: #f8f5f0; --paper-warm: #f0ebe2; --paper-dark: #e8e2d8;
-  --rule: #d8d2c8;
-  --gold: #b8860b; --gold-light: #f5e8c0; --gold-mid: #d4a520;
-  --red: #8b1a1a; --red-light: #fdf0f0;
-  --amber: #92500a; --amber-light: #fef5e7;
-  --green: #1a5c2a; --green-light: #f0f7f2;
-  --blue: #1a3a5c; --blue-light: #eef3f8;
-  --serif: 'Playfair Display', Georgia, serif;
-  --sans: 'DM Sans', system-ui, sans-serif;
+  --gold:#c9a84c; --gold-light:#e8c97a; --gold-dim:#8a6e2f; --gold-muted:#f5ecd8;
+  --cream:#f5f0e8; --cream-warm:#ede5d5; --cream-dark:#d9cdb8;
+  --ink:#1a1410; --ink-soft:#4a3f32; --ink-muted:#7a6e60; --white:#ffffff;
+  --green:#1a5c2a; --green-light:#f0f7f2; --blue:#1a3a5c; --blue-light:#eef3f8;
+  --amber:#92500a; --amber-light:#fef5e7; --red:#8b1a1a; --red-light:#fdf0f0;
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Outfit',system-ui,sans-serif;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--sans); background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.6; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.65;min-height:100vh}
 
-/* ── HEADER ── */
-.site-header { background: var(--paper-warm); color: var(--ink); padding: 0 2rem; border-bottom: 2px solid var(--gold); }
-.header-inner { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
-.logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); text-decoration: none; }
-.logo span { color: var(--gold-mid); }
-.back-link { font-size: 13px; color: var(--ink-muted); text-decoration: none; }
-.back-link:hover { color: var(--gold-mid); }
+/* HEADER */
+.site-header{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.97);border-bottom:1px solid var(--cream-dark);backdrop-filter:blur(12px)}
+.header-inner{max-width:1100px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-mark{width:36px;height:36px;border:1.5px solid var(--gold);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;font-weight:700;color:var(--gold)}
+.logo-text{font-family:var(--serif);font-size:1.2rem;font-weight:600;color:var(--ink)}
+.logo-text span{color:var(--gold)}
+.header-right{display:flex;align-items:center;gap:1rem}
+.user-email{font-size:13px;color:var(--ink-muted)}
+.btn-logout{background:none;border:1px solid var(--cream-dark);color:var(--ink-soft);padding:7px 16px;border-radius:2px;font-family:var(--sans);font-size:13px;cursor:pointer;transition:all 0.15s}
+.btn-logout:hover{border-color:var(--ink);color:var(--ink)}
 
-/* ── PROGRESS BAR ── */
-.progress-bar { background: var(--paper-dark); border-bottom: 1px solid var(--rule); padding: 0; }
-.progress-inner { max-width: 1000px; margin: 0 auto; display: flex; }
-.prog-step { flex: 1; padding: 0.85rem 1rem; font-size: 12px; font-weight: 500; letter-spacing: 0.04em; color: var(--ink-muted); text-align: center; border-bottom: 3px solid transparent; display: flex; align-items: center; justify-content: center; gap: 6px; }
-.prog-step.active { color: var(--ink); border-bottom-color: var(--gold-mid); }
-.prog-step.done { color: var(--green); border-bottom-color: var(--green); }
-.prog-num { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; }
-.prog-step.done .prog-num { background: var(--green); color: white; border-color: var(--green); }
+/* AUTH GATE */
+#stage-auth{text-align:center;padding:6rem 2rem;display:none}
 
-/* ── MAIN LAYOUT ── */
-.main { max-width: 1000px; margin: 0 auto; padding: 2.5rem 2rem; }
+/* MAIN */
+main{max-width:820px;margin:0 auto;padding:3rem 1.5rem 6rem}
 
-/* ── PANELS ── */
-.panel { display: none; }
-.panel.active { display: block; }
+/* WELCOME */
+.welcome-banner{background:var(--green-light);border:1px solid #b8d9c3;border-left:4px solid var(--green);border-radius:4px;padding:1.25rem 1.5rem;margin-bottom:2.5rem;display:flex;align-items:flex-start;gap:14px}
+.wb-icon{font-size:28px;flex-shrink:0}
+.wb-title{font-family:var(--serif);font-size:1.2rem;font-weight:600;color:var(--green);margin-bottom:3px}
+.wb-sub{font-size:14px;color:var(--ink-soft);line-height:1.6}
 
-/* ── VERIFICATION PANEL ── */
-.verify-header { margin-bottom: 2rem; }
-.panel-label { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.35rem; }
-.panel-title { font-family: var(--serif); font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; }
-.panel-sub { font-size: 14px; color: var(--ink-soft); max-width: 560px; line-height: 1.7; }
+/* EYEBROW / TITLE */
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-dim);display:block;margin-bottom:0.5rem}
+.page-title{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:600;color:var(--ink);line-height:1.15;margin-bottom:0.5rem}
+.page-title em{font-style:italic;color:var(--gold-dim)}
+.page-sub{font-size:1rem;color:var(--ink-soft);line-height:1.7;margin-bottom:2.5rem;max-width:580px}
 
-.notice-banner { background: var(--gold-light); border: 1px solid var(--gold); border-radius: 3px; padding: 1rem 1.25rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
-.notice-code-badge { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; color: var(--ink); background: white; border: 1px solid var(--gold); padding: 6px 14px; border-radius: 2px; flex-shrink: 0; }
-.notice-banner-text { font-size: 14px; color: var(--amber); }
-.notice-banner-text strong { color: var(--ink); display: block; font-size: 15px; }
+/* STATUS BANNER */
+.status-banner{border-radius:4px;padding:1rem 1.25rem;margin-bottom:2rem;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500}
+.status-banner.active{background:var(--blue-light);border:1px solid #b8cfe0;color:var(--blue)}
+.status-banner.warning{background:var(--amber-light);border:1px solid #e8c98a;color:var(--amber)}
+.status-banner.success{background:var(--green-light);border:1px solid #b8d9c3;color:var(--green)}
+.status-dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-/* ── FORM ── */
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem; }
-.form-grid.single { grid-template-columns: 1fr; }
-.field { display: flex; flex-direction: column; gap: 5px; }
-.field label { font-size: 12px; font-weight: 500; letter-spacing: 0.06em; color: var(--ink-soft); text-transform: uppercase; }
-.field input, .field select, .field textarea {
-  padding: 10px 14px; border: 1px solid var(--rule); border-radius: 3px; background: white;
-  font-family: var(--sans); font-size: 14px; color: var(--ink); outline: none;
-  transition: border-color 0.15s;
-}
-.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--gold); }
-.field textarea { resize: vertical; min-height: 80px; }
-.field-hint { font-size: 12px; color: var(--ink-muted); }
+/* STEPS */
+.steps-container{position:relative;margin-bottom:3rem}
+.steps-container::before{content:'';position:absolute;left:27px;top:28px;bottom:28px;width:1px;background:linear-gradient(180deg,var(--gold-dim),var(--cream-dark))}
+.step-card{display:flex;gap:1.5rem;margin-bottom:1.25rem;position:relative}
+.step-num-wrap{width:56px;height:56px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;transition:all 0.3s}
+.step-num-wrap.step-done{background:var(--green);border:2px solid var(--green)}
+.step-num-wrap.step-active{background:var(--gold-muted);border:2px solid var(--gold-dim)}
+.step-num-wrap.step-pending{background:var(--cream);border:2px solid var(--cream-dark)}
+.step-num{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--gold-dim)}
+.step-num-wrap.step-done .step-num{color:var(--white);font-size:1.4rem}
+.step-num-wrap.step-pending .step-num{color:var(--ink-muted)}
 
-.transcript-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
-.t-option { border: 1.5px solid var(--rule); border-radius: 3px; padding: 1rem; cursor: pointer; transition: all 0.15s; background: white; }
-.t-option:hover { border-color: var(--gold); }
-.t-option.selected { border-color: var(--gold-mid); background: var(--gold-light); }
-.t-option input[type="checkbox"] { display: none; }
-.t-option-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
-.t-option-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.4; }
+.step-body{flex:1;background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;padding:1.5rem 1.75rem;transition:all 0.3s}
+.step-body.step-active-body{border-color:var(--gold);border-top:3px solid var(--gold)}
+.step-body.step-done-body{background:var(--green-light);border-color:#b8d9c3}
+.step-body.step-pending-body{opacity:0.5}
 
-.consent-box { background: var(--blue-light); border: 1px solid #b8cfe0; border-radius: 3px; padding: 1.25rem; margin-bottom: 1.5rem; }
-.consent-box h4 { font-size: 13px; font-weight: 500; color: var(--blue); margin-bottom: 0.5rem; }
-.consent-box p { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
-.consent-check { display: flex; align-items: flex-start; gap: 10px; margin-top: 0.75rem; cursor: pointer; }
-.consent-check input[type="checkbox"] { margin-top: 3px; accent-color: var(--blue); }
-.consent-check span { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+.step-status-pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:0.6rem}
+.pill-active{background:var(--gold-muted);color:var(--gold-dim);border:1px solid var(--gold)}
+.pill-done{background:var(--green-light);color:var(--green);border:1px solid #b8d9c3}
+.pill-pending{background:var(--cream);color:var(--ink-muted);border:1px solid var(--cream-dark)}
+.pill-dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pulse 2s ease-in-out infinite}
+.step-title{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink);margin-bottom:0.4rem;line-height:1.2}
+.step-desc{font-size:14px;color:var(--ink-soft);line-height:1.72}
+.step-desc strong{color:var(--ink);font-weight:600}
+.step-action{margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--cream-dark)}
+.step-action-label{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.6rem;display:block}
+.timeline-note{background:var(--amber-light);border:1px solid #e8c98a;border-radius:3px;padding:10px 16px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--amber);margin-top:1rem}
 
-/* ── BUTTONS ── */
-.btn-primary { background: var(--ink); color: white; border: none; padding: 12px 28px; border-radius: 3px; font-family: var(--sans); font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 8px; }
-.btn-primary:hover { background: #2a2420; }
-.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn-secondary { background: transparent; color: var(--ink); border: 1px solid var(--rule); padding: 11px 24px; border-radius: 3px; font-family: var(--sans); font-size: 14px; cursor: pointer; transition: all 0.2s; }
-.btn-secondary:hover { border-color: var(--ink); }
+/* FORM 8821 */
+.form-8821{background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;padding:1.75rem}
+.form-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.4rem}
+.form-title{font-family:var(--serif);font-size:1.4rem;font-weight:600;color:var(--ink);margin-bottom:0.5rem}
+.form-sub{font-size:13px;color:var(--ink-muted);line-height:1.6;margin-bottom:1.5rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.form-field{display:flex;flex-direction:column;gap:5px}
+.form-field.full{grid-column:1/-1}
+.form-label{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim)}
+.form-input{padding:11px 14px;border:1.5px solid var(--cream-dark);border-radius:3px;background:var(--white);font-family:var(--sans);font-size:14px;color:var(--ink);outline:none;transition:border-color 0.15s}
+.form-input:focus{border-color:var(--gold)}
+.form-input::placeholder{color:var(--ink-muted)}
 
-/* ── LOADING STATE ── */
-.loading-overlay { position: fixed; inset: 0; background: rgba(248,245,240,0.9); z-index: 100; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 1.5rem; }
-.loading-overlay.show { display: flex; }
-.spinner { width: 40px; height: 40px; border: 3px solid var(--paper-dark); border-top-color: var(--gold-mid); border-radius: 50%; animation: spin 0.8s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.loading-title { font-family: var(--serif); font-size: 1.2rem; color: var(--ink); }
-.loading-sub { font-size: 13px; color: var(--ink-muted); }
+/* SIGNATURE PAD */
+.sig-wrap{margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--cream-dark)}
+.sig-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.75rem;display:block}
+.sig-canvas-wrap{border:2px dashed var(--cream-dark);border-radius:3px;background:var(--white);position:relative;cursor:crosshair}
+.sig-canvas-wrap:hover{border-color:var(--gold)}
+#sigCanvas{display:block;width:100%;height:130px;touch-action:none}
+.sig-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:13px;color:var(--ink-muted);pointer-events:none;text-align:center}
+.sig-controls{display:flex;gap:0.5rem;margin-top:0.5rem}
+.sig-clear{background:none;border:1px solid var(--cream-dark);color:var(--ink-muted);padding:6px 14px;border-radius:2px;font-family:var(--sans);font-size:13px;cursor:pointer}
+.sig-clear:hover{border-color:var(--red);color:var(--red)}
 
-/* ── TRANSCRIPT RESULTS ── */
-.results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
-.result-card { background: white; border: 1px solid var(--rule); border-radius: 3px; padding: 1.25rem; }
-.result-card h3 { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--paper-dark); }
-.result-row { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--paper-dark); font-size: 14px; }
-.result-row:last-child { border-bottom: none; }
-.result-label { color: var(--ink-soft); }
-.result-val { font-weight: 500; color: var(--ink); }
-.result-val.danger { color: var(--red); }
-.result-val.good { color: var(--green); }
+/* CONSENT */
+.consent-box{background:var(--blue-light);border:1px solid #b8cfe0;border-radius:3px;padding:1rem 1.25rem;margin-top:1.25rem;font-size:13px;color:var(--blue);line-height:1.65}
+.consent-check{display:flex;align-items:flex-start;gap:10px;margin-top:0.75rem;cursor:pointer}
+.consent-check input{margin-top:3px;flex-shrink:0;cursor:pointer;width:16px;height:16px}
 
-.findings-list { margin-bottom: 2rem; }
-.finding-item { border-radius: 3px; padding: 1rem 1.25rem; margin-bottom: 10px; border-left: 4px solid; }
-.finding-item.high { background: var(--red-light); border-color: var(--red); }
-.finding-item.medium { background: var(--amber-light); border-color: var(--amber); }
-.finding-item.info { background: var(--green-light); border-color: var(--green); }
-.finding-severity { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
-.high .finding-severity { color: var(--red); }
-.medium .finding-severity { color: var(--amber); }
-.info .finding-severity { color: var(--green); }
-.finding-message { font-size: 14px; color: var(--ink); margin-bottom: 4px; line-height: 1.5; }
-.finding-action { font-size: 13px; color: var(--ink-soft); font-style: italic; }
+/* BUTTONS */
+.btn-primary{background:var(--gold);color:var(--white);border:none;padding:13px 28px;border-radius:2px;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;letter-spacing:0.04em;transition:all 0.2s;width:100%;margin-top:1rem}
+.btn-primary:hover:not(:disabled){background:var(--gold-dim)}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+.btn-ghost{background:transparent;border:1px solid var(--cream-dark);color:var(--ink-soft);padding:10px 20px;border-radius:2px;font-family:var(--sans);font-size:14px;cursor:pointer;transition:all 0.15s}
+.btn-ghost:hover{border-color:var(--gold-dim);color:var(--gold-dim)}
 
-.summary-banner { border-radius: 3px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; }
-.summary-banner.warning { background: var(--red-light); color: var(--red); border: 1px solid #e8b0b0; }
-.summary-banner.caution { background: var(--amber-light); color: var(--amber); border: 1px solid #f0c890; }
-.summary-banner.clear { background: var(--green-light); color: var(--green); border: 1px solid #a0d0b0; }
-.summary-icon { font-size: 20px; flex-shrink: 0; }
+/* PLAN APPROVAL */
+.plan-card{background:var(--white);border:1px solid var(--gold);border-top:3px solid var(--gold);border-radius:4px;padding:1.75rem}
+.plan-title{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink);margin-bottom:0.5rem}
+.plan-body{font-size:14px;color:var(--ink-soft);line-height:1.72;margin-bottom:1.25rem}
+.approve-btns{display:flex;gap:0.75rem;flex-wrap:wrap}
+.btn-approve{background:var(--green);color:var(--white);border:none;padding:12px 24px;border-radius:2px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:background 0.2s}
+.btn-approve:hover{background:#145020}
 
-/* ── LETTER PANEL ── */
-.letter-form { max-width: 680px; }
-.position-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.5rem; }
-.pos-option { border: 1.5px solid var(--rule); border-radius: 3px; padding: 1rem; text-align: center; cursor: pointer; transition: all 0.15s; background: white; }
-.pos-option:hover { border-color: var(--gold); }
-.pos-option.selected { border-color: var(--gold-mid); background: var(--gold-light); }
-.pos-option input { display: none; }
-.pos-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
-.pos-desc { font-size: 12px; color: var(--ink-muted); }
+/* DECODER SECTION */
+.decoder-section{border-top:1px solid var(--cream-dark);padding-top:3rem;margin-top:1rem}
+.decoder-header{margin-bottom:1.75rem}
+.decoder-header h2{font-family:var(--serif);font-size:1.8rem;font-weight:600;color:var(--ink);margin-bottom:0.4rem}
+.decoder-header p{font-size:15px;color:var(--ink-soft)}
+.tab-bar{display:flex;background:var(--cream-warm);border:1px solid var(--cream-dark);border-radius:3px;padding:3px;gap:3px;margin-bottom:1.5rem}
+.tab-btn{flex:1;padding:9px 4px;border-radius:2px;border:none;background:transparent;color:var(--ink-muted);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:500;transition:all 0.15s}
+.tab-btn.active{background:var(--white);color:var(--gold-dim);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+textarea{width:100%;min-height:160px;background:var(--white);border:1.5px solid var(--cream-dark);border-radius:4px;padding:13px 16px;color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.65;resize:vertical;outline:none;transition:border-color 0.15s}
+textarea:focus{border-color:var(--gold)}
+textarea::placeholder{color:var(--ink-muted)}
+select{width:100%;padding:13px 16px;border:1.5px solid var(--cream-dark);border-radius:4px;background:var(--white);color:var(--ink);font-family:var(--sans);font-size:14px;outline:none;transition:border-color 0.15s;cursor:pointer}
+select:focus{border-color:var(--gold)}
+.card{background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;padding:1.25rem 1.5rem;margin-bottom:1rem}
+.loading-box{text-align:center;padding:3rem 0}
+.loading-icon{font-size:40px;margin-bottom:10px}
+.loading-title{font-family:var(--serif);font-size:1.4rem;font-weight:600;color:var(--ink);margin-bottom:4px}
+.loading-sub{font-size:13px;color:var(--ink-muted)}
 
-/* ── LETTER OUTPUT ── */
-.letter-output-wrap { background: white; border: 1px solid var(--rule); border-radius: 3px; overflow: hidden; margin-top: 2rem; }
-.letter-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.25rem; background: var(--paper-dark); border-bottom: 1px solid var(--rule); }
-.letter-toolbar-title { font-size: 13px; font-weight: 500; color: var(--ink); }
-.toolbar-actions { display: flex; gap: 8px; }
-.toolbar-btn { padding: 6px 14px; border: 1px solid var(--rule); border-radius: 2px; background: white; font-size: 12px; font-weight: 500; color: var(--ink); cursor: pointer; transition: all 0.15s; font-family: var(--sans); }
-.toolbar-btn:hover { background: var(--ink); color: white; border-color: var(--ink); }
-.letter-body { padding: 2rem; font-family: 'Courier New', monospace; font-size: 13px; color: var(--ink); line-height: 1.8; white-space: pre-wrap; min-height: 200px; }
-.letter-cursor { display: inline-block; width: 2px; height: 1em; background: var(--gold-mid); animation: blink 1s step-end infinite; margin-left: 1px; vertical-align: text-bottom; }
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+/* FOOTER */
+footer{background:var(--cream-warm);border-top:1px solid var(--cream-dark);padding:2rem;margin-top:4rem}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-size:13px;color:var(--ink-muted)}
+.footer-links a{font-size:13px;color:var(--ink-muted);text-decoration:none;margin-left:1.25rem}
+.footer-links a:hover{color:var(--gold-dim)}
 
-/* ── ERROR BANNER ── */
-.error-banner { background: var(--red-light); border: 1px solid #e8b0b0; border-radius: 3px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; color: var(--red); font-size: 14px; display: none; }
-.error-banner.show { display: block; }
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.fade-in{animation:fadeUp 0.3s ease forwards}
 
-/* ── RESPONSIVE ── */
-@media (max-width: 640px) {
-  .form-grid { grid-template-columns: 1fr; }
-  .results-grid { grid-template-columns: 1fr; }
-  .position-selector { grid-template-columns: 1fr; }
-  .prog-step span.label { display: none; }
+@media(max-width:640px){
+  main{padding:2rem 1rem 4rem}
+  .step-card{flex-direction:column;gap:0.5rem}
+  .steps-container::before{display:none}
+  .form-grid{grid-template-columns:1fr}
+  .approve-btns{flex-direction:column}
 }
 </style>
 </head>
@@ -170,599 +173,750 @@ body { font-family: var(--sans); background: var(--paper); color: var(--ink); fo
 
 <header class="site-header">
   <div class="header-inner">
-    <a href="/" class="logo">IRS <span>Resolution</span> Service</a>
-    <a href="/" class="back-link">← Back to notice decoder</a>
+    <a href="/" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <div class="header-right">
+      <span class="user-email" id="userEmail"></span>
+      <button class="btn-logout" id="logoutBtn" style="display:none">Sign out</button>
+    </div>
   </div>
 </header>
 
-<!-- Progress bar -->
-<div class="progress-bar">
-  <div class="progress-inner">
-    <div class="prog-step active" id="prog-1">
-      <div class="prog-num">1</div>
-      <span class="label">Payment confirmed</span>
-    </div>
-    <div class="prog-step" id="prog-2">
-      <div class="prog-num">2</div>
-      <span class="label">Pull transcript</span>
-    </div>
-    <div class="prog-step" id="prog-3">
-      <div class="prog-num">3</div>
-      <span class="label">Verify notice</span>
-    </div>
-    <div class="prog-step" id="prog-4">
-      <div class="prog-num">4</div>
-      <span class="label">Draft letter</span>
-    </div>
+<!-- AUTH GATE -->
+<div id="stage-auth">
+  <div style="font-size:44px;margin-bottom:1rem">🔒</div>
+  <span style="font-size:12px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-dim);display:block;margin-bottom:0.75rem">Access Required</span>
+  <h1 style="font-family:var(--serif);font-size:2.4rem;font-weight:600;color:var(--ink);margin-bottom:1rem">Sign in to your dashboard</h1>
+  <p style="font-size:1rem;color:var(--ink-soft);margin:0 auto 2rem;max-width:420px;line-height:1.7">Your dashboard is only accessible after signing up for IRS Resolution Service.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+    <a href="/login" style="background:var(--gold);color:white;padding:13px 28px;border-radius:2px;font-family:var(--sans);font-size:15px;font-weight:600;text-decoration:none">Sign in</a>
+    <a href="https://buy.stripe.com/00weVd2fefLa1QY9uJbEA00" style="background:transparent;border:1px solid var(--cream-dark);color:var(--ink-soft);padding:12px 24px;border-radius:2px;font-family:var(--sans);font-size:15px;text-decoration:none">Get started — $999</a>
   </div>
 </div>
 
-<main class="main">
+<!-- DASHBOARD -->
+<div id="stage-dashboard" style="display:none">
+<main>
 
-  <!-- ── PANEL 1: Payment verified + transcript request form ── -->
-  <div class="panel active" id="panel-1">
-    <div class="verify-header">
-      <div class="panel-label">Step 1 of 4 — Payment Confirmed</div>
-      <h1 class="panel-title">Let's pull your IRS transcript</h1>
-      <p class="panel-sub">We'll retrieve your official IRS account records and cross-verify them against the notice. First, confirm a few details so we request the right transcript.</p>
+  <div class="welcome-banner" id="welcomeBanner" style="display:none">
+    <div class="wb-icon">✅</div>
+    <div>
+      <div class="wb-title">Payment confirmed — welcome aboard</div>
+      <div class="wb-sub">Romeo and his team have been notified. Complete Step 1 below to get started.</div>
+    </div>
+  </div>
+
+  <span class="eyebrow">Your Resolution Dashboard</span>
+  <h1 class="page-title">Your case, <em>step by step.</em></h1>
+  <p class="page-sub">Track your resolution in real time. Each step updates automatically as Romeo and his team make progress.</p>
+
+  <!-- STATUS BANNER -->
+  <div class="status-banner active" id="statusBanner">
+    <div class="status-dot"></div>
+    <span id="statusBannerText">Loading your status…</span>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps-container" id="stepsContainer">
+    <!-- Rendered by JS -->
+  </div>
+
+  <!-- NOTICE DECODER -->
+  <div class="decoder-section">
+    <div class="decoder-header">
+      <span style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-dim);display:block;margin-bottom:0.5rem">Included with your plan</span>
+      <h2>IRS Notice Decoder</h2>
+      <p>Full AI-powered analysis of any IRS notice — paste text or pick a common type.</p>
     </div>
 
-    <div class="notice-banner" id="noticeBanner">
-      <div class="notice-code-badge" id="noticeCodeBadge">—</div>
-      <div class="notice-banner-text">
-        <strong id="noticeTitleText">Loading notice details...</strong>
-        Payment confirmed · Session ID: <span id="sessionIdDisplay">—</span>
+    <div id="d-input">
+      <div class="tab-bar">
+        <button class="tab-btn active" id="dtab-paste" onclick="dSwitchTab('paste')">✏️ Paste Notice Text</button>
+        <button class="tab-btn" id="dtab-select" onclick="dSwitchTab('select')">📋 Common Notices</button>
       </div>
-    </div>
-
-    <div class="error-banner" id="errorBanner1"></div>
-
-    <form id="transcriptForm">
-      <div class="form-grid">
-        <div class="field">
-          <label>Your full name (as on tax return)</label>
-          <input type="text" id="taxpayerName" placeholder="John A. Smith" required />
-        </div>
-        <div class="field">
-          <label>Tax year on the notice</label>
-          <select id="taxYear" required>
-            <option value="">Select year...</option>
-            <option value="2024">2024</option>
-            <option value="2023">2023</option>
-            <option value="2022">2022</option>
-            <option value="2021">2021</option>
-            <option value="2020">2020</option>
+      <div id="dpanel-paste">
+        <textarea id="dPasteInput" placeholder="Paste the full text of your IRS notice here…"></textarea>
+        <button class="btn-primary" style="margin-top:0.75rem" onclick="dRunPaste()">Analyze My Notice →</button>
+      </div>
+      <div id="dpanel-select" style="display:none">
+        <div class="card" style="margin-bottom:1rem">
+          <label style="font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dim);display:block;margin-bottom:0.6rem">Select Your Notice Type</label>
+          <select id="dNoticeSelect">
+            <option value="">— Choose a notice type —</option>
+            <optgroup label="Underreported Income / Balance Due">
+              <option value="CP2000">CP2000 — Proposed Changes to Your Return</option>
+              <option value="CP2501">CP2501 — Review Your Return</option>
+              <option value="CP14">CP14 — Balance Due, No Math Error</option>
+              <option value="CP501">CP501 — Reminder — Balance Due</option>
+              <option value="CP502">CP502 — Second Reminder — Balance Due</option>
+              <option value="CP503">CP503 — Third Reminder — Balance Due</option>
+            </optgroup>
+            <optgroup label="Collections / Levy / Lien">
+              <option value="CP504">CP504 — Final Notice Before Levy</option>
+              <option value="CP523">CP523 — Intent to Terminate Installment Agreement</option>
+              <option value="LT11">LT11 — Final Notice of Intent to Levy</option>
+              <option value="Letter 1058">Letter 1058 — Final Notice, Right to a Hearing</option>
+            </optgroup>
+            <optgroup label="Audit / Examination">
+              <option value="CP75">CP75 — Examination of EITC / Refund on Hold</option>
+              <option value="Letter 525">Letter 525 — General 30-Day Letter</option>
+              <option value="Letter 531">Letter 531 — Notice of Deficiency (90-Day Letter)</option>
+            </optgroup>
+            <optgroup label="Math Errors / Refunds">
+              <option value="CP11">CP11 — Math Error — Balance Due</option>
+              <option value="CP12">CP12 — Overpayment / Changed Your Refund</option>
+              <option value="CP90">CP90 — Final Notice Before Levy</option>
+            </optgroup>
+            <optgroup label="Identity / Fraud">
+              <option value="CP5071C">CP5071C — Identity Verification Required</option>
+              <option value="Letter 4883C">Letter 4883C — Verify Your Identity</option>
+            </optgroup>
+            <optgroup label="Business / Payroll">
+              <option value="CP161">CP161 — Balance Due for Business Return</option>
+              <option value="Letter 1153">Letter 1153 — Trust Fund Recovery Penalty Proposal</option>
+            </optgroup>
           </select>
         </div>
-        <div class="field">
-          <label>Last 4 of your SSN</label>
-          <input type="text" id="ssnLast4" maxlength="4" placeholder="e.g. 4521" pattern="\d{4}" required />
-          <span class="field-hint">Used only for transcript verification identification</span>
-        </div>
-        <div class="field">
-          <label>Amount shown on notice ($)</label>
-          <input type="number" id="proposedAmount" placeholder="e.g. 2450.00" step="0.01" min="0" />
-          <span class="field-hint">Leave blank if no dollar amount on notice</span>
-        </div>
+        <button class="btn-primary" onclick="dRunSelect()">Analyze This Notice →</button>
       </div>
-
-      <div class="field" style="margin-bottom:1.5rem;">
-        <label>Mailing address</label>
-        <input type="text" id="taxpayerAddress" placeholder="123 Main St, Springfield, MA 01101" />
-      </div>
-
-      <p style="font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px;">Which transcripts to retrieve</p>
-      <div class="transcript-options" id="transcriptOptions">
-        <label class="t-option selected" onclick="toggleTranscript(this,'ACCOUNT')">
-          <input type="checkbox" value="ACCOUNT" checked>
-          <div class="t-option-title">Account Transcript</div>
-          <div class="t-option-desc">Payments, assessments, penalties, balance history</div>
-        </label>
-        <label class="t-option selected" onclick="toggleTranscript(this,'WAGE')">
-          <input type="checkbox" value="WAGE" checked>
-          <div class="t-option-title">Wage & Income</div>
-          <div class="t-option-desc">W-2s, 1099s, and income reported by employers</div>
-        </label>
-        <label class="t-option" onclick="toggleTranscript(this,'RETURN')">
-          <input type="checkbox" value="RETURN">
-          <div class="t-option-title">Return Transcript</div>
-          <div class="t-option-desc">Copy of your filed return data</div>
-        </label>
-      </div>
-
-      <div class="consent-box">
-        <h4>IRS e-Services Authorization</h4>
-        <p>By proceeding, you authorize IRS Resolution Service to retrieve your tax transcripts from the IRS Transcript Delivery System (TDS) via the e-Services API for the sole purpose of cross-verifying notice <strong id="consentNoticeCode">—</strong> for tax year <strong id="consentTaxYear">—</strong>. This is a read-only action — no changes are made to your IRS account.</p>
-        <label class="consent-check">
-          <input type="checkbox" id="consentCheck" required />
-          <span>I authorize the retrieval of my IRS transcript(s) as described above and confirm this is my own tax account.</span>
-        </label>
-      </div>
-
-      <button type="submit" class="btn-primary" id="fetchBtn">
-        <span>Fetch My IRS Transcript</span>
-        <span>→</span>
-      </button>
-    </form>
-  </div>
-
-  <!-- ── PANEL 2: Transcript results + verification findings ── -->
-  <div class="panel" id="panel-2">
-    <div class="verify-header">
-      <div class="panel-label">Step 2 of 4 — Transcript Retrieved</div>
-      <h1 class="panel-title">Your IRS records vs. the notice</h1>
-      <p class="panel-sub">Here's what we found in your official IRS account transcript — and how it compares to what the notice claims.</p>
+      <p style="font-size:12px;color:var(--ink-muted);text-align:center;margin-top:0.75rem">General guidance only — not legal or tax advice</p>
     </div>
 
-    <div class="error-banner" id="errorBanner2"></div>
-
-    <div class="summary-banner" id="verificationSummary"></div>
-
-    <div class="results-grid" id="transcriptResults"></div>
-
-    <h3 style="font-family:var(--serif);font-size:1.1rem;margin-bottom:1rem;">Verification findings</h3>
-    <div class="findings-list" id="findingsList"></div>
-
-    <div style="display:flex;gap:12px;margin-top:1.5rem;">
-      <button class="btn-primary" onclick="goToPanel(3)">Continue to Draft Response Letter →</button>
-      <button class="btn-secondary" onclick="goToPanel(1)">← Re-fetch Transcript</button>
-    </div>
-  </div>
-
-  <!-- ── PANEL 3: Letter inputs ── -->
-  <div class="panel" id="panel-3">
-    <div class="verify-header">
-      <div class="panel-label">Step 3 of 4 — Draft Response Letter</div>
-      <h1 class="panel-title">Tell us your position</h1>
-      <p class="panel-sub">The AI will use your transcript findings and your answers below to draft a professional, IRS-ready response letter.</p>
+    <div id="d-loading" style="display:none" class="loading-box">
+      <div class="loading-icon" id="dLoadIcon">⚖️</div>
+      <div class="loading-title" id="dLoadTitle">Analyzing your notice…</div>
+      <div class="loading-sub" id="dLoadSub">Cross-referencing IRS Internal Revenue Manual</div>
     </div>
 
-    <div class="letter-form">
-      <p style="font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px;">Your position on this notice</p>
-      <div class="position-selector" id="positionSelector">
-        <label class="pos-option selected" onclick="selectPosition(this,'disagree')">
-          <input type="radio" name="position" value="disagree" checked>
-          <div class="pos-title">I disagree</div>
-          <div class="pos-desc">The notice is wrong or overstated</div>
-        </label>
-        <label class="pos-option" onclick="selectPosition(this,'partial')">
-          <input type="radio" name="position" value="partial">
-          <div class="pos-title">Partially agree</div>
-          <div class="pos-desc">Some items correct, others disputed</div>
-        </label>
-        <label class="pos-option" onclick="selectPosition(this,'agree')">
-          <input type="radio" name="position" value="agree">
-          <div class="pos-title">I agree</div>
-          <div class="pos-desc">Confirming and arranging payment</div>
-        </label>
-      </div>
-
-      <div class="form-grid" style="margin-bottom:1.25rem;">
-        <div class="field">
-          <label>Notice date (from the letter)</label>
-          <input type="text" id="noticeDate" placeholder="e.g. March 15, 2025" />
-        </div>
-        <div class="field">
-          <label>Your mailing address</label>
-          <input type="text" id="letterAddress" placeholder="123 Main St, Springfield, MA" />
-        </div>
-      </div>
-
-      <div class="field" style="margin-bottom:1.25rem;">
-        <label>Reason for your position / additional context</label>
-        <textarea id="additionalContext" placeholder="e.g. The 1099 income was from a retirement rollover that was reported on Schedule B. I have the Form 5498 confirming the rollover was non-taxable..."></textarea>
-        <span class="field-hint">The more detail you provide, the more specific and persuasive the letter will be.</span>
-      </div>
-
-      <div class="field" style="margin-bottom:1.5rem;">
-        <label>Documents you can include (optional)</label>
-        <input type="text" id="enclosures" placeholder="e.g. Copy of Form 5498, bank statement dated Jan 2024, employer letter..." />
-        <span class="field-hint">These will be listed in the letter's enclosures section.</span>
-      </div>
-
-      <button class="btn-primary" id="draftBtn" onclick="draftLetter()">
-        <span>Draft My Response Letter</span>
-        <span>→</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- ── PANEL 4: Letter output ── -->
-  <div class="panel" id="panel-4">
-    <div class="verify-header">
-      <div class="panel-label">Step 4 of 4 — Your Response Letter</div>
-      <h1 class="panel-title">Letter ready to send</h1>
-      <p class="panel-sub">Review the letter below. Copy and paste it onto your letterhead, or print and mail it. Send certified mail with return receipt for proof of delivery.</p>
-    </div>
-
-    <div class="letter-output-wrap">
-      <div class="letter-toolbar">
-        <span class="letter-toolbar-title">IRS Response Letter — <span id="letterNoticeLabel">—</span></span>
-        <div class="toolbar-actions">
-          <button class="toolbar-btn" onclick="copyLetter()">Copy</button>
-          <button class="toolbar-btn" onclick="printLetter()">Print</button>
-          <button class="toolbar-btn" onclick="goToPanel(3)">Re-draft</button>
-        </div>
-      </div>
-      <div class="letter-body" id="letterOutput"></div>
-    </div>
-
-    <div style="margin-top:1.5rem;padding:1.25rem;background:var(--amber-light);border:1px solid var(--gold);border-radius:3px;">
-      <p style="font-size:14px;color:var(--amber);font-weight:500;margin-bottom:4px;">Before you mail this letter</p>
-      <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;">Send via USPS Certified Mail with Return Receipt (green card) so you have legal proof of the date the IRS received your response. Keep a copy of everything you mail. The IRS mailing address for your specific notice is printed on the notice itself — always use that address, not a generic IRS address.</p>
+    <div id="d-results" style="display:none">
+      <div id="dResultsContent" class="fade-in"></div>
+      <button class="btn-ghost" style="margin-top:1.5rem" onclick="dReset()">← Analyze another notice</button>
     </div>
   </div>
 
 </main>
-
-<!-- Loading overlay -->
-<div class="loading-overlay" id="loadingOverlay">
-  <div class="spinner"></div>
-  <div class="loading-title" id="loadingTitle">Connecting to IRS e-Services...</div>
-  <div class="loading-sub" id="loadingSub">This may take 15–30 seconds</div>
 </div>
 
-<script>
-// ── State ─────────────────────────────────────────────────────────────────────
-const state = {
-  sessionId:    null,
-  noticeCode:   null,
-  noticeTitle:  null,
-  transcript:   null,
-  verification: null,
-  position:     'disagree'
-};
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 Criminally Prolific LLC. Questions? romeo@taxedright.com</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/contact">Contact</a>
+    </div>
+  </div>
+</footer>
 
-// ── Init: read URL params ─────────────────────────────────────────────────────
-(function init() {
+<script type="module">
+import { getUser, logout, onAuthChange } from 'https://esm.sh/@netlify/identity@1';
+
+// All state lives here — accessible to inline onclick handlers via window
+window._state = { user: null, clientStatus: null };
+
+async function init() {
   const params = new URLSearchParams(window.location.search);
-  state.sessionId  = params.get('session_id');
-  state.noticeCode = params.get('notice') || 'CP2000';
+  const adminPreviewEmail = params.get('adminPreview');
 
-  if (!state.sessionId) {
-    // No session — redirect to homepage
-    window.location.href = '/?error=no_session#tool';
+  // Admin preview mode — load any client's dashboard without auth
+  if (adminPreviewEmail) {
+    window._state.user = { email: adminPreviewEmail };
+    window._currentUserEmail = adminPreviewEmail;
+    document.getElementById('stage-auth').style.display = 'none';
+    document.getElementById('stage-dashboard').style.display = 'block';
+    document.getElementById('userEmail').textContent = '👁 Admin Preview: ' + adminPreviewEmail;
+    document.getElementById('logoutBtn').style.display = '';
+    document.getElementById('logoutBtn').textContent = '← Back to Admin';
+    document.getElementById('logoutBtn').onclick = () => { window.location.href = '/admin.html'; };
+    // Show admin banner
+    const banner = document.createElement('div');
+    banner.style.cssText = 'background:#1a1410;color:#e8c97a;padding:10px 1.5rem;text-align:center;font-size:13px;font-weight:600;letter-spacing:0.04em;position:sticky;top:64px;z-index:100';
+    banner.textContent = '👁 Admin Preview Mode — viewing dashboard as ' + adminPreviewEmail;
+    document.querySelector('main').prepend(banner);
+    await loadStatus();
     return;
   }
 
-  // Display notice code immediately
-  document.getElementById('noticeCodeBadge').textContent  = state.noticeCode;
-  document.getElementById('sessionIdDisplay').textContent = state.sessionId.substring(0, 20) + '...';
-  document.getElementById('consentNoticeCode').textContent = state.noticeCode;
+  const user = await getUser();
 
-  // Verify payment and get notice title
-  fetch(`/api/stripe/session/${state.sessionId}`)
-    .then(r => r.json())
-    .then(data => {
-      if (!data.paid) { window.location.href = '/?error=payment_failed'; return; }
-      state.noticeTitle = data.noticeTitle || state.noticeCode;
-      document.getElementById('noticeTitleText').textContent = data.noticeTitle || `Notice ${state.noticeCode}`;
-      if (data.name) document.getElementById('taxpayerName').value = data.name;
-    })
-    .catch(() => {
-      showError('errorBanner1', 'Could not verify payment. Please contact support@irsresolutionservice.com');
-    });
-})();
-
-// ── Panel navigation ──────────────────────────────────────────────────────────
-function goToPanel(n) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.getElementById(`panel-${n}`).classList.add('active');
-  for (let i = 1; i <= 4; i++) {
-    const step = document.getElementById(`prog-${i}`);
-    step.classList.remove('active', 'done');
-    if (i < n) step.classList.add('done');
-    if (i === n) step.classList.add('active');
-  }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// ── Transcript option toggling ────────────────────────────────────────────────
-function toggleTranscript(el, val) {
-  el.classList.toggle('selected');
-  const cb = el.querySelector('input[type="checkbox"]');
-  cb.checked = el.classList.contains('selected');
-}
-
-// ── Position selector ─────────────────────────────────────────────────────────
-function selectPosition(el, val) {
-  document.querySelectorAll('.pos-option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  state.position = val;
-}
-
-// ── Loading overlay ───────────────────────────────────────────────────────────
-function showLoading(title, sub) {
-  document.getElementById('loadingTitle').textContent = title;
-  document.getElementById('loadingSub').textContent   = sub || '';
-  document.getElementById('loadingOverlay').classList.add('show');
-}
-function hideLoading() { document.getElementById('loadingOverlay').classList.remove('show'); }
-
-// ── Error display ─────────────────────────────────────────────────────────────
-function showError(id, msg) {
-  const el = document.getElementById(id);
-  el.textContent = msg;
-  el.classList.add('show');
-}
-function clearError(id) { document.getElementById(id).classList.remove('show'); }
-
-// ── Fetch transcript ──────────────────────────────────────────────────────────
-document.getElementById('transcriptForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  clearError('errorBanner1');
-
-  const consent = document.getElementById('consentCheck').checked;
-  if (!consent) { showError('errorBanner1', 'Please check the authorization box to continue.'); return; }
-
-  const taxYear = document.getElementById('taxYear').value;
-  document.getElementById('consentTaxYear').textContent = taxYear;
-
-  const selectedTypes = [...document.querySelectorAll('.t-option.selected input')]
-    .map(cb => cb.value);
-
-  if (!selectedTypes.length) {
-    showError('errorBanner1', 'Please select at least one transcript type.');
+  if (!user) {
+    document.getElementById('stage-auth').style.display = 'block';
+    document.getElementById('stage-dashboard').style.display = 'none';
     return;
   }
 
-  const btn = document.getElementById('fetchBtn');
-  btn.disabled = true;
+  window._state.user = user;
+  window._currentUserEmail = user.email;
 
-  showLoading('Connecting to IRS e-Services...', 'Authenticating your request — this takes 15–30 seconds');
+  document.getElementById('stage-auth').style.display = 'none';
+  document.getElementById('stage-dashboard').style.display = 'block';
+  document.getElementById('userEmail').textContent = user.email || '';
 
-  try {
-    // Fetch each selected transcript type
-    let combinedTranscript = null;
-    let combinedVerification = { findings: [] };
+  const logoutBtn = document.getElementById('logoutBtn');
+  logoutBtn.style.display = '';
+  logoutBtn.onclick = async () => { await logout(); window.location.reload(); };
 
-    for (const tType of selectedTypes) {
-      showLoading(`Retrieving ${tType.toLowerCase()} transcript...`, `Communicating with IRS TDS API`);
-
-      const resp = await fetch('/api/transcript/fetch', {
+  // Show welcome banner if arriving from Stripe
+  if (params.get('session_id') || params.get('payment') === 'success') {
+    document.getElementById('welcomeBanner').style.display = 'flex';
+    try {
+      await fetch('/api/client-status', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          sessionId:      state.sessionId,
-          taxYear,
-          transcriptType: tType,
-          noticeCode:     state.noticeCode,
-          proposedAmount: document.getElementById('proposedAmount').value || '0',
+          email: user.email,
+          update: { status: 'paid', name: user.user_metadata?.full_name || '', paidAt: new Date().toISOString() }
         })
       });
+    } catch(e) { console.warn('Could not create initial record:', e.message); }
+  }
 
-      const data = await resp.json();
-      if (!resp.ok) throw new Error(data.error || 'Transcript fetch failed');
+  await loadStatus();
+}
 
-      // Merge transcripts
-      if (!combinedTranscript) {
-        combinedTranscript = data.transcript;
-      } else {
-        // Merge wage items if WAGE transcript fetched separately
-        if (data.transcript.wageIncomeItems?.length) {
-          combinedTranscript.wageIncomeItems = [
-            ...(combinedTranscript.wageIncomeItems || []),
-            ...data.transcript.wageIncomeItems
-          ];
-        }
-        if (data.transcript.accountTransactions?.length) {
-          combinedTranscript.accountTransactions = [
-            ...(combinedTranscript.accountTransactions || []),
-            ...data.transcript.accountTransactions
-          ];
-        }
+async function loadStatus() {
+  const user = window._state.user;
+  if (!user) return;
+  try {
+    const res = await fetch(`/api/client-status?email=${encodeURIComponent(user.email)}`);
+    window._state.clientStatus = await res.json();
+  } catch {
+    window._state.clientStatus = { status: 'paid', steps: {} };
+  }
+  // renderSteps is defined in the regular script below — call it now
+  if (typeof renderSteps === 'function') renderSteps();
+}
+
+// Expose so submit8821 and approvePlan can trigger a reload
+window._loadStatus = loadStatus;
+
+onAuthChange(init);
+init();
+</script>
+
+<script>
+const API = '/.netlify/functions/anthropic';
+
+// ── STATUS STEPS DEFINITION ─────────────────────────────────────────────────
+const STEPS_DEF = [
+  {
+    id: 'sign8821',
+    statusKey: null,
+    doneKey: 'form8821Signed',
+    title: 'Authorize Romeo to access your IRS records',
+    desc: 'Complete and sign Form 8821 — this authorizes Romeo Razi, CPA to view your IRS transcripts on your behalf. It is read-only access; no changes are made to your account.',
+    actionType: 'form8821',
+    pendingNote: null,
+  },
+  {
+    id: 'cafPending',
+    statusKey: 'caf_pending',
+    doneKey: 'cafSubmitted',
+    title: "Romeo submits your Form 8821 to the IRS",
+    desc: "Romeo's team submits your signed Form 8821 to the IRS Centralized Authorization File (CAF). This is handled entirely by our team — no action needed from you.",
+    actionType: 'waiting',
+    pendingNote: '⏱ Typically submitted within 1 business day of receiving your signed form.',
+  },
+  {
+    id: 'cafActive',
+    statusKey: 'caf_active',
+    doneKey: 'cafActive',
+    title: 'IRS confirms authorization',
+    desc: 'The IRS processes the Form 8821 and activates Romeo\'s access to your transcripts. This step is handled by the IRS.',
+    actionType: 'waiting',
+    pendingNote: '⏱ IRS processing typically takes 2–5 business days.',
+  },
+  {
+    id: 'transcripts',
+    statusKey: 'transcripts_pulled',
+    doneKey: 'transcriptsPulled',
+    title: 'Romeo pulls and reviews your IRS transcripts',
+    desc: 'Romeo retrieves your official IRS transcripts, cross-references every figure against your notice, and identifies any errors or discrepancies. He then builds your personalized resolution plan.',
+    actionType: 'waiting',
+    pendingNote: '⏱ Review and plan creation takes 3–5 business days.',
+  },
+  {
+    id: 'planSent',
+    statusKey: 'plan_sent',
+    doneKey: 'planSent',
+    title: 'Your resolution plan is ready',
+    desc: 'Romeo has reviewed your situation and prepared a customized resolution plan. Review it carefully and approve or request changes.',
+    actionType: 'approvePlan',
+    pendingNote: null,
+  },
+  {
+    id: 'planApproved',
+    statusKey: 'plan_approved',
+    doneKey: 'planApproved',
+    title: 'Plan approved — Romeo files everything',
+    desc: "You've approved the plan. Romeo's team is now preparing and filing all necessary documents with the IRS. You don't need to write a single letter or make a single call.",
+    actionType: 'waiting',
+    pendingNote: '⏱ Filing and confirmation typically takes 5–10 business days.',
+  },
+  {
+    id: 'filed',
+    statusKey: 'filed',
+    doneKey: 'documentsFiled',
+    title: 'Documents filed — awaiting IRS confirmation',
+    desc: 'All documents have been filed with the IRS. We are waiting for confirmation of receipt and processing.',
+    actionType: 'waiting',
+    pendingNote: '⏱ IRS confirmation can take 2–4 weeks.',
+  },
+  {
+    id: 'resolved',
+    statusKey: 'resolved',
+    doneKey: 'resolved',
+    title: '🎉 Your case is resolved',
+    desc: 'Congratulations — your IRS situation has been fully resolved. Romeo and his team have completed all filings and received confirmation from the IRS.',
+    actionType: 'done',
+    pendingNote: null,
+  },
+];
+
+const STATUS_ORDER = ['paid','8821_signed','caf_pending','caf_active','transcripts_pulled','plan_sent','plan_approved','filed','resolved'];
+
+function getStatusIndex(status) {
+  return STATUS_ORDER.indexOf(status);
+}
+
+function renderSteps() {
+  if (!window._state || !window._state.clientStatus) return;
+  const clientStatus = window._state.clientStatus;
+  const status = clientStatus.status || 'paid';
+  const steps = clientStatus.steps || {};
+  const statusIdx = getStatusIndex(status);
+
+  // Update status banner
+  const bannerMessages = {
+    paid: { msg: 'Action required — please complete Step 1 below', cls: 'warning' },
+    '8821_signed': { msg: 'Form 8821 received — Romeo\'s team will submit to IRS within 1 business day', cls: 'active' },
+    caf_pending: { msg: 'Form 8821 submitted to IRS — waiting for CAF activation (2–5 days)', cls: 'active' },
+    caf_active: { msg: 'IRS access confirmed — Romeo is now reviewing your transcripts', cls: 'active' },
+    transcripts_pulled: { msg: 'Transcripts reviewed — resolution plan being prepared', cls: 'active' },
+    plan_sent: { msg: 'Action required — your resolution plan is ready for your review', cls: 'warning' },
+    plan_approved: { msg: 'Plan approved — Romeo is filing your documents', cls: 'active' },
+    filed: { msg: 'Documents filed — awaiting IRS confirmation', cls: 'active' },
+    resolved: { msg: 'Your case is fully resolved ✓', cls: 'success' },
+  };
+  const banner = bannerMessages[status] || { msg: 'In progress', cls: 'active' };
+  const bannerEl = document.getElementById('statusBanner');
+  bannerEl.className = 'status-banner ' + banner.cls;
+  document.getElementById('statusBannerText').textContent = banner.msg;
+
+  // Render steps
+  const container = document.getElementById('stepsContainer');
+  let html = '';
+
+  STEPS_DEF.forEach((step, i) => {
+    const isDone = !!steps[step.doneKey];
+    const isActive = !isDone && isStepActive(step, status, steps);
+    const isPending = !isDone && !isActive;
+
+    const numClass = isDone ? 'step-done' : isActive ? 'step-active' : 'step-pending';
+    const bodyClass = isDone ? 'step-done-body' : isActive ? 'step-active-body' : 'step-pending-body';
+    const pillClass = isDone ? 'pill-done' : isActive ? 'pill-active' : 'pill-pending';
+    const pillLabel = isDone ? '✓ Complete' : isActive ? 'Your turn' : 'Coming up';
+    const numContent = isDone ? '✓' : (i + 1);
+
+    let actionHtml = '';
+    if (isActive) {
+      if (step.actionType === 'form8821') {
+        actionHtml = render8821Form();
+      } else if (step.actionType === 'approvePlan') {
+        actionHtml = renderPlanApproval();
+      } else if (step.actionType === 'waiting' && step.pendingNote) {
+        actionHtml = `<div class="timeline-note">${step.pendingNote}</div>`;
       }
-      combinedVerification.findings.push(...(data.verification?.findings || []));
-      combinedVerification.summary = data.verification?.summary;
+    } else if (isPending && step.pendingNote) {
+      actionHtml = `<div class="timeline-note" style="opacity:0.6">${step.pendingNote}</div>`;
     }
 
-    state.transcript   = combinedTranscript;
-    state.verification = combinedVerification;
+    const doneAt = isDone && typeof steps[step.doneKey] === 'string'
+      ? `<div style="font-size:12px;color:var(--green);margin-top:4px">Completed ${new Date(steps[step.doneKey]).toLocaleDateString()}</div>`
+      : '';
 
-    // Store taxpayer info for letter panel
-    state.taxpayerName    = document.getElementById('taxpayerName').value;
-    state.taxpayerAddress = document.getElementById('taxpayerAddress').value;
-    state.ssnLast4        = document.getElementById('ssnLast4').value;
-    state.taxYear         = taxYear;
+    html += `
+      <div class="step-card">
+        <div class="step-num-wrap ${numClass}">
+          <span class="step-num">${numContent}</span>
+        </div>
+        <div class="step-body ${bodyClass}">
+          <div class="step-status-pill ${pillClass}">
+            ${isActive ? '<span class="pill-dot"></span>' : ''}${pillLabel}
+          </div>
+          <div class="step-title">${step.title}</div>
+          <div class="step-desc">${step.desc}</div>
+          ${doneAt}
+          ${actionHtml}
+        </div>
+      </div>`;
+  });
 
-    renderTranscriptResults();
-    hideLoading();
-    goToPanel(2);
+  container.innerHTML = html;
 
-  } catch (err) {
-    hideLoading();
-    btn.disabled = false;
-    showError('errorBanner1', err.message || 'Failed to retrieve transcript. Please try again.');
+  // Init signature pad if visible
+  if (document.getElementById('sigCanvas')) {
+    initSignaturePad();
   }
-});
+}
 
-// ── Render transcript results ─────────────────────────────────────────────────
-function renderTranscriptResults() {
-  const t   = state.transcript;
-  const ver = state.verification;
+function isStepActive(step, status, steps) {
+  if (steps[step.doneKey]) return false;
+  // Step 1 (sign 8821) is active when status is 'paid'
+  if (step.id === 'sign8821') return status === 'paid';
+  // Other steps are active when their statusKey matches current status
+  if (step.statusKey) return status === step.statusKey;
+  return false;
+}
 
-  // Summary banner
-  const s   = ver.summary || { level: 'clear', message: 'Verification complete.' };
-  const bannerEl = document.getElementById('verificationSummary');
-  const icons = { warning: '⚠', caution: '◆', clear: '✓' };
-  bannerEl.className = `summary-banner ${s.level}`;
-  bannerEl.innerHTML = `<span class="summary-icon">${icons[s.level] || '◆'}</span>${s.message}`;
-
-  // Transcript data cards
-  const resultsEl = document.getElementById('transcriptResults');
-  resultsEl.innerHTML = `
-    <div class="result-card">
-      <h3>Account Summary</h3>
-      ${row('Taxpayer', t.taxpayerName || 'On file')}
-      ${row('SSN', t.tin)}
-      ${row('Tax Year', t.taxYear || state.taxYear)}
-      ${row('Filing Status', t.filingStatus || '—')}
-      ${row('Return Type', t.returnType || '1040')}
-    </div>
-    <div class="result-card">
-      <h3>Financial Summary</h3>
-      ${row('Adjusted Gross Income', fmt(t.adjustedGrossIncome))}
-      ${row('Total Tax', fmt(t.totalTax))}
-      ${row('Total Payments', fmt(t.totalPayments), 'good')}
-      ${row('Balance Due', fmt(t.balanceDue), t.balanceDue > 0 ? 'danger' : 'good')}
-      ${t.refundAmount > 0 ? row('Refund Amount', fmt(t.refundAmount), 'good') : ''}
-    </div>
-    ${t.wageIncomeItems?.length ? `
-    <div class="result-card" style="grid-column: 1 / -1;">
-      <h3>Wage & Income on File (IRS transcript)</h3>
-      ${t.wageIncomeItems.map(w => `
-        <div class="result-row">
-          <span class="result-label">${w.formType} — ${w.employer || 'Employer'} (EIN: ${w.ein})</span>
-          <span class="result-val">${fmt(w.wages || w.otherIncome)}</span>
+function render8821Form() {
+  return `
+    <div class="step-action">
+      <span class="step-action-label">Complete and sign Form 8821</span>
+      <div class="form-8821">
+        <div class="form-eyebrow">IRS Form 8821 — Tax Information Authorization</div>
+        <div class="form-title">Authorize Romeo Razi, CPA</div>
+        <div class="form-sub">This form authorizes Romeo Razi of Taxed Right LLC to receive your IRS transcripts. It is read-only — Romeo cannot make changes to your account or file on your behalf without separate authorization.</div>
+        <div class="form-grid">
+          <div class="form-field full">
+            <label class="form-label">Your Full Name (as on tax return) *</label>
+            <input class="form-input" id="f8821-name" placeholder="Jane Smith" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Last 4 of SSN *</label>
+            <input class="form-input" id="f8821-ssn" placeholder="1234" maxlength="4" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Date of Birth</label>
+            <input class="form-input" id="f8821-dob" placeholder="MM/DD/YYYY" type="date">
+          </div>
+          <div class="form-field full">
+            <label class="form-label">Current Address *</label>
+            <input class="form-input" id="f8821-address" placeholder="123 Main St, City, State, ZIP" required>
+          </div>
+          <div class="form-field full">
+            <label class="form-label">Tax Years to Authorize *</label>
+            <input class="form-input" id="f8821-years" placeholder="e.g. 2021, 2022, 2023, 2024" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Phone Number</label>
+            <input class="form-input" id="f8821-phone" placeholder="(555) 555-5555" type="tel">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Filing Status</label>
+            <select class="form-input" id="f8821-filing">
+              <option value="">Select…</option>
+              <option value="Single">Single</option>
+              <option value="Married Filing Jointly">Married Filing Jointly</option>
+              <option value="Married Filing Separately">Married Filing Separately</option>
+              <option value="Head of Household">Head of Household</option>
+            </select>
+          </div>
         </div>
-      `).join('')}
-    </div>` : ''}
-    ${t.accountTransactions?.length ? `
-    <div class="result-card" style="grid-column: 1 / -1;">
-      <h3>Recent Account Activity</h3>
-      ${t.accountTransactions.slice(0, 8).map(tx => `
-        <div class="result-row">
-          <span class="result-label">${tx.date} — ${tx.description}</span>
-          <span class="result-val ${tx.type === 'PAYMENT' ? 'good' : ''}">${tx.type === 'PAYMENT' ? '-' : ''}${fmt(tx.amount)}</span>
-        </div>
-      `).join('')}
-    </div>` : ''}
-  `;
 
-  // Findings
-  const findingsEl = document.getElementById('findingsList');
-  if (!ver.findings?.length) {
-    findingsEl.innerHTML = '<p style="font-size:14px;color:var(--ink-muted);">No specific findings — transcript retrieved successfully.</p>';
-  } else {
-    findingsEl.innerHTML = ver.findings.map(f => `
-      <div class="finding-item ${f.severity}">
-        <div class="finding-severity">${f.severity === 'high' ? '⚠ Potential Issue' : f.severity === 'medium' ? '◆ Note' : '✓ Confirmed'}</div>
-        <div class="finding-message">${f.message}</div>
-        <div class="finding-action">${f.action}</div>
+        <div class="sig-wrap">
+          <span class="sig-label">Your Signature *</span>
+          <div class="sig-canvas-wrap">
+            <canvas id="sigCanvas" width="760" height="130"></canvas>
+            <div class="sig-hint" id="sigHint">Sign here using your mouse or finger</div>
+          </div>
+          <div class="sig-controls">
+            <button class="sig-clear" onclick="clearSignature()">Clear signature</button>
+          </div>
+        </div>
+
+        <div class="consent-box">
+          By signing above, I authorize Romeo Razi, CPA (Taxed Right LLC) to receive my IRS tax transcripts for the years specified. This authorization is valid for 3 years from the date signed. I understand this is read-only access and does not authorize Romeo Razi to represent me before the IRS or file documents on my behalf.
+          <label class="consent-check">
+            <input type="checkbox" id="f8821-consent">
+            <span>I understand and agree to the above authorization</span>
+          </label>
+        </div>
+
+        <button class="btn-primary" id="submit8821Btn" onclick="submit8821()" disabled>Submit Form 8821 →</button>
+        <p style="font-size:12px;color:var(--ink-muted);text-align:center;margin-top:0.5rem">Your information is transmitted securely and used only for IRS transcript retrieval.</p>
       </div>
-    `).join('');
-  }
-
-  // Pre-fill letter panel
-  document.getElementById('letterAddress').value = state.taxpayerAddress || '';
+    </div>`;
 }
 
-function row(label, val, cls='') {
-  return `<div class="result-row"><span class="result-label">${label}</span><span class="result-val ${cls}">${val}</span></div>`;
-}
-function fmt(n) {
-  if (!n && n !== 0) return '—';
-  return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+function renderPlanApproval() {
+  return `
+    <div class="step-action">
+      <span class="step-action-label">Review and approve your resolution plan</span>
+      <div class="plan-card">
+        <div class="plan-title">Your resolution plan is ready</div>
+        <div class="plan-body">
+          Romeo has reviewed your IRS transcripts and prepared a customized resolution plan for your situation. 
+          Check your email for the full plan details — Romeo sent it to the email address on file.<br><br>
+          Once you've reviewed the plan, click below to approve it and we'll get to work.
+          If you have questions or want changes, reply to Romeo's email directly.
+        </div>
+        <div class="approve-btns">
+          <button class="btn-approve" onclick="approvePlan()">✓ I approve the resolution plan</button>
+          <a href="mailto:romeo@taxedright.com?subject=Questions about my resolution plan" class="btn-ghost" style="text-decoration:none;display:inline-flex;align-items:center">Ask Romeo a question →</a>
+        </div>
+      </div>
+    </div>`;
 }
 
-// ── Draft letter ──────────────────────────────────────────────────────────────
-async function draftLetter() {
-  const btn = document.getElementById('draftBtn');
+// ── FORM 8821 SIGNATURE PAD ─────────────────────────────────────────────────
+let sigPad = { drawing: false, hasSig: false, ctx: null, canvas: null };
+
+function initSignaturePad() {
+  const canvas = document.getElementById('sigCanvas');
+  if (!canvas) return;
+  sigPad.canvas = canvas;
+  sigPad.ctx = canvas.getContext('2d');
+  sigPad.ctx.strokeStyle = '#1a1410';
+  sigPad.ctx.lineWidth = 2;
+  sigPad.ctx.lineCap = 'round';
+  sigPad.ctx.lineJoin = 'round';
+
+  // Scale for device pixel ratio
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * window.devicePixelRatio || 760;
+  canvas.height = 130 * window.devicePixelRatio || 130;
+  sigPad.ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+
+  const getPos = (e) => {
+    const r = canvas.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return { x: (src.clientX - r.left), y: (src.clientY - r.top) };
+  };
+
+  canvas.addEventListener('mousedown', e => { sigPad.drawing = true; const p = getPos(e); sigPad.ctx.beginPath(); sigPad.ctx.moveTo(p.x, p.y); });
+  canvas.addEventListener('mousemove', e => { if (!sigPad.drawing) return; const p = getPos(e); sigPad.ctx.lineTo(p.x, p.y); sigPad.ctx.stroke(); sigPad.hasSig = true; document.getElementById('sigHint').style.display = 'none'; updateSubmitBtn(); });
+  canvas.addEventListener('mouseup', () => { sigPad.drawing = false; });
+  canvas.addEventListener('mouseleave', () => { sigPad.drawing = false; });
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); sigPad.drawing = true; const p = getPos(e); sigPad.ctx.beginPath(); sigPad.ctx.moveTo(p.x, p.y); }, { passive: false });
+  canvas.addEventListener('touchmove', e => { e.preventDefault(); if (!sigPad.drawing) return; const p = getPos(e); sigPad.ctx.lineTo(p.x, p.y); sigPad.ctx.stroke(); sigPad.hasSig = true; document.getElementById('sigHint').style.display = 'none'; updateSubmitBtn(); }, { passive: false });
+  canvas.addEventListener('touchend', () => { sigPad.drawing = false; });
+
+  // Watch form fields for submit btn
+  ['f8821-name','f8821-ssn','f8821-address','f8821-years'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updateSubmitBtn);
+  });
+  const consent = document.getElementById('f8821-consent');
+  if (consent) consent.addEventListener('change', updateSubmitBtn);
+}
+
+function clearSignature() {
+  if (!sigPad.ctx || !sigPad.canvas) return;
+  sigPad.ctx.clearRect(0, 0, sigPad.canvas.width, sigPad.canvas.height);
+  sigPad.hasSig = false;
+  document.getElementById('sigHint').style.display = 'block';
+  updateSubmitBtn();
+}
+
+function updateSubmitBtn() {
+  const btn = document.getElementById('submit8821Btn');
+  if (!btn) return;
+  const name = (document.getElementById('f8821-name')?.value || '').trim();
+  const ssn = (document.getElementById('f8821-ssn')?.value || '').trim();
+  const addr = (document.getElementById('f8821-address')?.value || '').trim();
+  const years = (document.getElementById('f8821-years')?.value || '').trim();
+  const consent = document.getElementById('f8821-consent')?.checked;
+  btn.disabled = !(name && ssn.length === 4 && addr && years && consent && sigPad.hasSig);
+}
+
+async function submit8821() {
+  const btn = document.getElementById('submit8821Btn');
   btn.disabled = true;
-  btn.innerHTML = '<span>Drafting letter...</span>';
+  btn.textContent = 'Submitting…';
 
-  document.getElementById('letterNoticeLabel').textContent = state.noticeCode;
+  const email = window._currentUserEmail;
+  if (!email) { btn.disabled = false; btn.textContent = 'Submit Form 8821 →'; alert('Not logged in.'); return; }
 
-  goToPanel(4);
+  const formData = {
+    taxpayerName: document.getElementById('f8821-name').value.trim(),
+    ssnLast4: document.getElementById('f8821-ssn').value.trim(),
+    dob: document.getElementById('f8821-dob')?.value || '',
+    address: document.getElementById('f8821-address').value.trim(),
+    taxYears: document.getElementById('f8821-years').value.trim(),
+    phone: document.getElementById('f8821-phone')?.value || '',
+    filingStatus: document.getElementById('f8821-filing')?.value || '',
+    signedAt: new Date().toISOString(),
+  };
 
-  const letterEl = document.getElementById('letterOutput');
-  letterEl.innerHTML = '<span class="letter-cursor"></span>';
+  const signatureDataUrl = sigPad.canvas.toDataURL('image/png');
 
   try {
-    const resp = await fetch('/api/letter/draft', {
+    const res = await fetch('/api/submit-8821', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, name: formData.taxpayerName, formData, signatureDataUrl })
+    });
+    if (!res.ok) throw new Error('Submission failed');
+    await window._loadStatus();
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = 'Submit Form 8821 →';
+    alert('Submission failed: ' + e.message + '. Please try again or email romeo@taxedright.com.');
+  }
+}
+
+async function approvePlan() {
+  const email = window._currentUserEmail;
+  if (!email) return;
+  try {
+    await fetch('/api/client-status', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        sessionId:   state.sessionId,
-        noticeCode:  state.noticeCode,
-        noticeDate:  document.getElementById('noticeDate').value,
-        taxYear:     state.taxYear,
-        taxpayerName: state.taxpayerName,
-        taxpayerAddress: document.getElementById('letterAddress').value,
-        taxpayerSSNLast4: state.ssnLast4,
-        proposedAmount: state.transcript?.balanceDue || 0,
-        taxpayerPosition: state.position,
-        additionalContext: document.getElementById('additionalContext').value,
-        enclosures: document.getElementById('enclosures').value,
-        verificationFindings: state.verification?.findings || []
+        email: window._currentUserEmail,
+        update: {
+          status: 'plan_approved',
+          steps: { planApproved: new Date().toISOString() }
+        }
       })
     });
-
-    if (!resp.ok) {
-      const err = await resp.json();
-      letterEl.textContent = 'Error: ' + err.error;
-      btn.disabled = false;
-      btn.innerHTML = '<span>Draft My Response Letter</span><span>→</span>';
-      return;
-    }
-
-    // Stream the letter
-    const reader  = resp.body.getReader();
-    const decoder = new TextDecoder();
-    let fullText  = '';
-    letterEl.innerHTML = '';
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-
-      const chunk = decoder.decode(value);
-      const lines = chunk.split('\n');
-
-      for (const line of lines) {
-        if (!line.startsWith('data: ')) continue;
-        try {
-          const data = JSON.parse(line.slice(6));
-          if (data.text) {
-            fullText += data.text;
-            letterEl.textContent = fullText;
-            // Keep cursor visible at end
-            const cursor = document.createElement('span');
-            cursor.className = 'letter-cursor';
-            letterEl.appendChild(cursor);
-          }
-          if (data.done) {
-            letterEl.textContent = fullText; // Remove cursor when done
-          }
-        } catch {}
-      }
-    }
-
-    state.letterText = fullText;
-    btn.disabled = false;
-    btn.innerHTML = '<span>Draft My Response Letter</span><span>→</span>';
-
-  } catch (err) {
-    letterEl.textContent = 'Failed to draft letter: ' + err.message;
-    btn.disabled = false;
-    btn.innerHTML = '<span>Draft My Response Letter</span><span>→</span>';
+    await window._loadStatus();
+  } catch(e) {
+    alert('Could not save approval. Please email romeo@taxedright.com to confirm.');
   }
 }
 
-// ── Copy & Print ──────────────────────────────────────────────────────────────
-function copyLetter() {
-  const text = document.getElementById('letterOutput').textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = event.target;
-    btn.textContent = 'Copied!';
-    setTimeout(() => btn.textContent = 'Copy', 2000);
+
+
+// ── DECODER ─────────────────────────────────────────────────────────────────
+function dSwitchTab(tab) {
+  ['paste','select'].forEach(t => {
+    document.getElementById('dpanel-'+t).style.display = t===tab ? '' : 'none';
+    document.getElementById('dtab-'+t).classList.toggle('active', t===tab);
   });
 }
 
-function printLetter() {
-  const text = document.getElementById('letterOutput').textContent;
-  const win  = window.open('', '_blank');
-  win.document.write(`
-    <html><head><title>IRS Response Letter — ${state.noticeCode}</title>
-    <style>
-      body { font-family: 'Courier New', monospace; font-size: 12pt; line-height: 1.8; margin: 1.5in; color: #000; }
-      @media print { body { margin: 1in; } }
-    </style></head>
-    <body><pre>${text}</pre></body></html>
-  `);
-  win.document.close();
-  win.print();
+async function dRunPaste() {
+  const text = document.getElementById('dPasteInput').value.trim();
+  if (!text) return;
+  await dAnalyze(null, text);
+}
+
+async function dRunSelect() {
+  const val = document.getElementById('dNoticeSelect').value;
+  if (!val) { alert('Please select a notice type.'); return; }
+  await dAnalyze(val, null);
+}
+
+async function dAnalyze(noticeType, pastedText) {
+  document.getElementById('d-input').style.display = 'none';
+  document.getElementById('d-loading').style.display = 'block';
+  document.getElementById('d-results').style.display = 'none';
+
+  const steps = [
+    ['🛡️','Removing personal information…','Stripping names, SSNs, and identifying details'],
+    ['📖','Cross-referencing IRS Internal Revenue Manual…','Finding IRM procedures and taxpayer rights'],
+    ['✍️','Building your personalized action plan…','Combining IRM references with CPA-level analysis'],
+  ];
+  let si = 0;
+  const ticker = setInterval(() => {
+    if (si < steps.length) {
+      document.getElementById('dLoadIcon').textContent = steps[si][0];
+      document.getElementById('dLoadTitle').textContent = steps[si][1];
+      document.getElementById('dLoadSub').textContent = steps[si][2];
+      si++;
+    }
+  }, 2800);
+
+  const prompt = pastedText
+    ? 'You are a CPA and enrolled agent with deep IRS Internal Revenue Manual knowledge.\n\nThe taxpayer pasted this IRS notice text. Identify the notice type and provide full analysis.\n\nNOTICE TEXT:\n' + pastedText.substring(0, 3000) + '\n\nReturn ONLY valid JSON (no markdown):\n{"urgencyLevel":"CRITICAL|HIGH|MEDIUM|LOW","urgencyReason":"one sentence","tldr":"2-3 sentence summary","whatIRSReallyMeans":"plain language","irmReference":"IRM sections 2-3 sentences","taxpayerRights":["right1","right2"],"actionPlan":[{"step":1,"title":"","what":"","how":"","timing":"","priority":"immediate|this week|this month"}],"ifYouCantPay":"options or null","documentsNeeded":["doc1"],"redFlags":["mistake1"],"professionalHelp":{"needed":true,"level":"CPA|Enrolled Agent|Tax Attorney","reason":"","urgency":"before responding|if you disagree|optional"},"timeline":"timeframe","noticeType":"identified type"}'
+    : 'You are a CPA and enrolled agent with deep IRS Internal Revenue Manual knowledge.\n\nNOTICE TYPE: ' + noticeType + '\n\nProvide comprehensive guidance. Reference specific IRM sections.\n\nReturn ONLY valid JSON (no markdown):\n{"urgencyLevel":"CRITICAL|HIGH|MEDIUM|LOW","urgencyReason":"one sentence","tldr":"2-3 sentence summary","whatIRSReallyMeans":"plain language","irmReference":"IRM sections 2-3 sentences","taxpayerRights":["right1","right2"],"actionPlan":[{"step":1,"title":"","what":"","how":"","timing":"","priority":"immediate|this week|this month"}],"ifYouCantPay":"options or null","documentsNeeded":["doc1"],"redFlags":["mistake1"],"professionalHelp":{"needed":true,"level":"CPA|Enrolled Agent|Tax Attorney","reason":"","urgency":"before responding|if you disagree|optional"},"timeline":"timeframe","noticeType":"' + noticeType + '"}';
+
+  try {
+    const result = await callClaude('You are a CPA and enrolled agent. Return ONLY valid JSON, no markdown.', [{ type:'text', text: prompt }]);
+    clearInterval(ticker);
+    dRenderResults(result);
+    document.getElementById('d-loading').style.display = 'none';
+    document.getElementById('d-results').style.display = 'block';
+    document.getElementById('d-results').scrollIntoView({ behavior:'smooth', block:'start' });
+  } catch(e) {
+    clearInterval(ticker);
+    document.getElementById('d-loading').style.display = 'none';
+    document.getElementById('d-input').style.display = 'block';
+    alert('Analysis failed: ' + e.message);
+  }
+}
+
+function dReset() {
+  document.getElementById('d-input').style.display = 'block';
+  document.getElementById('d-results').style.display = 'none';
+  document.getElementById('dPasteInput').value = '';
+  document.getElementById('dNoticeSelect').value = '';
+}
+
+const URGENCY_STYLES = {
+  CRITICAL:{ bg:'#fdf0f0', border:'#e8b0b0', color:'#8b1a1a', label:'Act Immediately', icon:'🚨' },
+  HIGH:    { bg:'#fef5e7', border:'#f0c98a', color:'#92500a', label:'High Priority',   icon:'⚠️' },
+  MEDIUM:  { bg:'#fefce8', border:'#f0e070', color:'#7a5800', label:'Action Required',  icon:'📋' },
+  LOW:     { bg:'#f0f7f2', border:'#b8d9c3', color:'#1a5c2a', label:'Informational',    icon:'ℹ️' },
+};
+const PRIORITY_STYLES = {
+  'immediate': { color:'#8b1a1a', bg:'#fdf0f0', label:'Do Now' },
+  'this week': { color:'#92500a', bg:'#fef5e7', label:'This Week' },
+  'this month':{ color:'#1a5c2a', bg:'#f0f7f2', label:'This Month' },
+};
+
+function dRenderResults(a) {
+  const u = URGENCY_STYLES[a.urgencyLevel] || URGENCY_STYLES.MEDIUM;
+  let html = '';
+  html += `<div style="background:${u.bg};border:1px solid ${u.border};border-radius:4px;padding:16px 20px;margin-bottom:1rem;display:flex;align-items:flex-start;gap:14px"><div style="font-size:24px;flex-shrink:0">${u.icon}</div><div><div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:${u.color};margin-bottom:3px">${u.label} · ${esc(a.noticeType||'')}</div><div style="font-size:14px;color:${u.color};line-height:1.55">${esc(a.urgencyReason||'')}</div></div></div>`;
+  html += `<div style="background:#eef3f8;border:1px solid #b8cfe0;border-radius:4px;padding:16px 20px;margin-bottom:1rem"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#1a3a5c;margin-bottom:6px">🗣 The Short Version</div><p style="font-size:16px;line-height:1.72;color:var(--ink-soft);font-style:italic;margin:0;font-family:var(--serif)">${esc(a.tldr||'')}</p></div>`;
+  html += `<div class="card"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:6px">🏛️ What the IRS Is Actually Saying</div><p style="color:var(--ink-soft);font-size:15px;line-height:1.72;margin:0">${esc(a.whatIRSReallyMeans||'')}</p></div>`;
+  html += `<div style="background:var(--white);border:1px solid var(--cream-dark);border-left:4px solid var(--gold);border-radius:0 4px 4px 0;padding:14px 18px;margin-bottom:1rem"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:6px">📖 IRS Internal Revenue Manual Reference</div><p style="font-size:14px;color:var(--ink-soft);line-height:1.68;margin:0">${esc(a.irmReference||'')}</p></div>`;
+  if (a.taxpayerRights?.length) {
+    html += `<div class="card"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px">⚖️ Your Rights as a Taxpayer</div><div style="display:flex;flex-wrap:wrap;gap:7px">${a.taxpayerRights.map(r=>`<div style="background:var(--cream);border:1px solid var(--cream-dark);border-radius:2px;padding:5px 11px;font-size:13px;color:var(--ink-soft)">${esc(r)}</div>`).join('')}</div></div>`;
+  }
+  html += `<div class="card" style="border-top:3px solid var(--gold)"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:1rem">✅ Your Action Plan</div>${(a.actionPlan||[]).map((step,i)=>{
+    const p = PRIORITY_STYLES[step.priority] || PRIORITY_STYLES['this month'];
+    const last = i===a.actionPlan.length-1;
+    return `<div style="display:flex;gap:14px;padding-bottom:16px;margin-bottom:16px;${last?'padding-bottom:0;margin-bottom:0':';border-bottom:1px solid var(--cream-warm)'}"><div style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:2px solid var(--cream-dark);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--ink-muted);margin-top:3px;background:var(--cream)">${step.step}</div><div style="flex:1"><div style="margin-bottom:6px"><span style="font-size:15px;font-weight:600;color:var(--ink)">${esc(step.title||'')}</span><span style="display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:2px 8px;border-radius:20px;margin-left:8px;background:${p.bg};color:${p.color}">${p.label}</span></div><p style="color:var(--ink-soft);font-size:14px;line-height:1.68;margin:0 0 7px">${esc(step.what||'')}</p>${step.how?`<p style="color:var(--ink-soft);font-size:13px;line-height:1.6;margin:0 0 6px;background:var(--cream);border-radius:2px;padding:9px 12px"><strong style="color:var(--ink-muted)">How: </strong>${esc(step.how)}</p>`:''}${step.timing?`<div style="font-size:12px;color:var(--ink-muted)">⏱ ${esc(step.timing)}</div>`:''}</div></div>`;
+  }).join('')}</div>`;
+  document.getElementById('dResultsContent').innerHTML = html;
+}
+
+async function callClaude(systemPrompt, userContent) {
+  const response = await fetch(API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ system: systemPrompt, messages: [{ role:'user', content: userContent }], max_tokens: 4096, stream: true }),
+  });
+  if (!response.ok) {
+    let msg = 'API error ' + response.status;
+    try { const t = await response.text(); msg = JSON.parse(t)?.error?.message || msg; } catch {}
+    throw new Error(msg);
+  }
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let raw = '';
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    const chunk = decoder.decode(value, { stream: true });
+    for (const line of chunk.split('\n')) {
+      if (!line.startsWith('data: ')) continue;
+      const data = line.slice(6).trim();
+      if (data === '[DONE]') break;
+      try {
+        const evt = JSON.parse(data);
+        if (evt.type === 'content_block_delta' && evt.delta?.type === 'text_delta') raw += evt.delta.text;
+      } catch {}
+    }
+  }
+  if (!raw.trim()) throw new Error('Empty response.');
+  const clean = raw.replace(/^```json\s*/i,'').replace(/^```\s*/i,'').replace(/```\s*$/i,'').trim();
+  try { return JSON.parse(clean); } catch {
+    const m = clean.match(/\{[\s\S]*\}/);
+    if (m) try { return JSON.parse(m[0]); } catch {}
+    throw new Error('Unexpected format.');
+  }
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 </script>
+
 </body>
 </html>
