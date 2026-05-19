@@ -80,8 +80,8 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 .tsearch:focus{border-color:var(--gold)}
 /* TABLE */
 .ctable{background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;box-shadow:var(--sh);overflow:hidden}
-.thead{display:grid;grid-template-columns:24px 2fr 1.5fr 1.4fr 1.1fr 1.1fr 1.3fr 60px;padding:.625rem 1rem;background:var(--cream-warm);border-bottom:1px solid var(--cream-dark);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);gap:.5rem;align-items:center}
-.trow{display:grid;grid-template-columns:24px 2fr 1.5fr 1.4fr 1.1fr 1.1fr 1.3fr 60px;padding:.75rem 1rem;border-bottom:1px solid var(--cream-warm);align-items:center;cursor:pointer;transition:background .12s;gap:.5rem}
+.thead{display:grid;grid-template-columns:24px 2.5fr 1.5fr 1.2fr 2fr 60px;padding:.625rem 1rem;background:var(--cream-warm);border-bottom:1px solid var(--cream-dark);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);gap:.5rem;align-items:center}
+.trow{display:grid;grid-template-columns:24px 2.5fr 1.5fr 1.2fr 2fr 60px;padding:.75rem 1rem;border-bottom:1px solid var(--cream-warm);align-items:center;cursor:pointer;transition:background .12s;gap:.5rem}
 .trow:last-child{border-bottom:none}
 .trow:hover{background:var(--cream)}
 .trow.open{background:var(--gold-muted)}
@@ -243,7 +243,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
       <input class="tsearch" id="srch" placeholder="Search…" oninput="renderTable()">
     </div>
     <div class="ctable">
-      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Paid On</div><div>Amount</div><div>Status</div><div>Updated</div><div></div></div>
+      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Status</div><div>Actions</div><div></div></div>
       <div id="tbody"><div class="empty"><div class="empty-ic">👥</div><h3>Loading clients…</h3></div></div>
     </div>
   </div>
@@ -254,7 +254,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
   <div class="topbar"><div><div class="tb-title">Needs Action</div><div class="tb-sub">Clients waiting on your team</div></div></div>
   <div class="body">
     <div class="ctable">
-      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Paid On</div><div>Amount</div><div>Status</div><div>Updated</div><div></div></div>
+      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Status</div><div>Actions</div><div></div></div>
       <div id="tbody-action"><div class="empty"><div class="empty-ic">⚡</div><h3>Loading…</h3></div></div>
     </div>
   </div>
@@ -265,7 +265,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
   <div class="topbar"><div><div class="tb-title">Resolved Cases</div><div class="tb-sub">Completed resolutions</div></div></div>
   <div class="body">
     <div class="ctable">
-      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Paid On</div><div>Amount</div><div>Status</div><div>Updated</div><div></div></div>
+      <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Status</div><div>Actions</div><div></div></div>
       <div id="tbody-resolved"><div class="empty"><div class="empty-ic">✅</div><h3>Loading…</h3></div></div>
     </div>
   </div>
@@ -353,7 +353,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
         <div class="field"><span class="lbl">Full Name *</span><input class="inp" id="ac-n" placeholder="Jane Smith"></div>
         <div class="field"><span class="lbl">Email *</span><input class="inp" id="ac-e" type="email" placeholder="jane@co.com"></div>
         <div class="field"><span class="lbl">Company</span><input class="inp" id="ac-co" placeholder="Acme Corp"></div>
-        <div class="field"><span class="lbl">Amount Paid</span><input class="inp" id="ac-a" value="$999.00"></div>
+        <div class="field"><span class="lbl">Phone</span><input class="inp" id="ac-ph" type="tel" placeholder="(555) 555-5555"></div>
         <div class="field" style="grid-column:span 2"><span class="lbl">Initial Status</span>
           <select class="inp" id="ac-s">
             <option value="paid">Paid — Awaiting 8821</option>
@@ -363,10 +363,11 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
         </div>
         <div class="field" style="grid-column:span 2"><span class="lbl">Notes</span><textarea class="notes-ta" id="ac-no" placeholder="Notes…" rows="2"></textarea></div>
       </div>
-      <div class="modal-foot">
-        <button class="btn btn-gold" onclick="addClient()">Add Client</button>
-        <button class="btn btn-ghost" onclick="closeM('addModal')">Cancel</button>
-      </div>
+        <div class="modal-foot">
+          <button class="btn btn-gold" id="ac-btn" onclick="addClient()">Add Client</button>
+          <button class="btn btn-ghost" onclick="closeM('addModal')">Cancel</button>
+        </div>
+        <div id="ac-result" style="display:none;padding:10px 14px;border-radius:3px;font-size:13px;margin-top:.75rem;line-height:1.5"></div>
     </div>
   </div>
 </div>
@@ -392,7 +393,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 
 <script>
 const PW='gdhERcgvJfqk3WhiPExi';
-let apw='',clients=[],filt='all',curTx='';
+let apw='',clients=[],filt='all',curTx='',curTxEmail='',curTxKey='';
 
 const SL={'paid':'Awaiting 8821','8821_signed':'8821 Signed','caf_pending':'CAF Pending','caf_active':'CAF Active','transcripts_pulled':'Transcripts Pulled','plan_sent':'Plan Sent','plan_approved':'Plan Approved','filed':'Filed','resolved':'Resolved'};
 const SC={'paid':'sp','8821_signed':'s8','caf_pending':'sc','caf_active':'sa','transcripts_pulled':'st','plan_sent':'sps','plan_approved':'spa','filed':'sf','resolved':'sr'};
@@ -474,7 +475,6 @@ function renderTBody(id,list){
 
 function renderRow(c){
   const init=((c.name||c.email||'?').split(' ').map(w=>w[0]).join('').substring(0,2)).toUpperCase();
-  const pd=c.paidAt?new Date(c.paidAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
   const ud=c.updatedAt?new Date(c.updatedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';
   const sc=SC[c.status]||'sp', sl=SL[c.status]||c.status;
   const co=c.company||'—';
@@ -483,11 +483,12 @@ function renderRow(c){
   <div><div class="av">${init}</div></div>
   <div><div class="cn">${esc(c.name||'—')}</div><div class="ce">${esc(c.email)}</div></div>
   <div><div class="cc">${esc(co)}</div></div>
-  <div><div class="ct">${pd}</div></div>
-  <div><div class="cm">${esc(c.amount||'$999')}</div></div>
   <div><span class="sbadge ${sc}">${sl}</span></div>
-  <div><div class="ct">${ud}</div></div>
-  <div><span class="chev" id="chv-${esc(c.email)}">▶</span></div>
+  <div style="display:flex;gap:5px;align-items:center">
+    <button class="btn btn-ink btn-sm" onclick="event.stopPropagation();viewAsClient('${esc(c.email)}')" style="font-size:10px;padding:4px 8px;white-space:nowrap">👁 View</button>
+    <button class="btn btn-blue btn-sm" onclick="event.stopPropagation();quickPull('${esc(c.email)}')" style="font-size:10px;padding:4px 8px;white-space:nowrap">📋 Transcript</button>
+  </div>
+  <div><div class="ct">${ud}</div><span class="chev" id="chv-${esc(c.email)}">▶</span></div>
 </div>
 <div class="trow-detail" id="det-${esc(c.email)}">${renderDetail(c)}</div>`;
 }
@@ -528,6 +529,13 @@ function renderDetail(c){
     <div class="dp-h">⚡ Actions</div>
     <div class="btn-row">${actBtns}</div>
     <div style="margin-top:.875rem">
+      <span class="lbl">View & Access</span>
+      <div style="display:flex;gap:.4rem;margin-top:3px;flex-wrap:wrap">
+        <button class="btn btn-ink btn-sm" onclick="viewAsClient('${esc(c.email)}')">👁 View Client Dashboard</button>
+        <button class="btn btn-ghost btn-sm" onclick="resendInvite('${esc(c.email)}','${esc(c.name||'')}')">📧 Resend Invite Email</button>
+      </div>
+    </div>
+    <div style="margin-top:.875rem">
       <span class="lbl">Quick Transcript Pull</span>
       <button class="btn btn-blue btn-sm" style="margin-top:3px" onclick="quickPull('${esc(c.email)}')">🔗 Pull from IRS</button>
     </div>
@@ -538,7 +546,23 @@ function renderDetail(c){
   </div>
   <div class="dp s2">
     <div class="dp-h">📄 IRS Transcripts</div>
-    ${txHtml}
+    ${(()=>{
+      const pulls = Object.keys(s).filter(k=>k.startsWith('txPulled_'));
+      const downloads = Object.keys(s).filter(k=>k.startsWith('txDownloaded_'));
+      if (!pulls.length) return '<div style="font-size:12px;color:var(--ink-muted)">No transcripts pulled yet — use Pull from IRS button</div>';
+      return pulls.map(k=>{
+        const key = k.replace('txPulled_','');
+        const pulledAt = s[k] ? new Date(s[k]).toLocaleString() : '—';
+        const dlKey = 'txDownloaded_'+key;
+        const dlAt = s[dlKey] ? new Date(s[dlKey]).toLocaleString() : null;
+        return `<div style="background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:.75rem;margin-bottom:.5rem">
+          <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:4px">${key.replace(/_/g,' ')}</div>
+          <div style="font-size:11px;color:var(--ink-muted)">Last pulled: ${pulledAt}</div>
+          ${dlAt ? `<div style="font-size:11px;color:var(--green)">Downloaded by Romeo: ${dlAt}</div>` : '<div style="font-size:11px;color:var(--amber)">Not yet downloaded</div>'}
+          <button class="btn btn-blue btn-sm" style="margin-top:.5rem" onclick="rePullAndView('${esc(c.email)}','${key}')">↻ Pull &amp; View</button>
+        </div>`;
+      }).join('');
+    })()}
   </div>
   <div class="dp">
     <div class="dp-h">📝 Notes</div>
@@ -547,11 +571,10 @@ function renderDetail(c){
   </div>
   <div class="dp s3" style="background:var(--cream-warm)">
     <div class="dp-h">👤 Client Info (editable)</div>
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.625rem">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.625rem">
       <div><span class="lbl">Name</span><input class="inp" id="ci-n-${esc(c.email)}" value="${esc(c.name||'')}"></div>
       <div><span class="lbl">Company</span><input class="inp" id="ci-co-${esc(c.email)}" value="${esc(c.company||'')}" placeholder="Company"></div>
       <div><span class="lbl">Phone</span><input class="inp" id="ci-ph-${esc(c.email)}" value="${esc(c.phone||'')}" placeholder="Phone"></div>
-      <div><span class="lbl">Amount</span><input class="inp" id="ci-am-${esc(c.email)}" value="${esc(c.amount||'$999.00')}"></div>
       <div><span class="lbl">Session ID</span><input class="inp" id="ci-sid-${esc(c.email)}" value="${esc(c.sessionId||'')}" placeholder="Stripe session"></div>
     </div>
     <button class="btn btn-gold btn-sm" style="margin-top:.625rem" onclick="saveInfo('${esc(c.email)}')">Save Client Info</button>
@@ -583,7 +606,7 @@ async function adv(email,status,stepKey){await upd(email,{status,steps:{[stepKey
 async function overrideStatus(email){const v=document.getElementById('so-'+email).value;await upd(email,{status:v});toast('Status → '+SL[v]);}
 async function saveNotes(email){await upd(email,{notes:document.getElementById('nt-'+email).value});toast('Notes saved');}
 async function saveInfo(email){
-  await upd(email,{name:document.getElementById('ci-n-'+email).value,company:document.getElementById('ci-co-'+email).value,phone:document.getElementById('ci-ph-'+email).value,amount:document.getElementById('ci-am-'+email).value,sessionId:document.getElementById('ci-sid-'+email).value});
+  await upd(email,{name:document.getElementById('ci-n-'+email).value,company:document.getElementById('ci-co-'+email).value,phone:document.getElementById('ci-ph-'+email).value,sessionId:document.getElementById('ci-sid-'+email).value});
   toast('Client info saved');
 }
 
@@ -598,16 +621,79 @@ async function upd(email,update){
   }catch(e){toast(e.message,true);}
 }
 
-function openAdd(){document.getElementById('addModal').classList.add('open');}
+function openAdd(){
+  document.getElementById('addModal').classList.add('open');
+  document.getElementById('ac-result').style.display='none';
+  document.getElementById('ac-result').textContent='';
+}
+
 async function addClient(){
   const n=document.getElementById('ac-n').value.trim(),e=document.getElementById('ac-e').value.trim();
   if(!n||!e){toast('Name and email required',true);return;}
-  const co=document.getElementById('ac-co').value.trim(),a=document.getElementById('ac-a').value.trim(),s=document.getElementById('ac-s').value,no=document.getElementById('ac-no').value.trim();
+  const co=document.getElementById('ac-co').value.trim(),ph=document.getElementById('ac-ph').value.trim(),s=document.getElementById('ac-s').value,no=document.getElementById('ac-no').value.trim();
+  const btn=document.getElementById('ac-btn');
+  btn.disabled=true; btn.textContent='Adding…';
+  const res=document.getElementById('ac-result');
   try{
-    const r=await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,update:{name:n,company:co,amount:a,status:s,notes:no,paidAt:new Date().toISOString()}})});
+    // 1. Create Blobs record
+    const r=await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,update:{name:n,company:co,phone:ph,status:s,notes:no,paidAt:new Date().toISOString()}})});
     if(!r.ok)throw new Error((await r.json()).error);
-    closeM('addModal');await loadClients();toast('Client added');
-  }catch(e){toast(e.message,true);}
+
+    // 2. Create Netlify Identity account + send invite email
+    let identityMsg='';
+    try{
+      const ir=await fetch('/api/admin-invite',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,email:e,name:n})});
+      const id=await ir.json();
+      if(ir.ok&&id.ok) identityMsg=' Account created — invite email sent.';
+      else if(id.error?.includes('already')) identityMsg=' (Account already exists — no new invite sent.)';
+      else identityMsg=' Note: could not create login account — '+id.error;
+    }catch(ie){ identityMsg=' Note: could not create login — '+ie.message; }
+
+    res.style.display='block';
+    res.style.background='var(--green-light)';res.style.border='1px solid #b8d9c3';res.style.color='var(--green)';
+    res.textContent='✅ Client added.'+identityMsg;
+    await loadClients();
+    btn.disabled=false; btn.textContent='Add Client';
+  }catch(err){
+    res.style.display='block';
+    res.style.background='var(--red-light)';res.style.border='1px solid #e8b0b0';res.style.color='var(--red)';
+    res.textContent='Error: '+err.message;
+    btn.disabled=false; btn.textContent='Add Client';
+  }
+}
+
+async function rePullAndView(email, key){
+  // key format: 1040_ACTR_2023
+  const parts = key.split('_');
+  const formNumber = parts[0], productType = parts[1], taxYear = parts[2];
+  const c = clients.find(x=>x.email===email);
+  if(!c) return;
+  const f8 = c.steps?.form8821Data;
+  // Pre-fill IRS form and switch to IRS page
+  goPage('irs', document.querySelectorAll('.sb-i')[3]);
+  document.getElementById('irsClient').value = email;
+  if(f8){
+    const pts = (f8.taxpayerName||'').split(' ');
+    document.getElementById('irsFirst').value = pts[0]||'';
+    document.getElementById('irsLast').value  = pts.slice(1).join(' ')||'';
+  }
+  document.getElementById('irsForm').value  = formNumber||'1040';
+  document.getElementById('irsProd').value  = productType||'ACTR';
+  document.getElementById('irsYear').value  = taxYear||(new Date().getFullYear()-2);
+  toast('Form pre-filled — enter TIN and click Pull');
+}
+
+function viewAsClient(email){
+  window.open('/resolve?adminPreview='+encodeURIComponent(email),'_blank');
+}
+
+async function resendInvite(email,name){
+  try{
+    const r=await fetch('/api/admin-invite',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,email,name,resend:true})});
+    const d=await r.json();
+    if(!r.ok)throw new Error(d.error);
+    toast('Invite email sent to '+email);
+  }catch(e){toast('Error: '+e.message,true);}
 }
 
 function populateIrsSel(){
@@ -646,20 +732,45 @@ async function pullTranscript(){
   const btn=document.getElementById('pullBtn'),res=document.getElementById('pullRes');
   btn.disabled=true;btn.textContent='⏳ Pulling…';res.style.display='block';res.innerHTML='<span style="color:var(--ink-muted)">Connecting to IRS TDS API…</span>';
   const tp=document.getElementById('irsType').value;
+  const formNumber=document.getElementById('irsForm').value;
+  const productType=document.getElementById('irsProd').value;
+  const taxYear=document.getElementById('irsYear').value;
+  const txKey=`${formNumber}_${productType}_${taxYear}`;
   try{
-    const r=await fetch('/api/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,clientEmail:ce,action:'pull_transcript',transcriptRequest:{tin,taxpayerType:tp,firstName:document.getElementById('irsFirst').value,lastName:document.getElementById('irsLast').value,businessName:document.getElementById('irsBiz').value,formNumber:document.getElementById('irsForm').value,productType:document.getElementById('irsProd').value,taxYear:document.getElementById('irsYear').value,taxPeriod:12}})});
+    const r=await fetch('/api/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,clientEmail:ce,action:'pull_transcript',transcriptRequest:{tin,taxpayerType:tp,firstName:document.getElementById('irsFirst').value,lastName:document.getElementById('irsLast').value,businessName:document.getElementById('irsBiz').value,formNumber,productType,taxYear,taxPeriod:12}})});
     const d=await r.json();
     if(!r.ok){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(d.error||'IRS API error')}</span>`;}
-    else{curTx=d.transcript||'';res.innerHTML=`<span style="color:var(--green)">✅ Transcript pulled! <button class="btn btn-ghost btn-sm" onclick="openTxModal(curTx,'Transcript')">View</button></span>`;await loadClients();}
+    else{
+      curTx=d.transcript||'';
+      curTxEmail=ce;
+      curTxKey=txKey;
+      // Save pull metadata only (not the HTML)
+      await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:ce,adminPassword:apw,update:{adminAction:true,steps:{['txPulled_'+txKey]:new Date().toISOString()}}})});
+      res.innerHTML=`<span style="color:var(--green)">✅ Transcript pulled — not stored. <button class="btn btn-ghost btn-sm" onclick="openTxModal(curTx,'${txKey}')">View</button> <button class="btn btn-green btn-sm" onclick="dlTx()">⬇ Download</button></span>`;
+      await loadClients();
+    }
   }catch(e){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(e.message)}</span>`;}
   btn.disabled=false;btn.textContent='📋 Pull Transcript from IRS';
 }
 
 function quickPull(email){const c=clients.find(x=>x.email===email);if(!c)return;goPage('irs',document.querySelectorAll('.sb-i')[3]);if(c.steps?.form8821Data){const f=c.steps.form8821Data,pts=(f.taxpayerName||'').split(' ');document.getElementById('irsClient').value=email;document.getElementById('irsFirst').value=pts[0]||'';document.getElementById('irsLast').value=pts.slice(1).join(' ')||'';document.getElementById('irsYear').value=(f.taxYears||'').split(',')[0]?.trim()||new Date().getFullYear()-2;}}
 
-function viewTx(email,key){const c=clients.find(x=>x.email===email);if(!c)return;openTxModal(c.steps?.[key]||'',key.replace('transcript_',''));}
 function openTxModal(html,title){document.getElementById('txSub').textContent=title;document.getElementById('txContent').innerHTML=html||'No content';curTx=html;document.getElementById('txModal').classList.add('open');}
-function dlTx(){const b=new Blob([curTx],{type:'text/html'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='irs-transcript.html';a.click();}
+
+async function dlTx(){
+  // Record download date
+  if(curTxEmail&&curTxKey){
+    try{
+      await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:curTxEmail,adminPassword:apw,update:{adminAction:true,steps:{['txDownloaded_'+curTxKey]:new Date().toISOString()}}})});
+      await loadClients();
+    }catch(e){console.warn('Could not record download',e.message);}
+  }
+  const b=new Blob([curTx],{type:'text/html'}),a=document.createElement('a');
+  a.href=URL.createObjectURL(b);
+  a.download='irs-transcript-'+(curTxKey||'download')+'.html';
+  a.click();
+  toast('Transcript downloaded — not stored on server');
+}
 
 function dlF8(email){
   const c=clients.find(x=>x.email===email);if(!c)return;
