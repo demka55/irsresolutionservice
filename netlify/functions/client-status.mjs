@@ -6,70 +6,85 @@ export default async (req) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Password',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Content-Type': 'application/json',
   };
 
   if (req.method === 'OPTIONS') return new Response(null, { status: 200, headers });
 
   const store = getStore('client-status');
 
-  // GET — fetch status for a specific client (used by resolve.html)
+  // GET — fetch status for a specific client
   if (req.method === 'GET') {
     const url = new URL(req.url);
     const email = url.searchParams.get('email');
     if (!email) return new Response(JSON.stringify({ error: 'Missing email' }), { status: 400, headers });
 
     try {
-      const data = JSON.parse(await store.get(email.toLowerCase()) || '{}');
-      return new Response(JSON.stringify(data || { status: 'paid', steps: {} }), {
-        status: 200,
-        headers: { ...headers, 'Content-Type': 'application/json' }
-      });
+      const raw = await store.get(email.toLowerCase());
+      const data = raw ? (typeof raw === 'string' ? JSON.parse(raw) : raw) : { status: 'paid', steps: {} };
+      return new Response(JSON.stringify(data), { status: 200, headers });
     } catch {
-      return new Response(JSON.stringify({ status: 'paid', steps: {} }), {
-        status: 200,
-        headers: { ...headers, 'Content-Type': 'application/json' }
-      });
+      return new Response(JSON.stringify({ status: 'paid', steps: {} }), { status: 200, headers });
     }
   }
 
-  // POST — update status (used by admin and resolve.html)
+  // POST — update status
   if (req.method === 'POST') {
     let body;
     try { body = await req.json(); } catch { return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers }); }
 
     const { email, update, adminPassword } = body;
 
-    // Admin updates require password
     if (update.adminAction && adminPassword !== ADMIN_PASSWORD) {
       return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers });
     }
 
     if (!email) return new Response(JSON.stringify({ error: 'Missing email' }), { status: 400, headers });
 
-    try {
-      // Get existing data
-      let existing = {};
-      try { existing = JSON.parse(await store.get(email.toLowerCase()) || '{}') || {}; } catch {}
+    const key = email.toLowerCase();
 
-      // Merge update
+    try {
+      // Get existing
+      let existing = {};
+      try {
+        const raw = await store.get(key);
+        if (raw) existing = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      } catch {}
+
+      // Merge
       const updated = {
         ...existing,
-        email: email.toLowerCase(),
+        email: key,
         updatedAt: new Date().toISOString(),
         steps: { ...(existing.steps || {}), ...(update.steps || {}) },
         status: update.status || existing.status || 'paid',
-        name: update.name || existing.name || '',
+        name: update.name !== undefined ? update.name : (existing.name || ''),
+        company: update.company !== undefined ? update.company : (existing.company || ''),
+        phone: update.phone !== undefined ? update.phone : (existing.phone || ''),
         paidAt: existing.paidAt || update.paidAt || new Date().toISOString(),
+        sessionId: update.sessionId !== undefined ? update.sessionId : (existing.sessionId || ''),
         notes: update.notes !== undefined ? update.notes : (existing.notes || ''),
       };
 
-      await store.set(email.toLowerCase(), JSON.stringify(updated));
+      // Save client record
+      await store.set(key, JSON.stringify(updated));
 
-      return new Response(JSON.stringify({ ok: true, data: updated }), {
-        status: 200,
-        headers: { ...headers, 'Content-Type': 'application/json' }
-      });
+      // Update the email index
+      try {
+        let index = [];
+        const rawIndex = await store.get('__index__');
+        if (rawIndex) index = typeof rawIndex === 'string' ? JSON.parse(rawIndex) : rawIndex;
+        if (!index.includes(key)) {
+          index.push(key);
+          await store.set('__index__', JSON.stringify(index));
+        }
+      } catch (indexErr) {
+        console.warn('[client-status] index update failed:', indexErr.message);
+      }
+
+      return new Response(JSON.stringify({ ok: true, data: updated }), { status: 200, headers });
+
     } catch (err) {
       return new Response(JSON.stringify({ error: err.message }), { status: 500, headers });
     }

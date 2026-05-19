@@ -14,7 +14,6 @@ export default async (req) => {
 
   const url = new URL(req.url);
   const password = url.searchParams.get('password') || req.headers.get('X-Admin-Password');
-
   if (password !== ADMIN_PASSWORD) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers });
   }
@@ -22,32 +21,31 @@ export default async (req) => {
   try {
     const store = getStore('client-status');
 
-    let blobs = [];
+    // Read the index — a simple list of emails we maintain separately
+    // This avoids the slow/unreliable store.list() call
+    let emailIndex = [];
     try {
-      const result = await store.list();
-      blobs = result?.blobs || [];
-    } catch (listErr) {
-      console.error('[admin-clients] list() failed:', listErr.message);
-      return new Response(JSON.stringify({ clients: [], error: 'Could not list clients: ' + listErr.message }), { status: 200, headers });
+      const raw = await store.get('__index__');
+      if (raw) emailIndex = JSON.parse(raw);
+    } catch {
+      emailIndex = [];
     }
 
-    if (!blobs.length) {
-      return new Response(JSON.stringify({ clients: [] }), { status: 200, headers });
+    if (!emailIndex.length) {
+      return new Response(JSON.stringify({ clients: [], note: 'No clients yet' }), { status: 200, headers });
     }
 
+    // Fetch each client record individually with a timeout
     const clients = await Promise.all(
-      blobs.map(async (blob) => {
+      emailIndex.map(async (email) => {
         try {
-          // Get as text first, then parse — more reliable than type:'json'
-          const raw = await store.get(blob.key);
+          const raw = await Promise.race([
+            store.get(email),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 4000))
+          ]);
           if (!raw) return null;
-          try {
-            return typeof raw === 'string' ? JSON.parse(raw) : raw;
-          } catch {
-            return null;
-          }
-        } catch (getErr) {
-          console.warn('[admin-clients] get failed for', blob.key, getErr.message);
+          return typeof raw === 'string' ? JSON.parse(raw) : raw;
+        } catch {
           return null;
         }
       })
@@ -60,7 +58,6 @@ export default async (req) => {
     return new Response(JSON.stringify({ clients: validClients }), { status: 200, headers });
 
   } catch (err) {
-    console.error('[admin-clients] fatal:', err.message);
     return new Response(JSON.stringify({ clients: [], error: err.message }), { status: 200, headers });
   }
 };
