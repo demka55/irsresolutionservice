@@ -20,7 +20,7 @@ export default async (req) => {
     if (!email) return new Response(JSON.stringify({ error: 'Missing email' }), { status: 400, headers });
 
     try {
-      const data = await store.get(email.toLowerCase(), { type: 'json' });
+      const data = JSON.parse(await store.get(email.toLowerCase()) || '{}');
       return new Response(JSON.stringify(data || { status: 'paid', steps: {} }), {
         status: 200,
         headers: { ...headers, 'Content-Type': 'application/json' }
@@ -50,7 +50,7 @@ export default async (req) => {
     try {
       // Get existing data
       let existing = {};
-      try { existing = await store.get(email.toLowerCase(), { type: 'json' }) || {}; } catch {}
+      try { existing = JSON.parse(await store.get(email.toLowerCase()) || '{}') || {}; } catch {}
 
       // Merge update
       const updated = {
