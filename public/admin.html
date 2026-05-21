@@ -655,7 +655,7 @@ async function addClient(){
   const res=document.getElementById('ac-result');
   try{
     // 1. Create Blobs record
-    const r=await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,update:{name:n,company:co,phone:ph,status:s,notes:no,paidAt:new Date().toISOString()}})});
+    const r=await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,adminPassword:apw,update:{adminAction:true,name:n,company:co,phone:ph,status:s,notes:no,paidAt:new Date().toISOString()}})});
     if(!r.ok)throw new Error((await r.json()).error);
 
     // 2. Create Netlify Identity account + send invite email
