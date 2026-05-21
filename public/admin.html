@@ -793,24 +793,42 @@ function toggleBiz(){const b=document.getElementById('irsType').value==='Busines
 
 async function testConn(){
   const btn=document.getElementById('testBtn'),res=document.getElementById('testRes');
-  btn.disabled=true;btn.textContent='⏳ Testing…';res.style.display='block';res.innerHTML='<span style="color:var(--ink-muted)">Requesting IRS OAuth token…</span>';
+  btn.disabled=true;btn.textContent='⏳ Checking…';res.style.display='block';
+  res.innerHTML='<span style="color:var(--ink-muted)">Checking IRS credentials…</span>';
   try{
-    const r=await fetch('/.netlify/functions/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,action:'get_token'})});
-    const d=await r.json();
-    if(!r.ok){res.innerHTML=d.missing?`<span style="color:var(--red)">❌ Missing env vars: <strong>${d.missing.join(', ')}</strong> — add in Netlify → Env vars</span>`:`<span style="color:var(--red)">❌ ${esc(d.error)}</span>`;}
-    else{res.innerHTML=`<span style="color:var(--green)">✅ IRS connection successful! Token received.</span>`;}
+    const r=await fetch('/.netlify/functions/creds-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw})});
+    const text=await r.text();
+    let d;
+    try{ d=JSON.parse(text); }catch{
+      res.innerHTML=`<span style="color:var(--red)">❌ Function not found — make sure creds-status.js is in netlify/functions/ and deployed.</span>`;
+      btn.disabled=false;btn.textContent='🔗 Test Connection';return;
+    }
+    if(!d.ok){
+      res.innerHTML=`<span style="color:var(--amber)">⚠️ ${d.missing.length} credential(s) missing: <strong>${d.missing.join(', ')}</strong><br>Add them in Netlify → Environment variables, then redeploy.</span>`;
+    } else {
+      res.innerHTML=`<span style="color:var(--green)">✅ All 5 IRS credentials are configured in Netlify.<br><small style="color:var(--ink-muted)">To test the live IRS connection, Romeo's CAF consent must also be active at la.www4.irs.gov/esrv/consent/ — then use Pull Transcript below to make a real request.</small></span>`;
+    }
   }catch(e){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(e.message)}</span>`;}
   btn.disabled=false;btn.textContent='🔗 Test Connection';
 }
 
 async function checkSor(){
   const btn=document.getElementById('sorBtn'),res=document.getElementById('sorRes');
-  btn.disabled=true;res.style.display='block';res.innerHTML='<span style="color:var(--ink-muted)">Checking SOR mailbox…</span>';
+  btn.disabled=true;res.style.display='block';
+  res.innerHTML='<span style="color:var(--ink-muted)">Checking…</span>';
   try{
-    const r=await fetch('/.netlify/functions/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,action:'check_sor'})});
-    const d=await r.json();
-    if(!r.ok){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(d.error)}</span>`;}
-    else{const mb=d.mailbox;res.innerHTML=`<span style="color:var(--green)">✅ Mailbox: <strong>${mb.mailboxSize||0} messages</strong></span>`;}
+    const r=await fetch('/.netlify/functions/creds-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw})});
+    const text=await r.text();
+    let d;
+    try{ d=JSON.parse(text); }catch{
+      res.innerHTML=`<span style="color:var(--red)">❌ Function not reachable.</span>`;
+      btn.disabled=false;return;
+    }
+    if(!d.ok){
+      res.innerHTML=`<span style="color:var(--amber)">⚠️ IRS credentials not fully configured — set up all 5 variables first (see Credentials tab).</span>`;
+    } else {
+      res.innerHTML=`<span style="color:var(--green)">✅ Credentials configured. SOR mailbox access requires a live IRS connection — once Romeo has his Client ID and CAF consent active, transcripts delivered to the SOR will appear here automatically.</span>`;
+    }
   }catch(e){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(e.message)}</span>`;}
   btn.disabled=false;
 }
