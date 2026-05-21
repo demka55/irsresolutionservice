@@ -417,7 +417,7 @@ async function login(){
   btn.disabled=true; btn.textContent='Checking…';
   try{
     // Validate password server-side by attempting to load clients
-    const r=await fetch(`/api/admin-clients?password=${encodeURIComponent(pw)}`);
+    const r=await fetch(`/.netlify/functions/admin-clients?password=${encodeURIComponent(pw)}`);
     if(r.status===401){
       document.getElementById('lerr').style.display='block';
       btn.disabled=false; btn.textContent='Sign in →';
@@ -455,12 +455,19 @@ function needsAction(c){return['8821_signed','caf_active','transcripts_pulled','
 
 async function loadClients(){
   try{
-    const r=await fetch(`/api/admin-clients?password=${encodeURIComponent(apw)}`);
-    const d=await r.json();
-    if(!r.ok)throw new Error(d.error);
-    clients=d.clients||[];
+    const r=await fetch(`/.netlify/functions/admin-clients?password=${encodeURIComponent(apw)}`);
+    const text=await r.text();
+    let data;
+    try{ data=JSON.parse(text); }catch{ 
+      document.getElementById('tbody').innerHTML=`<div class="empty"><div class="empty-ic">⚠️</div><h3>Function error</h3><p>admin-clients returned: ${text.substring(0,200)}</p></div>`;
+      return;
+    }
+    if(!r.ok){ document.getElementById('tbody').innerHTML=`<div class="empty"><div class="empty-ic">⚠️</div><h3>Error</h3><p>${esc(data.error||'Unknown error')}</p></div>`; return; }
+    clients=data.clients||[];
     updateStats(); renderTable(); populateIrsSel();
-  }catch(e){document.getElementById('tbody').innerHTML=`<div class="empty"><div class="empty-ic">⚠️</div><h3>Error</h3><p>${esc(e.message)}</p></div>`;}
+  }catch(e){
+    document.getElementById('tbody').innerHTML=`<div class="empty"><div class="empty-ic">⚠️</div><h3>Error</h3><p>${esc(e.message)}</p></div>`;
+  }
 }
 
 function updateStats(){
@@ -631,7 +638,7 @@ async function saveInfo(email){
 
 async function upd(email,update){
   try{
-    const r=await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,adminPassword:apw,update:{...update,adminAction:true}})});
+    const r=await fetch('/.netlify/functions/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,adminPassword:apw,update:{...update,adminAction:true}})});
     const d=await r.json();if(!r.ok)throw new Error(d.error);
     const i=clients.findIndex(c=>c.email===email);if(i>=0)clients[i]=d.data;
     updateStats();renderTable();
@@ -655,13 +662,13 @@ async function addClient(){
   const res=document.getElementById('ac-result');
   try{
     // 1. Create Blobs record
-    const r=await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,adminPassword:apw,update:{adminAction:true,name:n,company:co,phone:ph,status:s,notes:no,paidAt:new Date().toISOString()}})});
+    const r=await fetch('/.netlify/functions/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,adminPassword:apw,update:{adminAction:true,name:n,company:co,phone:ph,status:s,notes:no,paidAt:new Date().toISOString()}})});
     if(!r.ok)throw new Error((await r.json()).error);
 
     // 2. Create Netlify Identity account + send invite email
     let identityMsg='';
     try{
-      const ir=await fetch('/api/admin-invite',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,email:e,name:n})});
+      const ir=await fetch('/.netlify/functions/admin-invite',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,email:e,name:n})});
       const id=await ir.json();
       if(ir.ok&&id.ok) identityMsg=' Account created — invite email sent.';
       else if(id.error?.includes('already')) identityMsg=' (Account already exists — no new invite sent.)';
@@ -703,12 +710,13 @@ async function rePullAndView(email, key){
 }
 
 function viewAsClient(email){
-  window.open('/resolve?adminPreview='+encodeURIComponent(email),'_blank');
+  // Pass admin password as query param so resolve.html skips the login gate
+  window.open('/resolve.html?adminPreview='+encodeURIComponent(email)+'&adminPw='+encodeURIComponent(apw),'_blank');
 }
 
 async function resendInvite(email,name){
   try{
-    const r=await fetch('/api/admin-invite',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,email,name,resend:true})});
+    const r=await fetch('/.netlify/functions/admin-invite',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,email,name,resend:true})});
     const d=await r.json();
     if(!r.ok)throw new Error(d.error);
     toast('Invite email sent to '+email);
@@ -725,7 +733,7 @@ async function testConn(){
   const btn=document.getElementById('testBtn'),res=document.getElementById('testRes');
   btn.disabled=true;btn.textContent='⏳ Testing…';res.style.display='block';res.innerHTML='<span style="color:var(--ink-muted)">Requesting IRS OAuth token…</span>';
   try{
-    const r=await fetch('/api/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,action:'get_token'})});
+    const r=await fetch('/.netlify/functions/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,action:'get_token'})});
     const d=await r.json();
     if(!r.ok){res.innerHTML=d.missing?`<span style="color:var(--red)">❌ Missing env vars: <strong>${d.missing.join(', ')}</strong> — add in Netlify → Env vars</span>`:`<span style="color:var(--red)">❌ ${esc(d.error)}</span>`;}
     else{res.innerHTML=`<span style="color:var(--green)">✅ IRS connection successful! Token received.</span>`;}
@@ -737,7 +745,7 @@ async function checkSor(){
   const btn=document.getElementById('sorBtn'),res=document.getElementById('sorRes');
   btn.disabled=true;res.style.display='block';res.innerHTML='<span style="color:var(--ink-muted)">Checking SOR mailbox…</span>';
   try{
-    const r=await fetch('/api/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,action:'check_sor'})});
+    const r=await fetch('/.netlify/functions/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,action:'check_sor'})});
     const d=await r.json();
     if(!r.ok){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(d.error)}</span>`;}
     else{const mb=d.mailbox;res.innerHTML=`<span style="color:var(--green)">✅ Mailbox: <strong>${mb.mailboxSize||0} messages</strong></span>`;}
@@ -756,7 +764,7 @@ async function pullTranscript(){
   const taxYear=document.getElementById('irsYear').value;
   const txKey=`${formNumber}_${productType}_${taxYear}`;
   try{
-    const r=await fetch('/api/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,clientEmail:ce,action:'pull_transcript',transcriptRequest:{tin,taxpayerType:tp,firstName:document.getElementById('irsFirst').value,lastName:document.getElementById('irsLast').value,businessName:document.getElementById('irsBiz').value,formNumber,productType,taxYear,taxPeriod:12}})});
+    const r=await fetch('/.netlify/functions/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,clientEmail:ce,action:'pull_transcript',transcriptRequest:{tin,taxpayerType:tp,firstName:document.getElementById('irsFirst').value,lastName:document.getElementById('irsLast').value,businessName:document.getElementById('irsBiz').value,formNumber,productType,taxYear,taxPeriod:12}})});
     const d=await r.json();
     if(!r.ok){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(d.error||'IRS API error')}</span>`;}
     else{
@@ -764,7 +772,7 @@ async function pullTranscript(){
       curTxEmail=ce;
       curTxKey=txKey;
       // Save pull metadata only (not the HTML)
-      await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:ce,adminPassword:apw,update:{adminAction:true,steps:{['txPulled_'+txKey]:new Date().toISOString()}}})});
+      await fetch('/.netlify/functions/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:ce,adminPassword:apw,update:{adminAction:true,steps:{['txPulled_'+txKey]:new Date().toISOString()}}})});
       res.innerHTML=`<span style="color:var(--green)">✅ Transcript pulled — not stored. <button class="btn btn-ghost btn-sm" onclick="openTxModal(curTx,'${txKey}')">View</button> <button class="btn btn-green btn-sm" onclick="dlTx()">⬇ Download</button></span>`;
       await loadClients();
     }
@@ -780,7 +788,7 @@ async function dlTx(){
   // Record download date
   if(curTxEmail&&curTxKey){
     try{
-      await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:curTxEmail,adminPassword:apw,update:{adminAction:true,steps:{['txDownloaded_'+curTxKey]:new Date().toISOString()}}})});
+      await fetch('/.netlify/functions/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:curTxEmail,adminPassword:apw,update:{adminAction:true,steps:{['txDownloaded_'+curTxKey]:new Date().toISOString()}}})});
       await loadClients();
     }catch(e){console.warn('Could not record download',e.message);}
   }
