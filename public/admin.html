@@ -887,19 +887,41 @@ function saveCreds(){ checkCredsStatus(); }
 async function checkCredsStatus(){
   const el=document.getElementById('credsStatus');
   if(!el) return;
-  el.innerHTML='<span style="color:var(--ink-muted)">Checking…</span>';
+  el.innerHTML='<span style="color:var(--ink-muted)">Checking Netlify environment variables…</span>';
   try{
-    const r=await fetch('/.netlify/functions/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,action:'get_token'})});
-    const d=await r.json();
-    if(d.missing&&d.missing.length){
-      el.innerHTML=`<div style="margin-bottom:.5rem;font-weight:600;color:var(--red)">❌ Missing variables:</div>${d.missing.map(m=>`<div style="color:var(--red);font-size:12px;padding:3px 0">✗ <code style="background:var(--red-light);padding:1px 6px;border-radius:2px">${m}</code></div>`).join('')}<div style="margin-top:.75rem;font-size:12px;color:var(--ink-muted)">Add these in Netlify → Environment variables, then redeploy.</div>`;
-    } else if(!r.ok){
-      el.innerHTML=`<div style="color:var(--red)">❌ ${esc(d.error||'Connection failed')}</div><div style="font-size:12px;color:var(--ink-muted);margin-top:.5rem">Check that all 5 variables are set in Netlify and you've redeployed.</div>`;
-    } else {
-      el.innerHTML=`<div style="color:var(--green);font-weight:600;margin-bottom:.5rem">✅ All credentials configured</div>${['IRS_API_CLIENT_ID','IRS_ESERVICES_USERNAME','IRS_CAF_NUMBER','IRS_JWK_KID','IRS_PRIVATE_KEY_PEM'].map(v=>`<div style="color:var(--green);font-size:12px;padding:3px 0">✓ <code style="background:var(--green-light);padding:1px 6px;border-radius:2px">${v}</code></div>`).join('')}<div style="margin-top:.75rem;font-size:12px;color:var(--ink-muted)">IRS connection ready. Go to IRS Connection tab to pull transcripts.</div>`;
+    const r=await fetch('/.netlify/functions/creds-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw})});
+    const text=await r.text();
+    let d;
+    try{ d=JSON.parse(text); }catch{
+      el.innerHTML=`<div style="color:var(--red);font-weight:600;margin-bottom:.5rem">❌ Function not found</div>
+        <div style="font-size:12px;color:var(--ink-soft);line-height:1.7">
+          Make sure <code>creds-status.mjs</code> is in <code>netlify/functions/</code> and you've committed and pushed.<br><br>
+          Raw response: ${text.substring(0,100)}
+        </div>`;
+      return;
     }
+    if(r.status===401){ el.innerHTML=`<div style="color:var(--red)">❌ Wrong admin password</div>`; return; }
+
+    const allVars=['IRS_API_CLIENT_ID','IRS_ESERVICES_USERNAME','IRS_CAF_NUMBER','IRS_JWK_KID','IRS_PRIVATE_KEY_PEM'];
+    el.innerHTML=`
+      <div style="font-weight:600;color:${d.ok?'var(--green)':'var(--amber)'};margin-bottom:.75rem">
+        ${d.ok ? '✅ All 5 credentials configured' : `⚠️ ${d.configured.length} of 5 configured`}
+      </div>
+      ${allVars.map(v=>{
+        const info=d.status?.[v];
+        const set=info?.set;
+        return `<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px">
+          <span style="color:${set?'var(--green)':'var(--red)';}">${set?'✓':'✗'}</span>
+          <code style="background:${set?'var(--green-light)':'var(--red-light)'};padding:2px 8px;border-radius:2px;font-size:11px;color:${set?'var(--green)':'var(--red)'}">${v}</code>
+          ${set?`<span style="color:var(--ink-muted);font-size:11px">${info.preview}</span>`:'<span style="color:var(--red);font-size:11px">not set</span>'}
+        </div>`;
+      }).join('')}
+      ${!d.ok?`<div style="margin-top:.875rem;font-size:12px;color:var(--ink-soft);background:var(--amber-light);border:1px solid #e8c98a;border-radius:3px;padding:.75rem;line-height:1.7">
+        Add missing variables in <strong>Netlify → Site configuration → Environment variables</strong> then push any commit to redeploy.
+      </div>`:'<div style="margin-top:.75rem;font-size:12px;color:var(--green)">Go to IRS Connection tab to test the live connection.</div>'}
+    `;
   }catch(e){
-    el.innerHTML=`<div style="color:var(--red)">❌ ${esc(e.message)}</div>`;
+    el.innerHTML=`<div style="color:var(--red);font-weight:600;margin-bottom:.5rem">❌ Network error</div><div style="font-size:12px;color:var(--ink-soft)">${esc(e.message)}</div>`;
   }
 }
 
