@@ -901,7 +901,7 @@ async function checkCredsStatus(){
         const info=d.status?.[v];
         const set=info?.set;
         return `<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px">
-          <span style="color:${set?'var(--green)':'var(--red)';}">${set?'✓':'✗'}</span>
+          <span style="color:${set?'var(--green)':'var(--red)'}">${set?'✓':'✗'}</span>
           <code style="background:${set?'var(--green-light)':'var(--red-light)'};padding:2px 8px;border-radius:2px;font-size:11px;color:${set?'var(--green)':'var(--red)'}">${v}</code>
           ${set?`<span style="color:var(--ink-muted);font-size:11px">${info.preview}</span>`:'<span style="color:var(--red);font-size:11px">not set</span>'}
         </div>`;
