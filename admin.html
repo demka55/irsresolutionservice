@@ -313,27 +313,99 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 <!-- CREDENTIALS PAGE -->
 <div id="pg-creds" class="page">
   <div class="topbar">
-    <div><div class="tb-title">IRS API Credentials</div><div class="tb-sub">Romeo's IRS e-Services credentials for transcript access</div></div>
-    <div class="tb-actions"><button class="btn btn-gold btn-sm" onclick="saveCreds()">Save & Show Instructions</button></div>
+    <div><div class="tb-title">IRS API Credentials</div><div class="tb-sub">How to securely configure Romeo's IRS e-Services credentials</div></div>
+    <div class="tb-actions"><button class="btn btn-blue btn-sm" onclick="checkCredsStatus()">↻ Check Status</button></div>
   </div>
   <div class="body">
-    <div class="notice-box"><strong>All other credentials (Resend, Stripe, Netlify) are already configured as environment variables.</strong> This page is only for the IRS API credentials needed to pull client transcripts directly from the IRS.</div>
-    <div class="cc-card" style="max-width:680px">
-      <div class="cc-h">🏛️ IRS e-Services API (TDS)</div>
-      <div class="cc-sub">Romeo's IRS API credentials for the Transcript Delivery System. Required to pull client transcripts via the A2A OAuth flow. Once set, go to the IRS Connection tab to test.</div>
-      <div class="field"><span class="lbl">IRS API Client ID</span><input class="inp" id="cr-cid" placeholder="From IRS e-Services → API Client ID Application"></div>
-      <div class="field"><span class="lbl">e-Services Username (used as JWT sub claim)</span><input class="inp" id="cr-usr" placeholder="Romeo's IRS e-Services login username"></div>
-      <div class="field"><span class="lbl">CAF Number (9 digits, no hyphens or spaces)</span><input class="inp" id="cr-caf" placeholder="123456789" maxlength="9"></div>
-      <div class="field"><span class="lbl">JWK Key ID (kid — from your JWK registration)</span><input class="inp" id="cr-kid" placeholder="key1"></div>
-      <div class="field"><span class="lbl">Private Key — PEM format (RSA-2048)</span><textarea class="inp mono" id="cr-pk" rows="6" placeholder="-----BEGIN PRIVATE KEY-----&#10;MIIEvgIBADANBgkq...&#10;-----END PRIVATE KEY-----"></textarea></div>
-      <div style="background:var(--blue-light);border:1px solid #b8cfe0;border-radius:3px;padding:.875rem 1rem;font-size:12px;color:var(--ink-soft);line-height:1.7;margin-top:.75rem">
-        <strong style="color:var(--blue);display:block;margin-bottom:.4rem">How to get these credentials:</strong>
-        <strong>1. Client ID</strong> — Log in to irs.gov/e-services → Access API Client ID → Complete application. Upload your JWK public key file. Client ID appears on Application Details page.<br>
-        <strong>2. Private Key</strong> — Generate RSA-2048 key pair. Upload the public key (as JWK with x5c/x5t) to IRS during registration. Paste the private key here.<br>
-        <strong>3. CAF Number</strong> — Call IRS Practitioner Priority Service at <strong>866-860-4259</strong> to retrieve it.<br>
-        <strong>4. Grant A2A Consent</strong> — One-time step: log in to <strong>la.www4.irs.gov/esrv/consent/</strong> and authorize your Client ID for A2A access.
+
+    <div style="background:#fdf0f0;border:1px solid #e8b0b0;border-radius:4px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:13px;color:var(--red);line-height:1.65">
+      <strong>⚠️ Never enter credentials in this UI.</strong> Anything typed in a browser can be intercepted or logged. All IRS credentials must be added directly in Netlify — never through any form.
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem">
+
+      <div class="cc-card">
+        <div class="cc-h">✅ How to add credentials securely</div>
+        <div class="cc-sub">Add these directly in Netlify — takes 2 minutes.</div>
+        <ol style="font-size:13px;color:var(--ink-soft);line-height:2.2;padding-left:1.25rem">
+          <li>Go to <strong>app.netlify.com</strong> → your site</li>
+          <li>Click <strong>Site configuration</strong> → <strong>Environment variables</strong></li>
+          <li>Click <strong>Add a variable</strong> for each one below</li>
+          <li>After adding all variables, push any commit to redeploy</li>
+          <li>Come back here and click <strong>Check Status</strong> to verify</li>
+        </ol>
+      </div>
+
+      <div class="cc-card" id="credsStatusCard">
+        <div class="cc-h">🔍 Current Status</div>
+        <div id="credsStatus" style="font-size:13px;color:var(--ink-muted)">Click "Check Status" to verify which credentials are configured.</div>
+      </div>
+
+    </div>
+
+    <div class="cc-card" style="margin-bottom:1.25rem">
+      <div class="cc-h">📋 Variables to add in Netlify</div>
+      <div style="font-size:13px;color:var(--ink-muted);margin-bottom:1rem">Copy each variable name exactly as shown. Values come from your IRS e-Services account.</div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead>
+          <tr style="background:var(--cream-warm);text-align:left">
+            <th style="padding:8px 12px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);font-weight:700;border-bottom:1px solid var(--cream-dark)">Variable Name</th>
+            <th style="padding:8px 12px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);font-weight:700;border-bottom:1px solid var(--cream-dark)">What it is</th>
+            <th style="padding:8px 12px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);font-weight:700;border-bottom:1px solid var(--cream-dark)">How to get it</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--cream-warm)">
+            <td style="padding:10px 12px"><code style="background:var(--cream);padding:2px 7px;border-radius:2px;font-size:12px;color:var(--ink)">IRS_API_CLIENT_ID</code></td>
+            <td style="padding:10px 12px;color:var(--ink-soft)">Your IRS API application ID</td>
+            <td style="padding:10px 12px;color:var(--ink-muted)">irs.gov/e-services → Access API Client ID → Application Details page</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--cream-warm)">
+            <td style="padding:10px 12px"><code style="background:var(--cream);padding:2px 7px;border-radius:2px;font-size:12px;color:var(--ink)">IRS_ESERVICES_USERNAME</code></td>
+            <td style="padding:10px 12px;color:var(--ink-soft)">Romeo's IRS e-Services login username</td>
+            <td style="padding:10px 12px;color:var(--ink-muted)">The username Romeo uses to log into irs.gov/e-services</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--cream-warm)">
+            <td style="padding:10px 12px"><code style="background:var(--cream);padding:2px 7px;border-radius:2px;font-size:12px;color:var(--ink)">IRS_CAF_NUMBER</code></td>
+            <td style="padding:10px 12px;color:var(--ink-soft)">9-digit CAF number (no hyphens)</td>
+            <td style="padding:10px 12px;color:var(--ink-muted)">Call IRS Practitioner Priority Service: <strong>866-860-4259</strong></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--cream-warm)">
+            <td style="padding:10px 12px"><code style="background:var(--cream);padding:2px 7px;border-radius:2px;font-size:12px;color:var(--ink)">IRS_JWK_KID</code></td>
+            <td style="padding:10px 12px;color:var(--ink-soft)">Key ID from your JWK registration</td>
+            <td style="padding:10px 12px;color:var(--ink-muted)">From the JWK file you uploaded during IRS API registration (usually "key1")</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 12px"><code style="background:var(--cream);padding:2px 7px;border-radius:2px;font-size:12px;color:var(--ink)">IRS_PRIVATE_KEY_PEM</code></td>
+            <td style="padding:10px 12px;color:var(--ink-soft)">RSA-2048 private key in PEM format</td>
+            <td style="padding:10px 12px;color:var(--ink-muted)">Generated when you created your key pair for IRS registration. Starts with <code>-----BEGIN PRIVATE KEY-----</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cc-card">
+      <div class="cc-h">🔑 One-time setup steps</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;font-size:13px;color:var(--ink-soft);line-height:1.8">
+        <div>
+          <strong style="color:var(--ink);display:block;margin-bottom:.5rem">Step 1 — Register for IRS API access</strong>
+          Log into <strong>irs.gov/e-services</strong> → navigate to Access API Client ID → complete the application form. You'll need to generate an RSA-2048 key pair and upload the public key as a JWK file with x5c and x5t parameters. Your Client ID appears on the Application Details page once approved.
+        </div>
+        <div>
+          <strong style="color:var(--ink);display:block;margin-bottom:.5rem">Step 2 — Get your CAF number</strong>
+          Call the IRS Practitioner Priority Service at <strong>866-860-4259</strong>. This is the 9-digit number assigned to Romeo as an authorized representative. It's required in every transcript request.
+        </div>
+        <div>
+          <strong style="color:var(--ink);display:block;margin-bottom:.5rem">Step 3 — Grant A2A consent (one-time)</strong>
+          Romeo must log into the IRS Consent App at <strong>la.www4.irs.gov/esrv/consent/</strong> and authorize the Client ID for A2A access. This is a one-time step that allows the system to pull transcripts without Romeo being present.
+        </div>
+        <div>
+          <strong style="color:var(--ink);display:block;margin-bottom:.5rem">Step 4 — Test the connection</strong>
+          After adding all variables and redeploying, go to the <strong>IRS Connection</strong> tab and click <strong>Test Connection</strong>. A green success message confirms everything is working.
+        </div>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -808,19 +880,27 @@ function dlF8(email){
 
 function emailCl(e,n){window.open(`mailto:${e}?subject=IRS Resolution Update — ${n}`);}
 
-function loadCredsFromStorage(){
-  ['cid','usr','caf','kid','rk'].forEach(f=>{const el=document.getElementById('cr-'+f),v=localStorage.getItem('cr_'+f);if(el&&v)el.value=v;});
-}
+function loadCredsFromStorage(){ /* credentials no longer stored in browser */ }
 
-function saveCreds(){
-  const fields=['cid','usr','caf','kid'];
-  fields.forEach(f=>{const el=document.getElementById('cr-'+f);if(el&&el.value.trim())localStorage.setItem('cr_'+f,el.value.trim());});
-  const cid=document.getElementById('cr-cid').value||'(not set)';
-  const usr=document.getElementById('cr-usr').value||'(not set)';
-  const caf=document.getElementById('cr-caf').value||'(not set)';
-  const kid=document.getElementById('cr-kid').value||'key1';
-  alert(`Add these to Netlify → Site configuration → Environment variables:\n\nIRS_API_CLIENT_ID = ${cid}\nIRS_ESERVICES_USERNAME = ${usr}\nIRS_CAF_NUMBER = ${caf}\nIRS_JWK_KID = ${kid}\nIRS_PRIVATE_KEY_PEM = (paste your full PEM private key)\n\nThen push a commit to GitHub to redeploy.`);
-  toast('Saved locally. Add env vars to Netlify to activate.');
+function saveCreds(){ checkCredsStatus(); }
+
+async function checkCredsStatus(){
+  const el=document.getElementById('credsStatus');
+  if(!el) return;
+  el.innerHTML='<span style="color:var(--ink-muted)">Checking…</span>';
+  try{
+    const r=await fetch('/.netlify/functions/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,action:'get_token'})});
+    const d=await r.json();
+    if(d.missing&&d.missing.length){
+      el.innerHTML=`<div style="margin-bottom:.5rem;font-weight:600;color:var(--red)">❌ Missing variables:</div>${d.missing.map(m=>`<div style="color:var(--red);font-size:12px;padding:3px 0">✗ <code style="background:var(--red-light);padding:1px 6px;border-radius:2px">${m}</code></div>`).join('')}<div style="margin-top:.75rem;font-size:12px;color:var(--ink-muted)">Add these in Netlify → Environment variables, then redeploy.</div>`;
+    } else if(!r.ok){
+      el.innerHTML=`<div style="color:var(--red)">❌ ${esc(d.error||'Connection failed')}</div><div style="font-size:12px;color:var(--ink-muted);margin-top:.5rem">Check that all 5 variables are set in Netlify and you've redeployed.</div>`;
+    } else {
+      el.innerHTML=`<div style="color:var(--green);font-weight:600;margin-bottom:.5rem">✅ All credentials configured</div>${['IRS_API_CLIENT_ID','IRS_ESERVICES_USERNAME','IRS_CAF_NUMBER','IRS_JWK_KID','IRS_PRIVATE_KEY_PEM'].map(v=>`<div style="color:var(--green);font-size:12px;padding:3px 0">✓ <code style="background:var(--green-light);padding:1px 6px;border-radius:2px">${v}</code></div>`).join('')}<div style="margin-top:.75rem;font-size:12px;color:var(--ink-muted)">IRS connection ready. Go to IRS Connection tab to pull transcripts.</div>`;
+    }
+  }catch(e){
+    el.innerHTML=`<div style="color:var(--red)">❌ ${esc(e.message)}</div>`;
+  }
 }
 
 function closeM(id){document.getElementById(id).classList.remove('open');}
