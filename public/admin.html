@@ -483,38 +483,21 @@ const STEPS=[
 document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
 
 async function login(){
-  const pw=document.getElementById('pw').value;
-  if(!pw){return;}
+  const pw=document.getElementById('pw').value.trim();
+  if(!pw) return;
   const btn=document.querySelector('.lbtn');
   const err=document.getElementById('lerr');
-  btn.disabled=true; btn.textContent='Checking…';
+  btn.disabled=true; btn.textContent='Signing in…';
   err.style.display='none';
-  try{
-    const r=await fetch(`/.netlify/functions/admin-clients?password=${encodeURIComponent(pw)}`);
-    const text=await r.text();
-    if(r.status===401){
-      err.textContent='Incorrect password.';
-      err.style.display='block';
-      btn.disabled=false; btn.textContent='Sign in →';
-      return;
-    }
-    // Accept any non-401 response as valid login — even if clients fail to load
-    apw=pw;
-    sessionStorage.setItem('a',pw);
-    document.getElementById('login').style.display='none';
-    document.getElementById('app').style.display='block';
-    // Try to parse clients
-    try{
-      const d=JSON.parse(text);
-      clients=d.clients||[];
-    }catch{ clients=[]; }
-    updateStats(); renderTable(); populateIrsSel();
-    loadCredsFromStorage();
-  }catch(e){
-    err.textContent='Connection error: '+e.message+'. Check your internet connection.';
-    err.style.display='block';
-    btn.disabled=false; btn.textContent='Sign in →';
-  }
+
+  // Store password and go straight in — server validates on each API call
+  apw=pw;
+  sessionStorage.setItem('a',pw);
+  document.getElementById('login').style.display='none';
+  document.getElementById('app').style.display='block';
+  btn.disabled=false; btn.textContent='Sign in →';
+  loadClients();
+  loadCredsFromStorage();
 }
 function logout(){sessionStorage.removeItem('a');location.reload();}
 const sa=sessionStorage.getItem('a');
