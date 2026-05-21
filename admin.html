@@ -889,47 +889,39 @@ async function checkCredsStatus(){
   if(!el) return;
   el.innerHTML='<span style="color:var(--ink-muted)">Checking Netlify environment variables…</span>';
   try{
-    const r=await fetch('/.netlify/functions/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,action:'get_token'})});
+    const r=await fetch('/.netlify/functions/creds-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw})});
     const text=await r.text();
     let d;
     try{ d=JSON.parse(text); }catch{
-      // Function returned HTML — means the function itself isn't found or crashed at load
-      el.innerHTML=`
-        <div style="color:var(--red);font-weight:600;margin-bottom:.5rem">❌ Function not reachable</div>
+      el.innerHTML=`<div style="color:var(--red);font-weight:600;margin-bottom:.5rem">❌ Function not found</div>
         <div style="font-size:12px;color:var(--ink-soft);line-height:1.7">
-          The <code>irs-transcript</code> function returned an HTML error page instead of JSON.<br><br>
-          <strong>Most likely cause:</strong> the function file wasn't deployed correctly.<br><br>
-          <strong>To fix:</strong><br>
-          1. Make sure <code>irs-transcript.mjs</code> is in your <code>netlify/functions/</code> folder<br>
-          2. Commit and push to trigger a redeploy<br>
-          3. Check Netlify → Functions to confirm it appears in the list
+          Make sure <code>creds-status.js</code> is in <code>netlify/functions/</code> and you've committed and pushed.<br><br>
+          Raw response: ${text.substring(0,100)}
         </div>`;
       return;
     }
-    if(r.status===503&&d.missing&&d.missing.length){
-      el.innerHTML=`
-        <div style="font-weight:600;color:var(--amber);margin-bottom:.75rem">⚠️ Missing environment variables (${d.missing.length} of 5)</div>
-        ${d.missing.map(m=>`<div style="color:var(--red);font-size:12px;padding:4px 0;display:flex;align-items:center;gap:8px"><span style="color:var(--red)">✗</span><code style="background:var(--red-light);padding:2px 8px;border-radius:2px;font-size:11px">${m}</code></div>`).join('')}
-        <div style="margin-top:1rem;font-size:12px;color:var(--ink-soft);background:var(--amber-light);border:1px solid #e8c98a;border-radius:3px;padding:.75rem;line-height:1.7">
-          <strong>Next step:</strong> Add the missing variables in<br>
-          <strong>Netlify → Site configuration → Environment variables</strong><br>
-          then push any commit to redeploy.
-        </div>`;
-    } else if(!r.ok){
-      el.innerHTML=`
-        <div style="color:var(--red);font-weight:600;margin-bottom:.5rem">❌ IRS connection failed</div>
-        <div style="font-size:12px;color:var(--ink-soft);line-height:1.7">Error: ${esc(d.error||'Unknown')}<br><br>
-        All 5 variables may be set but the IRS API rejected the credentials. Check that your Client ID, CAF number, and private key are correct, and that A2A consent has been granted at <strong>la.www4.irs.gov/esrv/consent/</strong></div>`;
-    } else {
-      el.innerHTML=`
-        <div style="color:var(--green);font-weight:600;margin-bottom:.75rem">✅ All 5 credentials configured and working</div>
-        ${['IRS_API_CLIENT_ID','IRS_ESERVICES_USERNAME','IRS_CAF_NUMBER','IRS_JWK_KID','IRS_PRIVATE_KEY_PEM'].map(v=>`<div style="color:var(--green);font-size:12px;padding:3px 0;display:flex;align-items:center;gap:8px"><span>✓</span><code style="background:var(--green-light);padding:2px 8px;border-radius:2px;font-size:11px">${v}</code></div>`).join('')}
-        <div style="margin-top:.75rem;font-size:12px;color:var(--green)">IRS connection verified. Go to IRS Connection tab to pull transcripts.</div>`;
-    }
-  }catch(e){
+    if(r.status===401){ el.innerHTML=`<div style="color:var(--red)">❌ Wrong admin password</div>`; return; }
+
+    const allVars=['IRS_API_CLIENT_ID','IRS_ESERVICES_USERNAME','IRS_CAF_NUMBER','IRS_JWK_KID','IRS_PRIVATE_KEY_PEM'];
     el.innerHTML=`
-      <div style="color:var(--red);font-weight:600;margin-bottom:.5rem">❌ Network error</div>
-      <div style="font-size:12px;color:var(--ink-soft)">Could not reach the function: ${esc(e.message)}<br><br>Check your internet connection and that the site is deployed.</div>`;
+      <div style="font-weight:600;color:${d.ok?'var(--green)':'var(--amber)'};margin-bottom:.75rem">
+        ${d.ok ? '✅ All 5 credentials configured' : `⚠️ ${d.configured.length} of 5 configured`}
+      </div>
+      ${allVars.map(v=>{
+        const info=d.status?.[v];
+        const set=info?.set;
+        return `<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px">
+          <span style="color:${set?'var(--green)':'var(--red)';}">${set?'✓':'✗'}</span>
+          <code style="background:${set?'var(--green-light)':'var(--red-light)'};padding:2px 8px;border-radius:2px;font-size:11px;color:${set?'var(--green)':'var(--red)'}">${v}</code>
+          ${set?`<span style="color:var(--ink-muted);font-size:11px">${info.preview}</span>`:'<span style="color:var(--red);font-size:11px">not set</span>'}
+        </div>`;
+      }).join('')}
+      ${!d.ok?`<div style="margin-top:.875rem;font-size:12px;color:var(--ink-soft);background:var(--amber-light);border:1px solid #e8c98a;border-radius:3px;padding:.75rem;line-height:1.7">
+        Add missing variables in <strong>Netlify → Site configuration → Environment variables</strong> then push any commit to redeploy.
+      </div>`:'<div style="margin-top:.75rem;font-size:12px;color:var(--green)">Go to IRS Connection tab to test the live connection.</div>'}
+    `;
+  }catch(e){
+    el.innerHTML=`<div style="color:var(--red);font-weight:600;margin-bottom:.5rem">❌ Network error</div><div style="font-size:12px;color:var(--ink-soft)">${esc(e.message)}</div>`;
   }
 }
 

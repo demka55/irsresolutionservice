@@ -895,7 +895,7 @@ async function checkCredsStatus(){
     try{ d=JSON.parse(text); }catch{
       el.innerHTML=`<div style="color:var(--red);font-weight:600;margin-bottom:.5rem">❌ Function not found</div>
         <div style="font-size:12px;color:var(--ink-soft);line-height:1.7">
-          Make sure <code>creds-status.mjs</code> is in <code>netlify/functions/</code> and you've committed and pushed.<br><br>
+          Make sure <code>creds-status.js</code> is in <code>netlify/functions/</code> and you've committed and pushed.<br><br>
           Raw response: ${text.substring(0,100)}
         </div>`;
       return;
