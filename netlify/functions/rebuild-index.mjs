@@ -1,10 +1,10 @@
 // One-time migration: rebuilds the __index__ from store.list()
-// Call once at: /api/rebuild-index?password=gdhERcgvJfqk3WhiPExi
+// Call once at: /api/rebuild-index?password=YOUR_ADMIN_PASSWORD
 // Then delete this file from your repo
 
 import { getStore } from '@netlify/blobs';
 
-const ADMIN_PASSWORD = 'gdhERcgvJfqk3WhiPExi';
+const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || '';
 
 export default async (req) => {
   const headers = { 'Content-Type': 'application/json' };

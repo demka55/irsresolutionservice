@@ -2,7 +2,7 @@ import { getStore } from '@netlify/blobs';
 
 export default async (req) => {
   const headers = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': 'https://irsresolutionservice.com',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };

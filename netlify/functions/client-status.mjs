@@ -1,10 +1,17 @@
 import { getStore } from '@netlify/blobs';
 
-const ADMIN_PASSWORD = 'gdhERcgvJfqk3WhiPExi';
+// Password read from env var — never hardcoded
+const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || '';
+
+// Fields clients are allowed to update on their own record
+const CLIENT_ALLOWED_FIELDS = ['steps', 'notes'];
+
+// Fields only admins can update
+const ADMIN_ONLY_FIELDS = ['status', 'name', 'company', 'phone', 'sessionId', 'paidAt', 'amount'];
 
 export default async (req) => {
   const headers = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': 'https://irsresolutionservice.com',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Content-Type': 'application/json',
@@ -19,7 +26,6 @@ export default async (req) => {
     const url = new URL(req.url);
     const email = url.searchParams.get('email');
     if (!email) return new Response(JSON.stringify({ error: 'Missing email' }), { status: 400, headers });
-
     try {
       const raw = await store.get(email.toLowerCase());
       const data = raw ? (typeof raw === 'string' ? JSON.parse(raw) : raw) : { status: 'paid', steps: {} };
@@ -32,45 +38,67 @@ export default async (req) => {
   // POST — update status
   if (req.method === 'POST') {
     let body;
-    try { body = await req.json(); } catch { return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers }); }
-
-    const { email, update, adminPassword } = body;
-
-    if (update.adminAction && adminPassword !== ADMIN_PASSWORD) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers });
+    try { body = await req.json(); } catch {
+      return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers });
     }
 
+    const { email, update, adminPassword } = body;
     if (!email) return new Response(JSON.stringify({ error: 'Missing email' }), { status: 400, headers });
+
+    const isAdmin = ADMIN_PASSWORD && adminPassword === ADMIN_PASSWORD;
+
+    // Check if update contains admin-only fields
+    const hasAdminFields = ADMIN_ONLY_FIELDS.some(f => update[f] !== undefined) || update.adminAction;
+
+    if (hasAdminFields && !isAdmin) {
+      return new Response(JSON.stringify({ error: 'Unauthorized — admin required for this update' }), { status: 401, headers });
+    }
+
+    // Non-admin updates: only allow specific step keys (form8821Signed, planApproved)
+    if (!isAdmin && update.steps) {
+      const allowedStepKeys = ['form8821Signed', 'form8821Data', 'planApproved'];
+      const attemptedKeys = Object.keys(update.steps);
+      const disallowedKeys = attemptedKeys.filter(k => !allowedStepKeys.includes(k));
+      if (disallowedKeys.length) {
+        return new Response(JSON.stringify({ error: 'Unauthorized step keys: ' + disallowedKeys.join(', ') }), { status: 401, headers });
+      }
+    }
 
     const key = email.toLowerCase();
 
     try {
-      // Get existing
       let existing = {};
       try {
         const raw = await store.get(key);
         if (raw) existing = typeof raw === 'string' ? JSON.parse(raw) : raw;
       } catch {}
 
-      // Merge
       const updated = {
         ...existing,
         email: key,
         updatedAt: new Date().toISOString(),
         steps: { ...(existing.steps || {}), ...(update.steps || {}) },
-        status: update.status || existing.status || 'paid',
-        name: update.name !== undefined ? update.name : (existing.name || ''),
-        company: update.company !== undefined ? update.company : (existing.company || ''),
-        phone: update.phone !== undefined ? update.phone : (existing.phone || ''),
-        paidAt: existing.paidAt || update.paidAt || new Date().toISOString(),
-        sessionId: update.sessionId !== undefined ? update.sessionId : (existing.sessionId || ''),
-        notes: update.notes !== undefined ? update.notes : (existing.notes || ''),
+        ...(isAdmin ? {
+          status:    update.status    !== undefined ? update.status    : existing.status    || 'paid',
+          name:      update.name      !== undefined ? update.name      : existing.name      || '',
+          company:   update.company   !== undefined ? update.company   : existing.company   || '',
+          phone:     update.phone     !== undefined ? update.phone     : existing.phone     || '',
+          sessionId: update.sessionId !== undefined ? update.sessionId : existing.sessionId || '',
+          notes:     update.notes     !== undefined ? update.notes     : existing.notes     || '',
+          paidAt:    existing.paidAt  || update.paidAt || new Date().toISOString(),
+        } : {
+          status:  existing.status  || 'paid',
+          name:    existing.name    || '',
+          company: existing.company || '',
+          phone:   existing.phone   || '',
+          paidAt:  existing.paidAt  || new Date().toISOString(),
+          notes:   update.notes !== undefined ? update.notes : existing.notes || '',
+        }),
       };
 
-      // Save client record
       await store.set(key, JSON.stringify(updated));
 
-      // Update the email index
+      // Update email index
       try {
         let index = [];
         const rawIndex = await store.get('__index__');

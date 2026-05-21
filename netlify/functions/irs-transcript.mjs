@@ -4,7 +4,7 @@
 
 import { getStore } from '@netlify/blobs';
 
-const ADMIN_PASSWORD = 'gdhERcgvJfqk3WhiPExi';
+const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || '';
 
 // IRS API endpoints
 const IRS_TOKEN_URL = 'https://api.www4.irs.gov/auth/oauth/v2/token';
@@ -18,7 +18,7 @@ const IRS_SOR_URL   = 'https://api.www4.irs.gov/esrv/api/sor/messages';
 
 export default async (req) => {
   const headers = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': 'https://irsresolutionservice.com',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };

@@ -1,10 +1,10 @@
 import { getStore } from '@netlify/blobs';
 
-const ADMIN_PASSWORD = 'gdhERcgvJfqk3WhiPExi';
+const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || '';
 
 export default async (req) => {
   const headers = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': 'https://irsresolutionservice.com',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Password',
     'Content-Type': 'application/json',

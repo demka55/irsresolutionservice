@@ -392,7 +392,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 <div class="toast" id="toast"></div>
 
 <script>
-const PW='gdhERcgvJfqk3WhiPExi';
+const PW = null; // Password validated server-side only — never stored in frontend code
 let apw='',clients=[],filt='all',curTx='',curTxEmail='',curTxKey='';
 
 const SL={'paid':'Awaiting 8821','8821_signed':'8821 Signed','caf_pending':'CAF Pending','caf_active':'CAF Active','transcripts_pulled':'Transcripts Pulled','plan_sent':'Plan Sent','plan_approved':'Plan Approved','filed':'Filed','resolved':'Resolved'};
@@ -410,17 +410,36 @@ const STEPS=[
 
 document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
 
-function login(){
-  if(document.getElementById('pw').value===PW){
-    apw=PW; sessionStorage.setItem('a',PW);
+async function login(){
+  const pw=document.getElementById('pw').value;
+  if(!pw){return;}
+  const btn=document.querySelector('.lbtn');
+  btn.disabled=true; btn.textContent='Checking…';
+  try{
+    // Validate password server-side by attempting to load clients
+    const r=await fetch(`/api/admin-clients?password=${encodeURIComponent(pw)}`);
+    if(r.status===401){
+      document.getElementById('lerr').style.display='block';
+      btn.disabled=false; btn.textContent='Sign in →';
+      return;
+    }
+    apw=pw;
+    sessionStorage.setItem('a', pw);
     document.getElementById('login').style.display='none';
     document.getElementById('app').style.display='block';
-    loadClients(); loadCredsFromStorage();
-  } else { document.getElementById('lerr').style.display='block'; }
+    const data=await r.json();
+    clients=data.clients||[];
+    updateStats(); renderTable(); populateIrsSel();
+    loadCredsFromStorage();
+  }catch(e){
+    document.getElementById('lerr').textContent='Connection error. Try again.';
+    document.getElementById('lerr').style.display='block';
+    btn.disabled=false; btn.textContent='Sign in →';
+  }
 }
 function logout(){sessionStorage.removeItem('a');location.reload();}
 const sa=sessionStorage.getItem('a');
-if(sa===PW){apw=sa;document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';loadClients();loadCredsFromStorage();}
+if(sa){apw=sa;document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';loadClients();loadCredsFromStorage();}
 
 function goPage(n,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));

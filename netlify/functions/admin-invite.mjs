@@ -1,11 +1,11 @@
 // netlify/functions/admin-invite.mjs
 // Creates a Netlify Identity account for a client and sends them an invite email
 
-const ADMIN_PASSWORD = 'gdhERcgvJfqk3WhiPExi';
+const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || '';
 
 export default async (req) => {
   const headers = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': 'https://irsresolutionservice.com',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };
