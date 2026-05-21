@@ -456,11 +456,18 @@ function needsAction(c){return['8821_signed','caf_active','transcripts_pulled','
 async function loadClients(){
   try{
     const r=await fetch(`/.netlify/functions/admin-clients?password=${encodeURIComponent(apw)}`);
-    const d=await r.json();
-    if(!r.ok)throw new Error(d.error);
-    clients=d.clients||[];
+    const text=await r.text();
+    let data;
+    try{ data=JSON.parse(text); }catch{ 
+      document.getElementById('tbody').innerHTML=`<div class="empty"><div class="empty-ic">⚠️</div><h3>Function error</h3><p>admin-clients returned: ${text.substring(0,200)}</p></div>`;
+      return;
+    }
+    if(!r.ok){ document.getElementById('tbody').innerHTML=`<div class="empty"><div class="empty-ic">⚠️</div><h3>Error</h3><p>${esc(data.error||'Unknown error')}</p></div>`; return; }
+    clients=data.clients||[];
     updateStats(); renderTable(); populateIrsSel();
-  }catch(e){document.getElementById('tbody').innerHTML=`<div class="empty"><div class="empty-ic">⚠️</div><h3>Error</h3><p>${esc(e.message)}</p></div>`;}
+  }catch(e){
+    document.getElementById('tbody').innerHTML=`<div class="empty"><div class="empty-ic">⚠️</div><h3>Error</h3><p>${esc(e.message)}</p></div>`;
+  }
 }
 
 function updateStats(){
@@ -703,7 +710,8 @@ async function rePullAndView(email, key){
 }
 
 function viewAsClient(email){
-  window.open('/resolve?adminPreview='+encodeURIComponent(email),'_blank');
+  // Pass admin password as query param so resolve.html skips the login gate
+  window.open('/resolve.html?adminPreview='+encodeURIComponent(email)+'&adminPw='+encodeURIComponent(apw),'_blank');
 }
 
 async function resendInvite(email,name){

@@ -318,21 +318,36 @@ window._state = { user: null, clientStatus: null };
 async function init() {
   const params = new URLSearchParams(window.location.search);
   const adminPreviewEmail = params.get('adminPreview');
+  const adminPw = params.get('adminPw');
 
-  // Admin preview mode — load any client's dashboard without auth
-  if (adminPreviewEmail) {
+  // Admin preview mode — validate password then load client dashboard directly
+  if (adminPreviewEmail && adminPw) {
+    // Validate password by fetching client status with it
+    try {
+      const test = await fetch(`/.netlify/functions/admin-clients?password=${encodeURIComponent(adminPw)}`);
+      if (!test.ok) {
+        document.getElementById('stage-auth').style.display = 'block';
+        return;
+      }
+    } catch {
+      document.getElementById('stage-auth').style.display = 'block';
+      return;
+    }
+
     window._state.user = { email: adminPreviewEmail };
     window._currentUserEmail = adminPreviewEmail;
     document.getElementById('stage-auth').style.display = 'none';
     document.getElementById('stage-dashboard').style.display = 'block';
-    document.getElementById('userEmail').textContent = '👁 Admin Preview: ' + adminPreviewEmail;
-    document.getElementById('logoutBtn').style.display = '';
-    document.getElementById('logoutBtn').textContent = '← Back to Admin';
-    document.getElementById('logoutBtn').onclick = () => { window.location.href = '/admin.html'; };
-    // Show admin banner
+    document.getElementById('userEmail').textContent = '👁 Viewing: ' + adminPreviewEmail;
+    const logoutBtn = document.getElementById('logoutBtn');
+    logoutBtn.style.display = '';
+    logoutBtn.textContent = '← Back to Admin';
+    logoutBtn.onclick = () => { window.close(); };
+
+    // Admin banner
     const banner = document.createElement('div');
     banner.style.cssText = 'background:#1a1410;color:#e8c97a;padding:10px 1.5rem;text-align:center;font-size:13px;font-weight:600;letter-spacing:0.04em;position:sticky;top:64px;z-index:100';
-    banner.textContent = '👁 Admin Preview Mode — viewing dashboard as ' + adminPreviewEmail;
+    banner.textContent = '👁 Admin View — ' + adminPreviewEmail + ' (read-only)';
     document.querySelector('main').prepend(banner);
     await loadStatus();
     return;

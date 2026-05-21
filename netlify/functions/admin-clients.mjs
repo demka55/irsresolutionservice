@@ -32,6 +32,23 @@ export default async (req) => {
     }
 
     if (!emailIndex.length) {
+      // Index is empty — try rebuilding from store.list() as fallback
+      try {
+        const { blobs } = await store.list();
+        emailIndex = blobs
+          .map(b => b.key)
+          .filter(k => k !== '__index__' && k.includes('@'));
+        if (emailIndex.length) {
+          // Save the rebuilt index for next time
+          await store.set('__index__', JSON.stringify(emailIndex));
+        }
+      } catch {
+        // list() failed too — return empty
+        return new Response(JSON.stringify({ clients: [], note: 'No clients yet — index empty and list() failed' }), { status: 200, headers });
+      }
+    }
+
+    if (!emailIndex.length) {
       return new Response(JSON.stringify({ clients: [], note: 'No clients yet' }), { status: 200, headers });
     }
 
