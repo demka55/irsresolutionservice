@@ -4,9 +4,9 @@
 
 import { getStore } from '@netlify/blobs';
 
-const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || '';
 
 export default async (req) => {
+  const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || '';
   const headers = { 'Content-Type': 'application/json' };
   const url = new URL(req.url);
   if (url.searchParams.get('password') !== ADMIN_PASSWORD) {

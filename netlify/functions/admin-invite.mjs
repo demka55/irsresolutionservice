@@ -1,9 +1,12 @@
 // netlify/functions/admin-invite.mjs
 // Creates a Netlify Identity account for a client and sends them an invite email
 
-const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || '';
-
 export default async (req) => {
+  // Read env vars inside handler — not at module load time
+  const ADMIN_PASSWORD  = Netlify.env.get('ADMIN_PASSWORD') || '';
+  const netlifyToken    = Netlify.env.get('NETLIFY_ACCESS_TOKEN');
+  const netlifySiteId   = Netlify.env.get('NETLIFY_SITE_ID');
+  const resendKey       = Netlify.env.get('RESEND_API_KEY');
   const headers = {
     'Access-Control-Allow-Origin': 'https://irsresolutionservice.com',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -25,10 +28,6 @@ export default async (req) => {
   if (!email) {
     return new Response(JSON.stringify({ error: 'Missing email' }), { status: 400, headers });
   }
-
-  const netlifyToken  = Netlify.env.get('NETLIFY_ACCESS_TOKEN');
-  const netlifySiteId = Netlify.env.get('NETLIFY_SITE_ID');
-  const resendKey     = Netlify.env.get('RESEND_API_KEY');
 
   if (!netlifyToken || !netlifySiteId) {
     return new Response(JSON.stringify({ error: 'Netlify credentials not configured (NETLIFY_ACCESS_TOKEN, NETLIFY_SITE_ID)' }), { status: 503, headers });

@@ -1,7 +1,6 @@
 import { getStore } from '@netlify/blobs';
 
 // Password read from env var — never hardcoded
-const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || '';
 
 // Fields clients are allowed to update on their own record
 const CLIENT_ALLOWED_FIELDS = ['steps', 'notes'];
@@ -10,6 +9,7 @@ const CLIENT_ALLOWED_FIELDS = ['steps', 'notes'];
 const ADMIN_ONLY_FIELDS = ['status', 'name', 'company', 'phone', 'sessionId', 'paidAt', 'amount'];
 
 export default async (req) => {
+  const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || '';
   const headers = {
     'Access-Control-Allow-Origin': 'https://irsresolutionservice.com',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
