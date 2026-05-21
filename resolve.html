@@ -361,7 +361,7 @@ async function init() {
   if (params.get('session_id') || params.get('payment') === 'success') {
     document.getElementById('welcomeBanner').style.display = 'flex';
     try {
-      await fetch('/api/client-status', {
+      await fetch('/.netlify/functions/client-status', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -379,7 +379,7 @@ async function loadStatus() {
   const user = window._state.user;
   if (!user) return;
   try {
-    const res = await fetch(`/api/client-status?email=${encodeURIComponent(user.email)}`);
+    const res = await fetch(`/.netlify/functions/client-status?email=${encodeURIComponent(user.email)}`);
     window._state.clientStatus = await res.json();
   } catch {
     window._state.clientStatus = { status: 'paid', steps: {} };
@@ -743,7 +743,7 @@ async function submit8821() {
   const signatureDataUrl = sigPad.canvas.toDataURL('image/png');
 
   try {
-    const res = await fetch('/api/submit-8821', {
+    const res = await fetch('/.netlify/functions/submit-8821', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, name: formData.taxpayerName, formData, signatureDataUrl })
@@ -761,7 +761,7 @@ async function approvePlan() {
   const email = window._currentUserEmail;
   if (!email) return;
   try {
-    await fetch('/api/client-status', {
+    await fetch('/.netlify/functions/client-status', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
