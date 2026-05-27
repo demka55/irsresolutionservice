@@ -617,6 +617,10 @@ function renderDetail(c){
     <div class="dp-h">⚡ Actions</div>
     <div class="btn-row">${actBtns}</div>
     <div style="margin-top:.875rem">
+      <span class="lbl">Danger Zone</span>
+      <button class="btn btn-sm" style="margin-top:3px;background:var(--red-light);color:var(--red);border:1px solid #e8b0b0" onclick="deleteClient('${esc(c.email)}','${esc(c.name||c.email)}')">🗑 Delete Client</button>
+    </div>
+    <div style="margin-top:.875rem">
       <span class="lbl">View & Access</span>
       <div style="display:flex;gap:.4rem;margin-top:3px;flex-wrap:wrap">
         <button class="btn btn-ink btn-sm" onclick="viewAsClient('${esc(c.email)}')">👁 View Client Dashboard</button>
@@ -769,6 +773,18 @@ async function rePullAndView(email, key){
   document.getElementById('irsProd').value  = productType||'ACTR';
   document.getElementById('irsYear').value  = taxYear||(new Date().getFullYear()-2);
   toast('Form pre-filled — enter TIN and click Pull');
+}
+
+async function deleteClient(email, name){
+  if(!confirm(`Delete ${name}?\n\nThis removes them from the dashboard permanently. Their Netlify Identity account (login) is not affected.`)) return;
+  try{
+    const r=await fetch('/.netlify/functions/delete-client',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,email})});
+    const d=await r.json();
+    if(!r.ok) throw new Error(d.error);
+    clients=clients.filter(c=>c.email!==email);
+    updateStats(); renderTable();
+    toast('Client deleted');
+  }catch(e){ toast('Error: '+e.message,true); }
 }
 
 function viewAsClient(email){
