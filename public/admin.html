@@ -233,14 +233,43 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
     <div class="toolbar">
       <span style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)">Filter:</span>
       <button class="tbtn active" onclick="setF('all',this)">All</button>
-      <button class="tbtn" onclick="setF('paid',this)">Awaiting 8821</button>
-      <button class="tbtn" onclick="setF('8821_signed',this)">8821 Signed</button>
-      <button class="tbtn" onclick="setF('caf_pending',this)">CAF Pending</button>
-      <button class="tbtn" onclick="setF('caf_active',this)">CAF Active</button>
-      <button class="tbtn" onclick="setF('transcripts_pulled',this)">Transcripts</button>
-      <button class="tbtn" onclick="setF('plan_sent',this)">Plan Sent</button>
-      <button class="tbtn" onclick="setF('resolved',this)">Resolved</button>
+      <button class="tbtn" onclick="setF('paid',this)" title="Client paid but hasn't signed Form 8821 yet">Awaiting 8821</button>
+      <button class="tbtn" onclick="setF('8821_signed',this)" title="Client signed Form 8821 — Romeo needs to submit to IRS CAF">8821 Signed</button>
+      <button class="tbtn" onclick="setF('caf_pending',this)" title="Submitted to IRS CAF — waiting 2-5 business days for IRS to activate">CAF Pending</button>
+      <button class="tbtn" onclick="setF('caf_active',this)" title="IRS confirmed — Romeo can now pull transcripts">CAF Active</button>
+      <button class="tbtn" onclick="setF('transcripts_pulled',this)" title="Transcripts pulled — Romeo is building resolution plan">Transcripts</button>
+      <button class="tbtn" onclick="setF('plan_sent',this)" title="Plan sent to client — waiting for their approval">Plan Sent</button>
+      <button class="tbtn" onclick="setF('resolved',this)" title="Case fully resolved">Resolved</button>
       <input class="tsearch" id="srch" placeholder="Search…" oninput="renderTable()">
+    </div>
+
+    <!-- STATUS GUIDE -->
+    <div id="statusGuide" style="background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;margin-bottom:1.1rem;overflow:hidden;box-shadow:var(--sh)">
+      <div style="padding:.75rem 1.1rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none" onclick="toggleGuide()">
+        <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">📖 Status Guide — what each status means</span>
+        <span style="font-size:11px;color:var(--ink-muted)" id="guideChev">▼ Show</span>
+      </div>
+      <div id="guideBody" style="display:none;border-top:1px solid var(--cream-dark)">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0">
+          ${[
+            {s:'Awaiting 8821',c:'sp',what:'Client paid but has not yet signed Form 8821.',action:'Wait for client to complete Step 1 on their dashboard. They sign electronically — you get emailed automatically.',time:''},
+            {s:'8821 Signed',c:'s8',what:'Client signed Form 8821 authorizing Romeo to access their IRS records.',action:'Romeo submits the signed Form 8821 to the IRS Centralized Authorization File (CAF). Click "CAF Submitted" in admin.',time:'Do within 1 business day.'},
+            {s:'CAF Pending',c:'sc',what:'Form 8821 has been submitted to the IRS CAF — waiting for the IRS to process and activate it.',action:'Nothing to do — just wait. The IRS processes authorizations in 2–5 business days.',time:'2–5 business days.'},
+            {s:'CAF Active',c:'sa',what:'IRS has confirmed Romeo\'s authorization. Romeo can now pull this client\'s transcripts directly from the IRS.',action:'Use the IRS Connection tab to pull transcripts. Click "Transcripts Pulled" when done.',time:'Pull transcripts promptly.'},
+            {s:'Transcripts Pulled',c:'st',what:'Romeo has pulled the client\'s IRS transcripts and is reviewing them.',action:'Review transcripts, build the resolution plan, then send it to the client. Click "Plan Sent" when done.',time:'3–5 business days.'},
+            {s:'Plan Sent',c:'sps',what:'Resolution plan has been sent to the client for review and approval.',action:'Wait for client to approve on their dashboard. They click "I approve" — status updates automatically.',time:''},
+            {s:'Plan Approved',c:'spa',what:'Client approved the resolution plan.',action:'File all necessary documents with the IRS. Click "Docs Filed" when submitted.',time:'File promptly.'},
+            {s:'Filed',c:'sf',what:'Documents filed with the IRS — waiting for confirmation.',action:'Wait for IRS confirmation. Click "Mark Resolved" when case is fully closed.',time:'IRS takes 2–4 weeks.'},
+            {s:'Resolved',c:'sr',what:'Case fully resolved. All documents filed and IRS has confirmed resolution.',action:'No further action needed.',time:'✓ Complete'},
+          ].map(({s,c,what,action,time})=>`
+            <div style="padding:.875rem 1rem;border-bottom:1px solid var(--cream-warm);border-right:1px solid var(--cream-warm)">
+              <div style="margin-bottom:.5rem"><span class="sbadge ${c}">${s}</span></div>
+              <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">${what}</div>
+              <div style="font-size:11px;color:var(--gold-dim);font-weight:600;line-height:1.5">→ ${action}</div>
+              ${time?`<div style="font-size:11px;color:var(--ink-muted);margin-top:.3rem">⏱ ${time}</div>`:''}
+            </div>`).join('')}
+        </div>
+      </div>
     </div>
     <div class="ctable">
       <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Status</div><div>Actions</div><div></div></div>
@@ -572,6 +601,14 @@ function updateStats(){
   document.getElementById('clSub').textContent=t+' total client'+(t===1?'':'s');
 }
 
+function toggleGuide(){
+  const body=document.getElementById('guideBody');
+  const chev=document.getElementById('guideChev');
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  chev.textContent=open?'▼ Show':'▲ Hide';
+}
+
 function setF(f,btn){filt=f;document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderTable();}
 
 function renderTable(){
@@ -802,15 +839,17 @@ async function rePullAndView(email, key){
 }
 
 async function deleteClient(email, name){
-  if(!confirm(`Delete ${name}?\n\nThis removes them from the dashboard permanently. Their Netlify Identity account (login) is not affected.`)) return;
+  if(!confirm(`Delete ${name}?\n\nThis removes them from the dashboard permanently.`)) return;
   try{
     const r=await fetch('/.netlify/functions/delete-client',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,email})});
-    const d=await r.json();
-    if(!r.ok) throw new Error(d.error);
+    const text=await r.text();
+    let d;
+    try{ d=JSON.parse(text); }catch{ toast('Error: function returned HTML — check delete-client.js is deployed',true); return; }
+    if(!r.ok) throw new Error(d.error||'Unknown error');
     clients=clients.filter(c=>c.email!==email);
     updateStats(); renderTable();
-    toast('Client deleted');
-  }catch(e){ toast('Error: '+e.message,true); }
+    toast('Client deleted ✓');
+  }catch(e){ toast('Delete failed: '+e.message,true); }
 }
 
 function viewAsClient(email){
