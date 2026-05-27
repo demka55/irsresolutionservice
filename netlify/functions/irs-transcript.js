@@ -21,7 +21,7 @@ exports.handler = async function(event, context) {
   const privateKey      = process.env.IRS_PRIVATE_KEY_PEM;
   const cafNumber       = process.env.IRS_CAF_NUMBER;
   const eservicesUser   = process.env.IRS_ESERVICES_USERNAME;
-  const jwkKid          = process.env.IRS_JWK_KID || 'irs-key-1';
+  const jwkKid          = process.env.IRS_JWK_KID;
 
   let body;
   try { body = JSON.parse(event.body); }
