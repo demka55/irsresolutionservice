@@ -1,0 +1,34 @@
+functionsDirectory = "netlify/functions"
+functionsDirectoryOrigin = "config-v1"
+plugins = []
+headers = []
+redirects = []
+
+[build]
+publish = "public"
+publishOrigin = "config"
+commandOrigin = "config"
+command = "echo 'No build step required'"
+functions = "netlify/functions"
+
+  [build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "IRS_JWK_KID,IRS_PRIVATE_KEY_PEM,IRS_API_CLIENT_ID,IRS_CAF_NUMBER,IRS_ESERVICES_USERNAME"
+
+  [build.processing]
+
+    [build.processing.css]
+
+    [build.processing.html]
+
+    [build.processing.images]
+
+    [build.processing.js]
+
+  [build.services]
+
+[dev]
+port = 8888
+
+[functions]
+
+  [functions."*"]
