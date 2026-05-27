@@ -518,14 +518,23 @@ function initAuth() {
 }
 
 function checkAdminRole(user) {
+  console.log('[Admin] User object:', JSON.stringify(user, null, 2));
+  console.log('[Admin] app_metadata:', user.app_metadata);
+  console.log('[Admin] roles:', user.app_metadata?.roles);
+  console.log('[Admin] user_metadata:', user.user_metadata);
+
   const roles = user.app_metadata?.roles || [];
   if (!roles.includes('admin')) {
-    document.getElementById('loginLoading').style.display = 'none';
-    document.getElementById('loginBtn').style.display = 'block';
-    document.getElementById('lerr').textContent = 'Access denied — your account does not have admin role. Contact Dmitry to get access.';
-    document.getElementById('lerr').style.display = 'block';
-    netlifyIdentity.logout();
-    return;
+    // Also check alternative role locations
+    const altRoles = user.user_metadata?.roles || user.roles || [];
+    if (!altRoles.includes('admin')) {
+      document.getElementById('loginLoading').style.display = 'none';
+      document.getElementById('loginBtn').style.display = 'block';
+      document.getElementById('lerr').textContent = `Access denied. Roles found: ${JSON.stringify(roles)} / ${JSON.stringify(altRoles)}. Contact Dmitry.`;
+      document.getElementById('lerr').style.display = 'block';
+      netlifyIdentity.logout();
+      return;
+    }
   }
   // Authorized — set password from env for API calls
   apw = user.token?.access_token || '';
