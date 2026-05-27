@@ -246,28 +246,61 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
     <!-- STATUS GUIDE -->
     <div id="statusGuide" style="background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;margin-bottom:1.1rem;overflow:hidden;box-shadow:var(--sh)">
       <div style="padding:.75rem 1.1rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none" onclick="toggleGuide()">
-        <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">📖 Status Guide — what each status means</span>
+        <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">📖 Status Guide — what each status means and what to do next</span>
         <span style="font-size:11px;color:var(--ink-muted)" id="guideChev">▼ Show</span>
       </div>
       <div id="guideBody" style="display:none;border-top:1px solid var(--cream-dark)">
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0">
-          ${[
-            {s:'Awaiting 8821',c:'sp',what:'Client paid but has not yet signed Form 8821.',action:'Wait for client to complete Step 1 on their dashboard. They sign electronically — you get emailed automatically.',time:''},
-            {s:'8821 Signed',c:'s8',what:'Client signed Form 8821 authorizing Romeo to access their IRS records.',action:'Romeo submits the signed Form 8821 to the IRS Centralized Authorization File (CAF). Click "CAF Submitted" in admin.',time:'Do within 1 business day.'},
-            {s:'CAF Pending',c:'sc',what:'Form 8821 has been submitted to the IRS CAF — waiting for the IRS to process and activate it.',action:'Nothing to do — just wait. The IRS processes authorizations in 2–5 business days.',time:'2–5 business days.'},
-            {s:'CAF Active',c:'sa',what:'IRS has confirmed Romeo\'s authorization. Romeo can now pull this client\'s transcripts directly from the IRS.',action:'Use the IRS Connection tab to pull transcripts. Click "Transcripts Pulled" when done.',time:'Pull transcripts promptly.'},
-            {s:'Transcripts Pulled',c:'st',what:'Romeo has pulled the client\'s IRS transcripts and is reviewing them.',action:'Review transcripts, build the resolution plan, then send it to the client. Click "Plan Sent" when done.',time:'3–5 business days.'},
-            {s:'Plan Sent',c:'sps',what:'Resolution plan has been sent to the client for review and approval.',action:'Wait for client to approve on their dashboard. They click "I approve" — status updates automatically.',time:''},
-            {s:'Plan Approved',c:'spa',what:'Client approved the resolution plan.',action:'File all necessary documents with the IRS. Click "Docs Filed" when submitted.',time:'File promptly.'},
-            {s:'Filed',c:'sf',what:'Documents filed with the IRS — waiting for confirmation.',action:'Wait for IRS confirmation. Click "Mark Resolved" when case is fully closed.',time:'IRS takes 2–4 weeks.'},
-            {s:'Resolved',c:'sr',what:'Case fully resolved. All documents filed and IRS has confirmed resolution.',action:'No further action needed.',time:'✓ Complete'},
-          ].map(({s,c,what,action,time})=>`
-            <div style="padding:.875rem 1rem;border-bottom:1px solid var(--cream-warm);border-right:1px solid var(--cream-warm)">
-              <div style="margin-bottom:.5rem"><span class="sbadge ${c}">${s}</span></div>
-              <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">${what}</div>
-              <div style="font-size:11px;color:var(--gold-dim);font-weight:600;line-height:1.5">→ ${action}</div>
-              ${time?`<div style="font-size:11px;color:var(--ink-muted);margin-top:.3rem">⏱ ${time}</div>`:''}
-            </div>`).join('')}
+        <div style="display:grid;grid-template-columns:repeat(3,1fr)">
+          <div style="padding:.875rem 1rem;border-bottom:1px solid var(--cream-warm);border-right:1px solid var(--cream-warm)">
+            <div style="margin-bottom:.5rem"><span class="sbadge sp">Awaiting 8821</span></div>
+            <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">Client paid but has not yet signed Form 8821.</div>
+            <div style="font-size:11px;color:var(--gold-dim);font-weight:600">→ Wait for client to complete Step 1 on their dashboard. They sign electronically — you get emailed automatically.</div>
+          </div>
+          <div style="padding:.875rem 1rem;border-bottom:1px solid var(--cream-warm);border-right:1px solid var(--cream-warm)">
+            <div style="margin-bottom:.5rem"><span class="sbadge s8">8821 Signed</span></div>
+            <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">Client signed Form 8821 authorizing Romeo to access their IRS records.</div>
+            <div style="font-size:11px;color:var(--gold-dim);font-weight:600">→ Romeo submits Form 8821 to the IRS CAF. Click "CAF Submitted" in admin.</div>
+            <div style="font-size:11px;color:var(--ink-muted);margin-top:.3rem">⏱ Do within 1 business day.</div>
+          </div>
+          <div style="padding:.875rem 1rem;border-bottom:1px solid var(--cream-warm)">
+            <div style="margin-bottom:.5rem"><span class="sbadge sc">CAF Pending</span></div>
+            <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">Form 8821 submitted to IRS CAF — waiting for the IRS to process and activate it.</div>
+            <div style="font-size:11px;color:var(--gold-dim);font-weight:600">→ Nothing to do — just wait for the IRS.</div>
+            <div style="font-size:11px;color:var(--ink-muted);margin-top:.3rem">⏱ 2–5 business days.</div>
+          </div>
+          <div style="padding:.875rem 1rem;border-bottom:1px solid var(--cream-warm);border-right:1px solid var(--cream-warm)">
+            <div style="margin-bottom:.5rem"><span class="sbadge sa">CAF Active</span></div>
+            <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">IRS confirmed Romeo's authorization. Romeo can now pull transcripts directly from the IRS.</div>
+            <div style="font-size:11px;color:var(--gold-dim);font-weight:600">→ Use IRS Connection tab to pull transcripts. Click "Transcripts Pulled" when done.</div>
+          </div>
+          <div style="padding:.875rem 1rem;border-bottom:1px solid var(--cream-warm);border-right:1px solid var(--cream-warm)">
+            <div style="margin-bottom:.5rem"><span class="sbadge st">Transcripts Pulled</span></div>
+            <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">Romeo has pulled the client's IRS transcripts and is reviewing them.</div>
+            <div style="font-size:11px;color:var(--gold-dim);font-weight:600">→ Review transcripts, build resolution plan, send to client. Click "Plan Sent" when done.</div>
+            <div style="font-size:11px;color:var(--ink-muted);margin-top:.3rem">⏱ 3–5 business days.</div>
+          </div>
+          <div style="padding:.875rem 1rem;border-bottom:1px solid var(--cream-warm)">
+            <div style="margin-bottom:.5rem"><span class="sbadge sps">Plan Sent</span></div>
+            <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">Resolution plan sent to client for review and approval.</div>
+            <div style="font-size:11px;color:var(--gold-dim);font-weight:600">→ Wait for client to approve on their dashboard — status updates automatically.</div>
+          </div>
+          <div style="padding:.875rem 1rem;border-right:1px solid var(--cream-warm)">
+            <div style="margin-bottom:.5rem"><span class="sbadge spa">Plan Approved</span></div>
+            <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">Client approved the resolution plan.</div>
+            <div style="font-size:11px;color:var(--gold-dim);font-weight:600">→ File all documents with the IRS. Click "Docs Filed" when submitted.</div>
+            <div style="font-size:11px;color:var(--ink-muted);margin-top:.3rem">⏱ File promptly.</div>
+          </div>
+          <div style="padding:.875rem 1rem;border-right:1px solid var(--cream-warm)">
+            <div style="margin-bottom:.5rem"><span class="sbadge sf">Filed</span></div>
+            <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">Documents filed with IRS — waiting for confirmation.</div>
+            <div style="font-size:11px;color:var(--gold-dim);font-weight:600">→ Wait for IRS confirmation. Click "Mark Resolved" when case is fully closed.</div>
+            <div style="font-size:11px;color:var(--ink-muted);margin-top:.3rem">⏱ IRS takes 2–4 weeks.</div>
+          </div>
+          <div style="padding:.875rem 1rem">
+            <div style="margin-bottom:.5rem"><span class="sbadge sr">Resolved</span></div>
+            <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">Case fully resolved. All documents filed and IRS confirmed resolution.</div>
+            <div style="font-size:11px;color:var(--green);font-weight:600">✓ Complete — no further action needed.</div>
+          </div>
         </div>
       </div>
     </div>
