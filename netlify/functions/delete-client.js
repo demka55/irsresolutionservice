@@ -22,7 +22,7 @@ exports.handler = async function(event, context) {
 
   const { adminPassword, email } = body;
 
-  if (adminPassword !== ADMIN_PASSWORD) {
+  if ((adminPassword !== ADMIN_PASSWORD && adminPassword !== ADMIN_PASSWORD_ROMEO)) {
     return { statusCode: 401, headers, body: JSON.stringify({ error: 'Unauthorized' }) };
   }
 

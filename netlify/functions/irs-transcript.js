@@ -29,7 +29,7 @@ exports.handler = async function(event, context) {
 
   const { adminPassword, clientEmail, action, transcriptRequest } = body;
 
-  if (adminPassword !== ADMIN_PASSWORD) {
+  if ((adminPassword !== ADMIN_PASSWORD && adminPassword !== ADMIN_PASSWORD_ROMEO)) {
     return { statusCode: 401, headers, body: JSON.stringify({ error: 'Unauthorized' }) };
   }
 

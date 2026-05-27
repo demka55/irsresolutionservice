@@ -3,6 +3,7 @@ import { getStore } from '@netlify/blobs';
 
 export default async (req) => {
   const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || '';
+  const ADMIN_PASSWORD_ROMEO = Netlify.env.get('ADMIN_PASSWORD_ROMEO') || '';
   const headers = {
     'Access-Control-Allow-Origin': 'https://irsresolutionservice.com',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',

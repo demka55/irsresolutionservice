@@ -182,9 +182,9 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
     <div class="llogo"><div class="lmark">IRS</div><div class="ltext">Resolution Service</div></div>
     <h1 class="lh">Admin Dashboard</h1>
     <p class="ls">Romeo & Dmitry only</p>
-    <div class="lerr" id="lerr">Access denied — you need admin role.</div>
-    <div id="loginLoading" style="text-align:center;padding:1rem;color:var(--ink-muted);font-size:13px">Checking authentication…</div>
-    <button class="lbtn" id="loginBtn" style="display:none" onclick="doNetlifyLogin()">Sign in with Netlify →</button>
+    <div class="lerr" id="lerr">Incorrect password.</div>
+    <input type="password" class="linput" id="pw" placeholder="Enter your admin password" autocomplete="current-password">
+    <button class="lbtn" onclick="login()">Sign in →</button>
   </div>
 </div>
 
@@ -481,93 +481,53 @@ const STEPS=[
   {k:'resolved',l:'Case fully resolved'},
 ];
 
-// ── NETLIFY IDENTITY AUTH ────────────────────────────────────────────────────
-let netlifyIdentity;
+// ── AUTH ─────────────────────────────────────────────────────────────────────
+document.getElementById('pw').addEventListener('keydown', e => { if(e.key==='Enter') login(); });
 
-function initAuth() {
-  // Load Netlify Identity widget
-  const script = document.createElement('script');
-  script.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
-  script.onload = () => {
-    netlifyIdentity = window.netlifyIdentity;
-    netlifyIdentity.init();
-
-    const user = netlifyIdentity.currentUser();
-    if (user) {
-      checkAdminRole(user);
-    } else {
-      document.getElementById('loginLoading').style.display = 'none';
-      document.getElementById('loginBtn').style.display = 'block';
-    }
-
-    netlifyIdentity.on('login', user => {
-      netlifyIdentity.close();
-      checkAdminRole(user);
+async function login(){
+  const pw = document.getElementById('pw').value.trim();
+  if(!pw) return;
+  const btn = document.querySelector('.lbtn');
+  const err = document.getElementById('lerr');
+  btn.disabled = true; btn.textContent = 'Checking…';
+  err.style.display = 'none';
+  try{
+    // Validate against server — accepts ADMIN_PASSWORD or ADMIN_PASSWORD_ROMEO
+    const r = await fetch('/.netlify/functions/creds-status', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminPassword: pw })
     });
-
-    netlifyIdentity.on('logout', () => {
-      document.getElementById('app').style.display = 'none';
-      document.getElementById('login').style.display = 'flex';
-      document.getElementById('loginLoading').style.display = 'none';
-      document.getElementById('loginBtn').style.display = 'block';
-      document.getElementById('lerr').style.display = 'none';
-      clients = [];
-    });
-  };
-  document.head.appendChild(script);
-}
-
-function checkAdminRole(user) {
-  console.log('[Admin] User object:', JSON.stringify(user, null, 2));
-  console.log('[Admin] app_metadata:', user.app_metadata);
-  console.log('[Admin] roles:', user.app_metadata?.roles);
-  console.log('[Admin] user_metadata:', user.user_metadata);
-
-  const roles = user.app_metadata?.roles || [];
-  if (!roles.includes('admin')) {
-    // Also check alternative role locations
-    const altRoles = user.user_metadata?.roles || user.roles || [];
-    if (!altRoles.includes('admin')) {
-      document.getElementById('loginLoading').style.display = 'none';
-      document.getElementById('loginBtn').style.display = 'block';
-      document.getElementById('lerr').textContent = `Access denied. Roles found: ${JSON.stringify(roles)} / ${JSON.stringify(altRoles)}. Contact Dmitry.`;
-      document.getElementById('lerr').style.display = 'block';
-      netlifyIdentity.logout();
+    if(r.status === 401){
+      err.textContent = 'Incorrect password.';
+      err.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'Sign in →';
       return;
     }
-  }
-  // Authorized — set password from env for API calls
-  apw = user.token?.access_token || '';
-  document.getElementById('sbUser').textContent = user.email;
-  document.getElementById('login').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  loadClients();
-  loadCredsFromStorage();
-}
-
-function doNetlifyLogin() {
-  netlifyIdentity.open('login');
-}
-
-function logout() {
-  if (netlifyIdentity) netlifyIdentity.logout();
-}
-
-// Use the Netlify Identity JWT token as the admin password for API calls
-// The server-side functions verify it's a valid admin token
-async function getAdminToken() {
-  const user = netlifyIdentity?.currentUser();
-  if (!user) return '';
-  // Refresh token if needed
-  try {
-    const token = await user.jwt();
-    return token;
-  } catch {
-    return user.token?.access_token || '';
+    // Any non-401 = valid password
+    apw = pw;
+    sessionStorage.setItem('a', pw);
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Sign in →';
+    loadClients();
+  }catch(e){
+    err.textContent = 'Connection error. Try again.';
+    err.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Sign in →';
   }
 }
 
-initAuth();
+function logout(){
+  sessionStorage.removeItem('a');
+  apw = '';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login').style.display = 'flex';
+  document.getElementById('pw').value = '';
+}
+
+const sa = sessionStorage.getItem('a');
+if(sa){ apw = sa; document.getElementById('login').style.display='none'; document.getElementById('app').style.display='block'; loadClients(); }
 
 function goPage(n,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
