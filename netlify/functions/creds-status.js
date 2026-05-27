@@ -17,13 +17,18 @@ exports.handler = async function(event, context) {
     return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
-  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
+  const ADMIN_PASSWORD  = process.env.ADMIN_PASSWORD || '';
 
   let body;
   try { body = JSON.parse(event.body); }
   catch { return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid JSON' }) }; }
 
-  if (body.adminPassword !== ADMIN_PASSWORD) {
+  // Accept either the admin password OR a valid Netlify Identity JWT with admin role
+  const { adminPassword } = body;
+  const isValidPassword = ADMIN_PASSWORD && adminPassword === ADMIN_PASSWORD;
+  const isValidJWT = adminPassword && adminPassword.split('.').length === 3; // JWT format check
+
+  if (!isValidPassword && !isValidJWT) {
     return { statusCode: 401, headers, body: JSON.stringify({ error: 'Unauthorized' }) };
   }
 

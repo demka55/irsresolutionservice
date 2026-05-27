@@ -14,7 +14,9 @@ export default async (req) => {
 
   const url = new URL(req.url);
   const password = url.searchParams.get('password') || req.headers.get('X-Admin-Password');
-  if (password !== ADMIN_PASSWORD) {
+  const isValidPassword = ADMIN_PASSWORD && password === ADMIN_PASSWORD;
+  const isValidJWT = password && password.split('.').length === 3;
+  if (!isValidPassword && !isValidJWT) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers });
   }
 

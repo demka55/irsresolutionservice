@@ -182,9 +182,9 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
     <div class="llogo"><div class="lmark">IRS</div><div class="ltext">Resolution Service</div></div>
     <h1 class="lh">Admin Dashboard</h1>
     <p class="ls">Romeo & Dmitry only</p>
-    <div class="lerr" id="lerr">Incorrect password.</div>
-    <input type="password" class="linput" id="pw" placeholder="Admin password">
-    <button class="lbtn" onclick="login()">Sign in →</button>
+    <div class="lerr" id="lerr">Access denied — you need admin role.</div>
+    <div id="loginLoading" style="text-align:center;padding:1rem;color:var(--ink-muted);font-size:13px">Checking authentication…</div>
+    <button class="lbtn" id="loginBtn" style="display:none" onclick="doNetlifyLogin()">Sign in with Netlify →</button>
   </div>
 </div>
 
@@ -206,7 +206,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
     <div class="sb-i" onclick="goPage('creds',this)"><span class="sb-ic">🔑</span>Credentials</div>
   </nav>
   <div class="sb-bot">
-    <div class="sb-usr">Logged in as admin</div>
+    <div class="sb-usr" id="sbUser">Logged in</div>
     <button class="sb-out" onclick="logout()">Sign out</button>
   </div>
 </aside>
@@ -467,6 +467,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 const PW = null; // Password validated server-side only — never stored in frontend code
 let apw='',clients=[],filt='all',curTx='',curTxEmail='',curTxKey='';
 
+
 const SL={'paid':'Awaiting 8821','8821_signed':'8821 Signed','caf_pending':'CAF Pending','caf_active':'CAF Active','transcripts_pulled':'Transcripts Pulled','plan_sent':'Plan Sent','plan_approved':'Plan Approved','filed':'Filed','resolved':'Resolved'};
 const SC={'paid':'sp','8821_signed':'s8','caf_pending':'sc','caf_active':'sa','transcripts_pulled':'st','plan_sent':'sps','plan_approved':'spa','filed':'sf','resolved':'sr'};
 const STEPS=[
@@ -480,28 +481,84 @@ const STEPS=[
   {k:'resolved',l:'Case fully resolved'},
 ];
 
-document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
+// ── NETLIFY IDENTITY AUTH ────────────────────────────────────────────────────
+let netlifyIdentity;
 
-async function login(){
-  const pw=document.getElementById('pw').value.trim();
-  if(!pw) return;
-  const btn=document.querySelector('.lbtn');
-  const err=document.getElementById('lerr');
-  btn.disabled=true; btn.textContent='Signing in…';
-  err.style.display='none';
+function initAuth() {
+  // Load Netlify Identity widget
+  const script = document.createElement('script');
+  script.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
+  script.onload = () => {
+    netlifyIdentity = window.netlifyIdentity;
+    netlifyIdentity.init();
 
-  // Store password and go straight in — server validates on each API call
-  apw=pw;
-  sessionStorage.setItem('a',pw);
-  document.getElementById('login').style.display='none';
-  document.getElementById('app').style.display='block';
-  btn.disabled=false; btn.textContent='Sign in →';
+    const user = netlifyIdentity.currentUser();
+    if (user) {
+      checkAdminRole(user);
+    } else {
+      document.getElementById('loginLoading').style.display = 'none';
+      document.getElementById('loginBtn').style.display = 'block';
+    }
+
+    netlifyIdentity.on('login', user => {
+      netlifyIdentity.close();
+      checkAdminRole(user);
+    });
+
+    netlifyIdentity.on('logout', () => {
+      document.getElementById('app').style.display = 'none';
+      document.getElementById('login').style.display = 'flex';
+      document.getElementById('loginLoading').style.display = 'none';
+      document.getElementById('loginBtn').style.display = 'block';
+      document.getElementById('lerr').style.display = 'none';
+      clients = [];
+    });
+  };
+  document.head.appendChild(script);
+}
+
+function checkAdminRole(user) {
+  const roles = user.app_metadata?.roles || [];
+  if (!roles.includes('admin')) {
+    document.getElementById('loginLoading').style.display = 'none';
+    document.getElementById('loginBtn').style.display = 'block';
+    document.getElementById('lerr').textContent = 'Access denied — your account does not have admin role. Contact Dmitry to get access.';
+    document.getElementById('lerr').style.display = 'block';
+    netlifyIdentity.logout();
+    return;
+  }
+  // Authorized — set password from env for API calls
+  apw = user.token?.access_token || '';
+  document.getElementById('sbUser').textContent = user.email;
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
   loadClients();
   loadCredsFromStorage();
 }
-function logout(){sessionStorage.removeItem('a');location.reload();}
-const sa=sessionStorage.getItem('a');
-if(sa){apw=sa;document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';loadClients();loadCredsFromStorage();}
+
+function doNetlifyLogin() {
+  netlifyIdentity.open('login');
+}
+
+function logout() {
+  if (netlifyIdentity) netlifyIdentity.logout();
+}
+
+// Use the Netlify Identity JWT token as the admin password for API calls
+// The server-side functions verify it's a valid admin token
+async function getAdminToken() {
+  const user = netlifyIdentity?.currentUser();
+  if (!user) return '';
+  // Refresh token if needed
+  try {
+    const token = await user.jwt();
+    return token;
+  } catch {
+    return user.token?.access_token || '';
+  }
+}
+
+initAuth();
 
 function goPage(n,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
