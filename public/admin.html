@@ -1070,7 +1070,7 @@ function renderLeads() {
     return;
   }
 
-  el.innerHTML = `<div class="ctable"><div style="display:grid;grid-template-columns:1.5fr 1.2fr 1fr 1fr 1.2fr 80px;padding:.625rem 1rem;background:var(--cream-warm);border-bottom:1px solid var(--cream-dark);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);gap:.5rem">
+  el.innerHTML = `<div class="ctable"><div style="display:grid;grid-template-columns:1.5fr 1.2fr 1fr 1fr 1.2fr 80px;padding:.75rem 1.1rem;background:var(--cream-warm);border-bottom:1px solid var(--cream-dark);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);gap:.5rem">
     <div>Name / Email</div><div>Phone</div><div>Type</div><div>Submitted</div><div>Status</div><div></div>
   </div>
   ${list.map(l => renderLeadRow(l)).join('')}
@@ -1080,19 +1080,19 @@ function renderLeads() {
 function renderLeadRow(l) {
   const date = l.submittedAt ? new Date(l.submittedAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—';
   const typeBadge = l.formType === 'irs'
-    ? '<span style="background:var(--red-light);color:var(--red);border:1px solid #e8b0b0;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px">⚠️ IRS Issue</span>'
-    : '<span style="background:var(--blue-light);color:var(--blue);border:1px solid #b8cfe0;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px">📋 General Tax</span>';
+    ? '<span style="background:var(--red-light);color:var(--red);border:1px solid #e8b0b0;font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px">⚠️ IRS Issue</span>'
+    : '<span style="background:var(--blue-light);color:var(--blue);border:1px solid #b8cfe0;font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px">📋 General Tax</span>';
   const statusBadge = l.status === 'contacted'
-    ? '<span style="background:var(--green-light);color:var(--green);border:1px solid #b8d9c3;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px">✓ Contacted</span>'
-    : '<span style="background:var(--amber-light);color:var(--amber);border:1px solid #e8c98a;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px">🆕 New</span>';
+    ? '<span style="background:var(--green-light);color:var(--green);border:1px solid #b8d9c3;font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px">✓ Contacted</span>'
+    : '<span style="background:var(--amber-light);color:var(--amber);border:1px solid #e8c98a;font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px">🆕 New</span>';
 
   return `
     <div>
-      <div style="display:grid;grid-template-columns:1.5fr 1.2fr 1fr 1fr 1.2fr 80px;padding:.75rem 1rem;border-bottom:1px solid var(--cream-warm);align-items:center;gap:.5rem;cursor:pointer;transition:background .12s" onclick="toggleLead('${esc(l.id)}')" id="lrow-${esc(l.id)}">
-        <div><div class="cn">${esc(l.name||'—')}</div><div class="ce">${esc(l.email||'—')}</div></div>
-        <div class="ct">${esc(l.phone||'—')}</div>
+      <div style="display:grid;grid-template-columns:1.5fr 1.2fr 1fr 1fr 1.2fr 80px;padding:.875rem 1.1rem;border-bottom:1px solid var(--cream-warm);align-items:center;gap:.5rem;cursor:pointer;transition:background .12s" onclick="toggleLead('${esc(l.id)}')" id="lrow-${esc(l.id)}">
+        <div><div class="cn" style="font-size:14px">${esc(l.name||'—')}</div><div class="ce" style="font-size:12px">${esc(l.email||'—')}</div></div>
+        <div class="ct" style="font-size:13px">${esc(l.phone||'—')}</div>
         <div>${typeBadge}</div>
-        <div class="ct">${date}</div>
+        <div class="ct" style="font-size:13px">${date}</div>
         <div>${statusBadge}</div>
         <div style="display:flex;gap:4px">
           <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();emailLead('${esc(l.email)}','${esc(l.name||'')}')" style="font-size:10px;padding:3px 7px">✉</button>
@@ -1119,7 +1119,7 @@ function renderLeadDetail(l) {
 
   return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
     <div>
-      ${rows.map(([k,v]) => `<div class="f8row"><div class="f8k">${esc(k)}</div><div class="f8v" style="white-space:pre-wrap">${esc(v)}</div></div>`).join('')}
+      ${rows.map(([k,v]) => `<div class="f8row" style="font-size:13px"><div class="f8k" style="font-size:11px">${esc(k)}</div><div class="f8v" style="white-space:pre-wrap;line-height:1.7">${esc(v)}</div></div>`).join('')}
     </div>
     <div>
       <span class="lbl">Notes</span>
