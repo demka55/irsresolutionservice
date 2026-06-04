@@ -538,7 +538,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
     <div class="modal-body">
       <div class="tf" id="txContent"></div>
       <div class="modal-foot">
-        <button class="btn btn-ghost" onclick="dlTx()">⬇ Download</button>
+        <button class="btn btn-gold" onclick="dlTx()">📄 Open as PDF</button>
         <button class="btn btn-ghost" onclick="closeM('txModal')">Close</button>
       </div>
     </div>
@@ -731,7 +731,7 @@ function renderDetail(c){
   <div class="dp">
     <div class="dp-h">📋 Form 8821</div>
     ${f8Html}
-    ${f8?`<button class="btn btn-ghost btn-sm" style="margin-top:.625rem" onclick="dlF8('${esc(c.email)}')">⬇ Download</button>`:''}
+    ${f8?`<button class="btn btn-gold btn-sm" style="margin-top:.625rem" onclick="dlF8('${esc(c.email)}')">📄 Generate 8821 PDF</button>`:''}
   </div>
   <div class="dp">
     <div class="dp-h">⚡ Actions</div>
@@ -1003,25 +1003,174 @@ function quickPull(email){const c=clients.find(x=>x.email===email);if(!c)return;
 function openTxModal(html,title){document.getElementById('txSub').textContent=title;document.getElementById('txContent').innerHTML=html||'No content';curTx=html;document.getElementById('txModal').classList.add('open');}
 
 async function dlTx(){
-  // Record download date
   if(curTxEmail&&curTxKey){
     try{
       await fetch('/.netlify/functions/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:curTxEmail,adminPassword:apw,update:{adminAction:true,steps:{['txDownloaded_'+curTxKey]:new Date().toISOString()}}})});
       await loadClients();
     }catch(e){console.warn('Could not record download',e.message);}
   }
-  const b=new Blob([curTx],{type:'text/html'}),a=document.createElement('a');
-  a.href=URL.createObjectURL(b);
-  a.download='irs-transcript-'+(curTxKey||'download')+'.html';
-  a.click();
-  toast('Transcript downloaded — not stored on server');
+
+  // Open transcript as clean printable PDF
+  const printHtml=`<!DOCTYPE html><html><head><title>IRS Transcript — ${curTxKey||'download'}</title>
+<style>
+  @page{margin:0.75in}
+  body{font-family:'Courier New',monospace;font-size:10px;color:#000;margin:0;padding:0;line-height:1.5}
+  .no-print{background:#1a3a5c;color:white;padding:10px 16px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+  .header{text-align:center;font-weight:bold;font-size:12px;margin-bottom:12px;border-bottom:1px solid #000;padding-bottom:8px}
+  pre{white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New',monospace;font-size:10px}
+  @media print{.no-print{display:none}}
+</style></head><body>
+<div class="no-print">
+  <span style="font-weight:600">IRS Transcript — ${curTxKey||''} — Ready to save as PDF</span>
+  <button onclick="window.print()" style="background:#c9a84c;color:white;border:none;padding:8px 20px;border-radius:2px;font-weight:600;cursor:pointer">🖨 Print / Save as PDF</button>
+</div>
+<div class="header">IRS Official Transcript — ${curTxKey?.replace(/_/g,' ')||''}<br>Prepared for: Romeo Razi, CPA — Taxed Right LLC<br>Printed: ${new Date().toLocaleString()}</div>
+${curTx}
+</body></html>`;
+
+  const w=window.open('','_blank','width=900,height=1100');
+  w.document.write(printHtml);
+  w.document.close();
+  toast('Transcript opened — use Print → Save as PDF');
 }
 
 function dlF8(email){
-  const c=clients.find(x=>x.email===email);if(!c)return;
-  const f=c.steps?.form8821Data;if(!f)return;
-  const txt=`FORM 8821 — TAX INFORMATION AUTHORIZATION\nTaxed Right LLC — Romeo Razi, CPA\n\nTAXPAYER: ${f.taxpayerName||''}\nSSN: ***-**-${f.ssnLast4||''}\nDOB: ${f.dob||''}\nADDRESS: ${f.address||''}\nPHONE: ${f.phone||''}\nFILING STATUS: ${f.filingStatus||''}\n\nDESIGNEE: Romeo Razi, CPA — Taxed Right LLC\nTAX YEARS: ${f.taxYears||''}\nPURPOSE: IRS transcript access\n\nSIGNED: ${f.signedAt?new Date(f.signedAt).toLocaleString():''}\nCLIENT EMAIL: ${email}`;
-  const b=new Blob([txt],{type:'text/plain'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`8821_${email.split('@')[0]}.txt`;a.click();
+  const c=clients.find(x=>x.email===email);
+  if(!c)return;
+  const f=c.steps?.form8821Data;
+  if(!f){toast('No Form 8821 data found for this client',true);return;}
+
+  const today=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  const years=(f.taxYears||'').split(',').map(y=>y.trim());
+
+  const html=`<!DOCTYPE html><html><head><title>Form 8821 - ${f.taxpayerName||''}</title>
+<style>
+  @page{margin:0.75in}
+  body{font-family:Arial,sans-serif;font-size:11px;color:#000;margin:0;padding:0}
+  .header{text-align:center;border-bottom:2px solid #000;padding-bottom:8px;margin-bottom:12px}
+  .form-title{font-size:20px;font-weight:bold;margin:0}
+  .form-sub{font-size:12px;margin:2px 0}
+  .omb{font-size:9px;text-align:right;margin-bottom:4px}
+  .section{margin-bottom:10px}
+  .section-title{background:#000;color:#fff;font-weight:bold;padding:2px 6px;font-size:10px;margin-bottom:4px}
+  .field-row{display:flex;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+  .field{flex:1;min-width:180px}
+  .field-label{font-size:9px;font-weight:bold;text-transform:uppercase;color:#444;margin-bottom:1px}
+  .field-value{border-bottom:1px solid #000;padding:2px 0;font-size:11px;min-height:16px}
+  .field-value.box{border:1px solid #000;padding:3px 6px;min-height:18px}
+  .checkbox-row{display:flex;gap:16px;flex-wrap:wrap;margin:4px 0}
+  .checkbox-item{display:flex;align-items:center;gap:4px;font-size:10px}
+  .cb{width:12px;height:12px;border:1px solid #000;display:inline-block;text-align:center;line-height:12px;font-size:10px}
+  .year-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin:4px 0}
+  .year-box{border:1px solid #000;padding:3px;text-align:center;font-size:10px}
+  .year-box.checked{background:#000;color:#fff;font-weight:bold}
+  .sig-section{margin-top:12px;border-top:2px solid #000;padding-top:8px}
+  .sig-line{border-bottom:1px solid #000;margin-top:20px;margin-bottom:2px}
+  .two-col{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+  .instructions{background:#f5f5f5;border:1px solid #ccc;padding:8px;font-size:9px;margin-top:8px;line-height:1.5}
+  .romeo-box{border:2px solid #000;padding:8px;margin-top:8px}
+  .romeo-title{font-weight:bold;font-size:10px;margin-bottom:4px}
+  .submit-instructions{background:#fffde7;border:1px solid #f0c000;padding:8px;margin-top:12px;font-size:10px;line-height:1.7}
+  .submit-title{font-weight:bold;font-size:11px;margin-bottom:4px;color:#5a4000}
+  @media print{.no-print{display:none}.submit-instructions{display:none}}
+</style></head><body>
+
+<div class="no-print" style="background:#1a3a5c;color:white;padding:12px 20px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">
+  <span style="font-weight:600">Form 8821 — ${f.taxpayerName||''} — Ready to print/save as PDF</span>
+  <button onclick="window.print()" style="background:#c9a84c;color:white;border:none;padding:8px 20px;border-radius:2px;font-weight:600;cursor:pointer;font-size:13px">🖨 Print / Save as PDF</button>
+</div>
+
+<div class="submit-instructions no-print">
+  <div class="submit-title">📋 How to submit this Form 8821 to the IRS (Romeo):</div>
+  <strong>Option 1 — Fax (fastest, 1-2 days):</strong> Print this form → sign it → fax to IRS CAF Unit at <strong>855-214-7522</strong> (domestic) or <strong>304-707-9785</strong> (international)<br>
+  <strong>Option 2 — IRS e-Services (online):</strong> Log into <strong>la.www4.irs.gov</strong> → e-Services → Submit Form 8821 electronically<br>
+  <strong>Option 3 — Mail (slowest, 4-6 weeks):</strong> Mail to IRS, Attn: CAF Unit, based on client's state — see IRS.gov for address<br>
+  <strong>After submission:</strong> Mark client as "CAF Submitted" in the admin dashboard. IRS typically activates in 2-5 business days.
+</div>
+
+<div class="omb">OMB No. 1545-1165</div>
+
+<div class="header">
+  <div class="form-title">Form 8821</div>
+  <div class="form-sub">Tax Information Authorization</div>
+  <div class="form-sub">(Rev. November 2021)</div>
+  <div class="form-sub">Department of the Treasury — Internal Revenue Service</div>
+</div>
+
+<div class="section">
+  <div class="section-title">Part I — Taxpayer Information</div>
+  <div class="field-row">
+    <div class="field"><div class="field-label">Taxpayer Name</div><div class="field-value">${f.taxpayerName||''}</div></div>
+    <div class="field"><div class="field-label">SSN / EIN (last 4 only)</div><div class="field-value">***-**-${f.ssnLast4||''}</div></div>
+  </div>
+  <div class="field-row">
+    <div class="field" style="flex:2"><div class="field-label">Current Address</div><div class="field-value">${f.address||''}</div></div>
+    <div class="field"><div class="field-label">Phone</div><div class="field-value">${f.phone||''}</div></div>
+  </div>
+  <div class="field-row">
+    <div class="field"><div class="field-label">Filing Status</div><div class="field-value">${f.filingStatus||''}</div></div>
+    <div class="field"><div class="field-label">Date of Birth</div><div class="field-value">${f.dob||''}</div></div>
+    <div class="field"><div class="field-label">Email</div><div class="field-value">${email}</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Part II — Appointee (Authorized Designee)</div>
+  <div class="romeo-box">
+    <div class="romeo-title">Romeo Razi, CPA — Taxed Right LLC / IRS Resolution Service</div>
+    <div class="field-row">
+      <div class="field"><div class="field-label">Name</div><div class="field-value">Romeo Razi</div></div>
+      <div class="field"><div class="field-label">Firm Name</div><div class="field-value">Taxed Right LLC</div></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><div class="field-label">Address</div><div class="field-value">taxedright.com</div></div>
+      <div class="field"><div class="field-label">Phone</div><div class="field-value">romeo@taxedright.com</div></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><div class="field-label">CAF Number</div><div class="field-value">[Romeo's CAF Number]</div></div>
+      <div class="field"><div class="field-label">PTIN</div><div class="field-value">[Romeo's PTIN]</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Part III — Tax Information</div>
+  <div style="font-size:10px;margin-bottom:6px">This authorization covers the following tax matters:</div>
+  <div class="field-row">
+    <div class="field"><div class="field-label">Type of Tax (Form Number)</div><div class="field-value box">1040 — Individual Income Tax</div></div>
+    <div class="field"><div class="field-label">Tax Year(s) or Period(s)</div><div class="field-value box">${f.taxYears||''}</div></div>
+    <div class="field"><div class="field-label">Specific Tax Matters</div><div class="field-value box">Return & Account Transcripts</div></div>
+  </div>
+</div>
+
+<div class="sig-section">
+  <div class="section-title">Part IV — Taxpayer Signature</div>
+  <div style="font-size:9px;margin-bottom:8px;line-height:1.5">
+    By signing below, I authorize the appointee identified above to receive and inspect my confidential tax information for the tax matters listed. This authorization does not allow the appointee to represent me before the IRS or sign any documents on my behalf.
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="field-label">Taxpayer Signature</div>
+      <div class="sig-line"></div>
+      <div style="font-size:9px;color:#666">Signed electronically on ${f.signedAt ? new Date(f.signedAt).toLocaleString() : today}</div>
+    </div>
+    <div>
+      <div class="field-label">Date</div>
+      <div class="sig-line"></div>
+      <div style="font-size:9px;color:#666">${f.signedAt ? new Date(f.signedAt).toLocaleDateString() : today}</div>
+    </div>
+  </div>
+  <div style="margin-top:8px;font-size:9px;color:#666">
+    Signature captured electronically via IRS Resolution Service portal — irsresolutionservice.com<br>
+    Client email: ${email} | Submission date: ${today}
+  </div>
+</div>
+
+</body></html>`;
+
+  const w=window.open('','_blank','width=850,height=1100');
+  w.document.write(html);
+  w.document.close();
 }
 
 function emailCl(e,n){window.open(`mailto:${e}?subject=IRS Resolution Update — ${n}`);}
