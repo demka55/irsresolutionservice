@@ -200,6 +200,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
     <div class="sb-i active" onclick="goPage('clients',this)"><span class="sb-ic">👥</span>All Clients<span class="sb-cnt" id="cntAll">—</span></div>
     <div class="sb-i" onclick="goPage('action',this)"><span class="sb-ic">⚡</span>Needs Action<span class="sb-cnt r" id="cntAct">—</span></div>
     <div class="sb-i" onclick="goPage('resolved',this)"><span class="sb-ic">✅</span>Resolved<span class="sb-cnt" id="cntRes">—</span></div>
+    <div class="sb-i" onclick="goPage('leads',this)"><span class="sb-ic">📋</span>Leads / Inquiries<span class="sb-cnt" id="cntLeads">—</span></div>
     <span class="sb-sec">IRS Tools</span>
     <div class="sb-i" onclick="goPage('irs',this)"><span class="sb-ic">🔗</span>IRS Connection</div>
     <span class="sb-sec">Settings</span>
@@ -329,6 +330,27 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
     <div class="ctable">
       <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Status</div><div>Actions</div><div></div></div>
       <div id="tbody-resolved"><div class="empty"><div class="empty-ic">✅</div><h3>Loading…</h3></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- LEADS PAGE -->
+<div id="pg-leads" class="page">
+  <div class="topbar">
+    <div><div class="tb-title">Leads & Inquiries</div><div class="tb-sub" id="leadsSub">Contact form submissions from the website</div></div>
+    <div class="tb-actions"><button class="btn btn-ghost btn-sm" onclick="loadLeads()">↻ Refresh</button></div>
+  </div>
+  <div class="body">
+    <div class="toolbar">
+      <span style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)">Type:</span>
+      <button class="tbtn active" onclick="setLeadFilter('all',this)">All</button>
+      <button class="tbtn" onclick="setLeadFilter('general',this)">📋 General Tax</button>
+      <button class="tbtn" onclick="setLeadFilter('irs',this)">⚠️ IRS Issue</button>
+      <button class="tbtn" onclick="setLeadFilter('new',this)">🆕 New</button>
+      <button class="tbtn" onclick="setLeadFilter('contacted',this)">✅ Contacted</button>
+    </div>
+    <div id="leadsTable">
+      <div class="empty"><div class="empty-ic">📋</div><h3>No leads yet</h3><p>Contact form submissions will appear here.</p></div>
     </div>
   </div>
 </div>
@@ -599,6 +621,7 @@ function goPage(n,el){
   if(n==='action')renderTBody('tbody-action',clients.filter(needsAction));
   if(n==='resolved')renderTBody('tbody-resolved',clients.filter(c=>c.status==='resolved'));
   if(n==='irs')populateIrsSel();
+  if(n==='leads')loadLeads();
 }
 
 function needsAction(c){return['8821_signed','caf_active','transcripts_pulled','plan_approved','filed'].includes(c.status);}
@@ -1006,7 +1029,149 @@ function loadCredsFromStorage(){ /* credentials no longer stored in browser */ }
 
 function saveCreds(){ checkCredsStatus(); }
 
-async function checkCredsStatus(){
+async // ── LEADS ────────────────────────────────────────────────────────────────────
+let allLeads = [], leadFilter = 'all';
+
+async function loadLeads() {
+  try {
+    const r = await fetch(`/.netlify/functions/get-leads?password=${encodeURIComponent(apw)}`);
+    const text = await r.text();
+    let d;
+    try { d = JSON.parse(text); } catch {
+      document.getElementById('leadsTable').innerHTML = `<div class="empty"><div class="empty-ic">⚠️</div><h3>Error</h3><p>${text.substring(0,200)}</p></div>`;
+      return;
+    }
+    allLeads = d.leads || [];
+    document.getElementById('cntLeads').textContent = allLeads.length || '';
+    document.getElementById('leadsSub').textContent = `${allLeads.length} total submission${allLeads.length===1?'':'s'}`;
+    renderLeads();
+  } catch(e) {
+    document.getElementById('leadsTable').innerHTML = `<div class="empty"><div class="empty-ic">⚠️</div><h3>Error loading leads</h3><p>${esc(e.message)}</p></div>`;
+  }
+}
+
+function setLeadFilter(f, btn) {
+  leadFilter = f;
+  document.querySelectorAll('#pg-leads .tbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderLeads();
+}
+
+function renderLeads() {
+  let list = allLeads;
+  if (leadFilter === 'general')   list = allLeads.filter(l => l.formType === 'general');
+  if (leadFilter === 'irs')       list = allLeads.filter(l => l.formType === 'irs');
+  if (leadFilter === 'new')       list = allLeads.filter(l => l.status === 'new');
+  if (leadFilter === 'contacted') list = allLeads.filter(l => l.status === 'contacted');
+
+  const el = document.getElementById('leadsTable');
+  if (!list.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-ic">📋</div><h3>No leads here</h3></div>`;
+    return;
+  }
+
+  el.innerHTML = `<div class="ctable"><div style="display:grid;grid-template-columns:1.5fr 1.2fr 1fr 1fr 1.2fr 80px;padding:.625rem 1rem;background:var(--cream-warm);border-bottom:1px solid var(--cream-dark);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);gap:.5rem">
+    <div>Name / Email</div><div>Phone</div><div>Type</div><div>Submitted</div><div>Status</div><div></div>
+  </div>
+  ${list.map(l => renderLeadRow(l)).join('')}
+  </div>`;
+}
+
+function renderLeadRow(l) {
+  const date = l.submittedAt ? new Date(l.submittedAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—';
+  const typeBadge = l.formType === 'irs'
+    ? '<span style="background:var(--red-light);color:var(--red);border:1px solid #e8b0b0;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px">⚠️ IRS Issue</span>'
+    : '<span style="background:var(--blue-light);color:var(--blue);border:1px solid #b8cfe0;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px">📋 General Tax</span>';
+  const statusBadge = l.status === 'contacted'
+    ? '<span style="background:var(--green-light);color:var(--green);border:1px solid #b8d9c3;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px">✓ Contacted</span>'
+    : '<span style="background:var(--amber-light);color:var(--amber);border:1px solid #e8c98a;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px">🆕 New</span>';
+
+  return `
+    <div>
+      <div style="display:grid;grid-template-columns:1.5fr 1.2fr 1fr 1fr 1.2fr 80px;padding:.75rem 1rem;border-bottom:1px solid var(--cream-warm);align-items:center;gap:.5rem;cursor:pointer;transition:background .12s" onclick="toggleLead('${esc(l.id)}')" id="lrow-${esc(l.id)}">
+        <div><div class="cn">${esc(l.name||'—')}</div><div class="ce">${esc(l.email||'—')}</div></div>
+        <div class="ct">${esc(l.phone||'—')}</div>
+        <div>${typeBadge}</div>
+        <div class="ct">${date}</div>
+        <div>${statusBadge}</div>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();emailLead('${esc(l.email)}','${esc(l.name||'')}')" style="font-size:10px;padding:3px 7px">✉</button>
+          ${l.status==='new' ? `<button class="btn btn-green btn-sm" onclick="event.stopPropagation();markContacted('${esc(l.id)}')" style="font-size:10px;padding:3px 7px">✓</button>` : ''}
+        </div>
+      </div>
+      <div id="ldet-${esc(l.id)}" style="display:none;background:var(--cream);border-bottom:1px solid var(--cream-dark);padding:1.25rem">
+        ${renderLeadDetail(l)}
+      </div>
+    </div>`;
+}
+
+function renderLeadDetail(l) {
+  const rows = [
+    ['Address', l.address],
+    ['Referral', l.referral],
+    l.formType === 'general' ? ['Business', l.business] : null,
+    l.formType === 'general' ? ['Tax Situation', l.situation] : null,
+    l.formType === 'general' ? ['Why New Accountant', l.why] : null,
+    l.formType === 'general' ? ['Prior Preparer', l.preparer] : null,
+    l.formType === 'general' ? ['Unusual Events', l.unusual] : null,
+    l.formType === 'irs'     ? ['IRS Issue Details', l.issue] : null,
+  ].filter(Boolean).filter(([,v]) => v);
+
+  return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+    <div>
+      ${rows.map(([k,v]) => `<div class="f8row"><div class="f8k">${esc(k)}</div><div class="f8v" style="white-space:pre-wrap">${esc(v)}</div></div>`).join('')}
+    </div>
+    <div>
+      <span class="lbl">Notes</span>
+      <textarea class="notes-ta" id="lnote-${esc(l.id)}" rows="3">${esc(l.notes||'')}</textarea>
+      <div class="btn-row">
+        <button class="btn btn-gold btn-sm" onclick="saveLeadNote('${esc(l.id)}')">Save note</button>
+        <button class="btn btn-ghost btn-sm" onclick="emailLead('${esc(l.email)}','${esc(l.name||'')}')">✉ Email ${esc(l.name?.split(' ')[0]||'')}</button>
+        ${l.status==='new'?`<button class="btn btn-green btn-sm" onclick="markContacted('${esc(l.id)}')">✓ Mark contacted</button>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggleLead(id) {
+  const det = document.getElementById('ldet-' + id);
+  const open = det.style.display === 'block';
+  document.querySelectorAll('[id^="ldet-"]').forEach(d => d.style.display = 'none');
+  if (!open) det.style.display = 'block';
+}
+
+function emailLead(email, name) {
+  window.open(`mailto:${email}?subject=Your inquiry to IRS Resolution Service — ${name}`);
+}
+
+async function markContacted(id) {
+  const lead = allLeads.find(l => l.id === id);
+  if (!lead) return;
+  lead.status = 'contacted';
+  await saveLeadToBlobs(lead);
+  renderLeads();
+  toast('Marked as contacted ✓');
+}
+
+async function saveLeadNote(id) {
+  const lead = allLeads.find(l => l.id === id);
+  if (!lead) return;
+  lead.notes = document.getElementById('lnote-' + id).value;
+  await saveLeadToBlobs(lead);
+  toast('Note saved ✓');
+}
+
+async function saveLeadToBlobs(lead) {
+  try {
+    await fetch('/.netlify/functions/update-lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminPassword: apw, lead }),
+    });
+  } catch(e) { toast('Save failed: ' + e.message, true); }
+}
+
+function checkCredsStatus(){
   const el=document.getElementById('credsStatus');
   if(!el) return;
   el.innerHTML='<span style="color:var(--ink-muted)">Checking Netlify environment variables…</span>';

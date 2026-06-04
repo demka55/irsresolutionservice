@@ -1,5 +1,7 @@
 // netlify/functions/contact-form.mjs
-// Receives contact form submissions and emails Romeo
+// Receives contact form submissions, saves to Blobs, and emails Romeo
+
+import { getStore } from '@netlify/blobs';
 
 export default async (req) => {
   const headers = {
@@ -19,6 +21,40 @@ export default async (req) => {
 
   if (!name || !email) {
     return new Response(JSON.stringify({ error: 'Missing required fields' }), { status: 400, headers });
+  }
+
+  // Save lead to Blobs
+  try {
+    const store = getStore('leads');
+    const leadId = `${Date.now()}-${email.toLowerCase().replace(/[^a-z0-9]/g,'-')}`;
+    const lead = {
+      id: leadId,
+      formType: formType || 'general',
+      name, phone, email, address, referral,
+      submittedAt: new Date().toISOString(),
+      status: 'new',
+      notes: '',
+      // General form fields
+      business:   body.business   || '',
+      situation:  body.situation  || '',
+      why:        body.why        || '',
+      preparer:   body.preparer   || '',
+      unusual:    body.unusual    || '',
+      // IRS form fields
+      issue:      body.issue      || '',
+    };
+    await store.set(leadId, JSON.stringify(lead));
+
+    // Update leads index
+    let index = [];
+    try {
+      const raw = await store.get('__index__');
+      if (raw) index = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    } catch {}
+    index.unshift(leadId); // newest first
+    await store.set('__index__', JSON.stringify(index));
+  } catch(err) {
+    console.error('[contact-form] Blobs save failed:', err.message);
   }
 
   let subject, html;
@@ -108,4 +144,3 @@ async function sendEmail(apiKey, { from, to, subject, html }) {
   }
 }
 
-export const config = { path: '/api/contact-form' };
