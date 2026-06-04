@@ -1,27 +1,25 @@
-// netlify/functions/get-leads.js
-// Returns all contact form submissions for admin dashboard
+// netlify/functions/get-leads.mjs
+import { getStore } from '@netlify/blobs';
 
-const { getStore } = require('@netlify/blobs');
-
-exports.handler = async function(event, context) {
+export default async (req) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Content-Type': 'application/json',
   };
 
-  if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
+  if (req.method === 'OPTIONS') return new Response(null, { status: 200, headers });
 
-  const ADMIN_PASSWORD       = process.env.ADMIN_PASSWORD || '';
-  const ADMIN_PASSWORD_ROMEO = process.env.ADMIN_PASSWORD_ROMEO || '';
+  const ADMIN_PASSWORD       = Netlify.env.get('ADMIN_PASSWORD') || '';
+  const ADMIN_PASSWORD_ROMEO = Netlify.env.get('ADMIN_PASSWORD_ROMEO') || '';
 
-  const url = new URL(event.rawUrl || `https://x.com${event.path}`);
+  const url = new URL(req.url);
   const password = url.searchParams.get('password');
   const isValid = (ADMIN_PASSWORD && password === ADMIN_PASSWORD) ||
                   (ADMIN_PASSWORD_ROMEO && password === ADMIN_PASSWORD_ROMEO);
 
-  if (!isValid) return { statusCode: 401, headers, body: JSON.stringify({ error: 'Unauthorized' }) };
+  if (!isValid) return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers });
 
   try {
     const store = getStore('leads');
@@ -33,7 +31,7 @@ exports.handler = async function(event, context) {
     } catch {}
 
     if (!index.length) {
-      return { statusCode: 200, headers, body: JSON.stringify({ leads: [] }) };
+      return new Response(JSON.stringify({ leads: [] }), { status: 200, headers });
     }
 
     const leads = await Promise.all(
@@ -49,13 +47,9 @@ exports.handler = async function(event, context) {
       })
     );
 
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({ leads: leads.filter(Boolean) })
-    };
+    return new Response(JSON.stringify({ leads: leads.filter(Boolean) }), { status: 200, headers });
 
   } catch(err) {
-    return { statusCode: 500, headers, body: JSON.stringify({ error: err.message }) };
+    return new Response(JSON.stringify({ error: err.message }), { status: 500, headers });
   }
 };
