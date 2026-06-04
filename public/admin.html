@@ -1030,7 +1030,7 @@ function loadCredsFromStorage(){ /* credentials no longer stored in browser */ }
 
 function saveCreds(){ checkCredsStatus(); }
 
-async // ── LEADS ────────────────────────────────────────────────────────────────────
+// ── LEADS ────────────────────────────────────────────────────────────────────
 
 async function loadLeads() {
   try {
@@ -1163,11 +1163,15 @@ async function saveLeadNote(id) {
 
 async function saveLeadToBlobs(lead) {
   try {
-    await fetch('/.netlify/functions/update-lead', {
+    const r = await fetch('/.netlify/functions/update-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ adminPassword: apw, lead }),
     });
+    const text = await r.text();
+    let d;
+    try { d = JSON.parse(text); } catch { toast('Save failed: invalid response', true); return; }
+    if (!r.ok) throw new Error(d.error || 'Save failed');
   } catch(e) { toast('Save failed: ' + e.message, true); }
 }
 
