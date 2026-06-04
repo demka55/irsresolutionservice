@@ -550,6 +550,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 <script>
 const PW = null; // Password validated server-side only — never stored in frontend code
 let apw='',clients=[],filt='all',curTx='',curTxEmail='',curTxKey='';
+let allLeads=[], leadFilter='all';
 
 
 const SL={'paid':'Awaiting 8821','8821_signed':'8821 Signed','caf_pending':'CAF Pending','caf_active':'CAF Active','transcripts_pulled':'Transcripts Pulled','plan_sent':'Plan Sent','plan_approved':'Plan Approved','filed':'Filed','resolved':'Resolved'};
@@ -1030,7 +1031,6 @@ function loadCredsFromStorage(){ /* credentials no longer stored in browser */ }
 function saveCreds(){ checkCredsStatus(); }
 
 async // ── LEADS ────────────────────────────────────────────────────────────────────
-let allLeads = [], leadFilter = 'all';
 
 async function loadLeads() {
   try {
