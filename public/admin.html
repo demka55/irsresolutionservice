@@ -1171,7 +1171,7 @@ async function saveLeadToBlobs(lead) {
   } catch(e) { toast('Save failed: ' + e.message, true); }
 }
 
-function checkCredsStatus(){
+async function checkCredsStatus(){
   const el=document.getElementById('credsStatus');
   if(!el) return;
   el.innerHTML='<span style="color:var(--ink-muted)">Checking Netlify environment variables…</span>';
