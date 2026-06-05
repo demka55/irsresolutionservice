@@ -201,6 +201,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
     <div class="sb-i" onclick="goPage('action',this)"><span class="sb-ic">⚡</span>Needs Action<span class="sb-cnt r" id="cntAct">—</span></div>
     <div class="sb-i" onclick="goPage('resolved',this)"><span class="sb-ic">✅</span>Resolved<span class="sb-cnt" id="cntRes">—</span></div>
     <div class="sb-i" onclick="goPage('leads',this)"><span class="sb-ic">📋</span>Leads / Inquiries<span class="sb-cnt" id="cntLeads">—</span></div>
+    <div class="sb-i" onclick="goPage('community',this)"><span class="sb-ic">🎯</span>Community<span class="sb-cnt" id="cntCommunity">—</span></div>
     <span class="sb-sec">IRS Tools</span>
     <div class="sb-i" onclick="goPage('irs',this)"><span class="sb-ic">🔗</span>IRS Connection</div>
     <span class="sb-sec">Settings</span>
@@ -330,6 +331,27 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
     <div class="ctable">
       <div class="thead"><div></div><div>Name / Email</div><div>Company</div><div>Status</div><div>Actions</div><div></div></div>
       <div id="tbody-resolved"><div class="empty"><div class="empty-ic">✅</div><h3>Loading…</h3></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- COMMUNITY PAGE -->
+<div id="pg-community" class="page">
+  <div class="topbar">
+    <div><div class="tb-title">Community Waitlist</div><div class="tb-sub" id="commSub">CPA & EA signups for the monthly community call</div></div>
+    <div class="tb-actions"><button class="btn btn-ghost btn-sm" onclick="loadCommunity()">↻ Refresh</button></div>
+  </div>
+  <div class="body">
+    <div class="stats" style="grid-template-columns:repeat(3,1fr)">
+      <div class="stat g"><span class="stat-n" id="cmTotal">—</span><span class="stat-l">Total Signups</span></div>
+      <div class="stat"><span class="stat-n" id="cmMonthly">—</span><span class="stat-l">Monthly Plan</span></div>
+      <div class="stat"><span class="stat-n" id="cmAnnual">—</span><span class="stat-l">Annual Plan</span></div>
+    </div>
+    <div class="ctable">
+      <div style="display:grid;grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px;padding:.625rem 1rem;background:var(--cream-warm);border-bottom:1px solid var(--cream-dark);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);gap:.5rem">
+        <div>Name / Email</div><div>Question Submitted</div><div>Plan</div><div>MRR Value</div><div>Signed Up</div><div></div>
+      </div>
+      <div id="communityTable"><div class="empty"><div class="empty-ic">🎯</div><h3>No signups yet</h3><p>Community waitlist signups will appear here.</p></div></div>
     </div>
   </div>
 </div>
@@ -623,6 +645,7 @@ function goPage(n,el){
   if(n==='resolved')renderTBody('tbody-resolved',clients.filter(c=>c.status==='resolved'));
   if(n==='irs')populateIrsSel();
   if(n==='leads')loadLeads();
+  if(n==='community')loadCommunity();
 }
 
 function needsAction(c){return['8821_signed','caf_active','transcripts_pulled','plan_approved','filed'].includes(c.status);}
@@ -1322,6 +1345,55 @@ async function saveLeadToBlobs(lead) {
     try { d = JSON.parse(text); } catch { toast('Save failed: invalid response', true); return; }
     if (!r.ok) throw new Error(d.error || 'Save failed');
   } catch(e) { toast('Save failed: ' + e.message, true); }
+}
+
+async // ── COMMUNITY ────────────────────────────────────────────────────────────────
+let allMembers = [];
+
+async function loadCommunity() {
+  try {
+    const r = await fetch(`/.netlify/functions/get-community?password=${encodeURIComponent(apw)}`);
+    const text = await r.text();
+    let d;
+    try { d = JSON.parse(text); } catch {
+      document.getElementById('communityTable').innerHTML = `<div class="empty"><div class="empty-ic">⚠️</div><h3>Error</h3><p>${text.substring(0,200)}</p></div>`;
+      return;
+    }
+    allMembers = d.members || [];
+    const monthly = allMembers.filter(m => m.plan === 'monthly').length;
+    const annual  = allMembers.filter(m => m.plan === 'annual').length;
+    document.getElementById('cmTotal').textContent   = allMembers.length;
+    document.getElementById('cmMonthly').textContent = monthly;
+    document.getElementById('cmAnnual').textContent  = annual;
+    document.getElementById('cntCommunity').textContent = allMembers.length || '';
+    document.getElementById('commSub').textContent = `${allMembers.length} member${allMembers.length===1?'':'s'} · Est. MRR: $${((monthly*99)+(annual*999/12)).toFixed(0)}`;
+    renderCommunity();
+  } catch(e) {
+    document.getElementById('communityTable').innerHTML = `<div class="empty"><div class="empty-ic">⚠️</div><h3>Error</h3><p>${esc(e.message)}</p></div>`;
+  }
+}
+
+function renderCommunity() {
+  const el = document.getElementById('communityTable');
+  if (!allMembers.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-ic">🎯</div><h3>No signups yet</h3><p>Community waitlist signups appear here.</p></div>`;
+    return;
+  }
+  el.innerHTML = allMembers.map(m => {
+    const date = m.submittedAt ? new Date(m.submittedAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—';
+    const planBadge = m.plan === 'annual'
+      ? '<span style="background:var(--gold-muted);color:var(--gold-dim);border:1px solid var(--gold);font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px">Annual</span>'
+      : '<span style="background:var(--blue-light);color:var(--blue);border:1px solid #b8cfe0;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px">Monthly</span>';
+    const mrr = m.plan === 'annual' ? '$83/mo' : '$99/mo';
+    return `<div style="display:grid;grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px;padding:.75rem 1rem;border-bottom:1px solid var(--cream-warm);align-items:start;gap:.5rem">
+      <div><div class="cn">${esc(m.name||'—')}</div><div class="ce">${esc(m.email||'—')}</div><div class="ce" style="margin-top:2px">${esc(m.credential||'')}</div></div>
+      <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;font-style:italic">${m.question ? '"'+esc(m.question.substring(0,120))+(m.question.length>120?'…':'')+'"' : '<span style="color:var(--ink-muted)">—</span>'}</div>
+      <div>${planBadge}</div>
+      <div><div class="cm">${mrr}</div></div>
+      <div><div class="ct">${date}</div></div>
+      <div><button class="btn btn-ghost btn-sm" onclick="emailLead('${esc(m.email)}','${esc(m.name||'')}')">✉</button></div>
+    </div>`;
+  }).join('');
 }
 
 async function checkCredsStatus(){
