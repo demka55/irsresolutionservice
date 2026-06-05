@@ -108,7 +108,7 @@ async function sendWelcomeEmail(resendKey, email, name, isResend) {
                     <div style="width:22px;height:22px;background:#c9a84c;border-radius:50%;text-align:center;line-height:22px;font-size:12px;font-weight:700;color:#1a1410">1</div>
                   </td>
                   <td style="vertical-align:top;padding:6px 0 6px 10px;font-size:14px;color:#1a1410;line-height:1.6">
-                    <strong>Create your account</strong> — click the button below to set your password and log into your secure client dashboard.
+                    <strong>Set up your password</strong> — click the button below. Your email is already filled in. Just choose a password to get into your dashboard.
                   </td>
                 </tr>
                 <tr>
@@ -116,7 +116,7 @@ async function sendWelcomeEmail(resendKey, email, name, isResend) {
                     <div style="width:22px;height:22px;background:#c9a84c;border-radius:50%;text-align:center;line-height:22px;font-size:12px;font-weight:700;color:#1a1410">2</div>
                   </td>
                   <td style="vertical-align:top;padding:6px 0 6px 10px;font-size:14px;color:#1a1410;line-height:1.6">
-                    <strong>Sign your Form 8821</strong> — this is the first thing you'll see once you log in.
+                    <strong>Sign your Form 8821</strong> — it's the first thing you'll see inside. Takes 2 minutes.
                   </td>
                 </tr>
                 <tr>
@@ -131,10 +131,13 @@ async function sendWelcomeEmail(resendKey, email, name, isResend) {
             </div>
 
             <div style="margin-bottom:1.5rem;text-align:center">
-              <a href="https://irsresolutionservice.com/resolve"
+              <a href="https://irsresolutionservice.com/resolve?email=${encodeURIComponent(email)}"
                  style="display:inline-block;background:#c9a84c;color:#1a1410;text-decoration:none;padding:14px 32px;border-radius:2px;font-weight:700;font-size:15px;letter-spacing:0.03em">
-                Go to your dashboard →
+                Finish setting up your account →
               </a>
+              <div style="margin-top:10px;font-size:13px;color:#7a6e60">
+                Your email is already filled in — just choose a password.
+              </div>
             </div>
 
             <div style="background:#f9f6f1;border:1px solid #d9cdb8;border-radius:4px;padding:20px;margin-bottom:1.5rem">
