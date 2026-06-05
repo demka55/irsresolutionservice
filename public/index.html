@@ -857,7 +857,7 @@ footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); p
             <label style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px">Email *</label>
             <input id="cm-email" type="email" placeholder="jane@yourfirm.com" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:var(--white);padding:11px 14px;border-radius:3px;font-family:var(--sans);font-size:14px;outline:none">
           </div>
-          <div style="margin-bottom:0.875rem">
+          <div style="margin-bottom:1.25rem">
             <label style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px">Credential</label>
             <select id="cm-cred" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:var(--white);padding:11px 14px;border-radius:3px;font-family:var(--sans);font-size:14px;outline:none;cursor:pointer">
               <option value="" style="background:#1a1410">Select your credential</option>
@@ -868,26 +868,6 @@ footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); p
             </select>
           </div>
           <div style="margin-bottom:1.25rem">
-            <label style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:8px">Preferred plan <span style="color:rgba(255,255,255,0.4);font-weight:400;text-transform:none;letter-spacing:0">— first month free on either</span></label>
-            <div style="display:flex;flex-direction:column;gap:0.625rem">
-              <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);border-radius:3px;padding:12px 14px;cursor:pointer">
-                <input type="radio" name="cm-plan" value="monthly" style="accent-color:var(--gold);flex-shrink:0">
-                <div style="flex:1">
-                  <div style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:500">Monthly — $99<span style="color:rgba(255,255,255,0.5);font-size:12px;font-weight:400">/month</span></div>
-                  <div style="font-size:11px;color:var(--gold);margin-top:2px">🎁 First month free</div>
-                </div>
-              </label>
-              <label style="display:flex;align-items:center;gap:10px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.5);border-radius:3px;padding:12px 14px;cursor:pointer;position:relative">
-                <div style="position:absolute;top:-9px;right:12px;background:var(--gold);color:var(--ink);font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:2px 8px;border-radius:20px">Best value</div>
-                <input type="radio" name="cm-plan" value="annual" checked style="accent-color:var(--gold);flex-shrink:0">
-                <div style="flex:1">
-                  <div style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:500">Annual — $999<span style="color:rgba(255,255,255,0.5);font-size:12px;font-weight:400">/year</span> <span style="font-size:11px;color:rgba(255,255,255,0.45)">(2 months free vs monthly)</span></div>
-                  <div style="font-size:11px;color:var(--gold);margin-top:2px">🎁 First month free</div>
-                </div>
-              </label>
-            </div>
-          </div>
-          <div style="margin-bottom:1.25rem">
             <label style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px">What's your most pressing IRS resolution question right now? <span style="color:rgba(255,255,255,0.4);font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
             <textarea id="cm-question" rows="3" placeholder="e.g. How do I handle a client whose OIC was rejected for miscalculated RCP? Or: what's the best strategy for CDP hearings on business tax debt?" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:var(--white);padding:11px 14px;border-radius:3px;font-family:var(--sans);font-size:13px;outline:none;resize:vertical;line-height:1.6"></textarea>
             <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:4px">We use these to pick the first month's topic. Romeo reads every one.</div>
@@ -895,8 +875,8 @@ footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); p
           <div id="cm-status" style="display:none;padding:10px 14px;border-radius:3px;font-size:13px;margin-bottom:0.875rem"></div>
           <button onclick="submitCommunity()" id="cm-btn" style="width:100%;background:var(--gold);color:var(--ink);border:none;padding:14px;border-radius:2px;font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;letter-spacing:0.04em;transition:background 0.2s">Join the Waitlist — First Month Free →</button>
           <div style="text-align:center;margin-top:0.875rem">
-            <div style="font-size:13px;color:rgba(255,255,255,0.7);font-weight:500">🚫 No credit card needed — ever, for the first month.</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px">Just let us know you're interested. We'll reach out before launch with all the details.</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.7);font-weight:500">🚫 No credit card needed now.</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:4px;line-height:1.6">After your free first month — $99/month or $999/year.<br>You choose when we reach out before launch. Cancel anytime.</div>
           </div>
         </div>
       </div>
@@ -937,7 +917,12 @@ footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); p
         <a href="https://taxedright.com/" target="_blank">Romeo Razi, CPA</a>
         <a href="https://www.criminallyprolific.com/" target="_blank">Dmitry Dragilev</a>
         <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank">LinkedIn</a>
-        <a href="https://irsresolutionservice.com/contact">Send US a message</a>
+        <a href="https://irsresolutionservice.com/contact">Send us a message</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -1274,7 +1259,7 @@ async function submitCommunity() {
   const name     = document.getElementById('cm-name').value.trim();
   const email    = document.getElementById('cm-email').value.trim();
   const cred     = document.getElementById('cm-cred').value;
-  const plan     = document.querySelector('input[name="cm-plan"]:checked')?.value || 'annual';
+  const plan     = 'tbd'; // plan chosen at launch
   const question = document.getElementById('cm-question').value.trim();
   const status   = document.getElementById('cm-status');
 
