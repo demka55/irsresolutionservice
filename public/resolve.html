@@ -895,38 +895,38 @@ async function submit8821() {
     const res = await fetch('/.netlify/functions/submit-8821', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, name: formData.taxpayerName, formData, signatureDataUrl })
+      body: JSON.stringify({ email, name: formData.taxpayerName || email, formData, signatureDataUrl })
     });
-    if (!res.ok) throw new Error('Submission failed');
 
-    // Show success FIRST before reloading status
-    const canvas = document.querySelector('canvas');
-    if (canvas) {
-      const parent = canvas.closest('.step-body, [class*="step"], .card, section, div');
-      // Walk up to find a meaningful container
-      let container = canvas.parentElement;
-      for(let i=0; i<6; i++){
-        if(container && (container.classList.length > 0 || container.tagName==='SECTION')) break;
-        container = container?.parentElement;
-      }
-      if(container) container.innerHTML = `
-        <div style="text-align:center;padding:2.5rem 1rem">
-          <div style="font-size:56px;margin-bottom:1.25rem">✅</div>
-          <h3 style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--ink);margin-bottom:0.875rem">Form 8821 submitted</h3>
-          <p style="font-size:15px;color:var(--ink-soft);line-height:1.8;max-width:440px;margin:0 auto 1.25rem">
-            Your Form 8821 has been received and sent to Romeo's team. They will submit it to the IRS within 1 business day.
-          </p>
-          <p style="font-size:14px;color:var(--ink-muted);line-height:1.7;max-width:440px;margin:0 auto">
-            Once the IRS processes it — typically <strong>2–5 business days</strong> — your status here will update automatically and Romeo will begin pulling your transcripts.
-          </p>
-          <div style="margin-top:1.5rem;background:var(--cream);border:1px solid var(--cream-dark);border-radius:4px;padding:1rem 1.25rem;font-size:14px;color:var(--ink-soft);max-width:440px;margin-left:auto;margin-right:auto">
-            A confirmation email has been sent to <strong>${email}</strong>
-          </div>
-        </div>`;
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(err || 'Submission failed');
     }
 
-    // Now reload status in the background — dashboard steps will update but not overwrite success
-    await window._loadStatus();
+    // Success — show confirmation banner above the form
+    const successDiv = document.createElement('div');
+    successDiv.style.cssText = 'background:#f0fdf4;border:1px solid #b8d9c3;border-radius:4px;padding:1.5rem;margin-bottom:1.5rem;text-align:center';
+    successDiv.innerHTML = `
+      <div style="font-size:36px;margin-bottom:.75rem">✅</div>
+      <div style="font-family:var(--serif);font-size:1.25rem;font-weight:600;color:#1a5c2e;margin-bottom:.5rem">Form 8821 submitted</div>
+      <div style="font-size:14px;color:#2d6a4f;line-height:1.7">Romeo's team has been notified. They'll submit to the IRS within 1 business day.<br>
+      Once the IRS confirms (2–5 days) your status here will update automatically.</div>`;
+
+    btn.closest('div, section')?.prepend(successDiv);
+    btn.textContent = '✓ Submitted';
+    btn.style.background = 'var(--green)';
+    btn.style.color = 'white';
+    btn.disabled = true; // keep disabled after success — intentional
+
+    // Reload status in background
+    try { await window._loadStatus(); } catch {}
+
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = 'Submit Form 8821 →';
+    alert('Submission failed: ' + e.message + '\n\nPlease try again or email romeo@taxedright.com');
+  }
+}
   } catch(e) {
     btn.disabled = false;
     btn.textContent = 'Submit Form 8821 →';
