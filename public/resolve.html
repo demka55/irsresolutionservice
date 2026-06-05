@@ -849,6 +849,7 @@ function initSignaturePad() {
   });
   const consent = document.getElementById('f8821-consent');
   if (consent) consent.addEventListener('change', updateSubmitBtn);
+  updateSubmitBtn(); // set initial state
 }
 
 function clearSignature() {
@@ -861,13 +862,13 @@ function clearSignature() {
 
 function updateSubmitBtn() {
   const btn = document.getElementById('submit8821Btn');
-  if (!btn) return;
+  if (!btn || btn.textContent === '✓ Submitted') return;
   const name = (document.getElementById('f8821-name')?.value || '').trim();
   const ssn = (document.getElementById('f8821-ssn')?.value || '').trim();
   const addr = (document.getElementById('f8821-address')?.value || '').trim();
   const years = (document.getElementById('f8821-years')?.value || '').trim();
   const consent = document.getElementById('f8821-consent')?.checked;
-  btn.disabled = !(name && ssn.length === 4 && addr && years && consent && sigPad.hasSig);
+  btn.disabled = !(name && ssn.length >= 4 && addr && years && consent);
 }
 
 async function submit8821() {
