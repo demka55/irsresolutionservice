@@ -927,12 +927,8 @@ async function submit8821() {
     alert('Submission failed: ' + e.message + '\n\nPlease try again or email romeo@taxedright.com');
   }
 }
-  } catch(e) {
-    btn.disabled = false;
-    btn.textContent = 'Submit Form 8821 →';
-    alert('Submission failed: ' + e.message + '. Please try again or email romeo@taxedright.com.');
-  }
-}
+
+
 
 async function approvePlan() {
   const email = window._currentUserEmail;
