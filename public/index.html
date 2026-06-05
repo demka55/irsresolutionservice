@@ -803,16 +803,14 @@ footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); p
     <div style="margin-bottom:4rem">
       <div style="font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;text-align:center">Sample monthly topics</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
-        ${[
-          'When the IRS rejects your OIC: how to structure a counter-offer that actually works',
-          'IRS Reasonable Collection Potential miscalculations — how to spot and challenge them',
-          'Currently Not Collectible vs Offer in Compromise: when to recommend which',
-          'Trust Fund Recovery Penalty cases: strategy for protecting business owners',
-          'First-time penalty abatement in 2025 — what the IRS is actually accepting',
-          'CDP hearing strategy when a client is facing imminent levy or lien',
-          'IRS Appeals officers: what moves the needle and what doesn\'t',
-          'Handling OIC rejections on dissipated assets — the arguments that hold up',
-        ].map(q=>`<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-left:3px solid var(--gold);border-radius:3px;padding:0.875rem 1rem;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.55">◆ ${q}</div>`).join('')}
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-left:3px solid var(--gold);border-radius:3px;padding:0.875rem 1rem;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.55">◆ When the IRS rejects your OIC: how to structure a counter-offer that actually works</div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-left:3px solid var(--gold);border-radius:3px;padding:0.875rem 1rem;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.55">◆ IRS Reasonable Collection Potential miscalculations — how to spot and challenge them</div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-left:3px solid var(--gold);border-radius:3px;padding:0.875rem 1rem;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.55">◆ Currently Not Collectible vs Offer in Compromise: when to recommend which</div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-left:3px solid var(--gold);border-radius:3px;padding:0.875rem 1rem;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.55">◆ Trust Fund Recovery Penalty cases: strategy for protecting business owners</div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-left:3px solid var(--gold);border-radius:3px;padding:0.875rem 1rem;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.55">◆ First-time penalty abatement — what the IRS is actually accepting right now</div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-left:3px solid var(--gold);border-radius:3px;padding:0.875rem 1rem;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.55">◆ CDP hearing strategy when a client is facing imminent levy or lien</div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-left:3px solid var(--gold);border-radius:3px;padding:0.875rem 1rem;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.55">◆ IRS Appeals officers: what moves the needle and what doesn't</div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-left:3px solid var(--gold);border-radius:3px;padding:0.875rem 1rem;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.55">◆ Handling OIC rejections on dissipated assets — the arguments that hold up</div>
       </div>
     </div>
 
@@ -870,13 +868,22 @@ footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); p
             </select>
           </div>
           <div style="margin-bottom:1.25rem">
-            <label style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px">Preferred plan</label>
-            <div style="display:flex;gap:0.75rem">
-              <label style="flex:1;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);border-radius:3px;padding:10px 14px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.8)">
-                <input type="radio" name="cm-plan" value="monthly" style="accent-color:var(--gold)"> Monthly $99
+            <label style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:8px">Preferred plan <span style="color:rgba(255,255,255,0.4);font-weight:400;text-transform:none;letter-spacing:0">— first month free on either</span></label>
+            <div style="display:flex;flex-direction:column;gap:0.625rem">
+              <label style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);border-radius:3px;padding:12px 14px;cursor:pointer">
+                <input type="radio" name="cm-plan" value="monthly" style="accent-color:var(--gold);flex-shrink:0">
+                <div style="flex:1">
+                  <div style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:500">Monthly — $99<span style="color:rgba(255,255,255,0.5);font-size:12px;font-weight:400">/month</span></div>
+                  <div style="font-size:11px;color:var(--gold);margin-top:2px">🎁 First month free</div>
+                </div>
               </label>
-              <label style="flex:1;display:flex;align-items:center;gap:8px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.4);border-radius:3px;padding:10px 14px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.8)">
-                <input type="radio" name="cm-plan" value="annual" checked style="accent-color:var(--gold)"> Annual $999
+              <label style="display:flex;align-items:center;gap:10px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.5);border-radius:3px;padding:12px 14px;cursor:pointer;position:relative">
+                <div style="position:absolute;top:-9px;right:12px;background:var(--gold);color:var(--ink);font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:2px 8px;border-radius:20px">Best value</div>
+                <input type="radio" name="cm-plan" value="annual" checked style="accent-color:var(--gold);flex-shrink:0">
+                <div style="flex:1">
+                  <div style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:500">Annual — $999<span style="color:rgba(255,255,255,0.5);font-size:12px;font-weight:400">/year</span> <span style="font-size:11px;color:rgba(255,255,255,0.45)">(2 months free vs monthly)</span></div>
+                  <div style="font-size:11px;color:var(--gold);margin-top:2px">🎁 First month free</div>
+                </div>
               </label>
             </div>
           </div>
@@ -887,7 +894,10 @@ footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); p
           </div>
           <div id="cm-status" style="display:none;padding:10px 14px;border-radius:3px;font-size:13px;margin-bottom:0.875rem"></div>
           <button onclick="submitCommunity()" id="cm-btn" style="width:100%;background:var(--gold);color:var(--ink);border:none;padding:14px;border-radius:2px;font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;letter-spacing:0.04em;transition:background 0.2s">Join the Waitlist — First Month Free →</button>
-          <p style="font-size:11px;color:rgba(255,255,255,0.4);text-align:center;margin-top:0.75rem">No payment now. We launch summer 2026.</p>
+          <div style="text-align:center;margin-top:0.875rem">
+            <div style="font-size:13px;color:rgba(255,255,255,0.7);font-weight:500">🚫 No credit card needed — ever, for the first month.</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px">Just let us know you're interested. We'll reach out before launch with all the details.</div>
+          </div>
         </div>
       </div>
 
@@ -919,7 +929,6 @@ footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); p
       <div class="footer-col">
         <h4>Tool</h4>
         <a href="#tool">Notice Decoder</a>
-        <a href="#pricing">Pricing</a>
         <a href="#services">How it works</a>
         <a href="#faq">FAQ</a>
       </div>
@@ -933,7 +942,7 @@ footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); p
     </div>
     <div class="footer-bottom">
       <div class="footer-copy">© 2026 IRS Resolution Service LLC. All rights reserved.</div>
-      <p class="disclaimer">IRS Resolution Service is not affiliated with the Internal Revenue Service. This tool provides general informational guidance only and does not constitute legal or tax advice. For complex matters, please consult a licensed enrolled agent or tax attorney.</p>
+      <p class="disclaimer">IRS Resolution Service is not affiliated with the Internal Revenue Service. This tool provides general informational guidance only and does not constitute legal or tax advice. · <a href="/privacy" style="color:var(--ink-muted);text-decoration:none">Privacy Policy</a> · <a href="/terms" style="color:var(--ink-muted);text-decoration:none">Terms of Service</a></p>
     </div>
   </div>
 </footer>

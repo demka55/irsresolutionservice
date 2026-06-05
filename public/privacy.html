@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — IRS Resolution Service</title>
+<meta name="description" content="Privacy Policy for IRS Resolution Service LLC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#c9a84c;--gold-dim:#8a6e2f;--gold-muted:#f5ecd8;
+  --cream:#f5f0e8;--cream-warm:#ede5d5;--cream-dark:#d9cdb8;
+  --ink:#1a1410;--ink-soft:#4a3f32;--ink-muted:#7a6e60;--white:#ffffff;
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Outfit',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.7}
+
+/* HEADER */
+.site-header{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--cream-dark);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
+.header-inner{max-width:900px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-mark{width:36px;height:36px;border:1.5px solid var(--gold);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;font-weight:700;color:var(--gold)}
+.logo-text{font-family:var(--serif);font-size:1.2rem;font-weight:600;color:var(--ink)}
+.logo-text span{color:var(--gold)}
+.back-link{font-size:13px;color:var(--ink-muted);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.15s}
+.back-link:hover{color:var(--gold-dim)}
+
+/* HERO */
+.policy-hero{background:var(--white);border-bottom:1px solid var(--cream-dark);padding:3.5rem 2rem}
+.policy-hero-inner{max-width:900px;margin:0 auto}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-dim);display:block;margin-bottom:0.75rem}
+.policy-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--ink);margin-bottom:0.75rem;line-height:1.2}
+.policy-meta{font-size:14px;color:var(--ink-muted);display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.policy-meta-item{display:flex;align-items:center;gap:6px}
+
+/* CONTENT */
+.policy-body{max-width:900px;margin:0 auto;padding:3.5rem 2rem;display:grid;grid-template-columns:220px 1fr;gap:4rem;align-items:start}
+
+/* TOC */
+.toc{position:sticky;top:88px}
+.toc-title{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:1rem}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{font-size:13px;color:var(--ink-muted);text-decoration:none;padding:5px 10px;border-left:2px solid var(--cream-dark);display:block;transition:all 0.15s;line-height:1.4}
+.toc-list a:hover{color:var(--gold-dim);border-left-color:var(--gold)}
+
+/* SECTIONS */
+.policy-sections{min-width:0}
+.policy-section{margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid var(--cream-dark)}
+.policy-section:last-child{border-bottom:none;margin-bottom:0}
+.section-num{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.5rem;display:block}
+.section-title{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--ink);margin-bottom:1.25rem;line-height:1.3}
+.policy-text{font-size:15px;color:var(--ink-soft);line-height:1.8;margin-bottom:1rem}
+.policy-text:last-child{margin-bottom:0}
+.policy-list{margin:0.75rem 0 1rem 1.25rem;display:flex;flex-direction:column;gap:0.5rem}
+.policy-list li{font-size:15px;color:var(--ink-soft);line-height:1.7}
+.policy-list li strong{color:var(--ink)}
+.highlight-box{background:var(--gold-muted);border:1px solid var(--cream-dark);border-left:3px solid var(--gold);border-radius:3px;padding:1rem 1.25rem;margin:1.25rem 0}
+.highlight-box p{font-size:14px;color:var(--ink-soft);line-height:1.75;margin:0}
+.contact-box{background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;padding:1.5rem;margin-top:1.25rem}
+.contact-box-title{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:0.75rem}
+.contact-line{font-size:14px;color:var(--ink-soft);line-height:2;display:flex;gap:8px}
+.contact-line strong{color:var(--ink);min-width:80px}
+.contact-line a{color:var(--gold-dim);text-decoration:none}
+.contact-line a:hover{text-decoration:underline}
+
+/* FOOTER */
+footer{background:var(--cream-warm);border-top:1px solid var(--cream-dark);padding:2rem}
+.footer-inner{max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-size:13px;color:var(--ink-muted)}
+.footer-links a{font-size:13px;color:var(--ink-muted);text-decoration:none;margin-left:1.25rem}
+.footer-links a:hover{color:var(--gold-dim)}
+
+@media(max-width:768px){
+  .policy-body{grid-template-columns:1fr;gap:2rem}
+  .toc{position:static;background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;padding:1.25rem}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <a href="/" class="back-link">← Back to home</a>
+  </div>
+</header>
+
+<div class="policy-hero">
+  <div class="policy-hero-inner">
+    <span class="eyebrow">Legal</span>
+    <h1 class="policy-title">Privacy Policy</h1>
+    <div class="policy-meta">
+      <span class="policy-meta-item">IRS Resolution Service LLC</span>
+      <span class="policy-meta-item">Effective Date: June 1, 2026</span>
+      <span class="policy-meta-item">Last Updated: June 1, 2026</span>
+    </div>
+  </div>
+</div>
+
+<div class="policy-body">
+
+  <!-- TABLE OF CONTENTS -->
+  <aside class="toc">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#s1">1. Who We Are</a></li>
+      <li><a href="#s2">2. Information We Collect</a></li>
+      <li><a href="#s3">3. How We Use Your Information</a></li>
+      <li><a href="#s4">4. Sensitive Tax Information</a></li>
+      <li><a href="#s5">5. How We Share Information</a></li>
+      <li><a href="#s6">6. Data Storage & Security</a></li>
+      <li><a href="#s7">7. Cookies & Tracking</a></li>
+      <li><a href="#s8">8. Your Rights</a></li>
+      <li><a href="#s9">9. Children's Privacy</a></li>
+      <li><a href="#s10">10. Changes to This Policy</a></li>
+      <li><a href="#s11">11. Contact Us</a></li>
+    </ul>
+  </aside>
+
+  <!-- SECTIONS -->
+  <div class="policy-sections">
+
+    <div class="highlight-box">
+      <p><strong>Plain-language summary:</strong> We collect information you give us when you fill out a form or use our services. We use it only to provide IRS resolution and tax services. We do not sell your information to anyone. Tax information you share with us is treated as strictly confidential and handled in accordance with IRS Circular 230 and applicable professional conduct rules.</p>
+    </div>
+
+    <div class="policy-section" id="s1">
+      <span class="section-num">Section 01</span>
+      <h2 class="section-title">Who We Are</h2>
+      <p class="policy-text">IRS Resolution Service LLC ("we," "us," or "our") is a tax resolution firm operated by Romeo Razi, CPA, a licensed Certified Public Accountant and former IRS Auditor. We provide IRS resolution services, tax consulting, and related services to individuals and businesses.</p>
+      <p class="policy-text">This Privacy Policy applies to information collected through our website at irsresolutionservice.com, our client portal, our professional community, and any other services we operate (collectively, the "Services").</p>
+      <div class="contact-box">
+        <div class="contact-box-title">Business Information</div>
+        <div class="contact-line"><strong>Company</strong> IRS Resolution Service LLC</div>
+        <div class="contact-line"><strong>Address</strong> 9673 Camino Capistrano, Las Vegas, NV</div>
+        <div class="contact-line"><strong>Contact</strong> <a href="mailto:romeo@taxedright.com">romeo@taxedright.com</a></div>
+        <div class="contact-line"><strong>Website</strong> <a href="https://irsresolutionservice.com">irsresolutionservice.com</a></div>
+      </div>
+    </div>
+
+    <div class="policy-section" id="s2">
+      <span class="section-num">Section 02</span>
+      <h2 class="section-title">Information We Collect</h2>
+      <p class="policy-text">We collect information you provide directly to us, including:</p>
+      <ul class="policy-list">
+        <li><strong>Contact information</strong> — name, email address, phone number, and mailing address</li>
+        <li><strong>Tax and financial information</strong> — tax years, filing status, business information, IRS notices received, amounts owed, and other information necessary to provide tax resolution services</li>
+        <li><strong>Identity information</strong> — the last four digits of your Social Security Number or EIN, as needed to authorize IRS transcript access via Form 8821</li>
+        <li><strong>Account information</strong> — email and password when you create a client portal account</li>
+        <li><strong>Communication records</strong> — emails, messages, and other correspondence you send us</li>
+        <li><strong>Form submissions</strong> — information submitted through our contact forms, intake forms, and Form 8821 authorization</li>
+        <li><strong>Professional information</strong> — for community members, your credential type (CPA, EA, etc.) and firm information</li>
+      </ul>
+      <p class="policy-text">We also collect certain information automatically when you use our website, including IP address, browser type, pages visited, and referring URL. This is standard web analytics data.</p>
+    </div>
+
+    <div class="policy-section" id="s3">
+      <span class="section-num">Section 03</span>
+      <h2 class="section-title">How We Use Your Information</h2>
+      <p class="policy-text">We use the information we collect to:</p>
+      <ul class="policy-list">
+        <li>Provide, operate, and improve our tax resolution services</li>
+        <li>Communicate with you about your case, account, or inquiry</li>
+        <li>Retrieve your IRS tax transcripts through the IRS Transcript Delivery System (TDS) when you have authorized us to do so via Form 8821</li>
+        <li>Prepare and submit documents to the IRS on your behalf, where authorized</li>
+        <li>Send you service-related emails and notifications</li>
+        <li>Process payments for services rendered</li>
+        <li>Operate our professional community, including scheduling calls and sending communications</li>
+        <li>Comply with our legal and professional obligations as a licensed CPA firm</li>
+        <li>Protect against fraud and unauthorized access</li>
+      </ul>
+      <p class="policy-text">We do not use your information for advertising, profiling, or any purpose unrelated to providing our services.</p>
+    </div>
+
+    <div class="policy-section" id="s4">
+      <span class="section-num">Section 04</span>
+      <h2 class="section-title">Sensitive Tax Information</h2>
+      <p class="policy-text">We take the confidentiality of your tax and financial information seriously. As a CPA firm, we are bound by professional conduct rules under IRS Circular 230 and applicable state CPA licensing requirements regarding client confidentiality.</p>
+      <ul class="policy-list">
+        <li><strong>IRS transcripts</strong> are retrieved from the IRS in real time when needed and are not permanently stored in our systems. When you or Romeo downloads a transcript, it exists only on that device.</li>
+        <li><strong>Social Security Numbers</strong> — we store only the last four digits in our system. Full SSNs entered for transcript retrieval are transmitted securely to the IRS and are not retained in our database.</li>
+        <li><strong>Form 8821 data</strong> — the authorization information you sign is stored securely and used only to authorize Romeo's access to your IRS records as specified in the form.</li>
+        <li><strong>Financial details</strong> you share in intake forms are stored in our secure client management system and accessed only by Romeo and authorized staff.</li>
+      </ul>
+      <div class="highlight-box">
+        <p>We will never sell, rent, or share your tax or financial information with third parties for marketing, advertising, or commercial purposes under any circumstances.</p>
+      </div>
+    </div>
+
+    <div class="policy-section" id="s5">
+      <span class="section-num">Section 05</span>
+      <h2 class="section-title">How We Share Information</h2>
+      <p class="policy-text">We share your information only in the following limited circumstances:</p>
+      <ul class="policy-list">
+        <li><strong>With the IRS</strong> — as required to provide our services, including submitting authorized forms and retrieving transcripts on your behalf</li>
+        <li><strong>With service providers</strong> — we use a small number of third-party services to operate our platform, including Netlify (hosting and infrastructure), Stripe (payment processing), and Resend (transactional email). These providers only process data as necessary to provide their services and are contractually prohibited from using your data for other purposes.</li>
+        <li><strong>For legal compliance</strong> — if required by law, court order, or government authority, or to protect the rights and safety of our clients and our firm</li>
+        <li><strong>With your consent</strong> — for any other purpose, only with your explicit authorization</li>
+      </ul>
+      <p class="policy-text">We do not sell, rent, trade, or otherwise transfer your personal information to any third party for commercial purposes.</p>
+    </div>
+
+    <div class="policy-section" id="s6">
+      <span class="section-num">Section 06</span>
+      <h2 class="section-title">Data Storage & Security</h2>
+      <p class="policy-text">Your information is stored on Netlify's infrastructure, which provides enterprise-grade security including encryption in transit (HTTPS/TLS) and encryption at rest. Our client portal uses Netlify Identity for authentication, with industry-standard password hashing.</p>
+      <p class="policy-text">We implement reasonable administrative, technical, and physical safeguards to protect your information against unauthorized access, disclosure, or destruction. These include:</p>
+      <ul class="policy-list">
+        <li>HTTPS encryption for all data in transit</li>
+        <li>Password-protected admin access with no hardcoded credentials in our codebase</li>
+        <li>Limited data retention — we store only what is necessary to provide our services</li>
+        <li>IRS transcripts are not stored in our database — they are retrieved on demand and exist only on the devices of authorized personnel</li>
+      </ul>
+      <p class="policy-text">No method of transmission over the internet or electronic storage is 100% secure. While we take reasonable steps to protect your information, we cannot guarantee absolute security.</p>
+      <p class="policy-text">We retain your information for as long as necessary to provide our services, comply with our legal and professional obligations, and resolve any disputes. Client records may be retained for up to seven years in accordance with IRS recordkeeping recommendations and applicable professional standards.</p>
+    </div>
+
+    <div class="policy-section" id="s7">
+      <span class="section-num">Section 07</span>
+      <h2 class="section-title">Cookies & Tracking</h2>
+      <p class="policy-text">Our website uses minimal cookies necessary for the site to function, including authentication cookies for logged-in users. We do not use advertising cookies, tracking pixels, or third-party behavioral analytics.</p>
+      <p class="policy-text">We may use basic, privacy-respecting analytics to understand how our website is used (e.g., which pages are visited). This data is aggregated and not tied to individual users.</p>
+      <p class="policy-text">You can control cookie settings in your browser. Disabling cookies may affect the functionality of our client portal.</p>
+    </div>
+
+    <div class="policy-section" id="s8">
+      <span class="section-num">Section 08</span>
+      <h2 class="section-title">Your Rights</h2>
+      <p class="policy-text">Depending on your location, you may have the following rights regarding your personal information:</p>
+      <ul class="policy-list">
+        <li><strong>Access</strong> — request a copy of the personal information we hold about you</li>
+        <li><strong>Correction</strong> — request that we correct inaccurate or incomplete information</li>
+        <li><strong>Deletion</strong> — request that we delete your personal information, subject to our legal and professional retention obligations</li>
+        <li><strong>Portability</strong> — request your information in a portable format</li>
+        <li><strong>Opt-out of communications</strong> — unsubscribe from any non-essential communications at any time</li>
+      </ul>
+      <p class="policy-text">To exercise any of these rights, contact us at <a href="mailto:romeo@taxedright.com" style="color:var(--gold-dim)">romeo@taxedright.com</a>. We will respond within 30 days.</p>
+      <p class="policy-text"><strong>Nevada residents:</strong> Under Nevada law, Nevada residents may opt out of the sale of their personal information. We do not sell personal information, but you may submit an opt-out request to the address above.</p>
+      <p class="policy-text"><strong>California residents:</strong> California residents have additional rights under the California Consumer Privacy Act (CCPA). We do not sell personal information. For a complete list of your rights, contact us at the email above.</p>
+    </div>
+
+    <div class="policy-section" id="s9">
+      <span class="section-num">Section 09</span>
+      <h2 class="section-title">Children's Privacy</h2>
+      <p class="policy-text">Our Services are intended for adults and are not directed to children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe we have inadvertently collected information from a child, please contact us immediately at <a href="mailto:romeo@taxedright.com" style="color:var(--gold-dim)">romeo@taxedright.com</a> and we will promptly delete it.</p>
+    </div>
+
+    <div class="policy-section" id="s10">
+      <span class="section-num">Section 10</span>
+      <h2 class="section-title">Changes to This Policy</h2>
+      <p class="policy-text">We may update this Privacy Policy from time to time. When we make material changes, we will update the "Last Updated" date at the top of this page and, where appropriate, notify you by email.</p>
+      <p class="policy-text">Your continued use of our Services after any changes constitutes your acceptance of the updated policy. We encourage you to review this page periodically.</p>
+    </div>
+
+    <div class="policy-section" id="s11">
+      <span class="section-num">Section 11</span>
+      <h2 class="section-title">Contact Us</h2>
+      <p class="policy-text">If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:</p>
+      <div class="contact-box">
+        <div class="contact-box-title">Privacy Contact</div>
+        <div class="contact-line"><strong>Name</strong> Romeo Razi, CPA</div>
+        <div class="contact-line"><strong>Company</strong> IRS Resolution Service LLC</div>
+        <div class="contact-line"><strong>Address</strong> 9673 Camino Capistrano, Las Vegas, NV</div>
+        <div class="contact-line"><strong>Email</strong> <a href="mailto:romeo@taxedright.com">romeo@taxedright.com</a></div>
+        <div class="contact-line"><strong>Website</strong> <a href="https://irsresolutionservice.com">irsresolutionservice.com</a></div>
+      </div>
+      <p class="policy-text" style="margin-top:1.25rem">We will respond to all privacy-related inquiries within 30 days. For urgent matters involving potential unauthorized access to your tax information, please contact us immediately by email.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 IRS Resolution Service LLC. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/contact">Contact</a>
+      <a href="mailto:romeo@taxedright.com">romeo@taxedright.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

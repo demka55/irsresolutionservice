@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — IRS Resolution Service</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#c9a84c;--gold-dim:#8a6e2f;--gold-muted:#f5ecd8;--cream:#f5f0e8;--cream-warm:#ede5d5;--cream-dark:#d9cdb8;--ink:#1a1410;--ink-soft:#4a3f32;--ink-muted:#7a6e60;--white:#ffffff;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Outfit',system-ui,sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.7}
+.site-header{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--cream-dark);position:sticky;top:0;z-index:100}
+.header-inner{max-width:900px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-mark{width:36px;height:36px;border:1.5px solid var(--gold);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;font-weight:700;color:var(--gold)}
+.logo-text{font-family:var(--serif);font-size:1.2rem;font-weight:600;color:var(--ink)}
+.logo-text span{color:var(--gold)}
+.back-link{font-size:13px;color:var(--ink-muted);text-decoration:none;transition:color 0.15s}
+.back-link:hover{color:var(--gold-dim)}
+.policy-hero{background:var(--white);border-bottom:1px solid var(--cream-dark);padding:3.5rem 2rem}
+.policy-hero-inner{max-width:900px;margin:0 auto}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-dim);display:block;margin-bottom:0.75rem}
+.policy-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--ink);margin-bottom:0.75rem;line-height:1.2}
+.policy-meta{font-size:14px;color:var(--ink-muted);display:flex;gap:1.5rem;flex-wrap:wrap}
+.policy-body{max-width:900px;margin:0 auto;padding:3.5rem 2rem;display:grid;grid-template-columns:220px 1fr;gap:4rem;align-items:start}
+.toc{position:sticky;top:88px}
+.toc-title{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:1rem}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{font-size:13px;color:var(--ink-muted);text-decoration:none;padding:5px 10px;border-left:2px solid var(--cream-dark);display:block;transition:all 0.15s;line-height:1.4}
+.toc-list a:hover{color:var(--gold-dim);border-left-color:var(--gold)}
+.policy-sections{min-width:0}
+.policy-section{margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid var(--cream-dark)}
+.policy-section:last-child{border-bottom:none;margin-bottom:0}
+.section-num{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.5rem;display:block}
+.section-title{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--ink);margin-bottom:1.25rem;line-height:1.3}
+.policy-text{font-size:15px;color:var(--ink-soft);line-height:1.8;margin-bottom:1rem}
+.policy-text:last-child{margin-bottom:0}
+.policy-list{margin:0.75rem 0 1rem 1.25rem;display:flex;flex-direction:column;gap:0.5rem}
+.policy-list li{font-size:15px;color:var(--ink-soft);line-height:1.7}
+.policy-list li strong{color:var(--ink)}
+.highlight-box{background:var(--gold-muted);border:1px solid var(--cream-dark);border-left:3px solid var(--gold);border-radius:3px;padding:1rem 1.25rem;margin:1.25rem 0}
+.highlight-box p{font-size:14px;color:var(--ink-soft);line-height:1.75;margin:0}
+.warning-box{background:#fdf0f0;border:1px solid #e8b0b0;border-left:3px solid #8b1a1a;border-radius:3px;padding:1rem 1.25rem;margin:1.25rem 0}
+.warning-box p{font-size:14px;color:#4a1a1a;line-height:1.75;margin:0}
+.contact-box{background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;padding:1.5rem;margin-top:1.25rem}
+.contact-box-title{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:0.75rem}
+.contact-line{font-size:14px;color:var(--ink-soft);line-height:2;display:flex;gap:8px}
+.contact-line strong{color:var(--ink);min-width:80px}
+.contact-line a{color:var(--gold-dim);text-decoration:none}
+footer{background:var(--cream-warm);border-top:1px solid var(--cream-dark);padding:2rem}
+.footer-inner{max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-size:13px;color:var(--ink-muted)}
+.footer-links a{font-size:13px;color:var(--ink-muted);text-decoration:none;margin-left:1.25rem}
+.footer-links a:hover{color:var(--gold-dim)}
+@media(max-width:768px){.policy-body{grid-template-columns:1fr;gap:2rem}.toc{position:static;background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;padding:1.25rem}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <a href="/" class="back-link">← Back to home</a>
+  </div>
+</header>
+
+<div class="policy-hero">
+  <div class="policy-hero-inner">
+    <span class="eyebrow">Legal</span>
+    <h1 class="policy-title">Terms of Service</h1>
+    <div class="policy-meta">
+      <span>IRS Resolution Service LLC</span>
+      <span>Effective Date: June 1, 2026</span>
+      <span>Last Updated: June 1, 2026</span>
+    </div>
+  </div>
+</div>
+
+<div class="policy-body">
+
+  <aside class="toc">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#t1">1. Agreement to Terms</a></li>
+      <li><a href="#t2">2. Services Provided</a></li>
+      <li><a href="#t3">3. Not Legal Advice</a></li>
+      <li><a href="#t4">4. Client Responsibilities</a></li>
+      <li><a href="#t5">5. Fees & Payment</a></li>
+      <li><a href="#t6">6. IRS Authorization</a></li>
+      <li><a href="#t7">7. Confidentiality</a></li>
+      <li><a href="#t8">8. Limitation of Liability</a></li>
+      <li><a href="#t9">9. No Guarantee of Outcome</a></li>
+      <li><a href="#t10">10. Community Membership</a></li>
+      <li><a href="#t11">11. Acceptable Use</a></li>
+      <li><a href="#t12">12. Intellectual Property</a></li>
+      <li><a href="#t13">13. Termination</a></li>
+      <li><a href="#t14">14. Governing Law</a></li>
+      <li><a href="#t15">15. Contact</a></li>
+    </ul>
+  </aside>
+
+  <div class="policy-sections">
+
+    <div class="highlight-box">
+      <p><strong>Plain-language summary:</strong> By using our services you agree to these terms. We provide professional tax and IRS resolution services — not legal advice. We make no guarantees about outcomes. Fees are earned upon performance of services. You are responsible for providing accurate information.</p>
+    </div>
+
+    <div class="policy-section" id="t1">
+      <span class="section-num">Section 01</span>
+      <h2 class="section-title">Agreement to Terms</h2>
+      <p class="policy-text">These Terms of Service ("Terms") constitute a legally binding agreement between you ("Client," "you," or "your") and IRS Resolution Service LLC ("Company," "we," "us," or "our"), a Nevada limited liability company, governing your access to and use of our website at irsresolutionservice.com and all related services.</p>
+      <p class="policy-text">By accessing our website, submitting a contact form, creating an account, or engaging our services, you agree to be bound by these Terms. If you do not agree, do not use our Services.</p>
+      <p class="policy-text">We reserve the right to modify these Terms at any time. Changes become effective upon posting. Your continued use of our Services constitutes acceptance of modified Terms.</p>
+    </div>
+
+    <div class="policy-section" id="t2">
+      <span class="section-num">Section 02</span>
+      <h2 class="section-title">Services Provided</h2>
+      <p class="policy-text">IRS Resolution Service LLC provides professional tax and IRS resolution services through Romeo Razi, CPA, a licensed Certified Public Accountant. Our services include:</p>
+      <ul class="policy-list">
+        <li>IRS notice analysis and response preparation</li>
+        <li>Filing of delinquent and late tax returns</li>
+        <li>Offer in Compromise preparation and negotiation</li>
+        <li>Penalty abatement requests</li>
+        <li>Installment agreement and payment plan negotiation</li>
+        <li>IRS audit representation and appeals</li>
+        <li>Collection Due Process hearing representation</li>
+        <li>IRS transcript retrieval via authorized e-Services API</li>
+        <li>Free IRS notice decoder tool (informational only)</li>
+        <li>Professional community membership for CPAs and Enrolled Agents</li>
+      </ul>
+      <p class="policy-text">The specific scope of services for each engagement will be agreed upon in a separate engagement letter or service agreement prior to commencement of work.</p>
+    </div>
+
+    <div class="policy-section" id="t3">
+      <span class="section-num">Section 03</span>
+      <h2 class="section-title">Not Legal Advice</h2>
+      <div class="warning-box">
+        <p><strong>Important:</strong> IRS Resolution Service LLC is a CPA firm, not a law firm. Our services constitute tax and accounting advice, not legal advice. Romeo Razi is a licensed CPA, not an attorney. Nothing on our website or in our communications constitutes legal advice or creates an attorney-client relationship.</p>
+      </div>
+      <p class="policy-text">Our free IRS notice decoder tool provides general informational guidance only. It is not a substitute for professional advice tailored to your specific situation. For matters involving Tax Court, criminal tax matters, or complex legal questions, we recommend consulting a qualified tax attorney.</p>
+      <p class="policy-text">IRS Resolution Service is not affiliated with the Internal Revenue Service or any government agency.</p>
+    </div>
+
+    <div class="policy-section" id="t4">
+      <span class="section-num">Section 04</span>
+      <h2 class="section-title">Client Responsibilities</h2>
+      <p class="policy-text">You agree to:</p>
+      <ul class="policy-list">
+        <li><strong>Provide accurate information</strong> — You represent that all information you provide to us is true, accurate, and complete. Providing false or misleading information may void our engagement and may have legal consequences.</li>
+        <li><strong>Respond promptly</strong> — IRS matters often have strict deadlines. You agree to respond to our requests for information and approvals in a timely manner. We are not responsible for adverse outcomes resulting from your failure to respond promptly.</li>
+        <li><strong>Review documents</strong> — You are responsible for reviewing all documents before they are filed with the IRS. You must approve all filings before submission.</li>
+        <li><strong>Maintain records</strong> — You agree to maintain copies of all tax records, notices, and correspondence for your own records.</li>
+        <li><strong>Disclose all relevant information</strong> — You agree to disclose all information relevant to your tax situation, including prior filings, payments, and communications with the IRS.</li>
+      </ul>
+    </div>
+
+    <div class="policy-section" id="t5">
+      <span class="section-num">Section 05</span>
+      <h2 class="section-title">Fees & Payment</h2>
+      <p class="policy-text">Fees for our services vary based on the complexity and scope of each engagement. Fee structures include flat fees, hourly rates, retainers, and contingency arrangements where permitted under IRS Circular 230.</p>
+      <p class="policy-text">Specific fees will be disclosed and agreed upon before work begins. By engaging our services, you agree to pay all applicable fees as specified in your engagement agreement.</p>
+      <ul class="policy-list">
+        <li>Payments are processed securely through Stripe</li>
+        <li>All fees are in U.S. dollars</li>
+        <li>Refund policies are specified in individual engagement agreements</li>
+        <li>Community membership fees are billed monthly or annually as selected, with the first month free for founding members</li>
+        <li>Community memberships may be cancelled at any time; no refunds for partial billing periods</li>
+      </ul>
+    </div>
+
+    <div class="policy-section" id="t6">
+      <span class="section-num">Section 06</span>
+      <h2 class="section-title">IRS Authorization (Form 8821)</h2>
+      <p class="policy-text">To retrieve your IRS tax transcripts, we require you to authorize us via IRS Form 8821 (Tax Information Authorization). By signing Form 8821 through our platform:</p>
+      <ul class="policy-list">
+        <li>You authorize Romeo Razi, CPA / Taxed Right LLC to receive and inspect your IRS tax information for the years and forms specified</li>
+        <li>This authorization is read-only — it does not authorize us to make changes to your account or file documents on your behalf without a separate Form 2848 (Power of Attorney)</li>
+        <li>You may revoke this authorization at any time by notifying us in writing and submitting a revocation to the IRS</li>
+        <li>Transcripts retrieved under this authorization are used solely to provide services to you and are handled in accordance with our Privacy Policy</li>
+      </ul>
+    </div>
+
+    <div class="policy-section" id="t7">
+      <span class="section-num">Section 07</span>
+      <h2 class="section-title">Confidentiality</h2>
+      <p class="policy-text">All information you provide to us in connection with our services is treated as strictly confidential in accordance with:</p>
+      <ul class="policy-list">
+        <li>IRS Circular 230, which governs the conduct of practitioners before the IRS</li>
+        <li>The AICPA Code of Professional Conduct</li>
+        <li>Nevada CPA licensing requirements</li>
+        <li>Our Privacy Policy, incorporated herein by reference</li>
+      </ul>
+      <p class="policy-text">We will not disclose your confidential information to any third party without your consent, except as required by law or professional regulations.</p>
+    </div>
+
+    <div class="policy-section" id="t8">
+      <span class="section-num">Section 08</span>
+      <h2 class="section-title">Limitation of Liability</h2>
+      <p class="policy-text">To the maximum extent permitted by applicable law, IRS Resolution Service LLC, its members, officers, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including lost profits, arising from your use of or inability to use our Services.</p>
+      <p class="policy-text">Our total aggregate liability for any claims arising out of or related to these Terms or our Services shall not exceed the total fees paid by you to us in the twelve months preceding the claim.</p>
+      <p class="policy-text">Some jurisdictions do not allow limitations on liability, so some of the above limitations may not apply to you.</p>
+    </div>
+
+    <div class="policy-section" id="t9">
+      <span class="section-num">Section 09</span>
+      <h2 class="section-title">No Guarantee of Outcome</h2>
+      <div class="warning-box">
+        <p>We make no guarantee, warranty, or representation that any particular outcome will be achieved in your IRS matter. Tax resolution outcomes depend on many factors outside our control, including IRS policies, your financial situation, and the specific facts of your case. Past results are not indicative of future outcomes.</p>
+      </div>
+      <p class="policy-text">We represent that we will provide services with the professional competence, diligence, and integrity expected of a licensed CPA. We do not guarantee that any Offer in Compromise will be accepted, any penalty will be abated, or any specific result will be achieved.</p>
+    </div>
+
+    <div class="policy-section" id="t10">
+      <span class="section-num">Section 10</span>
+      <h2 class="section-title">Community Membership</h2>
+      <p class="policy-text">Our professional community is available to licensed CPAs, Enrolled Agents, tax attorneys, and other qualified tax professionals. By joining:</p>
+      <ul class="policy-list">
+        <li>You represent that you hold the professional credentials you have stated</li>
+        <li>You agree to maintain respectful, professional conduct in all community interactions</li>
+        <li>You understand that content shared in community calls and forums is confidential and may not be recorded, redistributed, or shared outside the community without permission</li>
+        <li>Community membership does not create a CPA-client relationship between you and Romeo Razi</li>
+        <li>We reserve the right to remove members for conduct that violates these Terms or community standards</li>
+        <li>Founding member pricing is locked for the duration of continuous membership</li>
+      </ul>
+    </div>
+
+    <div class="policy-section" id="t11">
+      <span class="section-num">Section 11</span>
+      <h2 class="section-title">Acceptable Use</h2>
+      <p class="policy-text">You agree not to use our Services to:</p>
+      <ul class="policy-list">
+        <li>Provide false or misleading information to us or the IRS</li>
+        <li>Engage in tax fraud, evasion, or any illegal activity</li>
+        <li>Attempt to gain unauthorized access to our systems or other users' accounts</li>
+        <li>Interfere with the operation of our website or services</li>
+        <li>Use automated tools or bots to access our services without authorization</li>
+        <li>Violate any applicable law or regulation</li>
+      </ul>
+      <p class="policy-text">Violation of these restrictions may result in immediate termination of your account and engagement, and may be reported to appropriate authorities.</p>
+    </div>
+
+    <div class="policy-section" id="t12">
+      <span class="section-num">Section 12</span>
+      <h2 class="section-title">Intellectual Property</h2>
+      <p class="policy-text">All content on our website, including text, graphics, logos, and the IRS notice decoder tool, is the property of IRS Resolution Service LLC or its licensors and is protected by applicable intellectual property laws.</p>
+      <p class="policy-text">You may use our website for personal, non-commercial purposes. You may not reproduce, distribute, modify, or create derivative works from our content without our express written permission.</p>
+      <p class="policy-text">Work product we create specifically for you in connection with your engagement (e.g., response letters, OIC applications) belongs to you upon full payment of all fees.</p>
+    </div>
+
+    <div class="policy-section" id="t13">
+      <span class="section-num">Section 13</span>
+      <h2 class="section-title">Termination</h2>
+      <p class="policy-text">Either party may terminate a service engagement at any time with written notice. Upon termination:</p>
+      <ul class="policy-list">
+        <li>You will be billed for services rendered through the termination date</li>
+        <li>We will return or transfer your files and records upon request within 30 days</li>
+        <li>Any pending IRS deadlines will be communicated to you so you can arrange alternative representation</li>
+        <li>Our confidentiality obligations survive termination indefinitely</li>
+      </ul>
+      <p class="policy-text">We may terminate or suspend your account immediately, without notice, if you violate these Terms, provide false information, or engage in conduct harmful to our firm or other clients.</p>
+    </div>
+
+    <div class="policy-section" id="t14">
+      <span class="section-num">Section 14</span>
+      <h2 class="section-title">Governing Law & Disputes</h2>
+      <p class="policy-text">These Terms are governed by the laws of the State of Nevada, without regard to its conflict of law provisions. Any dispute arising from these Terms or our Services shall be resolved through binding arbitration in Clark County, Nevada, under the rules of the American Arbitration Association, except that either party may seek injunctive relief in court for intellectual property violations.</p>
+      <p class="policy-text">You waive any right to a jury trial or to participate in a class action lawsuit in connection with our Services.</p>
+    </div>
+
+    <div class="policy-section" id="t15">
+      <span class="section-num">Section 15</span>
+      <h2 class="section-title">Contact</h2>
+      <p class="policy-text">Questions about these Terms should be directed to:</p>
+      <div class="contact-box">
+        <div class="contact-box-title">Legal Contact</div>
+        <div class="contact-line"><strong>Company</strong> IRS Resolution Service LLC</div>
+        <div class="contact-line"><strong>Address</strong> 9673 Camino Capistrano, Las Vegas, NV</div>
+        <div class="contact-line"><strong>Email</strong> <a href="mailto:romeo@taxedright.com">romeo@taxedright.com</a></div>
+        <div class="contact-line"><strong>Website</strong> <a href="https://irsresolutionservice.com">irsresolutionservice.com</a></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 IRS Resolution Service LLC. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="mailto:romeo@taxedright.com">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
