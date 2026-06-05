@@ -86,6 +86,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 .trow:hover{background:var(--cream)}
 .trow.open{background:var(--gold-muted)}
 .trow-detail{display:none;border-bottom:1px solid var(--cream-dark);background:var(--white)}
+.trow-alert{background:rgba(184,217,195,0.15)!important;border-left:3px solid var(--green)!important;}
 .av{width:22px;height:22px;border-radius:50%;background:var(--cream-warm);border:1px solid var(--cream-dark);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:10px;font-weight:600;color:var(--gold-dim);flex-shrink:0}
 .cn{font-size:15px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ce{font-size:13px;color:var(--ink-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -703,10 +704,16 @@ function renderRow(c){
   const ud=c.updatedAt?new Date(c.updatedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';
   const sc=SC[c.status]||'sp', sl=SL[c.status]||c.status;
   const co=c.company||'—';
+  const has8821=!!c.steps?.form8821Data;
+  const needsAction8821=c.status==='8821_signed'&&has8821;
   return `
-<div class="trow" id="row-${esc(c.email)}" onclick="toggleRow('${esc(c.email)}')">
+<div class="trow${needsAction8821?' trow-alert':''}" id="row-${esc(c.email)}" onclick="toggleRow('${esc(c.email)}')">
   <div><div class="av">${init}</div></div>
-  <div><div class="cn">${esc(c.name||'—')}</div><div class="ce">${esc(c.email)}</div></div>
+  <div>
+    <div class="cn">${esc(c.name||'—')}</div>
+    <div class="ce">${esc(c.email)}</div>
+    ${needsAction8821?`<div style="font-size:11px;color:var(--green);font-weight:600;margin-top:2px">📋 8821 signed — expand to generate PDF</div>`:''}
+  </div>
   <div><div class="cc">${esc(co)}</div></div>
   <div><span class="sbadge ${sc}">${sl}</span></div>
   <div style="display:flex;gap:5px;align-items:center">
@@ -722,14 +729,17 @@ function renderDetail(c){
   const s=c.steps||{}, f8=s.form8821Data;
   const stepsHtml=STEPS.map(st=>{const d=!!s[st.k],t=d&&typeof s[st.k]==='string'?new Date(s[st.k]).toLocaleDateString():'';return`<div class="dstep ${d?'done':'pending'}"><div class="dstep-dot"></div>${st.l}${t?`<span class="dstep-t">${t}</span>`:''}</div>`;}).join('');
   const f8Html=f8?`
+    <div style="background:var(--green-light);border:1px solid #b8d9c3;border-radius:3px;padding:8px 12px;margin-bottom:.75rem;font-size:13px;color:var(--green);font-weight:600">
+      ✅ Form 8821 signed — ${f8.signedAt?new Date(f8.signedAt).toLocaleString():''}
+    </div>
     <div class="f8row"><div class="f8k">Name</div><div class="f8v">${esc(f8.taxpayerName||'—')}</div></div>
     <div class="f8row"><div class="f8k">SSN last 4</div><div class="f8v">***-**-${esc(f8.ssnLast4||'—')}</div></div>
+    <div class="f8row"><div class="f8k">Date of Birth</div><div class="f8v">${esc(f8.dob||'—')}</div></div>
     <div class="f8row"><div class="f8k">Address</div><div class="f8v">${esc(f8.address||'—')}</div></div>
     <div class="f8row"><div class="f8k">Tax Years</div><div class="f8v">${esc(f8.taxYears||'—')}</div></div>
     <div class="f8row"><div class="f8k">Filing Status</div><div class="f8v">${esc(f8.filingStatus||'—')}</div></div>
     <div class="f8row"><div class="f8k">Phone</div><div class="f8v">${esc(f8.phone||'—')}</div></div>
-    <div class="f8row"><div class="f8k">Signed</div><div class="f8v">${f8.signedAt?new Date(f8.signedAt).toLocaleString():'—'}</div></div>
-  `:'<div style="font-size:12px;color:var(--ink-muted)">Awaiting client signature</div>';
+  `:'<div style="font-size:13px;color:var(--ink-muted);padding:.5rem 0">⏳ Awaiting client signature</div>';
   const txKeys=Object.keys(s).filter(k=>k.startsWith('transcript_'));
   const txHtml=txKeys.length?txKeys.map(k=>`<button class="btn btn-ghost btn-sm" onclick="viewTx('${esc(c.email)}','${k}')">${k.replace('transcript_','').replace(/_/g,' ')}</button>`).join(' '):'<div style="font-size:12px;color:var(--ink-muted)">No transcripts yet</div>';
   const actBtns=getActBtns(c);
@@ -748,7 +758,11 @@ function renderDetail(c){
   <div class="dp">
     <div class="dp-h">📋 Form 8821</div>
     ${f8Html}
-    ${f8?`<button class="btn btn-gold btn-sm" style="margin-top:.625rem" onclick="dlF8('${esc(c.email)}')">📄 Generate 8821 PDF</button>`:''}
+    ${f8?`
+    <div style="margin-top:.875rem;display:flex;flex-direction:column;gap:.5rem">
+      <button class="btn btn-gold" style="font-size:13px" onclick="dlF8('${esc(c.email)}')">📄 Generate 8821 PDF — Submit to IRS</button>
+      <div style="font-size:11px;color:var(--ink-muted);line-height:1.6">Print → fax to IRS CAF at <strong>855-214-7522</strong> or upload via IRS e-Services. Then click "IRS Approved 8821" in Actions when confirmed.</div>
+    </div>`:''}
   </div>
   <div class="dp">
     <div class="dp-h">⚡ Actions</div>

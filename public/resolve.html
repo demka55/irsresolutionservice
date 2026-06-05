@@ -212,6 +212,9 @@ footer{background:var(--cream-warm);border-top:1px solid var(--cream-dark);paddi
     <div style="text-align:center;font-size:13px;color:var(--ink-muted)">
       Already have an account? <a href="#" onclick="switchToLogin(event)" style="color:var(--gold-dim);font-weight:600">Sign in</a>
     </div>
+    <div id="forgot-wrap" style="display:none;text-align:center;margin-top:0.625rem">
+      <a href="#" onclick="doForgotPassword(event)" style="font-size:13px;color:var(--ink-muted)">Forgot your password?</a>
+    </div>
     <div style="margin-top:1.25rem;text-align:center;font-size:12px;color:var(--ink-muted)">
       Questions? <a href="mailto:romeo@taxedright.com" style="color:var(--gold-dim)">romeo@taxedright.com</a>
     </div>
@@ -334,7 +337,7 @@ footer{background:var(--cream-warm);border-top:1px solid var(--cream-dark);paddi
 </footer>
 
 <script type="module">
-import { getUser, logout, onAuthChange, login as netlifyLogin, signup as netlifySignup } from 'https://esm.sh/@netlify/identity@1';
+import { getUser, logout, onAuthChange, login as netlifyLogin, signup as netlifySignup, requestPasswordRecovery as netlifyRequestPasswordRecovery } from 'https://esm.sh/@netlify/identity@1';
 
 // All state lives here — accessible to inline onclick handlers via window
 window._state = { user: null, clientStatus: null };
@@ -359,6 +362,7 @@ window.switchToLogin = function(e) {
   document.getElementById('auth-heading').textContent = 'Sign in to your account';
   document.getElementById('auth-subheading').textContent = 'Enter your email and password to access your dashboard.';
   document.getElementById('auth-confirm-wrap').style.display = 'none';
+  document.getElementById('forgot-wrap').style.display = 'block';
   document.getElementById('auth-btn').textContent = 'Sign in →';
   document.getElementById('auth-btn').setAttribute('onclick', 'doLogin()');
   document.querySelector('#stage-auth [onclick="switchToLogin(event)"]').parentElement.innerHTML =
@@ -371,8 +375,21 @@ window.switchToSignup = function(e) {
   document.getElementById('auth-heading').textContent = 'Create your account';
   document.getElementById('auth-subheading').textContent = 'Enter your email and choose a password to access your dashboard.';
   document.getElementById('auth-confirm-wrap').style.display = 'block';
+  document.getElementById('forgot-wrap').style.display = 'none';
   document.getElementById('auth-btn').textContent = 'Create account →';
   document.getElementById('auth-btn').setAttribute('onclick', 'doSignup()');
+};
+
+window.doForgotPassword = async function(e) {
+  e.preventDefault();
+  const email = document.getElementById('auth-email').value.trim();
+  if (!email) { showAuthError('Enter your email address above first.'); return; }
+  try {
+    await netlifyRequestPasswordRecovery(email);
+    showAuthSuccess('✅ Password reset email sent to ' + email + '. Check your inbox.');
+  } catch(err) {
+    showAuthError('Could not send reset email. Make sure the email is correct.');
+  }
 };
 
 window.doLogin = async function() {
@@ -881,6 +898,33 @@ async function submit8821() {
       body: JSON.stringify({ email, name: formData.taxpayerName, formData, signatureDataUrl })
     });
     if (!res.ok) throw new Error('Submission failed');
+
+    // Show success message to client
+    const step1 = document.getElementById('step-0') || document.querySelector('.step-card');
+    const formWrap = document.getElementById('f8821-form-wrap') || document.querySelector('canvas')?.closest('div');
+    const successHtml = `
+      <div style="text-align:center;padding:2rem 1rem">
+        <div style="font-size:48px;margin-bottom:1rem">✅</div>
+        <h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--ink);margin-bottom:0.75rem">Form 8821 submitted</h3>
+        <p style="font-size:15px;color:var(--ink-soft);line-height:1.75;max-width:420px;margin:0 auto 1rem">
+          Your Form 8821 has been received and sent to Romeo's team. They'll submit it to the IRS within 1 business day.
+        </p>
+        <p style="font-size:14px;color:var(--ink-muted);line-height:1.7;max-width:420px;margin:0 auto">
+          Once the IRS processes it (typically <strong>2–5 business days</strong>), your status here will update automatically and Romeo will begin pulling your transcripts.
+        </p>
+        <div style="margin-top:1.5rem;background:var(--cream);border:1px solid var(--cream-dark);border-radius:4px;padding:1rem 1.25rem;font-size:14px;color:var(--ink-soft);text-align:left;max-width:420px;margin-left:auto;margin-right:auto">
+          A confirmation email has been sent to <strong>${email}</strong>
+        </div>
+      </div>`;
+
+    // Replace the form with success message
+    const formContainer = document.querySelector('.f8821-form, #f8821-wrap, form');
+    const canvas = document.querySelector('canvas');
+    if (canvas) {
+      const parent = canvas.closest('.step-body, .step-content, div');
+      if (parent) parent.innerHTML = successHtml;
+    }
+
     await window._loadStatus();
   } catch(e) {
     btn.disabled = false;
