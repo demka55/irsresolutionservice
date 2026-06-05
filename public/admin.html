@@ -874,15 +874,18 @@ async function addClient(){
     const r=await fetch('/.netlify/functions/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,adminPassword:apw,update:{adminAction:true,name:n,company:co,phone:ph,status:s,notes:no,paidAt:new Date().toISOString()}})});
     if(!r.ok)throw new Error((await r.json()).error);
 
-    // 2. Create Netlify Identity account + send invite email
+    // 2. Send welcome email (and attempt Netlify Identity invite)
     let identityMsg='';
     try{
       const ir=await fetch('/.netlify/functions/admin-invite',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,email:e,name:n})});
-      const id=await ir.json();
-      if(ir.ok&&id.ok) identityMsg=' Account created — invite email sent.';
-      else if(id.error?.includes('already')) identityMsg=' (Account already exists — no new invite sent.)';
-      else identityMsg=' Note: could not create login account — '+id.error;
-    }catch(ie){ identityMsg=' Note: could not create login — '+ie.message; }
+      const text=await ir.text();
+      let id={};
+      try{ id=JSON.parse(text); }catch{ identityMsg=' Warning: invite function returned unexpected response.'; }
+      if(ir.ok&&id.emailSent) identityMsg=' Welcome email sent to '+e+'.';
+      else if(ir.ok&&!id.emailSent) identityMsg=' Note: email not sent — check RESEND_API_KEY in Netlify.';
+      else if(ir.status===404) identityMsg=' Note: admin-invite function not found — make sure admin-invite.js is deployed.';
+      else identityMsg=' Note: '+( id.note||id.error||'unknown issue');
+    }catch(ie){ identityMsg=' Note: could not reach invite function — '+ie.message; }
 
     res.style.display='block';
     res.style.background='var(--green-light)';res.style.border='1px solid #b8d9c3';res.style.color='var(--green)';
@@ -940,9 +943,13 @@ function viewAsClient(email){
 async function resendInvite(email,name){
   try{
     const r=await fetch('/.netlify/functions/admin-invite',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,email,name,resend:true})});
-    const d=await r.json();
-    if(!r.ok)throw new Error(d.error);
-    toast('Invite email sent to '+email);
+    const text=await r.text();
+    let d={};
+    try{ d=JSON.parse(text); }catch{ toast('Unexpected response: '+text.substring(0,100),true); return; }
+    if(r.status===404){ toast('admin-invite function not found — make sure admin-invite.js is deployed to netlify/functions/',true); return; }
+    if(!r.ok) throw new Error(d.error||'Unknown error');
+    if(d.emailSent) toast('Welcome email sent to '+email+' ✓');
+    else toast('Note: email may not have sent — '+( d.note||'check RESEND_API_KEY'),true);
   }catch(e){toast('Error: '+e.message,true);}
 }
 
@@ -1347,7 +1354,7 @@ async function saveLeadToBlobs(lead) {
   } catch(e) { toast('Save failed: ' + e.message, true); }
 }
 
-async // ── COMMUNITY ────────────────────────────────────────────────────────────────
+// ── COMMUNITY ────────────────────────────────────────────────────────────────
 let allMembers = [];
 
 async function loadCommunity() {
