@@ -116,7 +116,7 @@ async function sendWelcomeEmail(resendKey, email, name, isResend) {
                     <div style="width:22px;height:22px;background:#c9a84c;border-radius:50%;text-align:center;line-height:22px;font-size:12px;font-weight:700;color:#1a1410">2</div>
                   </td>
                   <td style="vertical-align:top;padding:6px 0 6px 10px;font-size:14px;color:#1a1410;line-height:1.6">
-                    <strong>Sign your Form 8821</strong> — it's the first thing you'll see inside. Takes 2 minutes.
+                    <strong>Sign your Form 2848</strong> — it's the first thing you'll see inside. Takes 2 minutes.
                   </td>
                 </tr>
                 <tr>
@@ -141,9 +141,9 @@ async function sendWelcomeEmail(resendKey, email, name, isResend) {
             </div>
 
             <div style="background:#f9f6f1;border:1px solid #d9cdb8;border-radius:4px;padding:20px;margin-bottom:1.5rem">
-              <div style="font-family:Georgia,serif;font-size:1.05rem;font-weight:600;color:#1a1410;margin-bottom:8px">What is Form 8821?</div>
+              <div style="font-family:Georgia,serif;font-size:1.05rem;font-weight:600;color:#1a1410;margin-bottom:8px">What is Form 2848?</div>
               <p style="font-size:14px;color:#4a3f32;line-height:1.75;margin:0">
-                Form 8821 is an IRS Tax Information Authorization. By signing it, you authorize Romeo Razi, CPA to access and review your IRS tax records on your behalf — including transcripts of your tax returns, account activity, and filed information.
+                Form 2848 is an IRS Power of Attorney and Declaration of Representative. By signing it, you authorize Romeo Razi, CPA to access and review your IRS tax records on your behalf — including transcripts of your tax returns, account activity, and filed information.
               </p>
               <p style="font-size:14px;color:#4a3f32;line-height:1.75;margin-top:10px;margin-bottom:0">
                 <strong>Important:</strong> This is a read-only authorization. It lets Romeo see your records but not make changes or file on your behalf without a separate agreement. You can revoke it at any time.
@@ -153,10 +153,10 @@ async function sendWelcomeEmail(resendKey, email, name, isResend) {
             <div style="background:#f9f6f1;border:1px solid #d9cdb8;border-radius:4px;padding:20px;margin-bottom:1.5rem">
               <div style="font-family:Georgia,serif;font-size:1.05rem;font-weight:600;color:#1a1410;margin-bottom:8px">What happens after you sign</div>
               <p style="font-size:14px;color:#4a3f32;line-height:1.75;margin:0">
-                Romeo submits your signed Form 8821 to the IRS Centralized Authorization File (CAF). The IRS typically processes this in <strong>2–5 business days</strong>. Once confirmed, our team will securely pull your IRS transcripts directly from the IRS — no further action needed from you.
+                Romeo submits your signed Form 2848 to the IRS Centralized Authorization File (CAF). The IRS typically processes this in <strong>2–5 business days</strong>. Once confirmed, our team will securely pull your IRS transcripts directly from the IRS — no further action needed from you.
               </p>
               <p style="font-size:14px;color:#4a3f32;line-height:1.75;margin-top:10px;margin-bottom:0">
-                You can track every step in your dashboard. All status updates — from Form 8821 submission through transcript retrieval, resolution planning, and final resolution — will be visible to you there.
+                You can track every step in your dashboard. All status updates — from Form 2848 submission through transcript retrieval, resolution planning, and final resolution — will be visible to you there.
               </p>
             </div>
 

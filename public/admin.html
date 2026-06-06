@@ -228,7 +228,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
   <div class="body">
     <div class="stats">
       <div class="stat g"><span class="stat-n" id="sT">—</span><span class="stat-l">Total</span></div>
-      <div class="stat"><span class="stat-n" id="sA">—</span><span class="stat-l">Awaiting 8821</span></div>
+      <div class="stat"><span class="stat-n" id="sA">—</span><span class="stat-l">Awaiting 2848</span></div>
       <div class="stat"><span class="stat-n" id="sI">—</span><span class="stat-l">In Progress</span></div>
       <div class="stat"><span class="stat-n" id="sR">—</span><span class="stat-l">Revenue</span></div>
       <div class="stat"><span class="stat-n" id="sD">—</span><span class="stat-l">Resolved</span></div>
@@ -236,10 +236,10 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
     <div class="toolbar">
       <span style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)">Filter:</span>
       <button class="tbtn active" onclick="setF('all',this)">All</button>
-      <button class="tbtn" onclick="setF('paid',this)" title="Client paid but hasn't signed Form 8821 yet">Awaiting 8821</button>
-      <button class="tbtn" onclick="setF('8821_signed',this)" title="Client signed Form 8821 — Romeo submits to IRS, then marks Approved when confirmed">8821 Signed</button>
+      <button class="tbtn" onclick="setF('paid',this)" title="Client paid but hasn't signed Form 2848 yet">Awaiting 2848</button>
+      <button class="tbtn" onclick="setF('2848_signed',this)" title="Client signed Form 2848 — Romeo submits to IRS, then marks Approved when confirmed">2848 Signed</button>
       
-      <button class="tbtn" onclick="setF('caf_active',this)" title="IRS approved Form 8821 — ready to pull transcripts">8821 Approved</button>
+      <button class="tbtn" onclick="setF('caf_active',this)" title="IRS approved Form 2848 — ready to pull transcripts">2848 Approved</button>
       <button class="tbtn" onclick="setF('transcripts_pulled',this)" title="Transcripts pulled — Romeo is building resolution plan">Transcripts</button>
       <button class="tbtn" onclick="setF('plan_sent',this)" title="Plan sent to client — waiting for their approval">Plan Sent</button>
       <button class="tbtn" onclick="setF('resolved',this)" title="Case fully resolved">Resolved</button>
@@ -255,19 +255,19 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
       <div id="guideBody" style="display:none;border-top:1px solid var(--cream-dark)">
         <div style="display:grid;grid-template-columns:repeat(3,1fr)">
           <div style="padding:.875rem 1rem;border-bottom:1px solid var(--cream-warm);border-right:1px solid var(--cream-warm)">
-            <div style="margin-bottom:.5rem"><span class="sbadge sp">Awaiting 8821</span></div>
-            <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">Client paid but has not yet signed Form 8821.</div>
+            <div style="margin-bottom:.5rem"><span class="sbadge sp">Awaiting 2848</span></div>
+            <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">Client paid but has not yet signed Form 2848.</div>
             <div style="font-size:11px;color:var(--gold-dim);font-weight:600">→ Wait for client to complete Step 1 on their dashboard. They sign electronically — you get emailed automatically.</div>
           </div>
           <div style="padding:.875rem 1rem;border-bottom:1px solid var(--cream-warm);border-right:1px solid var(--cream-warm)">
-            <div style="margin-bottom:.5rem"><span class="sbadge s8">8821 Signed</span></div>
-            <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">Client signed Form 8821 authorizing Romeo to access their IRS records.</div>
-            <div style="font-size:11px;color:var(--gold-dim);font-weight:600">→ Romeo submits the 8821 to the IRS. Once IRS approves it, click "IRS Approved 8821" below.</div>
+            <div style="margin-bottom:.5rem"><span class="sbadge s8">2848 Signed</span></div>
+            <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">Client signed Form 2848 authorizing Romeo to access their IRS records.</div>
+            <div style="font-size:11px;color:var(--gold-dim);font-weight:600">→ Romeo submits Form 2848 to the IRS. Once IRS approves it, click "IRS Approved 2848" below.</div>
             <div style="font-size:11px;color:var(--ink-muted);margin-top:.3rem">⏱ IRS approval takes 2–5 business days.</div>
           </div>
           <div style="padding:.875rem 1rem;border-bottom:1px solid var(--cream-warm)">
-            <div style="margin-bottom:.5rem"><span class="sbadge sa">8821 Approved</span></div>
-            <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">IRS approved Form 8821 — Romeo can now pull this client's transcripts.</div>
+            <div style="margin-bottom:.5rem"><span class="sbadge sa">2848 Approved</span></div>
+            <div style="font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:.4rem">IRS approved Form 2848 — Romeo can now pull this client's transcripts.</div>
             <div style="font-size:11px;color:var(--gold-dim);font-weight:600">→ Go to IRS Connection tab, select client, enter their TIN and pull transcripts. Click "Transcripts Pulled" when done.</div>
           </div>
           <div style="padding:.875rem 1rem;border-bottom:1px solid var(--cream-warm);border-right:1px solid var(--cream-warm)">
@@ -393,7 +393,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
     </div>
     <div class="cc-card">
       <div class="cc-h">Pull Client Transcript</div>
-      <div class="cc-sub">Request a client's IRS transcript. Romeo's CAF number is used automatically. Form 8821 must be on file with IRS CAF before pulling.</div>
+      <div class="cc-sub">Request a client's IRS transcript. Romeo's CAF number is used automatically. Form 2848 must be on file with IRS CAF before pulling.</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.625rem;margin-bottom:.75rem">
         <div><span class="lbl">Client</span><select class="inp" id="irsClient"><option value="">— Select —</option></select></div>
         <div><span class="lbl">Taxpayer TIN (9 digits)</span><input class="inp" id="irsTin" placeholder="No dashes"></div>
@@ -529,9 +529,9 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
         <div class="field"><span class="lbl">Phone</span><input class="inp" id="ac-ph" type="tel" placeholder="(555) 555-5555"></div>
         <div class="field" style="grid-column:span 2"><span class="lbl">Initial Status</span>
           <select class="inp" id="ac-s">
-            <option value="paid">Paid — Awaiting 8821</option>
-            <option value="8821_signed">8821 Signed</option>
-            <option value="8821_approved">8821 Approved</option>
+            <option value="paid">Paid — Awaiting 2848</option>
+            <option value="2848_signed">2848 Signed</option>
+            <option value="2848_approved">2848 Approved</option>
           </select>
         </div>
         <div class="field" style="grid-column:span 2"><span class="lbl">Notes</span><textarea class="notes-ta" id="ac-no" placeholder="Notes…" rows="2"></textarea></div>
@@ -570,12 +570,12 @@ let apw='',clients=[],filt='all',curTx='',curTxEmail='',curTxKey='';
 let allLeads=[], leadFilter='all';
 
 
-const SL={'paid':'Awaiting 8821','8821_signed':'8821 Signed','8821_approved':'8821 Approved','transcripts_pulled':'Transcripts Pulled','plan_sent':'Plan Sent','plan_approved':'Plan Approved','filed':'Filed','resolved':'Resolved'};
-const SC={'paid':'sp','8821_signed':'s8','8821_approved':'sa','transcripts_pulled':'st','plan_sent':'sps','plan_approved':'spa','filed':'sf','resolved':'sr'};
+const SL={'paid':'Awaiting 2848','2848_signed':'2848 Signed','2848_approved':'2848 Approved','transcripts_pulled':'Transcripts Pulled','plan_sent':'Plan Sent','plan_approved':'Plan Approved','filed':'Filed','resolved':'Resolved'};
+const SC={'paid':'sp','2848_signed':'s8','2848_approved':'sa','transcripts_pulled':'st','plan_sent':'sps','plan_approved':'spa','filed':'sf','resolved':'sr'};
 const STEPS=[
-  {k:'form8821Signed',l:'Form 8821 signed by client'},
+  {k:'form2848Signed',l:'Form 2848 signed by client'},
   
-  {k:'cafActive',l:'IRS approved Form 8821'},
+  {k:'cafActive',l:'IRS approved Form 2848'},
   {k:'transcriptsPulled',l:'IRS transcripts pulled'},
   {k:'planSent',l:'Resolution plan sent to client'},
   {k:'planApproved',l:'Plan approved by client'},
@@ -643,7 +643,7 @@ function goPage(n,el){
   if(n==='community')loadCommunity();
 }
 
-function needsAction(c){return['8821_signed','8821_approved','transcripts_pulled','plan_approved','filed'].includes(c.status);}
+function needsAction(c){return['2848_signed','2848_approved','transcripts_pulled','plan_approved','filed'].includes(c.status);}
 
 async function loadClients(){
   try{
@@ -704,15 +704,15 @@ function renderRow(c){
   const ud=c.updatedAt?new Date(c.updatedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';
   const sc=SC[c.status]||'sp', sl=SL[c.status]||c.status;
   const co=c.company||'—';
-  const has8821=!!c.steps?.form8821Data;
-  const needsAction8821=c.status==='8821_signed'&&has8821;
+  const has2848=!!c.steps?.form2848Data;
+  const needsAction2848=c.status==='2848_signed'&&has2848;
   return `
-<div class="trow${needsAction8821?' trow-alert':''}" id="row-${esc(c.email)}" onclick="toggleRow('${esc(c.email)}')">
+<div class="trow${needsAction2848?' trow-alert':''}" id="row-${esc(c.email)}" onclick="toggleRow('${esc(c.email)}')">
   <div><div class="av">${init}</div></div>
   <div>
     <div class="cn">${esc(c.name||'—')}</div>
     <div class="ce">${esc(c.email)}</div>
-    ${needsAction8821?`<div style="font-size:11px;color:var(--green);font-weight:600;margin-top:2px">📋 8821 signed — expand to generate PDF</div>`:''}
+    ${needsAction2848?`<div style="font-size:11px;color:var(--green);font-weight:600;margin-top:2px">📋 2848 signed — expand to generate PDF</div>`:''}
   </div>
   <div><div class="cc">${esc(co)}</div></div>
   <div><span class="sbadge ${sc}">${sl}</span></div>
@@ -726,11 +726,11 @@ function renderRow(c){
 }
 
 function renderDetail(c){
-  const s=c.steps||{}, f8=s.form8821Data;
+  const s=c.steps||{}, f8=s.form2848Data;
   const stepsHtml=STEPS.map(st=>{const d=!!s[st.k],t=d&&typeof s[st.k]==='string'?new Date(s[st.k]).toLocaleDateString():'';return`<div class="dstep ${d?'done':'pending'}"><div class="dstep-dot"></div>${st.l}${t?`<span class="dstep-t">${t}</span>`:''}</div>`;}).join('');
   const f8Html=f8?`
     <div style="background:var(--green-light);border:1px solid #b8d9c3;border-radius:3px;padding:8px 12px;margin-bottom:.75rem;font-size:13px;color:var(--green);font-weight:600">
-      ✅ Form 8821 signed — ${f8.signedAt?new Date(f8.signedAt).toLocaleString():''}
+      ✅ Form 2848 signed — ${f8.signedAt?new Date(f8.signedAt).toLocaleString():''}
     </div>
     <div class="f8row"><div class="f8k">Name</div><div class="f8v">${esc(f8.taxpayerName||'—')}</div></div>
     <div class="f8row"><div class="f8k">SSN last 4</div><div class="f8v">***-**-${esc(f8.ssnLast4||'—')}</div></div>
@@ -756,12 +756,12 @@ function renderDetail(c){
     </div>
   </div>
   <div class="dp">
-    <div class="dp-h">📋 Form 8821</div>
+    <div class="dp-h">📋 Form 2848</div>
     ${f8Html}
     ${f8?`
     <div style="margin-top:.875rem;display:flex;flex-direction:column;gap:.5rem">
-      <button class="btn btn-gold" style="font-size:13px" onclick="dlF8('${esc(c.email)}')">📄 Generate 8821 PDF — Submit to IRS</button>
-      <div style="font-size:11px;color:var(--ink-muted);line-height:1.6">Print → fax to IRS CAF at <strong>855-214-7522</strong> or upload via IRS e-Services. Then click "IRS Approved 8821" in Actions when confirmed.</div>
+      <button class="btn btn-gold" style="font-size:13px" onclick="dlF8('${esc(c.email)}')">📄 Generate 2848 PDF — Submit to IRS</button>
+      <div style="font-size:11px;color:var(--ink-muted);line-height:1.6">Print → fax to IRS CAF at <strong>855-214-7522</strong> or upload via IRS e-Services. Then click "IRS Approved 2848" in Actions when confirmed.</div>
     </div>`:''}
   </div>
   <div class="dp">
@@ -827,13 +827,13 @@ function renderDetail(c){
 
 function getActBtns(c){
   const e=esc(c.email),s=c.status,b=[];
-  if(s==='8821_signed')   b.push(`<button class="btn btn-gold btn-sm" onclick="adv('${e}','8821_approved','cafActive')">✓ IRS Approved 8821</button>`);
+  if(s==='2848_signed')   b.push(`<button class="btn btn-gold btn-sm" onclick="adv('${e}','2848_approved','cafActive')">✓ IRS Approved 2848</button>`);
   
-  if(s==='8821_approved')    b.push(`<button class="btn btn-gold btn-sm" onclick="adv('${e}','transcripts_pulled','transcriptsPulled')">✓ Transcripts Pulled</button>`);
+  if(s==='2848_approved')    b.push(`<button class="btn btn-gold btn-sm" onclick="adv('${e}','transcripts_pulled','transcriptsPulled')">✓ Transcripts Pulled</button>`);
   if(s==='transcripts_pulled') b.push(`<button class="btn btn-gold btn-sm" onclick="adv('${e}','plan_sent','planSent')">✓ Plan Sent</button>`);
   if(s==='plan_approved') b.push(`<button class="btn btn-gold btn-sm" onclick="adv('${e}','filed','documentsFiled')">✓ Docs Filed</button>`);
   if(s==='filed')         b.push(`<button class="btn btn-green btn-sm" onclick="adv('${e}','resolved','resolved')">✓ Mark Resolved</button>`);
-  if(s==='paid')          b.push(`<span style="font-size:11px;color:var(--ink-muted)">Waiting for Form 8821</span>`);
+  if(s==='paid')          b.push(`<span style="font-size:11px;color:var(--ink-muted)">Waiting for Form 2848</span>`);
   if(s==='plan_sent')     b.push(`<span style="font-size:11px;color:var(--ink-muted)">Waiting for plan approval</span>`);
   return b.join('');
 }
@@ -928,7 +928,7 @@ async function rePullAndView(email, key){
   const formNumber = parts[0], productType = parts[1], taxYear = parts[2];
   const c = clients.find(x=>x.email===email);
   if(!c) return;
-  const f8 = c.steps?.form8821Data;
+  const f8 = c.steps?.form2848Data;
   // Pre-fill IRS form and switch to IRS page
   goPage('irs', document.querySelectorAll('.sb-i')[3]);
   document.getElementById('irsClient').value = email;
@@ -1050,7 +1050,7 @@ async function pullTranscript(){
   btn.disabled=false;btn.textContent='📋 Pull Transcript from IRS';
 }
 
-function quickPull(email){const c=clients.find(x=>x.email===email);if(!c)return;goPage('irs',document.querySelectorAll('.sb-i')[3]);if(c.steps?.form8821Data){const f=c.steps.form8821Data,pts=(f.taxpayerName||'').split(' ');document.getElementById('irsClient').value=email;document.getElementById('irsFirst').value=pts[0]||'';document.getElementById('irsLast').value=pts.slice(1).join(' ')||'';document.getElementById('irsYear').value=(f.taxYears||'').split(',')[0]?.trim()||new Date().getFullYear()-2;}}
+function quickPull(email){const c=clients.find(x=>x.email===email);if(!c)return;goPage('irs',document.querySelectorAll('.sb-i')[3]);if(c.steps?.form2848Data){const f=c.steps.form2848Data,pts=(f.taxpayerName||'').split(' ');document.getElementById('irsClient').value=email;document.getElementById('irsFirst').value=pts[0]||'';document.getElementById('irsLast').value=pts.slice(1).join(' ')||'';document.getElementById('irsYear').value=(f.taxYears||'').split(',')[0]?.trim()||new Date().getFullYear()-2;}}
 
 function openTxModal(html,title){document.getElementById('txSub').textContent=title;document.getElementById('txContent').innerHTML=html||'No content';curTx=html;document.getElementById('txModal').classList.add('open');}
 
@@ -1089,13 +1089,13 @@ ${curTx}
 function dlF8(email){
   const c=clients.find(x=>x.email===email);
   if(!c)return;
-  const f=c.steps?.form8821Data;
-  if(!f){toast('No Form 8821 data found for this client',true);return;}
+  const f=c.steps?.form2848Data;
+  if(!f){toast('No Form 2848 data found for this client',true);return;}
 
   const today=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   const years=(f.taxYears||'').split(',').map(y=>y.trim());
 
-  const html=`<!DOCTYPE html><html><head><title>Form 8821 - ${f.taxpayerName||''}</title>
+  const html=`<!DOCTYPE html><html><head><title>Form 2848 - ${f.taxpayerName||''}</title>
 <style>
   @page{margin:0.75in}
   body{font-family:Arial,sans-serif;font-size:11px;color:#000;margin:0;padding:0}
@@ -1128,23 +1128,23 @@ function dlF8(email){
 </style></head><body>
 
 <div class="no-print" style="background:#1a3a5c;color:white;padding:12px 20px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">
-  <span style="font-weight:600">Form 8821 — ${f.taxpayerName||''} — Ready to print/save as PDF</span>
+  <span style="font-weight:600">Form 2848 — ${f.taxpayerName||''} — Ready to print/save as PDF</span>
   <button onclick="window.print()" style="background:#c9a84c;color:white;border:none;padding:8px 20px;border-radius:2px;font-weight:600;cursor:pointer;font-size:13px">🖨 Print / Save as PDF</button>
 </div>
 
 <div class="submit-instructions no-print">
-  <div class="submit-title">📋 How to submit this Form 8821 to the IRS (Romeo):</div>
+  <div class="submit-title">📋 How to submit this Form 2848 to the IRS (Romeo):</div>
   <strong>Option 1 — Fax (fastest, 1-2 days):</strong> Print this form → sign it → fax to IRS CAF Unit at <strong>855-214-7522</strong> (domestic) or <strong>304-707-9785</strong> (international)<br>
-  <strong>Option 2 — IRS e-Services (online):</strong> Log into <strong>la.www4.irs.gov</strong> → e-Services → Submit Form 8821 electronically<br>
+  <strong>Option 2 — IRS e-Services (online):</strong> Log into <strong>la.www4.irs.gov</strong> → e-Services → Submit Form 2848 electronically<br>
   <strong>Option 3 — Mail (slowest, 4-6 weeks):</strong> Mail to IRS, Attn: CAF Unit, based on client's state — see IRS.gov for address<br>
-  <strong>After submission:</strong> Once the IRS confirms — mark client as "IRS Approved 8821" in the admin dashboard.
+  <strong>After submission:</strong> Once the IRS confirms — mark client as "IRS Approved 2848" in the admin dashboard.
 </div>
 
 <div class="omb">OMB No. 1545-1165</div>
 
 <div class="header">
-  <div class="form-title">Form 8821</div>
-  <div class="form-sub">Tax Information Authorization</div>
+  <div class="form-title">Form 2848</div>
+  <div class="form-sub">Power of Attorney and Declaration of Representative</div>
   <div class="form-sub">(Rev. November 2021)</div>
   <div class="form-sub">Department of the Treasury — Internal Revenue Service</div>
 </div>

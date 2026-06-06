@@ -87,8 +87,8 @@ main{max-width:820px;margin:0 auto;padding:3rem 1.5rem 6rem}
 .step-action-label{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.6rem;display:block}
 .timeline-note{background:var(--amber-light);border:1px solid #e8c98a;border-radius:3px;padding:10px 16px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--amber);margin-top:1rem}
 
-/* FORM 8821 */
-.form-8821{background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;padding:1.75rem}
+/* FORM 2848 */
+.form-2848{background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;padding:1.75rem}
 .form-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.4rem}
 .form-title{font-family:var(--serif);font-size:1.4rem;font-weight:600;color:var(--ink);margin-bottom:0.5rem}
 .form-sub{font-size:13px;color:var(--ink-muted);line-height:1.6;margin-bottom:1.5rem}
@@ -537,7 +537,7 @@ async function loadStatus() {
   if (typeof renderSteps === 'function') renderSteps();
 }
 
-// Expose so submit8821 and approvePlan can trigger a reload
+// Expose so submit2848 and approvePlan can trigger a reload
 window._loadStatus = loadStatus;
 
 onAuthChange(init);
@@ -550,38 +550,29 @@ const API = '/.netlify/functions/anthropic';
 // ── STATUS STEPS DEFINITION ─────────────────────────────────────────────────
 const STEPS_DEF = [
   {
-    id: 'sign8821',
+    id: 'sign2848',
     statusKey: null,
-    doneKey: 'form8821Signed',
+    doneKey: 'form2848Signed',
     title: 'Authorize Romeo to access your IRS records',
-    desc: 'Complete and sign Form 8821 — this authorizes Romeo Razi, CPA to view your IRS transcripts on your behalf. It is read-only access; no changes are made to your account.',
-    actionType: 'form8821',
+    desc: 'Complete and sign Form 2848 — this authorizes Romeo Razi, CPA to view your IRS transcripts on your behalf. It is read-only access; no changes are made to your account.',
+    actionType: 'form2848',
     pendingNote: null,
   },
   {
-    id: 'cafPending',
-    statusKey: 'caf_pending',
-    doneKey: 'cafSubmitted',
-    title: "Romeo submits your Form 8821 to the IRS",
-    desc: "Romeo's team submits your signed Form 8821 to the IRS Centralized Authorization File (CAF). This is handled entirely by our team — no action needed from you.",
-    actionType: 'waiting',
-    pendingNote: '⏱ Typically submitted within 1 business day of receiving your signed form.',
-  },
-  {
-    id: 'cafActive',
-    statusKey: 'caf_active',
+    id: 'irsApproval',
+    statusKey: '2848_approved',
     doneKey: 'cafActive',
-    title: 'IRS confirms authorization',
-    desc: 'The IRS processes the Form 8821 and activates Romeo\'s access to your transcripts. This step is handled by the IRS.',
+    title: 'IRS processes and approves your Form 2848',
+    desc: "Romeo's team submits your signed Form 2848 to the IRS. The IRS then activates Romeo's access to your records. This is handled entirely by our team — no action needed from you.",
     actionType: 'waiting',
-    pendingNote: '⏱ IRS processing typically takes 2–5 business days.',
+    pendingNote: '⏱ Romeo submits within 1 business day. IRS approval takes 2–5 business days.',
   },
   {
     id: 'transcripts',
     statusKey: 'transcripts_pulled',
     doneKey: 'transcriptsPulled',
     title: 'Romeo pulls and reviews your IRS transcripts',
-    desc: 'Romeo retrieves your official IRS transcripts, cross-references every figure against your notice, and identifies any errors or discrepancies. He then builds your personalized resolution plan.',
+    desc: 'Romeo retrieves your official IRS transcripts, cross-references every figure, and identifies any errors or discrepancies. He then builds your personalized resolution plan.',
     actionType: 'waiting',
     pendingNote: '⏱ Review and plan creation takes 3–5 business days.',
   },
@@ -623,7 +614,7 @@ const STEPS_DEF = [
   },
 ];
 
-const STATUS_ORDER = ['paid','8821_signed','caf_pending','caf_active','transcripts_pulled','plan_sent','plan_approved','filed','resolved'];
+const STATUS_ORDER = ['paid','2848_signed','2848_approved','transcripts_pulled','plan_sent','plan_approved','filed','resolved'];
 
 function getStatusIndex(status) {
   return STATUS_ORDER.indexOf(status);
@@ -639,12 +630,11 @@ function renderSteps() {
   // Update status banner
   const bannerMessages = {
     paid: { msg: 'Action required — please complete Step 1 below', cls: 'warning' },
-    '8821_signed': { msg: 'Form 8821 received — Romeo\'s team will submit to IRS within 1 business day', cls: 'active' },
-    caf_pending: { msg: 'Form 8821 submitted to IRS — waiting for CAF activation (2–5 days)', cls: 'active' },
-    caf_active: { msg: 'IRS access confirmed — Romeo is now reviewing your transcripts', cls: 'active' },
-    transcripts_pulled: { msg: 'Transcripts reviewed — resolution plan being prepared', cls: 'active' },
-    plan_sent: { msg: 'Action required — your resolution plan is ready for your review', cls: 'warning' },
-    plan_approved: { msg: 'Plan approved — Romeo is filing your documents', cls: 'active' },
+    '2848_signed': { msg: 'Form 2848 received ✓ — our team will submit it to the IRS within 1 business day', cls: 'active' },
+    '2848_approved': { msg: 'IRS approved your Form 2848 — Romeo is now pulling your transcripts', cls: 'active' },
+    transcripts_pulled: { msg: 'Transcripts received — resolution plan being prepared', cls: 'active' },
+    plan_sent: { msg: 'Action required — your resolution plan is ready for your review below', cls: 'warning' },
+    plan_approved: { msg: 'Plan approved — Romeo is filing your documents with the IRS', cls: 'active' },
     filed: { msg: 'Documents filed — awaiting IRS confirmation', cls: 'active' },
     resolved: { msg: 'Your case is fully resolved ✓', cls: 'success' },
   };
@@ -670,8 +660,8 @@ function renderSteps() {
 
     let actionHtml = '';
     if (isActive) {
-      if (step.actionType === 'form8821') {
-        actionHtml = render8821Form();
+      if (step.actionType === 'form2848') {
+        actionHtml = render2848Form();
       } else if (step.actionType === 'approvePlan') {
         actionHtml = renderPlanApproval();
       } else if (step.actionType === 'waiting' && step.pendingNote) {
@@ -712,49 +702,49 @@ function renderSteps() {
 
 function isStepActive(step, status, steps) {
   if (steps[step.doneKey]) return false;
-  // Step 1 (sign 8821) is active when status is 'paid'
-  if (step.id === 'sign8821') return status === 'paid';
+  // Step 1 (sign 2848) is active when status is 'paid' and not yet signed
+  if (step.id === 'sign2848') return status === 'paid' && !steps.form2848Signed;
   // Other steps are active when their statusKey matches current status
   if (step.statusKey) return status === step.statusKey;
   return false;
 }
 
-function render8821Form() {
+function render2848Form() {
   return `
     <div class="step-action">
-      <span class="step-action-label">Complete and sign Form 8821</span>
-      <div class="form-8821">
-        <div class="form-eyebrow">IRS Form 8821 — Tax Information Authorization</div>
+      <span class="step-action-label">Complete and sign Form 2848</span>
+      <div class="form-2848">
+        <div class="form-eyebrow">IRS Form 2848 — Power of Attorney and Declaration of Representative</div>
         <div class="form-title">Authorize Romeo Razi, CPA</div>
         <div class="form-sub">This form authorizes Romeo Razi of Taxed Right LLC to receive your IRS transcripts. It is read-only — Romeo cannot make changes to your account or file on your behalf without separate authorization.</div>
         <div class="form-grid">
           <div class="form-field full">
             <label class="form-label">Your Full Name (as on tax return) *</label>
-            <input class="form-input" id="f8821-name" placeholder="Jane Smith" required>
+            <input class="form-input" id="f2848-name" placeholder="Jane Smith" required>
           </div>
           <div class="form-field">
             <label class="form-label">Last 4 of SSN *</label>
-            <input class="form-input" id="f8821-ssn" placeholder="1234" maxlength="4" required>
+            <input class="form-input" id="f2848-ssn" placeholder="1234" maxlength="4" required>
           </div>
           <div class="form-field">
             <label class="form-label">Date of Birth</label>
-            <input class="form-input" id="f8821-dob" placeholder="MM/DD/YYYY" type="date">
+            <input class="form-input" id="f2848-dob" placeholder="MM/DD/YYYY" type="date">
           </div>
           <div class="form-field full">
             <label class="form-label">Current Address *</label>
-            <input class="form-input" id="f8821-address" placeholder="123 Main St, City, State, ZIP" required>
+            <input class="form-input" id="f2848-address" placeholder="123 Main St, City, State, ZIP" required>
           </div>
           <div class="form-field full">
             <label class="form-label">Tax Years to Authorize *</label>
-            <input class="form-input" id="f8821-years" placeholder="e.g. 2021, 2022, 2023, 2024" required>
+            <input class="form-input" id="f2848-years" placeholder="e.g. 2021, 2022, 2023, 2024" required>
           </div>
           <div class="form-field">
             <label class="form-label">Phone Number</label>
-            <input class="form-input" id="f8821-phone" placeholder="(555) 555-5555" type="tel">
+            <input class="form-input" id="f2848-phone" placeholder="(555) 555-5555" type="tel">
           </div>
           <div class="form-field">
             <label class="form-label">Filing Status</label>
-            <select class="form-input" id="f8821-filing">
+            <select class="form-input" id="f2848-filing">
               <option value="">Select…</option>
               <option value="Single">Single</option>
               <option value="Married Filing Jointly">Married Filing Jointly</option>
@@ -778,12 +768,12 @@ function render8821Form() {
         <div class="consent-box">
           By signing above, I authorize Romeo Razi, CPA (Taxed Right LLC) to receive my IRS tax transcripts for the years specified. This authorization is valid for 3 years from the date signed. I understand this is read-only access and does not authorize Romeo Razi to represent me before the IRS or file documents on my behalf.
           <label class="consent-check">
-            <input type="checkbox" id="f8821-consent">
+            <input type="checkbox" id="f2848-consent">
             <span>I understand and agree to the above authorization</span>
           </label>
         </div>
 
-        <button class="btn-primary" id="submit8821Btn" onclick="submit8821()" disabled>Submit Form 8821 →</button>
+        <button class="btn-primary" id="submit2848Btn" onclick="submit2848()" disabled>Submit Form 2848 →</button>
         <p style="font-size:12px;color:var(--ink-muted);text-align:center;margin-top:0.5rem">Your information is transmitted securely and used only for IRS transcript retrieval.</p>
       </div>
     </div>`;
@@ -809,7 +799,7 @@ function renderPlanApproval() {
     </div>`;
 }
 
-// ── FORM 8821 SIGNATURE PAD ─────────────────────────────────────────────────
+// ── FORM 2848 SIGNATURE PAD ─────────────────────────────────────────────────
 let sigPad = { drawing: false, hasSig: false, ctx: null, canvas: null };
 
 function initSignaturePad() {
@@ -843,11 +833,11 @@ function initSignaturePad() {
   canvas.addEventListener('touchend', () => { sigPad.drawing = false; });
 
   // Watch form fields for submit btn
-  ['f8821-name','f8821-ssn','f8821-address','f8821-years'].forEach(id => {
+  ['f2848-name','f2848-ssn','f2848-address','f2848-years'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('input', updateSubmitBtn);
   });
-  const consent = document.getElementById('f8821-consent');
+  const consent = document.getElementById('f2848-consent');
   if (consent) consent.addEventListener('change', updateSubmitBtn);
   updateSubmitBtn(); // set initial state
 }
@@ -861,39 +851,39 @@ function clearSignature() {
 }
 
 function updateSubmitBtn() {
-  const btn = document.getElementById('submit8821Btn');
+  const btn = document.getElementById('submit2848Btn');
   if (!btn || btn.textContent === '✓ Submitted') return;
-  const name = (document.getElementById('f8821-name')?.value || '').trim();
-  const ssn = (document.getElementById('f8821-ssn')?.value || '').trim();
-  const addr = (document.getElementById('f8821-address')?.value || '').trim();
-  const years = (document.getElementById('f8821-years')?.value || '').trim();
-  const consent = document.getElementById('f8821-consent')?.checked;
+  const name = (document.getElementById('f2848-name')?.value || '').trim();
+  const ssn = (document.getElementById('f2848-ssn')?.value || '').trim();
+  const addr = (document.getElementById('f2848-address')?.value || '').trim();
+  const years = (document.getElementById('f2848-years')?.value || '').trim();
+  const consent = document.getElementById('f2848-consent')?.checked;
   btn.disabled = !(name && ssn.length >= 4 && addr && years && consent);
 }
 
-async function submit8821() {
-  const btn = document.getElementById('submit8821Btn');
+async function submit2848() {
+  const btn = document.getElementById('submit2848Btn');
   btn.disabled = true;
   btn.textContent = 'Submitting…';
 
   const email = window._currentUserEmail;
-  if (!email) { btn.disabled = false; btn.textContent = 'Submit Form 8821 →'; alert('Not logged in.'); return; }
+  if (!email) { btn.disabled = false; btn.textContent = 'Submit Form 2848 →'; alert('Not logged in.'); return; }
 
   const formData = {
-    taxpayerName: document.getElementById('f8821-name').value.trim(),
-    ssnLast4: document.getElementById('f8821-ssn').value.trim(),
-    dob: document.getElementById('f8821-dob')?.value || '',
-    address: document.getElementById('f8821-address').value.trim(),
-    taxYears: document.getElementById('f8821-years').value.trim(),
-    phone: document.getElementById('f8821-phone')?.value || '',
-    filingStatus: document.getElementById('f8821-filing')?.value || '',
+    taxpayerName: document.getElementById('f2848-name').value.trim(),
+    ssnLast4: document.getElementById('f2848-ssn').value.trim(),
+    dob: document.getElementById('f2848-dob')?.value || '',
+    address: document.getElementById('f2848-address').value.trim(),
+    taxYears: document.getElementById('f2848-years').value.trim(),
+    phone: document.getElementById('f2848-phone')?.value || '',
+    filingStatus: document.getElementById('f2848-filing')?.value || '',
     signedAt: new Date().toISOString(),
   };
 
   const signatureDataUrl = sigPad.canvas.toDataURL('image/png');
 
   try {
-    const res = await fetch('/.netlify/functions/submit-8821', {
+    const res = await fetch('/.netlify/functions/submit-2848', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, name: formData.taxpayerName || email, formData, signatureDataUrl })
@@ -909,7 +899,7 @@ async function submit8821() {
     successDiv.style.cssText = 'background:#f0fdf4;border:1px solid #b8d9c3;border-radius:4px;padding:1.5rem;margin-bottom:1.5rem;text-align:center';
     successDiv.innerHTML = `
       <div style="font-size:36px;margin-bottom:.75rem">✅</div>
-      <div style="font-family:var(--serif);font-size:1.25rem;font-weight:600;color:#1a5c2e;margin-bottom:.5rem">Form 8821 submitted</div>
+      <div style="font-family:var(--serif);font-size:1.25rem;font-weight:600;color:#1a5c2e;margin-bottom:.5rem">Form 2848 submitted</div>
       <div style="font-size:14px;color:#2d6a4f;line-height:1.7">Romeo's team has been notified. They'll submit to the IRS within 1 business day.<br>
       Once the IRS confirms (2–5 days) your status here will update automatically.</div>`;
 
@@ -924,7 +914,7 @@ async function submit8821() {
 
   } catch(e) {
     btn.disabled = false;
-    btn.textContent = 'Submit Form 8821 →';
+    btn.textContent = 'Submit Form 2848 →';
     alert('Submission failed: ' + e.message + '\n\nPlease try again or email romeo@taxedright.com');
   }
 }

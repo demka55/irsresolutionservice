@@ -55,9 +55,9 @@ export default async (req) => {
       return new Response(JSON.stringify({ error: 'Unauthorized — admin required for this update' }), { status: 401, headers });
     }
 
-    // Non-admin updates: only allow specific step keys (form8821Signed, planApproved)
+    // Non-admin updates: only allow specific step keys (form2848Signed, planApproved)
     if (!isAdmin && update.steps) {
-      const allowedStepKeys = ['form8821Signed', 'form8821Data', 'planApproved'];
+      const allowedStepKeys = ['form2848Signed', 'form2848Data', 'planApproved'];
       const attemptedKeys = Object.keys(update.steps);
       const disallowedKeys = attemptedKeys.filter(k => !allowedStepKeys.includes(k));
       if (disallowedKeys.length) {
