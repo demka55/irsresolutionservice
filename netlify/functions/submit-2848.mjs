@@ -1,5 +1,99 @@
 // netlify/functions/submit-2848.mjs
 import { getStore } from '@netlify/blobs';
+import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+
+// Builds a real, properly formatted PDF of the signed Form 2848 — not just a text summary.
+// Uses pdf-lib (pure JS, no headless browser needed) so this runs fine inside a serverless function.
+async function buildForm2848Pdf(formData, signaturePngBase64) {
+  const pdfDoc = await PDFDocument.create();
+  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const bold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+
+  const page = pdfDoc.addPage([612, 792]); // US Letter
+  const { width, height } = page.getSize();
+  const margin = 50;
+  let y = height - margin;
+
+  function text(str, opts = {}) {
+    page.drawText(str, {
+      x: opts.x ?? margin,
+      y,
+      size: opts.size ?? 11,
+      font: opts.bold ? bold : font,
+      color: rgb(0, 0, 0),
+    });
+    y -= opts.gap ?? (opts.size ? opts.size + 6 : 17);
+  }
+
+  function hr() {
+    page.drawLine({ start: { x: margin, y }, end: { x: width - margin, y }, thickness: 1, color: rgb(0, 0, 0) });
+    y -= 14;
+  }
+
+  function wrapped(str, size, maxWidth) {
+    const words = str.split(' ');
+    let lineStr = '';
+    for (const w of words) {
+      const test = lineStr ? lineStr + ' ' + w : w;
+      if (font.widthOfTextAtSize(test, size) > maxWidth) {
+        text(lineStr, { size, gap: size + 4 });
+        lineStr = w;
+      } else {
+        lineStr = test;
+      }
+    }
+    if (lineStr) text(lineStr, { size, gap: size + 4 });
+  }
+
+  text('IRS FORM 2848', { size: 20, bold: true, gap: 24 });
+  text('Power of Attorney and Declaration of Representative', { size: 12, gap: 20 });
+  hr();
+
+  text('TAXPAYER INFORMATION', { size: 11, bold: true, gap: 16 });
+  text(`Name: ${formData.taxpayerName}`);
+  text(`SSN (last 4): ***-**-${formData.ssnLast4}`);
+  text(`Date of Birth: ${formData.dob || '—'}`);
+  wrapped(`Address: ${formData.address}`, 11, width - margin * 2);
+  text(`Phone: ${formData.phone || '—'}`);
+  text(`Filing Status: ${formData.filingStatus || '—'}`);
+  y -= 6;
+  hr();
+
+  text('REPRESENTATIVE', { size: 11, bold: true, gap: 16 });
+  text('Romeo Razi, CPA — Taxed Right LLC');
+  y -= 6;
+  hr();
+
+  text('AUTHORIZATION', { size: 11, bold: true, gap: 16 });
+  text(`Tax Years Authorized: ${formData.taxYears}`);
+  y -= 6;
+  hr();
+
+  text('CONSENT', { size: 11, bold: true, gap: 16 });
+  wrapped(
+    'By signing below, the taxpayer authorizes Romeo Razi, CPA (Taxed Right LLC) to receive IRS tax transcripts for the years specified. This authorization is valid for 3 years from the date signed. This is read-only access and does not authorize representation before the IRS or filing documents on the taxpayer\u2019s behalf.',
+    9, width - margin * 2
+  );
+  y -= 20;
+
+  text('SIGNATURE', { size: 11, bold: true, gap: 16 });
+  if (signaturePngBase64) {
+    try {
+      const sigBytes = Buffer.from(signaturePngBase64, 'base64');
+      const sigImage = await pdfDoc.embedPng(sigBytes);
+      const sigDims = sigImage.scale(Math.min(0.4, 220 / sigImage.width));
+      page.drawImage(sigImage, { x: margin, y: y - sigDims.height, width: sigDims.width, height: sigDims.height });
+      y -= sigDims.height + 10;
+    } catch (sigErr) {
+      console.warn('[submit-2848] signature embed failed, continuing without it:', sigErr.message);
+    }
+  }
+  page.drawLine({ start: { x: margin, y }, end: { x: margin + 250, y }, thickness: 1, color: rgb(0, 0, 0) });
+  y -= 14;
+  text(`${formData.taxpayerName} — Signed ${new Date().toLocaleString()}`, { size: 9 });
+
+  return await pdfDoc.save();
+}
 
 export default async (req) => {
   const headers = {
@@ -68,10 +162,10 @@ export default async (req) => {
     return new Response(JSON.stringify({ error: 'Failed to save: ' + err.message }), { status: 500, headers });
   }
 
-  // Save a record of the signed Form 2848 into the client's document folder.
-  // Mirrors the storage pattern in client-files.mjs exactly: full record under
-  // "{email}:{fileId}" and a lightweight metadata entry appended to "__meta__:{email}"
-  // so it shows up instantly in admin's file list without re-fetching the full payload.
+  // Generate a real PDF of the signed Form 2848 (with embedded signature) and save it
+  // into the client's document folder. Mirrors the storage pattern in client-files.mjs
+  // exactly: full record under "{email}:{fileId}" and a lightweight metadata entry
+  // appended to "__meta__:{email}" so it shows up instantly in admin's file list.
   try {
     const filesStore = getStore('client-files');
 
@@ -85,26 +179,20 @@ export default async (req) => {
       await filesStore.set(`__meta__:${key}`, JSON.stringify(metaIndex));
     }
 
-    const fileId = `f${Date.now()}-2848`;
-    const summaryText = `IRS FORM 2848 — POWER OF ATTORNEY AND DECLARATION OF REPRESENTATIVE
-Signed by: ${formData.taxpayerName}
-SSN (last 4): ***-**-${formData.ssnLast4}
-Date of Birth: ${formData.dob || '—'}
-Address: ${formData.address}
-Tax Years Authorized: ${formData.taxYears}
-Filing Status: ${formData.filingStatus || '—'}
-Phone: ${formData.phone || '—'}
-Signed At: ${new Date().toLocaleString()}
-Email: ${email}
-`;
-    const base64Summary = Buffer.from(summaryText, 'utf-8').toString('base64');
+    const signaturePngBase64 = (signatureDataUrl && signatureDataUrl.startsWith('data:image'))
+      ? signatureDataUrl.split(',')[1]
+      : null;
 
+    const pdfBytes = await buildForm2848Pdf(formData, signaturePngBase64);
+    const base64Pdf = Buffer.from(pdfBytes).toString('base64');
+
+    const fileId = `f${Date.now()}-2848`;
     const fileRecord = {
       fileId,
-      filename: `Form-2848-${formData.taxpayerName.replace(/\s+/g,'-')}-${new Date().toISOString().slice(0,10)}.txt`,
-      contentType: 'text/plain',
-      size: base64Summary.length,
-      base64Data: base64Summary,
+      filename: `Form-2848-${formData.taxpayerName.replace(/\s+/g, '-')}-${new Date().toISOString().slice(0, 10)}.pdf`,
+      contentType: 'application/pdf',
+      size: Math.ceil(base64Pdf.length * 0.75),
+      base64Data: base64Pdf,
       uploadedAt: new Date().toISOString(),
       uploadedBy: 'System (client signature)',
       source: 'auto',
@@ -116,30 +204,9 @@ Email: ${email}
       size: fileRecord.size, uploadedAt: fileRecord.uploadedAt, uploadedBy: fileRecord.uploadedBy, source: fileRecord.source,
     });
 
-    // Also save the signature image if provided
-    if (signatureDataUrl && signatureDataUrl.startsWith('data:image')) {
-      const sigFileId = `f${Date.now()}-signature`;
-      const sigBase64 = signatureDataUrl.split(',')[1];
-      const sigRecord = {
-        fileId: sigFileId,
-        filename: `Signature-${formData.taxpayerName.replace(/\s+/g,'-')}-${new Date().toISOString().slice(0,10)}.png`,
-        contentType: 'image/png',
-        size: sigBase64.length,
-        base64Data: sigBase64,
-        uploadedAt: new Date().toISOString(),
-        uploadedBy: 'System (client signature)',
-        source: 'auto',
-      };
-      await filesStore.set(`${key}:${sigFileId}`, JSON.stringify(sigRecord));
-      await appendFileMeta(key, {
-        fileId: sigRecord.fileId, filename: sigRecord.filename, contentType: sigRecord.contentType,
-        size: sigRecord.size, uploadedAt: sigRecord.uploadedAt, uploadedBy: sigRecord.uploadedBy, source: sigRecord.source,
-      });
-    }
-
-    console.log('[submit-2848] saved file record for', key);
+    console.log('[submit-2848] saved signed Form 2848 PDF for', key);
   } catch(fileErr) {
-    console.warn('[submit-2848] file save failed (non-fatal):', fileErr.message);
+    console.warn('[submit-2848] PDF save failed (non-fatal):', fileErr.message);
   }
 
   // Send emails
