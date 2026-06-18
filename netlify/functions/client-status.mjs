@@ -8,6 +8,19 @@ const CLIENT_ALLOWED_FIELDS = ['steps', 'notes'];
 // Fields only admins can update
 const ADMIN_ONLY_FIELDS = ['status', 'name', 'company', 'phone', 'sessionId', 'paidAt', 'amount'];
 
+// Backward compatibility — map old/legacy status keys to current ones
+function normalizeStatus(key) {
+  const legacyMap = {
+    '8821_signed': '2848_signed',
+    '8821_approved': '2848_approved',
+    caf_pending: '2848_submitted',
+    caf_active: '2848_approved',
+    plan_sent: 'resolution_ready',
+    plan_approved: 'filed',
+  };
+  return legacyMap[key] || key;
+}
+
 export default async (req) => {
   const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || '';
   const ADMIN_PASSWORD_ROMEO = Netlify.env.get('ADMIN_PASSWORD_ROMEO') || '';
@@ -30,6 +43,7 @@ export default async (req) => {
     try {
       const raw = await store.get(email.toLowerCase());
       const data = raw ? (typeof raw === 'string' ? JSON.parse(raw) : raw) : { status: 'paid', steps: {} };
+      if (data.status) data.status = normalizeStatus(data.status);
       return new Response(JSON.stringify(data), { status: 200, headers });
     } catch {
       return new Response(JSON.stringify({ status: 'paid', steps: {} }), { status: 200, headers });
@@ -46,7 +60,7 @@ export default async (req) => {
     const { email, update, adminPassword } = body;
     if (!email) return new Response(JSON.stringify({ error: 'Missing email' }), { status: 400, headers });
 
-    const isAdmin = ADMIN_PASSWORD && adminPassword === ADMIN_PASSWORD;
+    const isAdmin = (ADMIN_PASSWORD && adminPassword === ADMIN_PASSWORD) || (ADMIN_PASSWORD_ROMEO && adminPassword === ADMIN_PASSWORD_ROMEO);
 
     // Check if update contains admin-only fields
     const hasAdminFields = ADMIN_ONLY_FIELDS.some(f => update[f] !== undefined) || update.adminAction;
@@ -55,7 +69,7 @@ export default async (req) => {
       return new Response(JSON.stringify({ error: 'Unauthorized — admin required for this update' }), { status: 401, headers });
     }
 
-    // Non-admin updates: only allow specific step keys (form2848Signed, planApproved)
+    // Non-admin updates: only allow specific step keys
     if (!isAdmin && update.steps) {
       const allowedStepKeys = ['form2848Signed', 'form2848Data', 'planApproved'];
       const attemptedKeys = Object.keys(update.steps);
@@ -74,13 +88,17 @@ export default async (req) => {
         if (raw) existing = typeof raw === 'string' ? JSON.parse(raw) : raw;
       } catch {}
 
+      const previousStatus = normalizeStatus(existing.status || 'paid');
+      const newStatus = update.status !== undefined ? normalizeStatus(update.status) : previousStatus;
+      const statusChanged = isAdmin && update.status !== undefined && newStatus !== previousStatus;
+
       const updated = {
         ...existing,
         email: key,
         updatedAt: new Date().toISOString(),
         steps: { ...(existing.steps || {}), ...(update.steps || {}) },
         ...(isAdmin ? {
-          status:    update.status    !== undefined ? update.status    : existing.status    || 'paid',
+          status:    newStatus,
           name:      update.name      !== undefined ? update.name      : existing.name      || '',
           company:   update.company   !== undefined ? update.company   : existing.company   || '',
           phone:     update.phone     !== undefined ? update.phone     : existing.phone     || '',
@@ -88,7 +106,7 @@ export default async (req) => {
           notes:     update.notes     !== undefined ? update.notes     : existing.notes     || '',
           paidAt:    existing.paidAt  || update.paidAt || new Date().toISOString(),
         } : {
-          status:  existing.status  || 'paid',
+          status:  previousStatus,
           name:    existing.name    || '',
           company: existing.company || '',
           phone:   existing.phone   || '',
@@ -112,7 +130,28 @@ export default async (req) => {
         console.warn('[client-status] index update failed:', indexErr.message);
       }
 
-      return new Response(JSON.stringify({ ok: true, data: updated }), { status: 200, headers });
+      // Fire status-change email if status actually changed (admin-driven only)
+      let emailResult = null;
+      if (statusChanged) {
+        try {
+          const internalKey = Netlify.env.get('INTERNAL_FUNCTION_KEY');
+          // NOTE: Netlify.env.get('URL') is a build-time variable and is NOT reliably
+          // available inside serverless Functions at runtime. Hardcode the known
+          // production URL instead, with an optional override via env var for staging/testing.
+          const siteUrl = Netlify.env.get('SITE_URL_OVERRIDE') || 'https://irsresolutionservice.com';
+          const emailRes = await fetch(`${siteUrl}/.netlify/functions/status-email`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: key, name: updated.name, status: newStatus, internalKey }),
+          });
+          emailResult = await emailRes.json().catch(() => null);
+        } catch (emailErr) {
+          console.warn('[client-status] status email failed:', emailErr.message);
+          emailResult = { ok: false, note: emailErr.message };
+        }
+      }
+
+      return new Response(JSON.stringify({ ok: true, data: updated, emailResult }), { status: 200, headers });
 
     } catch (err) {
       return new Response(JSON.stringify({ error: err.message }), { status: 500, headers });
@@ -121,4 +160,3 @@ export default async (req) => {
 
   return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers });
 };
-

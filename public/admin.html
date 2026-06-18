@@ -570,11 +570,46 @@ let apw='',clients=[],filt='all',curTx='',curTxEmail='',curTxKey='';
 let allLeads=[], leadFilter='all';
 
 
-const SL={'paid':'Awaiting 2848','2848_signed':'2848 Signed','2848_approved':'2848 Approved','transcripts_pulled':'Transcripts Pulled','plan_sent':'Plan Sent','plan_approved':'Plan Approved','filed':'Filed','resolved':'Resolved'};
-const SC={'paid':'sp','2848_signed':'s8','2848_approved':'sa','transcripts_pulled':'st','plan_sent':'sps','plan_approved':'spa','filed':'sf','resolved':'sr'};
+const SL={
+  paid:'Awaiting 2848',
+  '2848_signed':'2848 Signed by Client',
+  '2848_submitted':'2848 Submitted to IRS',
+  '2848_approved':'2848 Approved — Pulling Transcripts',
+  transcripts_pulled:'Transcripts Pulled — Analysis Started',
+  analyzing:'Analyzing Records',
+  preparing_resolution:'Preparing Resolution',
+  resolution_ready:'Resolution Ready',
+  filed:'Filed — Awaiting IRS',
+  resolved:'Resolved',
+};
+const SC={
+  paid:'sp',
+  '2848_signed':'s8',
+  '2848_submitted':'ss',
+  '2848_approved':'sa',
+  transcripts_pulled:'st',
+  analyzing:'sn',
+  preparing_resolution:'spp',
+  resolution_ready:'sps',
+  filed:'sf',
+  resolved:'sr',
+};
+// Client-facing explanation shown alongside each status in the status changer
+const STATUS_EXPLAIN={
+  paid:"Client needs to log in and sign Form 2848.",
+  '2848_signed':"Client signed — ready for Romeo's team to submit to the IRS.",
+  '2848_submitted':"Submitted to IRS — typically 2–5 business days to process. Client gets an estimated approval date.",
+  '2848_approved':"IRS approved — Romeo is about to pull transcripts.",
+  transcripts_pulled:"Transcripts pulled successfully — full analysis has started.",
+  analyzing:"Romeo is analyzing records in detail; may reach out with questions.",
+  preparing_resolution:"Romeo is drafting letters/forms for the resolution.",
+  resolution_ready:"Resolution ready — Romeo will walk client through it before filing.",
+  filed:"Filed with IRS — awaiting confirmation, can take a few weeks.",
+  resolved:"Case fully resolved.",
+};
 const STEPS=[
   {k:'form2848Signed',l:'Form 2848 signed by client'},
-  
+  {k:'submittedToIRS',l:'Form 2848 submitted to IRS'},
   {k:'cafActive',l:'IRS approved Form 2848'},
   {k:'transcriptsPulled',l:'IRS transcripts pulled'},
   {k:'planSent',l:'Resolution plan sent to client'},
@@ -643,7 +678,8 @@ function goPage(n,el){
   if(n==='community')loadCommunity();
 }
 
-function needsAction(c){return['2848_signed','2848_approved','transcripts_pulled','plan_approved','filed'].includes(c.status);}
+function normalizeStatus(s){const m={'8821_signed':'2848_signed','8821_approved':'2848_approved','caf_pending':'2848_submitted','caf_active':'2848_approved','plan_sent':'resolution_ready','plan_approved':'filed'};return m[s]||s;}
+function needsAction(c){return['2848_signed','2848_approved','transcripts_pulled','resolution_ready','filed'].includes(normalizeStatus(c.status));}
 
 async function loadClients(){
   try{
@@ -747,13 +783,6 @@ function renderDetail(c){
   <div class="dp">
     <div class="dp-h">📊 Resolution Steps</div>
     ${stepsHtml}
-    <div style="margin-top:.875rem">
-      <span class="lbl">Override Status</span>
-      <div style="display:flex;gap:.4rem;align-items:center;margin-top:3px">
-        <select class="status-sel" id="so-${esc(c.email)}">${Object.entries(SL).map(([v,l])=>`<option value="${v}"${c.status===v?' selected':''}>${l}</option>`).join('')}</select>
-        <button class="btn btn-gold btn-sm" onclick="overrideStatus('${esc(c.email)}')">Save</button>
-      </div>
-    </div>
   </div>
   <div class="dp">
     <div class="dp-h">📋 Form 2848</div>
@@ -765,17 +794,20 @@ function renderDetail(c){
     </div>`:''}
   </div>
   <div class="dp">
-    <div class="dp-h">⚡ Actions</div>
+    <div class="dp-h">⚡ Status &amp; Actions</div>
+    <div style="background:var(--cream-warm);border-radius:3px;padding:.625rem .75rem;margin-bottom:.75rem;font-size:12px;color:var(--ink-soft);line-height:1.6">
+      <strong style="color:var(--ink)">Current:</strong> ${STATUS_EXPLAIN[normalizeStatus(c.status)]||'—'}
+    </div>
     <div class="btn-row">${actBtns}</div>
     <div style="margin-top:.875rem">
       <span class="lbl">Danger Zone</span>
-      <button class="btn btn-sm" style="margin-top:3px;background:var(--red-light);color:var(--red);border:1px solid #e8b0b0" onclick="deleteClient('${esc(c.email)}','${esc(c.name||c.email)}')">🗑 Delete Client</button>
+      <button class="btn btn-sm" style="margin-top:3px;background:var(--red-light);color:var(--red);border:1px solid #e8b0b0" onclick="deleteClient('${esc(c.email)}','${jsEsc(c.name||c.email)}')">🗑 Delete Client</button>
     </div>
     <div style="margin-top:.875rem">
       <span class="lbl">View & Access</span>
       <div style="display:flex;gap:.4rem;margin-top:3px;flex-wrap:wrap">
         <button class="btn btn-ink btn-sm" onclick="viewAsClient('${esc(c.email)}')">👁 View Client Dashboard</button>
-        <button class="btn btn-ghost btn-sm" onclick="resendInvite('${esc(c.email)}','${esc(c.name||'')}')">📧 Resend Invite Email</button>
+        <button class="btn btn-ghost btn-sm" onclick="resendInvite('${esc(c.email)}','${jsEsc(c.name||'')}')">📧 Resend Invite Email</button>
       </div>
     </div>
     <div style="margin-top:.875rem">
@@ -784,7 +816,7 @@ function renderDetail(c){
     </div>
     <div style="margin-top:.875rem">
       <span class="lbl">Email Client</span>
-      <button class="btn btn-ghost btn-sm" style="margin-top:3px" onclick="emailCl('${esc(c.email)}','${esc(c.name||'')}')">✉ Email</button>
+      <button class="btn btn-ghost btn-sm" style="margin-top:3px" onclick="emailCl('${esc(c.email)}','${jsEsc(c.name||'')}')">✉ Email</button>
     </div>
   </div>
   <div class="dp s2">
@@ -807,10 +839,24 @@ function renderDetail(c){
       }).join('');
     })()}
   </div>
+  <div class="dp s2">
+    <div class="dp-h">📁 Documents</div>
+    <div id="filesPanel-${esc(c.email)}">
+      <div style="font-size:12px;color:var(--ink-muted)">Loading…</div>
+    </div>
+    <div style="margin-top:.875rem;border-top:1px solid var(--cream-warm);padding-top:.75rem">
+      <span class="lbl">Upload Document</span>
+      <input type="file" id="fileInput-${esc(c.email)}" class="inp" style="margin-top:5px;padding:8px" onchange="uploadFile('${esc(c.email)}')">
+      <div id="uploadStatus-${esc(c.email)}" style="font-size:11px;color:var(--ink-muted);margin-top:4px"></div>
+    </div>
+  </div>
   <div class="dp">
-    <div class="dp-h">📝 Notes</div>
-    <textarea class="notes-ta" id="nt-${esc(c.email)}">${esc(c.notes||'')}</textarea>
-    <button class="btn btn-ghost btn-sm" style="margin-top:.4rem" onclick="saveNotes('${esc(c.email)}')">Save</button>
+    <div class="dp-h">📝 Case Notes</div>
+    <div id="notesPanel-${esc(c.email)}" style="max-height:280px;overflow-y:auto;margin-bottom:.75rem">
+      <div style="font-size:12px;color:var(--ink-muted)">Loading…</div>
+    </div>
+    <textarea class="notes-ta" id="newNote-${esc(c.email)}" placeholder="Add a note about this case…" style="min-height:60px"></textarea>
+    <button class="btn btn-gold btn-sm" style="margin-top:.4rem" onclick="addNote('${esc(c.email)}')">Add Note</button>
   </div>
   <div class="dp s3" style="background:var(--cream-warm)">
     <div class="dp-h">👤 Client Info (editable)</div>
@@ -826,31 +872,190 @@ function renderDetail(c){
 }
 
 function getActBtns(c){
-  const e=esc(c.email),s=c.status,b=[];
-  if(s==='2848_signed')   b.push(`<button class="btn btn-gold btn-sm" onclick="adv('${e}','2848_approved','cafActive')">✓ IRS Approved 2848</button>`);
-  
-  if(s==='2848_approved')    b.push(`<button class="btn btn-gold btn-sm" onclick="adv('${e}','transcripts_pulled','transcriptsPulled')">✓ Transcripts Pulled</button>`);
-  if(s==='transcripts_pulled') b.push(`<button class="btn btn-gold btn-sm" onclick="adv('${e}','plan_sent','planSent')">✓ Plan Sent</button>`);
-  if(s==='plan_approved') b.push(`<button class="btn btn-gold btn-sm" onclick="adv('${e}','filed','documentsFiled')">✓ Docs Filed</button>`);
-  if(s==='filed')         b.push(`<button class="btn btn-green btn-sm" onclick="adv('${e}','resolved','resolved')">✓ Mark Resolved</button>`);
-  if(s==='paid')          b.push(`<span style="font-size:11px;color:var(--ink-muted)">Waiting for Form 2848</span>`);
-  if(s==='plan_sent')     b.push(`<span style="font-size:11px;color:var(--ink-muted)">Waiting for plan approval</span>`);
-  return b.join('');
+  const e=esc(c.email),s=normalizeStatus(c.status);
+  const order=['paid','2848_signed','2848_submitted','2848_approved','transcripts_pulled','analyzing','preparing_resolution','resolution_ready','filed','resolved'];
+  const idx=order.indexOf(s);
+  const next=idx>=0&&idx<order.length-1?order[idx+1]:null;
+  let html=`<div style="display:flex;flex-direction:column;gap:.5rem;width:100%">`;
+  html+=`<select class="inp" id="statusSel-${e}" style="font-size:13px" onchange="document.getElementById('statusBtn-${e}').disabled=(this.value===''||this.value==='${s}')">
+    <option value="">— Change status —</option>
+    ${order.map(k=>`<option value="${k}" ${k===s?'selected':''}>${SL[k]}</option>`).join('')}
+  </select>`;
+  html+=`<button class="btn btn-gold btn-sm" id="statusBtn-${e}" disabled onclick="changeStatusFromSelect('${e}')">Update Status &amp; Notify Client</button>`;
+  if(next) html+=`<div style="font-size:11px;color:var(--ink-muted)">Quick advance: <a href="#" onclick="event.preventDefault();document.getElementById('statusSel-${e}').value='${next}';document.getElementById('statusBtn-${e}').disabled=false;changeStatusFromSelect('${e}')" style="color:var(--gold-dim);font-weight:600">${SL[next]} →</a></div>`;
+  html+=`</div>`;
+  return html;
+}
+
+async function changeStatusFromSelect(email){
+  const sel=document.getElementById('statusSel-'+email);
+  const newStatus=sel.value;
+  if(!newStatus)return;
+  const btn=document.getElementById('statusBtn-'+email);
+  btn.disabled=true;btn.textContent='Updating…';
+  try{
+    const r=await fetch('/.netlify/functions/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,adminPassword:apw,update:{adminAction:true,status:newStatus}})});
+    const d=await r.json();
+    if(!r.ok)throw new Error(d.error||'Update failed');
+    let msg='✓ Status updated to "'+SL[newStatus]+'"';
+    if(d.emailResult && d.emailResult.ok) msg+=' — client notified by email ✓';
+    else if(d.emailResult && !d.emailResult.ok) msg+=' (note: '+(d.emailResult.note||'email may not have sent')+')';
+    toast(msg);
+    await loadClients();
+  }catch(err){
+    toast('Error: '+err.message,true);
+    btn.disabled=false;btn.textContent='Update Status & Notify Client';
+  }
 }
 
 function toggleRow(email){
   const row=document.getElementById('row-'+email),det=document.getElementById('det-'+email),open=row.classList.contains('open');
   document.querySelectorAll('.trow.open').forEach(r=>r.classList.remove('open'));
   document.querySelectorAll('.trow-detail').forEach(d=>d.style.display='none');
-  if(!open){row.classList.add('open');det.style.display='block';}
+  if(!open){
+    row.classList.add('open');det.style.display='block';
+    loadFiles(email);
+    loadNotes(email);
+  }
 }
 
-async function adv(email,status,stepKey){await upd(email,{status,steps:{[stepKey]:new Date().toISOString()}});}
-async function overrideStatus(email){const v=document.getElementById('so-'+email).value;await upd(email,{status:v});toast('Status → '+SL[v]);}
-async function saveNotes(email){await upd(email,{notes:document.getElementById('nt-'+email).value});toast('Notes saved');}
 async function saveInfo(email){
   await upd(email,{name:document.getElementById('ci-n-'+email).value,company:document.getElementById('ci-co-'+email).value,phone:document.getElementById('ci-ph-'+email).value,sessionId:document.getElementById('ci-sid-'+email).value});
   toast('Client info saved');
+}
+
+// ── DOCUMENTS ────────────────────────────────────────────────────────────────
+async function loadFiles(email){
+  const panel=document.getElementById('filesPanel-'+email);
+  if(!panel)return;
+  try{
+    const r=await fetch(`/.netlify/functions/client-files?email=${encodeURIComponent(email)}&password=${encodeURIComponent(apw)}`);
+    const d=await r.json();
+    if(!r.ok)throw new Error(d.error||'Failed to load files');
+    renderFiles(email,d.files||[]);
+  }catch(e){
+    panel.innerHTML=`<div style="font-size:12px;color:var(--red)">Error loading files: ${esc(e.message)}</div>`;
+  }
+}
+
+function renderFiles(email,files){
+  const panel=document.getElementById('filesPanel-'+email);
+  if(!files.length){panel.innerHTML=`<div style="font-size:12px;color:var(--ink-muted)">No documents yet.</div>`;return;}
+  panel.innerHTML=files.map(f=>{
+    const sizeKb=(f.size/1024).toFixed(1);
+    const date=new Date(f.uploadedAt).toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'});
+    const auto=f.source==='auto';
+    return `<div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;background:${auto?'var(--green-light)':'var(--white)'};border:1px solid ${auto?'#b8d9c3':'var(--cream-dark)'};border-radius:3px;padding:.625rem .75rem;margin-bottom:.5rem">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${auto?'🔒 ':'📄 '}${esc(f.filename)}</div>
+        <div style="font-size:11px;color:var(--ink-muted);margin-top:2px">${sizeKb}KB · ${esc(f.uploadedBy||'Admin')} · ${date}</div>
+      </div>
+      <div style="display:flex;gap:5px;flex-shrink:0">
+        <button class="btn btn-ghost btn-sm" onclick="downloadFile('${esc(email)}','${esc(f.fileId)}','${jsEsc(f.filename)}')">⬇</button>
+        <button class="btn btn-sm" style="background:var(--red-light);color:var(--red)" onclick="deleteFile('${esc(email)}','${esc(f.fileId)}','${jsEsc(f.filename)}')">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function uploadFile(email){
+  const input=document.getElementById('fileInput-'+email);
+  const statusEl=document.getElementById('uploadStatus-'+email);
+  const file=input.files[0];
+  if(!file)return;
+  if(file.size>4*1024*1024){statusEl.textContent='File too large — max 4MB.';statusEl.style.color='var(--red)';return;}
+  statusEl.textContent='Uploading…';statusEl.style.color='var(--ink-muted)';
+  try{
+    const base64Data=await new Promise((resolve,reject)=>{
+      const reader=new FileReader();
+      reader.onload=()=>resolve(reader.result.split(',')[1]);
+      reader.onerror=reject;
+      reader.readAsDataURL(file);
+    });
+    const r=await fetch('/.netlify/functions/client-files',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,adminPassword:apw,filename:file.name,contentType:file.type,base64Data})});
+    const d=await r.json();
+    if(!r.ok)throw new Error(d.error||'Upload failed');
+    statusEl.textContent='✓ Uploaded';statusEl.style.color='var(--green)';
+    input.value='';
+    await loadFiles(email);
+    setTimeout(()=>{statusEl.textContent='';},2000);
+  }catch(e){
+    statusEl.textContent='Error: '+e.message;statusEl.style.color='var(--red)';
+  }
+}
+
+async function downloadFile(email,fileId,filename){
+  try{
+    const r=await fetch(`/.netlify/functions/client-files?email=${encodeURIComponent(email)}&fileId=${encodeURIComponent(fileId)}&password=${encodeURIComponent(apw)}`);
+    const d=await r.json();
+    if(!r.ok)throw new Error(d.error||'Download failed');
+    const link=document.createElement('a');
+    link.href=`data:${d.contentType};base64,${d.base64Data}`;
+    link.download=filename;
+    document.body.appendChild(link);link.click();document.body.removeChild(link);
+  }catch(e){toast('Download error: '+e.message,true);}
+}
+
+async function deleteFile(email,fileId,filename){
+  if(!confirm(`Delete "${filename}"? This cannot be undone.`))return;
+  try{
+    const r=await fetch('/.netlify/functions/client-files',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,fileId,adminPassword:apw})});
+    if(!r.ok)throw new Error((await r.json()).error||'Delete failed');
+    toast('File deleted');
+    await loadFiles(email);
+  }catch(e){toast('Error: '+e.message,true);}
+}
+
+// ── NOTES ────────────────────────────────────────────────────────────────────
+async function loadNotes(email){
+  const panel=document.getElementById('notesPanel-'+email);
+  if(!panel)return;
+  try{
+    const r=await fetch(`/.netlify/functions/client-notes?email=${encodeURIComponent(email)}&password=${encodeURIComponent(apw)}`);
+    const d=await r.json();
+    if(!r.ok)throw new Error(d.error||'Failed to load notes');
+    renderNotes(email,d.notes||[]);
+  }catch(e){
+    panel.innerHTML=`<div style="font-size:12px;color:var(--red)">Error loading notes: ${esc(e.message)}</div>`;
+  }
+}
+
+function renderNotes(email,notes){
+  const panel=document.getElementById('notesPanel-'+email);
+  if(!notes.length){panel.innerHTML=`<div style="font-size:12px;color:var(--ink-muted)">No notes yet.</div>`;return;}
+  panel.innerHTML=notes.map(n=>{
+    const date=new Date(n.createdAt).toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'});
+    return `<div style="background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:.625rem .75rem;margin-bottom:.5rem">
+      <div style="font-size:13px;color:var(--ink-soft);line-height:1.6;white-space:pre-wrap">${esc(n.text)}</div>
+      <div style="font-size:11px;color:var(--ink-muted);margin-top:.4rem;display:flex;justify-content:space-between;align-items:center">
+        <span><strong style="color:var(--gold-dim)">${esc(n.author)}</strong> · ${date}</span>
+        <a href="#" onclick="event.preventDefault();deleteNote('${esc(email)}','${esc(n.id)}')" style="color:var(--red);font-size:11px">delete</a>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function addNote(email){
+  const textarea=document.getElementById('newNote-'+email);
+  const text=textarea.value.trim();
+  if(!text)return;
+  try{
+    const r=await fetch('/.netlify/functions/client-notes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,text,adminPassword:apw})});
+    if(!r.ok)throw new Error((await r.json()).error||'Failed to add note');
+    textarea.value='';
+    await loadNotes(email);
+    toast('Note added');
+  }catch(e){toast('Error: '+e.message,true);}
+}
+
+async function deleteNote(email,noteId){
+  if(!confirm('Delete this note?'))return;
+  try{
+    const r=await fetch('/.netlify/functions/client-notes',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,noteId,adminPassword:apw})});
+    if(!r.ok)throw new Error((await r.json()).error||'Delete failed');
+    toast('Note deleted');
+    await loadNotes(email);
+  }catch(e){toast('Error: '+e.message,true);}
 }
 
 async function upd(email,update){
@@ -887,9 +1092,13 @@ async function addClient(){
   const res=document.getElementById('ac-result');
   try{
     // 1. Create Blobs record
-    const inviteNote = 'Invite email sent — awaiting account creation';
-    const r=await fetch('/.netlify/functions/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,adminPassword:apw,update:{adminAction:true,name:n,company:co,phone:ph,status:s,notes:no||inviteNote,paidAt:new Date().toISOString()}})});
+    const r=await fetch('/.netlify/functions/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,adminPassword:apw,update:{adminAction:true,name:n,company:co,phone:ph,status:s,paidAt:new Date().toISOString()}})});
     if(!r.ok)throw new Error((await r.json()).error);
+
+    // 1b. Save initial note if entered
+    if(no){
+      try{ await fetch('/.netlify/functions/client-notes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,text:no,adminPassword:apw})}); }catch{}
+    }
 
     // 2. Send welcome email
     let identityMsg='';
@@ -1471,6 +1680,11 @@ document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>
 
 function toast(msg,err){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(err?'er':'ok');t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+// For strings embedded inside a single-quoted JS string literal within an onclick="..." attribute.
+// Must escape backslashes/quotes for JS FIRST, then HTML-escape the result for the attribute context —
+// otherwise a filename like "Romeo's Notes.pdf" breaks the onclick handler (browser decodes &#39; back to '
+// before parsing the attribute as JS, re-opening the string early and causing a syntax error).
+function jsEsc(s){return esc(String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,' ').replace(/\r/g,''));}
 </script>
 </body>
 </html>

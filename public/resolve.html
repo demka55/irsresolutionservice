@@ -559,82 +559,115 @@ const STEPS_DEF = [
     pendingNote: null,
   },
   {
+    id: 'submitted',
+    statusKey: '2848_submitted',
+    doneKey: 'submittedToIRS',
+    title: "Romeo submits your Form 2848 to the IRS",
+    desc: "Romeo and the team have submitted your signed Form 2848 to the IRS. This is handled entirely by our team — no action needed from you.",
+    actionType: 'waiting',
+    pendingNote: '⏱ The IRS typically takes 2–5 business days to process and approve.',
+  },
+  {
     id: 'irsApproval',
     statusKey: '2848_approved',
     doneKey: 'cafActive',
-    title: 'IRS processes and approves your Form 2848',
-    desc: "Romeo's team submits your signed Form 2848 to the IRS. The IRS then activates Romeo's access to your records. This is handled entirely by our team — no action needed from you.",
+    title: 'IRS approves Form 2848 — Romeo pulls your transcripts',
+    desc: "Good news — the IRS has approved your Form 2848. Romeo is about to pull your tax transcripts directly from the IRS.",
     actionType: 'waiting',
-    pendingNote: '⏱ Romeo submits within 1 business day. IRS approval takes 2–5 business days.',
+    pendingNote: '⏱ Transcript retrieval typically happens within 1–2 business days of approval.',
   },
   {
     id: 'transcripts',
     statusKey: 'transcripts_pulled',
     doneKey: 'transcriptsPulled',
-    title: 'Romeo pulls and reviews your IRS transcripts',
-    desc: 'Romeo retrieves your official IRS transcripts, cross-references every figure, and identifies any errors or discrepancies. He then builds your personalized resolution plan.',
+    title: 'Transcripts pulled — analysis started',
+    desc: 'Romeo and the team have successfully and securely pulled your tax transcripts from the IRS, and have started a full analysis of your case.',
     actionType: 'waiting',
-    pendingNote: '⏱ Review and plan creation takes 3–5 business days.',
+    pendingNote: '⏱ Initial analysis typically takes 3–5 business days.',
   },
   {
-    id: 'planSent',
-    statusKey: 'plan_sent',
-    doneKey: 'planSent',
-    title: 'Your resolution plan is ready',
-    desc: 'Romeo has reviewed your situation and prepared a customized resolution plan. Review it carefully and approve or request changes.',
-    actionType: 'approvePlan',
+    id: 'analyzing',
+    statusKey: 'analyzing',
+    doneKey: 'analyzing',
+    title: 'Romeo is analyzing your tax records',
+    desc: 'Romeo is reviewing your records in detail. If anything needs clarification, he will reach out to you directly with questions.',
+    actionType: 'waiting',
     pendingNote: null,
   },
   {
-    id: 'planApproved',
-    statusKey: 'plan_approved',
-    doneKey: 'planApproved',
-    title: 'Plan approved — Romeo files everything',
-    desc: "You've approved the plan. Romeo's team is now preparing and filing all necessary documents with the IRS. You don't need to write a single letter or make a single call.",
+    id: 'preparing',
+    statusKey: 'preparing_resolution',
+    doneKey: 'preparingResolution',
+    title: 'Preparing your resolution',
+    desc: 'Romeo is now preparing a resolution for your case — this includes drafting letters, forms, and other documents needed to resolve your IRS matter.',
     actionType: 'waiting',
-    pendingNote: '⏱ Filing and confirmation typically takes 5–10 business days.',
+    pendingNote: null,
+  },
+  {
+    id: 'resolutionReady',
+    statusKey: 'resolution_ready',
+    doneKey: 'resolutionReady',
+    title: 'Your resolution is ready',
+    desc: 'Romeo will be in touch shortly to walk you through everything and confirm details before filing with the IRS in the next few days.',
+    actionType: 'waiting',
+    pendingNote: null,
   },
   {
     id: 'filed',
     statusKey: 'filed',
     doneKey: 'documentsFiled',
     title: 'Documents filed — awaiting IRS confirmation',
-    desc: 'All documents have been filed with the IRS. We are waiting for confirmation of receipt and processing.',
+    desc: 'Your resolution documents have been filed with the IRS. We are now waiting for confirmation and processing.',
     actionType: 'waiting',
-    pendingNote: '⏱ IRS confirmation can take 2–4 weeks.',
+    pendingNote: '⏱ IRS confirmation can take a few weeks.',
   },
   {
     id: 'resolved',
     statusKey: 'resolved',
     doneKey: 'resolved',
     title: '🎉 Your case is resolved',
-    desc: 'Congratulations — your IRS situation has been fully resolved. Romeo and his team have completed all filings and received confirmation from the IRS.',
+    desc: 'Congratulations — your IRS situation has been fully resolved. Thank you for trusting us with your case.',
     actionType: 'done',
     pendingNote: null,
   },
 ];
 
-const STATUS_ORDER = ['paid','2848_signed','2848_approved','transcripts_pulled','plan_sent','plan_approved','filed','resolved'];
+const STATUS_ORDER = ['paid','2848_signed','2848_submitted','2848_approved','transcripts_pulled','analyzing','preparing_resolution','resolution_ready','filed','resolved'];
+
+// Backward compatibility — map old/legacy statuses to current ones
+function normalizeStatus(status) {
+  const map = {
+    '8821_signed': '2848_signed',
+    '8821_approved': '2848_approved',
+    caf_pending: '2848_submitted',
+    caf_active: '2848_approved',
+    plan_sent: 'resolution_ready',
+    plan_approved: 'filed',
+  };
+  return map[status] || status;
+}
 
 function getStatusIndex(status) {
-  return STATUS_ORDER.indexOf(status);
+  return STATUS_ORDER.indexOf(normalizeStatus(status));
 }
 
 function renderSteps() {
   if (!window._state || !window._state.clientStatus) return;
   const clientStatus = window._state.clientStatus;
-  const status = clientStatus.status || 'paid';
+  const status = normalizeStatus(clientStatus.status || 'paid');
   const steps = clientStatus.steps || {};
   const statusIdx = getStatusIndex(status);
 
   // Update status banner
   const bannerMessages = {
     paid: { msg: 'Action required — please complete Step 1 below', cls: 'warning' },
-    '2848_signed': { msg: 'Form 2848 received ✓ — our team will submit it to the IRS within 1 business day', cls: 'active' },
+    '2848_signed': { msg: 'Form 2848 received ✓ — our team will submit it to the IRS shortly', cls: 'active' },
+    '2848_submitted': { msg: 'Form 2848 submitted to the IRS — typically approved in 2–5 business days', cls: 'active' },
     '2848_approved': { msg: 'IRS approved your Form 2848 — Romeo is now pulling your transcripts', cls: 'active' },
-    transcripts_pulled: { msg: 'Transcripts received — resolution plan being prepared', cls: 'active' },
-    plan_sent: { msg: 'Action required — your resolution plan is ready for your review below', cls: 'warning' },
-    plan_approved: { msg: 'Plan approved — Romeo is filing your documents with the IRS', cls: 'active' },
+    transcripts_pulled: { msg: 'Transcripts pulled successfully — Romeo has started analyzing your case', cls: 'active' },
+    analyzing: { msg: 'Romeo is analyzing your tax records in detail', cls: 'active' },
+    preparing_resolution: { msg: 'Romeo is preparing your resolution — drafting letters and forms', cls: 'active' },
+    resolution_ready: { msg: 'Your resolution is ready — Romeo will be in touch shortly', cls: 'warning' },
     filed: { msg: 'Documents filed — awaiting IRS confirmation', cls: 'active' },
     resolved: { msg: 'Your case is fully resolved ✓', cls: 'success' },
   };

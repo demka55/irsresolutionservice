@@ -18,7 +18,7 @@ export default async (req) => {
   try { body = await req.json(); }
   catch { return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers }); }
 
-  const { email, name, formData } = body;
+  const { email, name, formData, signatureDataUrl } = body;
   if (!email || !name || !formData) {
     return new Response(JSON.stringify({ error: 'Missing required fields' }), { status: 400, headers });
   }
@@ -68,6 +68,80 @@ export default async (req) => {
     return new Response(JSON.stringify({ error: 'Failed to save: ' + err.message }), { status: 500, headers });
   }
 
+  // Save a record of the signed Form 2848 into the client's document folder.
+  // Mirrors the storage pattern in client-files.mjs exactly: full record under
+  // "{email}:{fileId}" and a lightweight metadata entry appended to "__meta__:{email}"
+  // so it shows up instantly in admin's file list without re-fetching the full payload.
+  try {
+    const filesStore = getStore('client-files');
+
+    async function appendFileMeta(key, metaRecord) {
+      let metaIndex = [];
+      try {
+        const rawMeta = await filesStore.get(`__meta__:${key}`);
+        if (rawMeta) metaIndex = typeof rawMeta === 'string' ? JSON.parse(rawMeta) : rawMeta;
+      } catch {}
+      metaIndex.push(metaRecord);
+      await filesStore.set(`__meta__:${key}`, JSON.stringify(metaIndex));
+    }
+
+    const fileId = `f${Date.now()}-2848`;
+    const summaryText = `IRS FORM 2848 — POWER OF ATTORNEY AND DECLARATION OF REPRESENTATIVE
+Signed by: ${formData.taxpayerName}
+SSN (last 4): ***-**-${formData.ssnLast4}
+Date of Birth: ${formData.dob || '—'}
+Address: ${formData.address}
+Tax Years Authorized: ${formData.taxYears}
+Filing Status: ${formData.filingStatus || '—'}
+Phone: ${formData.phone || '—'}
+Signed At: ${new Date().toLocaleString()}
+Email: ${email}
+`;
+    const base64Summary = Buffer.from(summaryText, 'utf-8').toString('base64');
+
+    const fileRecord = {
+      fileId,
+      filename: `Form-2848-${formData.taxpayerName.replace(/\s+/g,'-')}-${new Date().toISOString().slice(0,10)}.txt`,
+      contentType: 'text/plain',
+      size: base64Summary.length,
+      base64Data: base64Summary,
+      uploadedAt: new Date().toISOString(),
+      uploadedBy: 'System (client signature)',
+      source: 'auto',
+    };
+
+    await filesStore.set(`${key}:${fileId}`, JSON.stringify(fileRecord));
+    await appendFileMeta(key, {
+      fileId: fileRecord.fileId, filename: fileRecord.filename, contentType: fileRecord.contentType,
+      size: fileRecord.size, uploadedAt: fileRecord.uploadedAt, uploadedBy: fileRecord.uploadedBy, source: fileRecord.source,
+    });
+
+    // Also save the signature image if provided
+    if (signatureDataUrl && signatureDataUrl.startsWith('data:image')) {
+      const sigFileId = `f${Date.now()}-signature`;
+      const sigBase64 = signatureDataUrl.split(',')[1];
+      const sigRecord = {
+        fileId: sigFileId,
+        filename: `Signature-${formData.taxpayerName.replace(/\s+/g,'-')}-${new Date().toISOString().slice(0,10)}.png`,
+        contentType: 'image/png',
+        size: sigBase64.length,
+        base64Data: sigBase64,
+        uploadedAt: new Date().toISOString(),
+        uploadedBy: 'System (client signature)',
+        source: 'auto',
+      };
+      await filesStore.set(`${key}:${sigFileId}`, JSON.stringify(sigRecord));
+      await appendFileMeta(key, {
+        fileId: sigRecord.fileId, filename: sigRecord.filename, contentType: sigRecord.contentType,
+        size: sigRecord.size, uploadedAt: sigRecord.uploadedAt, uploadedBy: sigRecord.uploadedBy, source: sigRecord.source,
+      });
+    }
+
+    console.log('[submit-2848] saved file record for', key);
+  } catch(fileErr) {
+    console.warn('[submit-2848] file save failed (non-fatal):', fileErr.message);
+  }
+
   // Send emails
   if (resendKey) {
     const formHtml = `
@@ -81,7 +155,7 @@ export default async (req) => {
         <tr><td style="padding:8px 12px;background:#f5f0e8;font-weight:600">Signed at</td><td style="padding:8px 12px">${new Date().toLocaleString()}</td></tr>
       </table>
       <p style="margin-top:16px;font-size:13px;color:#7a6e60">
-        Next: Submit to IRS, then mark "IRS Approved 8821" in <a href="https://irsresolutionservice.com/admin">admin</a>.
+        Next: Submit to IRS, then mark "2848 Submitted to IRS" in <a href="https://irsresolutionservice.com/admin">admin</a>. The signed form has been saved to this client's document folder automatically.
       </p>`;
 
     try {
