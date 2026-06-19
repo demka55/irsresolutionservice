@@ -258,9 +258,15 @@ export default async (req) => {
 
       const accessToken = await getAccessToken({ clientId, privateKey, eservicesUser, jwkKid });
       const {
-        tin, taxpayerType, firstName, lastName,
+        tin: tinRaw, taxpayerType, firstName, lastName,
         businessName, formNumber, productType, taxYear, taxPeriod
       } = transcriptRequest;
+
+      // IRS expects TIN as digits only — strip dashes, spaces, or any other formatting
+      const tin = String(tinRaw || '').replace(/[^0-9]/g, '');
+      if (tin.length !== 9) {
+        return new Response(JSON.stringify({ error: `Invalid TIN: expected 9 digits, got ${tin.length} (after stripping non-digits from "${tinRaw}")` }), { status: 400, headers });
+      }
 
       const cafPayload = {
         cafNumber,
@@ -288,7 +294,22 @@ export default async (req) => {
 
       if (!tdsRes.ok) {
         const errData = await tdsRes.json().catch(() => ({}));
-        return new Response(JSON.stringify({ error: `TDS API error ${tdsRes.status}`, details: errData }), { status: tdsRes.status, headers });
+        return new Response(JSON.stringify({
+          error: `TDS API error ${tdsRes.status}`,
+          details: errData,
+          debugInfo: {
+            url: IRS_TDS_URL,
+            method: 'POST',
+            headersSent: { 'Authorization': `Bearer ${accessToken.substring(0, 12)}...(truncated)`, 'Content-Type': 'application/json' },
+            payloadSent: cafPayload,
+            rawTinReceived: tinRaw,
+            tinAfterStripping: tin,
+            tinLength: tin.length,
+            cafNumberUsed: cafNumber,
+            cafNumberLength: cafNumber.length,
+            environment: IRS_TDS_URL.includes('alt.') ? 'TEST (alt)' : 'PRODUCTION',
+          },
+        }), { status: tdsRes.status, headers });
       }
 
       const transcriptHtml = await tdsRes.text();
