@@ -133,21 +133,14 @@ async function getAccessToken({ clientId, privateKey, eservicesUser, jwkKid }) {
   // how the env var was pasted (single line, escaped \n, real newlines, etc.)
   const privKey = createPrivateKey(normalizePem(privateKey));
 
+  const clientClaims = { iss: clientId, sub: clientId, aud: IRS_TOKEN_URL, iat: now, exp, jti: randomUUID() };
+  const userClaims   = { iss: clientId, sub: eservicesUser, aud: IRS_TOKEN_URL, iat: now, exp, jti: randomUUID() };
+
   // Client JWT: both iss and sub = clientId
-  const clientJwt = buildJwt(privKey, {
-    iss: clientId, sub: clientId,
-    aud: IRS_TOKEN_URL,
-    iat: now, exp,
-    jti: randomUUID(),
-  }, jwkKid);
+  const clientJwt = buildJwt(privKey, clientClaims, jwkKid);
 
   // User JWT: iss = clientId, sub = eServices user ID (from A2A letter)
-  const userJwt = buildJwt(privKey, {
-    iss: clientId, sub: eservicesUser,
-    aud: IRS_TOKEN_URL,
-    iat: now, exp,
-    jti: randomUUID(),
-  }, jwkKid);
+  const userJwt = buildJwt(privKey, userClaims, jwkKid);
 
   const params = new URLSearchParams({
     grant_type:             'urn:ietf:params:oauth:grant-type:jwt-bearer',
@@ -164,7 +157,18 @@ async function getAccessToken({ clientId, privateKey, eservicesUser, jwkKid }) {
 
   if (!tokenRes.ok) {
     const err = await tokenRes.json().catch(() => ({}));
-    throw new Error(`IRS auth failed ${tokenRes.status}: ${JSON.stringify(err)}`);
+    // Include the exact decoded JWT claims that were sent (no secrets — just claims + header)
+    // so failures can be diagnosed precisely instead of guessing.
+    const debugInfo = {
+      clientJwtHeader: { alg: 'RS256', kid: jwkKid },
+      clientJwtClaims: clientClaims,
+      userJwtHeader: { alg: 'RS256', kid: jwkKid },
+      userJwtClaims: userClaims,
+      tokenUrl: IRS_TOKEN_URL,
+    };
+    const e = new Error(`IRS auth failed ${tokenRes.status}: ${JSON.stringify(err)}`);
+    e.debugInfo = debugInfo;
+    throw e;
   }
 
   const tokenData = await tokenRes.json();
@@ -327,6 +331,6 @@ export default async (req) => {
 
   } catch (err) {
     console.error('[IRS Transcript]', err.message);
-    return new Response(JSON.stringify({ error: err.message }), { status: 500, headers });
+    return new Response(JSON.stringify({ error: err.message, debugInfo: err.debugInfo || null }), { status: 500, headers });
   }
 };

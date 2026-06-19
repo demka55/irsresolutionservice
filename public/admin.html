@@ -1271,9 +1271,10 @@ async function pullTranscript(){
     if(!r.ok){
       // Show full error detail, not just the top-level message — surfaces the actual IRS error_code/error_description
       const detailStr = d.details ? '<br><span style="font-size:11px;opacity:.85">' + esc(typeof d.details === 'string' ? d.details : JSON.stringify(d.details)) + '</span>' : '';
+      const debugStr = d.debugInfo ? `<details style="margin-top:.5rem"><summary style="cursor:pointer;font-size:11px;color:var(--red)">Show JWT claims sent (debug)</summary><pre style="font-size:10px;white-space:pre-wrap;background:#fff;border-radius:3px;padding:.5rem;margin-top:.4rem">${esc(JSON.stringify(d.debugInfo,null,2))}</pre></details>` : '';
       res.innerHTML=`<div style="background:var(--red-light);border:1px solid #e8b0b0;border-radius:4px;padding:.75rem .875rem">
         <span style="color:var(--red);font-weight:600">❌ Transcript pull failed</span><br>
-        <span style="color:var(--red);font-size:12px">${esc(d.error||'IRS API error')}</span>${detailStr}
+        <span style="color:var(--red);font-size:12px">${esc(d.error||'IRS API error')}</span>${detailStr}${debugStr}
       </div>`;
     }
     else{
