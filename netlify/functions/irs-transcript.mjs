@@ -22,6 +22,24 @@ function base64UrlEncodeBuffer(buf) {
     .replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
 }
 
+// Normalizes a PEM private key regardless of how it was pasted into the env var —
+// handles real newlines, a single line with no breaks, literal "\n" escape sequences,
+// or any mix of these. Always produces a correctly formatted, parseable PEM.
+function normalizePem(raw) {
+  let cleaned = String(raw || '').trim();
+  // Convert literal backslash-n (2 chars: \ and n) into real newlines, in case the
+  // env var was pasted with escaped newlines instead of actual line breaks
+  cleaned = cleaned.replace(/\\n/g, '\n');
+  // Strip the header/footer markers and ALL remaining whitespace from the body
+  cleaned = cleaned
+    .replace(/-----BEGIN PRIVATE KEY-----/g, '')
+    .replace(/-----END PRIVATE KEY-----/g, '')
+    .replace(/\s+/g, '');
+  // Re-wrap the base64 body at the standard PEM line width (64 chars)
+  const lines = cleaned.match(/.{1,64}/g) || [];
+  return '-----BEGIN PRIVATE KEY-----\n' + lines.join('\n') + '\n-----END PRIVATE KEY-----\n';
+}
+
 function buildJwt(privateKey, claims, kid) {
   const header         = { alg: 'RS256', kid };
   const encodedHeader  = base64UrlEncode(JSON.stringify(header));
@@ -37,8 +55,9 @@ async function getAccessToken({ clientId, privateKey, eservicesUser, jwkKid }) {
   const now = Math.floor(Date.now() / 1000);
   const exp = now + (15 * 60);
 
-  // Parse the PEM key once — createPrivateKey handles PKCS8 PEM directly
-  const privKey = createPrivateKey(privateKey);
+  // Parse the PEM key once — normalizePem ensures correct formatting regardless of
+  // how the env var was pasted (single line, escaped \n, real newlines, etc.)
+  const privKey = createPrivateKey(normalizePem(privateKey));
 
   // Client JWT: both iss and sub = clientId
   const clientJwt = buildJwt(privKey, {
@@ -122,6 +141,7 @@ export default async (req) => {
   try {
     // ── Diagnostic check — safely reveals what's actually configured, no secrets exposed ──
     if (action === 'diagnose') {
+      const normalized = normalizePem(privateKey);
       const diag = {
         clientId_value: clientId,
         clientId_length: clientId.length,
@@ -129,20 +149,18 @@ export default async (req) => {
         eservicesUser_length: eservicesUser.length,
         jwkKid_value: jwkKid,
         cafNumber_length: cafNumber.length,
-        privateKey_length: privateKey.length,
-        privateKey_starts_with: privateKey.substring(0, 40),
-        privateKey_ends_with: privateKey.substring(privateKey.length - 40),
-        privateKey_has_real_newlines: privateKey.includes('\n'),
-        privateKey_newline_count: (privateKey.match(/\n/g) || []).length,
-        privateKey_parses: false,
-        privateKey_parse_error: null,
+        privateKey_raw_length: privateKey.length,
+        privateKey_raw_has_real_newlines: privateKey.includes('\n'),
+        privateKey_raw_newline_count: (privateKey.match(/\n/g) || []).length,
+        privateKey_normalized_parses: false,
+        privateKey_normalized_parse_error: null,
       };
 
       try {
-        createPrivateKey(privateKey);
-        diag.privateKey_parses = true;
+        createPrivateKey(normalized);
+        diag.privateKey_normalized_parses = true;
       } catch (parseErr) {
-        diag.privateKey_parse_error = parseErr.message;
+        diag.privateKey_normalized_parse_error = parseErr.message;
       }
 
       return new Response(JSON.stringify({ ok: true, diagnostic: diag }), { status: 200, headers });

@@ -790,8 +790,8 @@ function renderDetail(c){
     ${f8Html}
     ${f8?`
     <div style="margin-top:.875rem;display:flex;flex-direction:column;gap:.5rem">
-      <button class="btn btn-gold" style="font-size:13px" onclick="dlF8('${esc(c.email)}')">📄 Generate 2848 PDF — Submit to IRS</button>
-      <div style="font-size:11px;color:var(--ink-muted);line-height:1.6">Print → fax to IRS CAF at <strong>855-214-7522</strong> or upload via IRS e-Services. Then click "IRS Approved 2848" in Actions when confirmed.</div>
+      <div style="font-size:12px;color:var(--green);background:var(--green-light);border:1px solid #b8d9c3;border-radius:3px;padding:.625rem .75rem;line-height:1.6">📁 The signed Form 2848 PDF (with embedded signature) was saved automatically — see the <strong>Documents</strong> panel below.</div>
+      <div style="font-size:11px;color:var(--ink-muted);line-height:1.6">Download it there, then fax to IRS CAF at <strong>855-214-7522</strong> or upload via IRS e-Services. Click "Update Status" below once submitted.</div>
     </div>`:''}
   </div>
   <div class="dp">
@@ -1226,12 +1226,10 @@ Client ID: ${esc(g.clientId_value)} (${g.clientId_length} chars)
 eServices User: ${esc(g.eservicesUser_value)} (${g.eservicesUser_length} chars)
 JWK kid: ${esc(g.jwkKid_value)}
 CAF number length: ${g.cafNumber_length} chars
-Private key length: ${g.privateKey_length} chars
-Private key starts: ${esc(g.privateKey_starts_with)}
-Private key ends: ${esc(g.privateKey_ends_with)}
-Has real newlines: ${g.privateKey_has_real_newlines ? 'YES ✅' : 'NO ❌ — THIS IS LIKELY THE BUG'}
-Newline count: ${g.privateKey_newline_count} (should be ~25-27 for a 2048-bit RSA key)
-Private key parses: ${g.privateKey_parses ? 'YES ✅' : 'NO ❌ — '+esc(g.privateKey_parse_error||'')}
+Private key (raw env var) length: ${g.privateKey_raw_length} chars
+Raw value has real newlines: ${g.privateKey_raw_has_real_newlines ? 'YES' : 'NO (auto-normalized before use)'}
+Raw newline count: ${g.privateKey_raw_newline_count}
+Key parses after normalization: ${g.privateKey_normalized_parses ? 'YES ✅' : 'NO ❌ — '+esc(g.privateKey_normalized_parse_error||'')}
 </div>`;
   }catch(e){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(e.message)}</span>`;}
 }

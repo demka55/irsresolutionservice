@@ -708,6 +708,15 @@ function renderSteps() {
       ? `<div style="font-size:12px;color:var(--green);margin-top:4px">Completed ${new Date(steps[step.doneKey]).toLocaleDateString()}</div>`
       : '';
 
+    // Persistent success confirmation for the signed Form 2848 step (survives page reloads,
+    // unlike the one-time banner shown immediately after submit2848() succeeds)
+    const signedConfirmation = (isDone && step.id === 'sign2848')
+      ? `<div style="background:#f0fdf4;border:1px solid #b8d9c3;border-radius:4px;padding:1rem 1.25rem;margin-top:.75rem">
+          <div style="font-size:14px;color:#1a5c2e;font-weight:600;margin-bottom:.25rem">✅ Signing complete</div>
+          <div style="font-size:13px;color:#2d6a4f;line-height:1.6">Your signed Form 2848 has been received. Romeo's team will submit it to the IRS shortly.</div>
+        </div>`
+      : '';
+
     html += `
       <div class="step-card">
         <div class="step-num-wrap ${numClass}">
@@ -720,6 +729,7 @@ function renderSteps() {
           <div class="step-title">${step.title}</div>
           <div class="step-desc">${step.desc}</div>
           ${doneAt}
+          ${signedConfirmation}
           ${actionHtml}
         </div>
       </div>`;
@@ -845,16 +855,27 @@ function initSignaturePad() {
   sigPad.ctx.lineCap = 'round';
   sigPad.ctx.lineJoin = 'round';
 
-  // Scale for device pixel ratio
-  const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * window.devicePixelRatio || 760;
-  canvas.height = 130 * window.devicePixelRatio || 130;
-  sigPad.ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+  // Fixed internal resolution (matches the canvas's own width/height HTML attributes: 760x130).
+  // We previously tried to dynamically match getBoundingClientRect() * devicePixelRatio, but that
+  // runs synchronously right after innerHTML is set — before the browser has necessarily laid out
+  // the canvas — so rect.width could read as 0, desyncing the scale() transform from the actual
+  // buffer size and causing the signature to be drawn off-canvas or shrunk to nothing in the
+  // captured PNG even though it looked fine on screen. A fixed resolution removes that race entirely.
+  const BASE_WIDTH = 760;
+  const BASE_HEIGHT = 130;
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = BASE_WIDTH * dpr;
+  canvas.height = BASE_HEIGHT * dpr;
+  sigPad.ctx.scale(dpr, dpr);
 
+  // getPos converts a real pointer event into BASE_WIDTH x BASE_HEIGHT coordinate space,
+  // regardless of how large the canvas is actually displayed via CSS (width:100%).
   const getPos = (e) => {
     const r = canvas.getBoundingClientRect();
     const src = e.touches ? e.touches[0] : e;
-    return { x: (src.clientX - r.left), y: (src.clientY - r.top) };
+    const scaleX = BASE_WIDTH / r.width;
+    const scaleY = BASE_HEIGHT / r.height;
+    return { x: (src.clientX - r.left) * scaleX, y: (src.clientY - r.top) * scaleY };
   };
 
   canvas.addEventListener('mousedown', e => { sigPad.drawing = true; const p = getPos(e); sigPad.ctx.beginPath(); sigPad.ctx.moveTo(p.x, p.y); });
