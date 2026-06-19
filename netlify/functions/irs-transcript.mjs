@@ -7,7 +7,7 @@
 import { createSign, createPrivateKey, randomUUID } from 'node:crypto';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
-const IRS_TOKEN_URL = 'https://api.www4.irs.gov/auth/oauth/v2/token';
+const IRS_TOKEN_URL = 'https://api.alt.www4.irs.gov/auth/oauth/v2/token';
 const IRS_TDS_URL   = 'https://api.www4.irs.gov/esrv/api/tds/request/caf';
 const IRS_SOR_URL   = 'https://api.www4.irs.gov/esrv/api/sor/messages';
 
