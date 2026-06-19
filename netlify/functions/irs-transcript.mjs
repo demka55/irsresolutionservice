@@ -120,6 +120,34 @@ export default async (req) => {
   }
 
   try {
+    // ── Diagnostic check — safely reveals what's actually configured, no secrets exposed ──
+    if (action === 'diagnose') {
+      const diag = {
+        clientId_value: clientId,
+        clientId_length: clientId.length,
+        eservicesUser_value: eservicesUser,
+        eservicesUser_length: eservicesUser.length,
+        jwkKid_value: jwkKid,
+        cafNumber_length: cafNumber.length,
+        privateKey_length: privateKey.length,
+        privateKey_starts_with: privateKey.substring(0, 40),
+        privateKey_ends_with: privateKey.substring(privateKey.length - 40),
+        privateKey_has_real_newlines: privateKey.includes('\n'),
+        privateKey_newline_count: (privateKey.match(/\n/g) || []).length,
+        privateKey_parses: false,
+        privateKey_parse_error: null,
+      };
+
+      try {
+        createPrivateKey(privateKey);
+        diag.privateKey_parses = true;
+      } catch (parseErr) {
+        diag.privateKey_parse_error = parseErr.message;
+      }
+
+      return new Response(JSON.stringify({ ok: true, diagnostic: diag }), { status: 200, headers });
+    }
+
     // ── Token test ────────────────────────────────────────────────────────
     if (action === 'get_token') {
       const token = await getAccessToken({ clientId, privateKey, eservicesUser, jwkKid });

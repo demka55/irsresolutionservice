@@ -382,6 +382,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
         <div class="irs-conn-h">Test IRS Connection</div>
         <div class="irs-conn-s">Verify credentials by requesting a test OAuth access token from the IRS authorization server.</div>
         <button class="btn btn-blue" id="testBtn" onclick="testConn()">🔗 Test Connection</button>
+        <button class="btn btn-ghost btn-sm" style="margin-top:.5rem" onclick="diagnoseIrs()">🔍 Diagnose Credentials</button>
         <div id="testRes" style="margin-top:.75rem;font-size:12px;display:none"></div>
       </div>
       <div class="cc-card">
@@ -1209,6 +1210,30 @@ async function testConn(){
     }
   }catch(e){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(e.message)}</span>`;}
   btn.disabled=false;btn.textContent='🔗 Test Connection';
+}
+
+async function diagnoseIrs(){
+  const res=document.getElementById('testRes');
+  res.style.display='block';
+  res.innerHTML='<span style="color:var(--ink-muted)">Running diagnostic…</span>';
+  try{
+    const r=await fetch('/.netlify/functions/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,action:'diagnose'})});
+    const d=await r.json();
+    if(!r.ok){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(d.error||'Diagnostic failed')}</span>`;return;}
+    const g=d.diagnostic;
+    res.innerHTML=`<div style="background:var(--cream-warm);border-radius:4px;padding:.75rem;font-family:monospace;font-size:11px;line-height:1.7;white-space:pre-wrap">
+Client ID: ${esc(g.clientId_value)} (${g.clientId_length} chars)
+eServices User: ${esc(g.eservicesUser_value)} (${g.eservicesUser_length} chars)
+JWK kid: ${esc(g.jwkKid_value)}
+CAF number length: ${g.cafNumber_length} chars
+Private key length: ${g.privateKey_length} chars
+Private key starts: ${esc(g.privateKey_starts_with)}
+Private key ends: ${esc(g.privateKey_ends_with)}
+Has real newlines: ${g.privateKey_has_real_newlines ? 'YES ✅' : 'NO ❌ — THIS IS LIKELY THE BUG'}
+Newline count: ${g.privateKey_newline_count} (should be ~25-27 for a 2048-bit RSA key)
+Private key parses: ${g.privateKey_parses ? 'YES ✅' : 'NO ❌ — '+esc(g.privateKey_parse_error||'')}
+</div>`;
+  }catch(e){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(e.message)}</span>`;}
 }
 
 async function checkSor(){
