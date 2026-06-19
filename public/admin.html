@@ -1284,23 +1284,15 @@ async function pullTranscript(){
       // Save pull metadata
       await fetch('/.netlify/functions/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:ce,adminPassword:apw,update:{adminAction:true,steps:{['txPulled_'+txKey]:new Date().toISOString()}}})});
 
-      // Auto-save the transcript PDF into the client's Documents folder
+      // Auto-save the transcript into the client's Documents folder
       let docSavedMsg = '';
       try {
         const clientName = (clients.find(c=>c.email===ce)?.name || ce.split('@')[0]).replace(/\s+/g,'-');
-        if (d.transcriptPdfBase64) {
-          const filename = `IRS-Transcript-${formNumber}-${productType}-${taxYear}-${clientName}.pdf`;
-          const upRes = await fetch('/.netlify/functions/client-files',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:ce,adminPassword:apw,filename,contentType:'application/pdf',base64Data:d.transcriptPdfBase64,uploadedBy:'System (IRS pull)',source:'auto'})});
-          if(upRes.ok) docSavedMsg = '<br><span style="font-size:12px">📁 Saved to Documents as <strong>'+esc(filename)+'</strong></span>';
-          else docSavedMsg = '<br><span style="font-size:12px;opacity:.75">⚠ Pulled successfully, but could not auto-save to Documents — use Download below instead.</span>';
-        } else {
-          // PDF conversion failed server-side — fall back to saving the raw HTML so nothing is lost
-          const filename = `IRS-Transcript-${formNumber}-${productType}-${taxYear}-${clientName}.html`;
-          const base64Data = btoa(unescape(encodeURIComponent(curTx)));
-          const upRes = await fetch('/.netlify/functions/client-files',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:ce,adminPassword:apw,filename,contentType:'text/html',base64Data,uploadedBy:'System (IRS pull)',source:'auto'})});
-          if(upRes.ok) docSavedMsg = '<br><span style="font-size:12px">📁 PDF conversion unavailable — saved as HTML instead: <strong>'+esc(filename)+'</strong></span>';
-          else docSavedMsg = '<br><span style="font-size:12px;opacity:.75">⚠ Pulled successfully, but could not auto-save to Documents — use Download below instead.</span>';
-        }
+        const filename = `IRS-Transcript-${formNumber}-${productType}-${taxYear}-${clientName}.html`;
+        const base64Data = btoa(unescape(encodeURIComponent(curTx)));
+        const upRes = await fetch('/.netlify/functions/client-files',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:ce,adminPassword:apw,filename,contentType:'text/html',base64Data,uploadedBy:'System (IRS pull)',source:'auto'})});
+        if(upRes.ok) docSavedMsg = '<br><span style="font-size:12px">📁 Saved to Documents as <strong>'+esc(filename)+'</strong></span>';
+        else docSavedMsg = '<br><span style="font-size:12px;opacity:.75">⚠ Pulled successfully, but could not auto-save to Documents — use Download below instead.</span>';
       } catch {
         docSavedMsg = '<br><span style="font-size:12px;opacity:.75">⚠ Pulled successfully, but could not auto-save to Documents — use Download below instead.</span>';
       }
