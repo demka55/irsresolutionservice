@@ -1268,17 +1268,54 @@ async function pullTranscript(){
   try{
     const r=await fetch('/.netlify/functions/irs-transcript',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,clientEmail:ce,action:'pull_transcript',transcriptRequest:{tin,taxpayerType:tp,firstName:document.getElementById('irsFirst').value,lastName:document.getElementById('irsLast').value,businessName:document.getElementById('irsBiz').value,formNumber,productType,taxYear,taxPeriod:12}})});
     const d=await r.json();
-    if(!r.ok){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(d.error||'IRS API error')}</span>`;}
+    if(!r.ok){
+      // Show full error detail, not just the top-level message — surfaces the actual IRS error_code/error_description
+      const detailStr = d.details ? '<br><span style="font-size:11px;opacity:.85">' + esc(typeof d.details === 'string' ? d.details : JSON.stringify(d.details)) + '</span>' : '';
+      res.innerHTML=`<div style="background:var(--red-light);border:1px solid #e8b0b0;border-radius:4px;padding:.75rem .875rem">
+        <span style="color:var(--red);font-weight:600">❌ Transcript pull failed</span><br>
+        <span style="color:var(--red);font-size:12px">${esc(d.error||'IRS API error')}</span>${detailStr}
+      </div>`;
+    }
     else{
       curTx=d.transcript||'';
       curTxEmail=ce;
       curTxKey=txKey;
-      // Save pull metadata only (not the HTML)
+      // Save pull metadata
       await fetch('/.netlify/functions/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:ce,adminPassword:apw,update:{adminAction:true,steps:{['txPulled_'+txKey]:new Date().toISOString()}}})});
-      res.innerHTML=`<span style="color:var(--green)">✅ Transcript pulled — not stored. <button class="btn btn-ghost btn-sm" onclick="openTxModal(curTx,'${txKey}')">View</button> <button class="btn btn-green btn-sm" onclick="dlTx()">⬇ Download</button></span>`;
+
+      // Auto-save the transcript PDF into the client's Documents folder
+      let docSavedMsg = '';
+      try {
+        const clientName = (clients.find(c=>c.email===ce)?.name || ce.split('@')[0]).replace(/\s+/g,'-');
+        if (d.transcriptPdfBase64) {
+          const filename = `IRS-Transcript-${formNumber}-${productType}-${taxYear}-${clientName}.pdf`;
+          const upRes = await fetch('/.netlify/functions/client-files',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:ce,adminPassword:apw,filename,contentType:'application/pdf',base64Data:d.transcriptPdfBase64,uploadedBy:'System (IRS pull)',source:'auto'})});
+          if(upRes.ok) docSavedMsg = '<br><span style="font-size:12px">📁 Saved to Documents as <strong>'+esc(filename)+'</strong></span>';
+          else docSavedMsg = '<br><span style="font-size:12px;opacity:.75">⚠ Pulled successfully, but could not auto-save to Documents — use Download below instead.</span>';
+        } else {
+          // PDF conversion failed server-side — fall back to saving the raw HTML so nothing is lost
+          const filename = `IRS-Transcript-${formNumber}-${productType}-${taxYear}-${clientName}.html`;
+          const base64Data = btoa(unescape(encodeURIComponent(curTx)));
+          const upRes = await fetch('/.netlify/functions/client-files',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:ce,adminPassword:apw,filename,contentType:'text/html',base64Data,uploadedBy:'System (IRS pull)',source:'auto'})});
+          if(upRes.ok) docSavedMsg = '<br><span style="font-size:12px">📁 PDF conversion unavailable — saved as HTML instead: <strong>'+esc(filename)+'</strong></span>';
+          else docSavedMsg = '<br><span style="font-size:12px;opacity:.75">⚠ Pulled successfully, but could not auto-save to Documents — use Download below instead.</span>';
+        }
+      } catch {
+        docSavedMsg = '<br><span style="font-size:12px;opacity:.75">⚠ Pulled successfully, but could not auto-save to Documents — use Download below instead.</span>';
+      }
+
+      res.innerHTML=`<div style="background:var(--green-light);border:1px solid #b8d9c3;border-radius:4px;padding:.75rem .875rem">
+        <span style="color:var(--green);font-weight:600">✅ Transcript pulled successfully</span>${docSavedMsg}
+        <div style="margin-top:.5rem"><button class="btn btn-ghost btn-sm" onclick="openTxModal(curTx,'${txKey}')">View</button> <button class="btn btn-green btn-sm" onclick="dlTx()">⬇ Download</button></div>
+      </div>`;
       await loadClients();
     }
-  }catch(e){res.innerHTML=`<span style="color:var(--red)">❌ ${esc(e.message)}</span>`;}
+  }catch(e){
+    res.innerHTML=`<div style="background:var(--red-light);border:1px solid #e8b0b0;border-radius:4px;padding:.75rem .875rem">
+      <span style="color:var(--red);font-weight:600">❌ Request failed</span><br>
+      <span style="color:var(--red);font-size:12px">${esc(e.message)}</span>
+    </div>`;
+  }
   btn.disabled=false;btn.textContent='📋 Pull Transcript from IRS';
 }
 

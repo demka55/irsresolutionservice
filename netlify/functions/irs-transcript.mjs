@@ -5,10 +5,84 @@
 // older Netlify runtimes (crypto.subtle requires Node 19+; node:crypto works everywhere).
 
 import { createSign, createPrivateKey, randomUUID } from 'node:crypto';
+import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
 const IRS_TOKEN_URL = 'https://api.www4.irs.gov/auth/oauth/v2/token';
 const IRS_TDS_URL   = 'https://api.www4.irs.gov/esrv/api/tds/request/caf';
 const IRS_SOR_URL   = 'https://api.www4.irs.gov/esrv/api/sor/messages';
+
+// ── HTML → PDF conversion for transcripts ───────────────────────────────────
+// The IRS TDS API returns transcripts as raw HTML. pdf-lib can't render HTML/CSS
+// directly (no layout engine), so we strip it to clean plain text — preserving
+// row/line structure from <tr>/<td>/<br> — and lay it out as monospace text,
+// which suits IRS transcripts well since they're inherently tabular/columnar.
+function htmlToText(html) {
+  let text = html;
+  text = text.replace(/<\/(tr|p|div|h[1-6]|li)>/gi, '\n');
+  text = text.replace(/<br\s*\/?>/gi, '\n');
+  text = text.replace(/<\/td>/gi, '   ');
+  text = text.replace(/<\/th>/gi, '   ');
+  text = text.replace(/<[^>]+>/g, '');
+  const entities = { '&nbsp;': ' ', '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&apos;': "'" };
+  for (const [entity, char] of Object.entries(entities)) text = text.split(entity).join(char);
+  text = text.replace(/&#(\d+);/g, (_, code) => String.fromCharCode(code));
+  text = text.split('\n').map(line => line.replace(/[ \t]+/g, ' ').trimEnd()).join('\n');
+  text = text.replace(/\n{3,}/g, '\n\n').trim();
+  return text;
+}
+
+async function buildTranscriptPdf(transcriptHtml, meta) {
+  const pdfDoc = await PDFDocument.create();
+  const font = await pdfDoc.embedFont(StandardFonts.Courier);
+  const titleFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+
+  const PAGE_W = 612, PAGE_H = 792, margin = 45;
+  const fontSize = 8.5;
+  const lineHeight = fontSize + 3;
+  const maxLineWidth = PAGE_W - margin * 2;
+  const maxCharsPerLine = Math.floor(maxLineWidth / font.widthOfTextAtSize('M', fontSize));
+
+  let page = pdfDoc.addPage([PAGE_W, PAGE_H]);
+  let y = PAGE_H - margin;
+
+  function newPage() {
+    page = pdfDoc.addPage([PAGE_W, PAGE_H]);
+    y = PAGE_H - margin;
+  }
+  function ensureSpace(needed = lineHeight) {
+    if (y - needed < margin) newPage();
+  }
+
+  page.drawText('IRS TAX TRANSCRIPT', { x: margin, y, size: 16, font: titleFont, color: rgb(0, 0, 0) });
+  y -= 22;
+  page.drawText(`${meta.formNumber || ''} \u2014 ${meta.productType || ''} \u2014 Tax Year ${meta.taxYear || ''}`, { x: margin, y, size: 10, font, color: rgb(0.3, 0.3, 0.3) });
+  y -= 14;
+  page.drawText(`Client: ${meta.clientName || ''}  \u2022  Pulled: ${new Date().toLocaleString()}`, { x: margin, y, size: 9, font, color: rgb(0.4, 0.4, 0.4) });
+  y -= 10;
+  page.drawLine({ start: { x: margin, y }, end: { x: PAGE_W - margin, y }, thickness: 1, color: rgb(0, 0, 0) });
+  y -= 18;
+
+  const text = htmlToText(transcriptHtml);
+  const rawLines = text.split('\n');
+
+  for (const rawLine of rawLines) {
+    if (rawLine.trim() === '') {
+      ensureSpace();
+      y -= lineHeight * 0.6;
+      continue;
+    }
+    let remaining = rawLine;
+    while (remaining.length > 0) {
+      const chunk = remaining.slice(0, maxCharsPerLine);
+      remaining = remaining.slice(maxCharsPerLine);
+      ensureSpace();
+      page.drawText(chunk, { x: margin, y, size: fontSize, font, color: rgb(0, 0, 0) });
+      y -= lineHeight;
+    }
+  }
+
+  return await pdfDoc.save();
+}
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -214,7 +288,25 @@ export default async (req) => {
       }
 
       const transcriptHtml = await tdsRes.text();
-      return new Response(JSON.stringify({ ok: true, transcript: transcriptHtml }), { status: 200, headers });
+
+      // Convert the IRS's raw HTML into a real PDF, server-side, so the client never
+      // has to do HTML-to-PDF conversion in the browser.
+      let pdfBase64 = null;
+      try {
+        const clientName = `${firstName || ''} ${lastName || ''}`.trim() || businessName || clientEmail;
+        const pdfBytes = await buildTranscriptPdf(transcriptHtml, {
+          formNumber, productType, taxYear, clientName,
+        });
+        pdfBase64 = Buffer.from(pdfBytes).toString('base64');
+      } catch (pdfErr) {
+        console.warn('[irs-transcript] PDF conversion failed, returning raw HTML only:', pdfErr.message);
+      }
+
+      return new Response(JSON.stringify({
+        ok: true,
+        transcript: transcriptHtml, // raw HTML kept for the in-app "View" modal
+        transcriptPdfBase64: pdfBase64, // null if conversion failed — caller should handle gracefully
+      }), { status: 200, headers });
     }
 
     // ── Check SOR mailbox ────────────────────────────────────────────────
