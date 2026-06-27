@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haven't Filed Taxes in Years? What to Do — Former IRS Auditor Explains</title>
+<meta name="description" content="Former IRS Auditor Romeo Razi explains exactly what happens when you haven't filed taxes for multiple years, what the IRS actually does, and the step-by-step process to get back into compliance with minimal damage.">
+<link rel="canonical" href="https://irsresolutionservice.com/havent-filed-taxes">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c; --gold-light: #e8c97a; --gold-dim: #8a6e2f; --gold-muted: #f5ecd8;
+  --cream: #f5f0e8; --cream-warm: #ede5d5; --cream-dark: #d9cdb8;
+  --ink: #1a1410; --ink-soft: #4a3f32; --ink-muted: #7a6e60; --white: #ffffff;
+  --red: #c0392b; --red-light: #fdf0f0; --green: #1a5c2a; --green-light: #f0fdf4;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 18px; line-height: 1.7; }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--cream-dark); backdrop-filter: blur(12px); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-mark { width: 36px; height: 36px; border: 1.5px solid var(--gold); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--gold); }
+.logo-text { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+.logo-text span { color: var(--gold); }
+.nav { display: flex; align-items: center; gap: 1.75rem; }
+.nav a { font-size: 15px; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+.nav a:hover { color: var(--gold-dim); }
+.nav-cta { background: var(--gold) !important; color: var(--white) !important; padding: 9px 22px; border-radius: 2px; font-weight: 600; }
+.notice-hero { background: var(--white); padding: 120px 2rem 64px; border-bottom: 1px solid var(--cream-dark); }
+.notice-hero-inner { max-width: 840px; margin: 0 auto; }
+.notice-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--gold-muted); color: var(--gold-dim); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; margin-bottom: 1.5rem; }
+.notice-code-display { font-family: var(--serif); font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.notice-hero h1 { font-family: var(--serif); font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 600; color: var(--ink-soft); line-height: 1.3; margin-bottom: 1.5rem; }
+.direct-answer { background: var(--green-light); border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 2rem; }
+.direct-answer p { font-size: 17px; line-height: 1.65; color: var(--ink-soft); }
+.direct-answer strong { color: var(--green); }
+.deadline-badge { display: inline-flex; align-items: center; gap: 10px; background: var(--red-light); border: 1.5px solid #e8b0b0; border-radius: 4px; padding: 10px 18px; font-size: 15px; font-weight: 600; color: var(--red); }
+.notice-body { max-width: 840px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+.section { margin-bottom: 3.5rem; }
+.section h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
+.section h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); margin: 1.5rem 0 0.75rem; }
+.section p { color: var(--ink-soft); margin-bottom: 1rem; }
+.section ul, .section ol { color: var(--ink-soft); padding-left: 1.5rem; margin-bottom: 1rem; }
+.section li { margin-bottom: 0.5rem; }
+.insider { background: var(--gold-muted); border: 1px solid var(--cream-dark); border-left: 4px solid var(--gold); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.insider-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.4rem; }
+.insider p { font-size: 16px; color: var(--ink-soft); margin: 0; font-style: italic; }
+.warning-box { background: var(--red-light); border: 1px solid #e8b0b0; border-left: 4px solid var(--red); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.warning-box p { font-size: 16px; color: var(--ink-soft); margin: 0; }
+.step-list { list-style: none; padding: 0; counter-reset: steps; }
+.step-list li { counter-increment: steps; display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.25rem; }
+.step-list li::before { content: counter(steps); background: var(--gold); color: var(--white); min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; margin-top: 2px; flex-shrink: 0; }
+.cta-box { background: var(--ink); color: var(--white); border-radius: 6px; padding: 2.5rem 2rem; text-align: center; margin: 3rem 0; }
+.cta-box h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; }
+.cta-box p { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 1.5rem; }
+.cta-btn { display: inline-block; background: var(--gold); color: var(--ink); text-decoration: none; padding: 14px 32px; border-radius: 2px; font-weight: 700; font-size: 16px; letter-spacing: 0.04em; }
+.romeo-bar { display: flex; align-items: center; gap: 1.5rem; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+.romeo-avatar { width: 56px; height: 56px; background: var(--gold-muted); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--gold-dim); flex-shrink: 0; }
+.romeo-name { font-weight: 700; font-size: 16px; color: var(--ink); }
+.romeo-title { font-size: 13px; color: var(--ink-muted); }
+.faq-item { border-bottom: 1px solid var(--cream-dark); padding: 1.25rem 0; }
+.faq-q { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+.faq-a { font-size: 16px; color: var(--ink-soft); }
+footer { background: var(--ink); color: rgba(255,255,255,0.5); text-align: center; padding: 2rem; font-size: 13px; }
+footer a { color: var(--gold); text-decoration: none; }
+@media (max-width: 640px) { .nav { gap: 1rem; } .nav a:not(.nav-cta) { display: none; } }
+
+.romeo-bar{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0}
+.romeo-avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.romeo-avatar{width:72px;height:72px;background:var(--gold-muted);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px;font-weight:700;color:var(--gold-dim);overflow:hidden}
+.romeo-linkedin{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--gold-dim);text-decoration:none;font-weight:600;letter-spacing:0.05em}
+.romeo-linkedin:hover{color:var(--gold)}
+.romeo-info .romeo-name{font-weight:700;font-size:17px;color:var(--ink)}
+.romeo-info .romeo-title{font-size:14px;color:var(--ink-muted);margin-top:2px;line-height:1.5}
+.romeo-info .romeo-bio{font-size:15px;color:var(--ink-soft);margin-top:0.75rem;line-height:1.6}
+.notice-links{background:var(--cream-warm);border-radius:6px;padding:1.5rem;margin:2rem 0}
+.notice-links h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:1rem}
+.notice-links ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:0.5rem}
+.notice-links li a{display:inline-block;background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--gold-dim);text-decoration:none;transition:border-color 0.2s}
+.notice-links li a:hover{border-color:var(--gold);color:var(--gold)}
+.video-callout{background:var(--ink);color:var(--white);border-radius:6px;padding:1.5rem 1.75rem;margin:2rem 0;display:flex;align-items:center;gap:1.25rem}
+.video-callout .play-icon{font-size:2rem;flex-shrink:0}
+.video-callout h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.25rem}
+.video-callout p{font-size:14px;color:rgba(255,255,255,0.65);margin:0}
+.video-callout a{color:var(--gold);text-decoration:none;font-weight:600}
+@media(max-width:640px){.romeo-bar{grid-template-columns:1fr}.romeo-avatar-wrap{flex-direction:row}}
+
+
+/* DROPDOWN NAV */
+.nav-item { position: relative; }
+.nav-item > a { display: flex; align-items: center; gap: 4px; }
+.nav-item > a::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid currentColor; opacity: 0.5; margin-top: 1px; flex-shrink: 0; }
+.dropdown { display: none; position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; box-shadow: 0 12px 32px rgba(26,20,16,0.14); min-width: 580px; z-index: 300; padding: 1.25rem 0; }
+.nav-item:hover .dropdown, .nav-item:focus-within .dropdown { display: block; }
+.dropdown-cols { display: grid; grid-template-columns: 1fr 1fr; }
+.dropdown-col { padding: 0 1.25rem; }
+.dropdown-col:first-child { border-right: 1px solid var(--cream-dark); }
+.dropdown-col-head { font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dim); padding: 0 0 0.625rem; margin-bottom: 0.375rem; border-bottom: 1px solid var(--cream-dark); }
+.dropdown a { display: block; font-size: 13px; color: var(--ink-muted) !important; text-decoration: none; padding: 4px 0; line-height: 1.4; transition: color 0.15s; letter-spacing: 0; }
+.dropdown a:hover { color: var(--gold-dim) !important; }
+.dropdown a::after { display: none !important; }
+.dropdown-services { min-width: 260px; }
+.dropdown-services .dropdown-col { padding: 0 1.25rem; border-right: none; }
+/* Mobile: hide dropdowns on small screens, show all nav links */
+@media (max-width: 900px) { .dropdown { display: none !important; } .nav-item > a::after { display: none; } }
+@media (max-width: 640px) { .nav { gap: 0.875rem; } .nav a:not(.nav-cta) { display: none; } }
+
+</style>
+<style>
+
+.situation-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+.sit-card { border-radius: 6px; padding: 1.25rem 1.4rem; }
+.sit-card.ok { background: var(--green-light); border: 1.5px solid #b8d9c3; }
+.sit-card.danger { background: var(--red-light); border: 1.5px solid #e8b0b0; }
+.sit-card h3 { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; margin-bottom: .4rem; }
+.sit-card.ok h3 { color: var(--green); }
+.sit-card.danger h3 { color: var(--red); }
+.sit-card p { font-size: 14px; margin: 0; color: var(--ink-soft); }
+.year-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: .75rem; margin: 1.25rem 0; }
+.year-card { background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: .875rem 1rem; text-align: center; }
+.year-card .yr { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; color: var(--gold); }
+.year-card .status { font-size: 12px; color: var(--ink-muted); margin-top: .2rem; }
+.penalty-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; }
+.pen-card { border-radius: 6px; padding: 1.1rem 1.25rem; }
+.pen-card.bad { background: var(--red-light); border: 1.5px solid #e8b0b0; }
+.pen-card.ok { background: var(--cream-warm); border: 1.5px solid var(--cream-dark); }
+.pen-card .rate { font-family: var(--serif); font-size: 2rem; font-weight: 700; line-height: 1; }
+.pen-card.bad .rate { color: var(--red); }
+.pen-card.ok .rate { color: var(--gold-dim); }
+.pen-card .desc { font-size: 13px; color: var(--ink-soft); margin-top: .3rem; line-height: 1.5; }
+@media(max-width:560px){ .situation-bar,.penalty-compare { grid-template-columns:1fr; } }
+
+.romeo-bar{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0}
+.romeo-avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.romeo-avatar{width:72px;height:72px;background:var(--gold-muted);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px;font-weight:700;color:var(--gold-dim)}
+.romeo-linkedin{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--gold-dim);text-decoration:none;font-weight:600}
+.romeo-info .romeo-name{font-weight:700;font-size:17px;color:var(--ink)}
+.romeo-info .romeo-title{font-size:14px;color:var(--ink-muted);margin-top:2px;line-height:1.5}
+.romeo-info .romeo-bio{font-size:15px;color:var(--ink-soft);margin-top:.75rem;line-height:1.6}
+.notice-links{background:var(--cream-warm);border-radius:6px;padding:1.5rem;margin:2rem 0}
+.notice-links h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:1rem}
+.notice-links ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.5rem}
+.notice-links li a{display:inline-block;background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--gold-dim);text-decoration:none;transition:border-color .2s}
+.notice-links li a:hover{border-color:var(--gold);color:var(--gold)}
+@media(max-width:640px){.romeo-bar{grid-template-columns:1fr}.romeo-avatar-wrap{flex-direction:row}}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Haven't Filed Taxes in Years? What to Do \u2014 A Former IRS Auditor Explains",
+  "description": "Former IRS Auditor Romeo Razi explains exactly what happens when you haven't filed taxes for multiple years, how the IRS finds you, what the penalties are, and the step-by-step process to get back into compliance.",
+  "url": "https://irsresolutionservice.com/havent-filed-taxes",
+  "dateModified": "2026-06-27",
+  "author": {
+    "@type": "Person",
+    "@id": "https://irsresolutionservice.com/#romeo-razi",
+    "name": "Romeo Razi",
+    "honorificSuffix": "CPA",
+    "jobTitle": "Former IRS Tax Examiner, CPA",
+    "sameAs": "https://www.linkedin.com/in/romeo-razi/"
+  },
+  "publisher": {
+    "@id": "https://irsresolutionservice.com/#organization"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://irsresolutionservice.com/havent-filed-taxes"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What happens if you don't file taxes for years?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you owe money, three penalties accumulate: failure-to-file (5% per month up to 25%), failure-to-pay (0.5% per month up to 6%), and interest (currently 6-8%). The IRS can also file a Substitute for Return on your behalf, prepare a return using only the income they can see, and begin collection. If you're owed a refund, the only risk is losing it after 3 years."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How many years back do you need to file taxes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The IRS's definition of compliance is the last 6 years. You generally need to file the past 6 years of returns to be considered in compliance, not every year back to the beginning. The exception: if the IRS already filed a Substitute for Return for an older year that overstates your liability, it's worth filing your actual return for that year."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will the IRS find out if you don't file?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes \u2014 eventually. The IRS receives copies of every W-2, 1099, and other income document filed under your Social Security number. Their Automated Substitute for Return program matches these against filed returns. If no return appears, they generate a CP59 notice and eventually prepare their own version of your return. The process can take years, but it catches up."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can you go to jail for not filing taxes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Criminal prosecution for failure to file is extremely rare and reserved for willful, repeated non-filers with large amounts at stake. The IRS's primary approach is civil penalties, not prosecution. For the vast majority of people who simply fell behind, the IRS wants the returns filed and a payment plan established \u2014 not prosecution."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the penalty for not filing taxes for 3 years?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "After 3 years of not filing (assuming you owe money), the failure-to-file penalty alone has reached its maximum: 25% of unpaid tax. The failure-to-pay penalty is still accumulating at 0.5% per month. Interest is compounding on top of both. Total penalty burden commonly reaches 40-50% of the original tax owed, not counting ongoing interest."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I get caught up on years of unfiled tax returns?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Order your Wage and Income Transcripts from IRS.gov \u2014 they show every W-2 and 1099 filed under your SSN for each year. Prepare returns starting with the oldest first (within the last 6 years). Mail them to the IRS (you can't e-file prior-year returns older than 3 years). Once filed, negotiate a payment plan or OIC for any balance due. Request penalty abatement (First Time Abatement) if you have a clean prior history."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://irsresolutionservice.com" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+        <nav class="nav">
+      <div class="nav-item">
+        <a href="/#services">Services</a>
+        <div class="dropdown dropdown-services">
+          <div class="dropdown-col">
+            <div class="dropdown-col-head">What We Handle</div>
+            <a href="/#services">Unfiled Tax Returns</a>
+            <a href="/#services">Back Taxes &amp; Collections</a>
+            <a href="/#services">IRS Audits &amp; Appeals</a>
+            <a href="/#services">Offer in Compromise</a>
+            <a href="/#services">Installment Agreements</a>
+            <a href="/#services">Penalty Abatement</a>
+            <a href="/#services">IRS Notice Response</a>
+            <a href="/#services">Tax Catch-Up Filing</a>
+          </div>
+        </div>
+      </div>
+      <a href="/#founders">About</a>
+      <div class="nav-item">
+        <a href="/cp2000">IRS Guides</a>
+        <div class="dropdown">
+          <div class="dropdown-cols">
+            <div class="dropdown-col">
+              <div class="dropdown-col-head">IRS Notices Explained</div>
+              <a href="/cp2000">CP2000 — Proposed Adjustment</a>
+              <a href="/cp14">CP14 — First Balance Due</a>
+              <a href="/cp504">CP504 — Intent to Levy</a>
+              <a href="/lt11">LT11 — Final Levy Notice</a>
+              <a href="/cp3219a">CP3219A — Notice of Deficiency</a>
+              <a href="/cp59">CP59 — Unfiled Return</a>
+              <a href="/cp523">CP523 — Payment Plan Terminated</a>
+              <a href="/missed-tax-deadline">Missed the Tax Deadline</a>
+              <a href="/havent-filed-taxes">Haven't Filed in Years</a>
+            </div>
+            <div class="dropdown-col">
+              <div class="dropdown-col-head">Tax Law &amp; Strategy</div>
+              <a href="/one-big-beautiful-act">One Big Beautiful Act — 9 Changes</a>
+              <a href="/irs-tips-overtime-tax">Tax-Free Tips &amp; Overtime</a>
+              <a href="/salt-deduction-2025">SALT Deduction Raised to $40K</a>
+              <a href="/bonus-depreciation-2025">100% Bonus Depreciation</a>
+              <a href="/rd-expense-deduction">R&amp;D Expense Deduction</a>
+              <a href="/qualified-small-business-stock">QSBS Exclusion Changes</a>
+              <a href="/year-end-tax-planning">Year-End Business Planning</a>
+              <a href="/tax-brackets-2026">2026 Tax Brackets</a>
+              <a href="/irs-installment-agreement">Payment Plans Explained</a>
+              <a href="/irs-offer-in-compromise">Offer in Compromise</a>
+              <a href="/irs-collection-statute">10-Year Collection Statute</a>
+              <a href="/irs-audit-appeals-strategy">Audit &amp; Appeals Strategy</a>
+              <a href="/irs-budget-cuts-2025">IRS Budget Cuts 2025</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="/#tool">Notice Decoder</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#contact" class="nav-cta">Get Help Now</a>
+    </nav>
+  </div>
+</header>
+
+<section class="notice-hero">
+  <div class="notice-hero-inner">
+    <div class="notice-eyebrow" style="background:var(--red-light);color:var(--red)">&#9888; Unfiled Tax Returns — What to Do</div>
+    <div class="notice-code-display" style="font-size:clamp(1.75rem,4.5vw,3.5rem);line-height:1.15">Haven't Filed<br>Taxes in Years?</div>
+    <h1>Here's what the IRS actually does, what you owe in penalties, and the exact steps to get back into compliance</h1>
+    <div class="direct-answer">
+      <p><strong>The short answer:</strong> Not filing is far more common than people admit — nobody talks about it at dinner parties. The IRS will eventually find you through income documents filed under your Social Security number. The faster you act, the less it costs. And you probably only need to file the last <strong>6 years</strong>, not every year since you stopped.</p>
+    </div>
+  </div>
+</section>
+
+<div class="notice-body">
+
+<div style="background:var(--ink);color:#fff;border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0;display:flex;align-items:flex-start;gap:1rem">
+  <div style="font-size:1.75rem;flex-shrink:0;line-height:1">&#9654;</div>
+  <div>
+    <p style="font-size:14px;color:rgba(255,255,255,.75);margin:0 0 .35rem;font-style:normal">Romeo Razi, CPA: "In the last three weeks of tax season, I had three different people contact me. One hadn't filed for three years, one for five years, the other hadn't filed trust returns for four years. I was able to help all three."</p>
+    <a href="https://www.youtube.com/watch?v=X72vEtA_b0s" target="_blank" rel="noopener" style="color:var(--gold);font-size:13px;font-weight:600;text-decoration:none">Watch: What to Do If You Missed the Tax Deadline &rarr;</a>
+  </div>
+</div>
+
+  <div class="section">
+    <h2>First: which situation are you in?</h2>
+    <p>Before doing anything, you need to know whether you'd owe money or get a refund if you filed. The answer determines how urgently you need to act.</p>
+    <div class="situation-bar">
+      <div class="sit-card ok">
+        <h3>✓ You'd get a refund</h3>
+        <p>No penalties apply. The IRS doesn't penalize you for filing late when they owe you money. But you have a <strong>3-year window</strong> — after that, they keep your refund permanently. File now and collect what's yours.</p>
+      </div>
+      <div class="sit-card danger">
+        <h3>⚠ You'd owe money</h3>
+        <p>Three penalties are accumulating right now. The failure-to-file penalty is 5% per month — after 5 months it maxes out at 25% of your unpaid tax. Every month you wait makes this worse.</p>
+      </div>
+    </div>
+    <p>If you're not sure which situation you're in, order your Wage and Income Transcripts from IRS.gov — they show every W-2 and 1099 filed under your SSN for each year, which is the income the IRS already knows about. From there you can estimate whether a refund or a balance would result.</p>
+  </div>
+
+  <div class="section">
+    <h2>The penalty math — why every month of delay is expensive</h2>
+    <p>If you owe money and haven't filed, three separate penalties are running simultaneously. They don't replace each other — they stack on top of the unpaid tax balance.</p>
+    <div class="penalty-compare">
+      <div class="pen-card bad">
+        <div class="rate">5%/mo</div>
+        <div class="desc"><strong>Failure to File</strong> — the big one. Runs until you file or hits 25%. After just 5 months, you've added 25% to your tax bill from this penalty alone.</div>
+      </div>
+      <div class="pen-card ok">
+        <div class="rate">0.5%/mo</div>
+        <div class="desc"><strong>Failure to Pay</strong> — smaller, but runs indefinitely until the balance is paid. Maximum 25% over 50 months.</div>
+      </div>
+    </div>
+    <div class="warning-box">
+      <p>⚠ On top of both penalties, interest (currently 6–8% annually, tied to the federal funds rate) compounds on the entire outstanding amount. After 3–4 years of not filing with a balance due, the combined penalty + interest burden commonly reaches 40–60% of the original tax owed.</p>
+    </div>
+    <div class="insider">
+      <div class="insider-label">Romeo Razi, CPA — "What to Do If You Missed the Tax Deadline" (YouTube)</div>
+      <p>"The failure-to-file penalty was created by Satan. It is 5% per month. I've had clients come to me after three or four years and the failure-to-file penalty is as bad as the tax itself. That's what happens when you wait. Get something filed as soon as possible — even if it's not perfect. You can amend later. Stop that penalty immediately."</p>
+    </div>
+    <p><strong>The one thing that stops the failure-to-file penalty immediately: filing the return.</strong> Even an imperfect, incomplete return — you can amend it later. The penalty clock stops on the day you file.</p>
+  </div>
+
+  <div class="section">
+    <h2>How the IRS finds you — even if you think they haven't noticed</h2>
+    <p>The IRS receives a copy of every income document filed under your Social Security number: W-2s from employers, 1099s from clients and financial institutions, 1099-K from payment apps, 1099-R from retirement accounts. All of it flows into their system automatically.</p>
+    <p>Their Automated Substitute for Return (ASFR) program then compares that income data against filed returns. When no return appears, the IRS eventually generates a <a href="/cp59" class="text-link-inline" style="color:var(--gold-dim);font-weight:600">CP59 notice</a> asking you to explain the missing return. If you don't respond, they prepare their own version — a Substitute for Return (SFR) — using only the income documents they have, with the minimum deductions allowed. Then they assess that tax and begin collection.</p>
+    <div class="insider">
+      <div class="insider-label">Romeo Razi, CPA — IRS Insider Interview with Yoav Betsion, EA</div>
+      <p>"We have a case right now. The gentleman did not file 2016. The IRS filed a Substitute for Return. But you always have the right as a taxpayer to go file your actual return. We prepared it and saw that filing his real return — with his actual deductions — saves him $30,000. He still owes money on 2016, but it's $30,000 less than the IRS said he owed."</p>
+    </div>
+    <p>This is one of the most important things to understand: if the IRS has already filed a Substitute for Return for a prior year, <strong>you can and often should file your actual return to override it.</strong> The SFR almost always overstates your liability because it ignores your deductions, business expenses, retirement contributions, and credits.</p>
+  </div>
+
+  <div class="section">
+    <h2>How many years back do you actually need to file?</h2>
+    <p>This is where most people's anxiety is disproportionate to reality. They assume they need to file every year since they stopped — possibly going back a decade or more. In most cases, that's not what the IRS requires.</p>
+    <div class="insider">
+      <div class="insider-label">Yoav Betsion, EA — IRS Insider Interview (20 years in IRS practice)</div>
+      <p>"The IRS definition of compliance is the last 6 years. As long as you file the last 6 years, they consider you brought up to compliance. If you haven't filed for 10 years, you don't necessarily file 10 years. You file 6 years. The only exception is if the IRS filed a Substitute for Return for an older year and you can save money by filing your actual return — or if you have losses from that year you want to carry forward."</p>
+    </div>
+    <div class="year-grid">
+      <div class="year-card">
+        <div class="yr">6 yrs</div>
+        <div class="status">IRS compliance window</div>
+      </div>
+      <div class="year-card">
+        <div class="yr">3 yrs</div>
+        <div class="status">Refund claim deadline</div>
+      </div>
+      <div class="year-card">
+        <div class="yr">3 yrs</div>
+        <div class="status">IRS audit window (from filing)</div>
+      </div>
+      <div class="year-card">
+        <div class="yr">10 yrs</div>
+        <div class="status">IRS collection statute</div>
+      </div>
+    </div>
+    <p>File the last 6 years in order, starting with the oldest. Once all 6 are filed, you're in compliance — the IRS will work with you on a payment arrangement for any balance owed.</p>
+  </div>
+
+  <div class="section">
+    <h2>Step-by-step: getting back into compliance</h2>
+    <ol class="step-list">
+      <li><span><strong>Order your Wage and Income Transcripts.</strong> Go to IRS.gov → Get Your Tax Records → request a Wage and Income Transcript for each missing year. This shows every income document the IRS received under your SSN — W-2s, 1099s, everything. This is exactly what the IRS has, so you know what to work with.</span></li>
+      <li><span><strong>Prepare returns for the last 6 years</strong> (oldest first). Use the income from your transcripts plus any deductions and credits you're entitled to — business expenses, mortgage interest, retirement contributions, dependents, everything the IRS's Substitute for Return left out. Even a rough return is better than none.</span></li>
+      <li><span><strong>File by mail.</strong> You can't e-file prior-year returns older than 3 years — they have to be mailed. Send each year's return to the IRS service center address specified in the instructions for that year's form. Use certified mail with return receipt so you have proof of filing date.</span></li>
+      <li><span><strong>Request penalty abatement once you're in compliance.</strong> First Time Abatement (FTA) is available if you had no penalties in the prior 3 tax years before the year you're abating. You must request it — the IRS won't offer it. Reasonable Cause abatement is also available if you can document why you didn't file (illness, family emergency, erroneous advice, etc.).</span></li>
+      <li><span><strong>Address any balance with a payment plan or OIC.</strong> Once filed, an installment agreement stops active collection. If the total debt is genuinely more than your assets and future income can support, an Offer in Compromise may settle it for less. See our full guides: <a href="/irs-installment-agreement" style="color:var(--gold-dim);font-weight:600">IRS Payment Plans</a> · <a href="/irs-offer-in-compromise" style="color:var(--gold-dim);font-weight:600">Offer in Compromise</a>.</span></li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h2>One thing most people miss: the IRS collection statute still runs while you're unfiled</h2>
+    <p>Here's a nuance that matters for long-term cases: the IRS's 10-year collection statute (CSED) only starts running from the date a tax is <em>assessed</em>. For a year where you never filed and the IRS never prepared a Substitute for Return, no assessment exists — which means the 10-year collection clock never started.</p>
+    <p>But for years where the IRS <em>did</em> prepare a Substitute for Return and assess tax, that clock is running. If you're more than 7–8 years past an SFR assessment, it may be worth checking whether waiting out the statute makes more sense than filing and negotiating — but this requires knowing your exact account transcripts. See our full guide on the <a href="/irs-collection-statute" style="color:var(--gold-dim);font-weight:600">IRS 10-Year Collection Statute</a>.</p>
+  </div>
+
+  <div class="section">
+    <h2>Will you get in trouble? The criminal prosecution question</h2>
+    <p>The answer almost all tax professionals give, because it's accurate: criminal prosecution for failure to file is extremely rare. It's reserved for willful, repeated non-filers with large dollar amounts, often combined with other fraud. The IRS pursues approximately 1,000–2,000 criminal tax cases per year nationally — out of tens of millions of compliance issues.</p>
+    <p>For someone who simply fell behind and is now trying to get right, the IRS's goal is to get the returns filed and a payment arrangement established. Prosecution is not in their interest when there's a path to collecting the money owed.</p>
+    <div class="insider">
+      <div class="insider-label">Romeo Razi, CPA — YouTube Video</div>
+      <p>"People always talk about their highs — they never talk about their lows. You don't go to a dinner party and say 'hey, guess what, I didn't file my taxes for three years.' This is more common than you think. I'm not going to judge you. In the last three weeks of tax season alone, I had three people: one hadn't filed for three years, one for five years, one hadn't filed trust returns for four years. I helped all three."</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Frequently asked questions — unfiled taxes</h2>
+    <div class="faq-item">
+      <div class="faq-q">What happens if you don't file taxes for years?</div>
+      <div class="faq-a">If you owe money, three penalties accumulate simultaneously: failure-to-file (5%/month up to 25%), failure-to-pay (0.5%/month up to 6%), and compounding interest. The IRS also prepares a Substitute for Return using only the income documents they have — missing your deductions — and begins collection. If you're owed a refund, the only consequence is losing the refund after 3 years.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How many years back do I need to file taxes?</div>
+      <div class="faq-a">The IRS's compliance definition is the last 6 years. Filing the past 6 years brings you into compliance in most cases. You only need to go further back if the IRS filed a Substitute for Return for an older year that you want to override (because your actual tax is lower), or if you have net operating losses from an older year to carry forward.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Will the IRS find out if you don't file?</div>
+      <div class="faq-a">Eventually, yes. The IRS automatically receives every W-2, 1099, and other income document filed under your SSN. Their ASFR program cross-references these against filed returns. The timing varies — it can take years before a non-filer notice is generated — but the income data is there and the system does catch up.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can you go to jail for not filing taxes?</div>
+      <div class="faq-a">Criminal prosecution for failure to file is extremely rare — reserved for willful, systematic non-compliance at significant dollar amounts, often combined with other fraud. The IRS pursues roughly 1,000–2,000 criminal tax cases per year nationwide. For someone proactively trying to get compliant, prosecution is not a realistic risk. Civil penalties are the real concern.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is the penalty for not filing for 3 years?</div>
+      <div class="faq-a">After 3 years without filing (assuming a balance owed), the failure-to-file penalty has long since maxed out at 25%. The failure-to-pay penalty is still accumulating at 0.5% per month. Interest is compounding on the entire amount. Total burden commonly reaches 40–50% of the original tax owed — not counting ongoing interest accumulation after that point.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I e-file late returns for prior years?</div>
+      <div class="faq-a">You can e-file returns for the prior 2 years using commercial tax software (typically the 2 most recently completed tax years). Returns older than that must be prepared and mailed to the IRS — e-filing isn't available. Send each year separately by certified mail with return receipt so you have dated proof of filing.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if I can't afford to pay what I owe when I file?</div>
+      <div class="faq-a">File the returns anyway — the failure-to-file penalty (5%/month) dwarfs the failure-to-pay penalty (0.5%/month). Filing without paying stops the larger penalty immediately. Once filed, you can set up an installment agreement at IRS.gov (under $50,000 can usually be done entirely online), request Currently Not Collectible status if you genuinely can't pay anything, or explore an Offer in Compromise if the debt is beyond your realistic ability to ever pay.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">The IRS already filed a Substitute for Return for me — do I still need to file my own return?</div>
+      <div class="faq-a">Yes, in most cases — and it will likely save you money. An SFR uses gross income from third-party documents and applies only the standard deduction and one personal exemption. It misses your actual deductions, business expenses, retirement contributions, credits, and any other items that reduce your real liability. Filing your actual return typically produces a significantly lower tax bill than the SFR.</div>
+    </div>
+  </div>
+
+<div class="notice-links">
+  <h3>Related guides from a former IRS auditor:</h3>
+  <ul>
+    <li><a href="/cp59">CP59 — Unfiled Return Notice</a></li>
+    <li><a href="/cp14">CP14 — First Balance Due Notice</a></li>
+    <li><a href="/missed-tax-deadline">Missed the Tax Deadline?</a></li>
+    <li><a href="/irs-installment-agreement">IRS Payment Plans</a></li>
+    <li><a href="/irs-offer-in-compromise">Offer in Compromise</a></li>
+    <li><a href="/irs-collection-statute">IRS 10-Year Collection Statute</a></li>
+    <li><a href="/cp504">CP504 — Intent to Levy</a></li>
+    <li><a href="/lt11">LT11 — Final Levy Notice</a></li>
+    <li><a href="/cp3219a">CP3219A — Notice of Deficiency</a></li>
+    <li><a href="/cp523">CP523 — Payment Plan Terminated</a></li>
+    <li><a href="/irs-audit-appeals-strategy">Audit &amp; Appeals Strategy</a></li>
+    <li><a href="/one-big-beautiful-act">One Big Beautiful Act</a></li>
+  </ul>
+</div>
+<div class="romeo-bar">
+  <div class="romeo-avatar-wrap">
+    <div class="romeo-avatar">RR</div>
+    <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener" class="romeo-linkedin">&#128101; LinkedIn</a>
+  </div>
+  <div class="romeo-info">
+    <div class="romeo-name">Romeo Razi, CPA</div>
+    <div class="romeo-title">Former IRS Tax Examiner (Individual &amp; Employment Tax Division) &middot; CPA &middot; 10,000+ returns in 15+ years</div>
+    <div class="romeo-bio">Romeo has helped clients who hadn't filed for 3, 4, even 5 years — including trust returns. He knows what the IRS actually requires to bring you back into compliance, and how to minimize penalties when you do. <a href="https://www.youtube.com/watch?v=X72vEtA_b0s" target="_blank" rel="noopener" style="color:var(--gold-dim)">Watch: What to do if you missed the tax deadline &rarr;</a></div>
+  </div>
+</div>
+<div class="cta-box">
+  <h2>Haven't filed in years? Romeo has helped dozens of people in exactly this situation.</h2>
+  <p>Three years, five years, trust returns four years behind — he's seen it all. He knows what the IRS actually requires, what penalties can be reduced, and how to get back into compliance with minimal damage.</p>
+  <a href="/#contact" class="cta-btn">Get a Free Case Review &rarr;</a>
+</div>
+
+</div>
+<footer>
+  <p>IRS Resolution Service LLC · 9673 Camino Capistrano, Las Vegas, NV · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
+  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice.</p>
+</footer>
+</body>
+</html>
