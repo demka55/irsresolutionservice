@@ -24,6 +24,7 @@ These pages explain specific IRS notices — what they mean, exact deadlines, wh
 - [CP3219A — Statutory Notice of Deficiency](https://irsresolutionservice.com/cp3219a): 90-day Tax Court deadline (hard statutory, non-extendable), three response paths
 - [CP59 — Unfiled Return Notice](https://irsresolutionservice.com/cp59): Failure-to-file vs. failure-to-pay penalties, the 6-year compliance rule, how to respond
 - [CP523 — Installment Agreement Termination](https://irsresolutionservice.com/cp523): Why payment plans default, reinstatement vs. restructuring, what happens next
+- [Haven't Filed Taxes in Years? What to Do](https://irsresolutionservice.com/havent-filed-taxes): The 6-year compliance rule, penalty math, how to get transcripts, Substitute for Return strategy
 - [Missed Tax Deadline — What to Do](https://irsresolutionservice.com/missed-tax-deadline): Three stacking penalties, situation A vs. B, payment thresholds, catch-up filing
 
 ## IRS Strategy & Resolution Pages
