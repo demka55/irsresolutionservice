@@ -82,8 +82,10 @@ footer a{color:var(--gold);text-decoration:none}
 .nav-item { position: relative; }
 .nav-item > a { display: flex; align-items: center; gap: 4px; }
 .nav-item > a::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid currentColor; opacity: 0.5; margin-top: 1px; flex-shrink: 0; }
-.dropdown { display: none; position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; box-shadow: 0 12px 32px rgba(26,20,16,0.14); min-width: 580px; z-index: 300; padding: 1.25rem 0; }
+.dropdown { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; box-shadow: 0 12px 32px rgba(26,20,16,0.14); min-width: 580px; z-index: 300; padding: 1.75rem 0 1.25rem; }
+.nav-item { padding-bottom: 12px; margin-bottom: -12px; }
 .nav-item:hover .dropdown, .nav-item:focus-within .dropdown { display: block; }
+.dropdown::before { content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 12px; background: transparent; }
 .dropdown-cols { display: grid; grid-template-columns: 1fr 1fr; }
 .dropdown-col { padding: 0 1.25rem; }
 .dropdown-col:first-child { border-right: 1px solid var(--cream-dark); }
@@ -177,6 +179,7 @@ footer a{color:var(--gold);text-decoration:none}
               <a href="/cp523">CP523 — Payment Plan Terminated</a>
               <a href="/missed-tax-deadline">Missed the Tax Deadline</a>
               <a href="/havent-filed-taxes">Haven't Filed in Years</a>
+              <a href="/irs-wage-garnishment">Wage Garnishment — Stop It</a>
             </div>
             <div class="dropdown-col">
               <div class="dropdown-col-head">Tax Law &amp; Strategy</div>
