@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRS CP504 Notice: What It Really Means (It's Not What You Think) | Former IRS Auditor</title>
+<meta name="description" content="A CP504 is serious — but it is not the last notice before the IRS levies your wages or bank account. Former IRS Auditor Romeo Razi explains exactly what CP504 authorizes, what it doesn't, and your remaining options.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c; --gold-light: #e8c97a; --gold-dim: #8a6e2f; --gold-muted: #f5ecd8;
+  --cream: #f5f0e8; --cream-warm: #ede5d5; --cream-dark: #d9cdb8;
+  --ink: #1a1410; --ink-soft: #4a3f32; --ink-muted: #7a6e60; --white: #ffffff;
+  --red: #c0392b; --red-light: #fdf0f0; --green: #1a5c2a; --green-light: #f0fdf4;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 18px; line-height: 1.7; }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--cream-dark); backdrop-filter: blur(12px); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-mark { width: 36px; height: 36px; border: 1.5px solid var(--gold); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--gold); }
+.logo-text { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+.logo-text span { color: var(--gold); }
+.nav { display: flex; align-items: center; gap: 1.75rem; }
+.nav a { font-size: 15px; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+.nav a:hover { color: var(--gold-dim); }
+.nav-cta { background: var(--gold) !important; color: var(--white) !important; padding: 9px 22px; border-radius: 2px; font-weight: 600; }
+.notice-hero { background: var(--white); padding: 120px 2rem 64px; border-bottom: 1px solid var(--cream-dark); }
+.notice-hero-inner { max-width: 840px; margin: 0 auto; }
+.notice-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--gold-muted); color: var(--gold-dim); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; margin-bottom: 1.5rem; }
+.notice-code-display { font-family: var(--serif); font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.notice-hero h1 { font-family: var(--serif); font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 600; color: var(--ink-soft); line-height: 1.3; margin-bottom: 1.5rem; }
+.direct-answer { background: var(--green-light); border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 2rem; }
+.direct-answer p { font-size: 17px; line-height: 1.65; color: var(--ink-soft); }
+.direct-answer strong { color: var(--green); }
+.deadline-badge { display: inline-flex; align-items: center; gap: 10px; background: var(--red-light); border: 1.5px solid #e8b0b0; border-radius: 4px; padding: 10px 18px; font-size: 15px; font-weight: 600; color: var(--red); }
+.notice-body { max-width: 840px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+.section { margin-bottom: 3.5rem; }
+.section h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
+.section h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); margin: 1.5rem 0 0.75rem; }
+.section p { color: var(--ink-soft); margin-bottom: 1rem; }
+.section ul, .section ol { color: var(--ink-soft); padding-left: 1.5rem; margin-bottom: 1rem; }
+.section li { margin-bottom: 0.5rem; }
+.insider { background: var(--gold-muted); border: 1px solid var(--cream-dark); border-left: 4px solid var(--gold); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.insider-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.4rem; }
+.insider p { font-size: 16px; color: var(--ink-soft); margin: 0; font-style: italic; }
+.warning-box { background: var(--red-light); border: 1px solid #e8b0b0; border-left: 4px solid var(--red); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.warning-box p { font-size: 16px; color: var(--ink-soft); margin: 0; }
+.step-list { list-style: none; padding: 0; counter-reset: steps; }
+.step-list li { counter-increment: steps; display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.25rem; }
+.step-list li::before { content: counter(steps); background: var(--gold); color: var(--white); min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; margin-top: 2px; flex-shrink: 0; }
+.cta-box { background: var(--ink); color: var(--white); border-radius: 6px; padding: 2.5rem 2rem; text-align: center; margin: 3rem 0; }
+.cta-box h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; }
+.cta-box p { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 1.5rem; }
+.cta-btn { display: inline-block; background: var(--gold); color: var(--ink); text-decoration: none; padding: 14px 32px; border-radius: 2px; font-weight: 700; font-size: 16px; letter-spacing: 0.04em; }
+.romeo-bar { display: flex; align-items: center; gap: 1.5rem; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+.romeo-avatar { width: 56px; height: 56px; background: var(--gold-muted); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--gold-dim); flex-shrink: 0; }
+.romeo-name { font-weight: 700; font-size: 16px; color: var(--ink); }
+.romeo-title { font-size: 13px; color: var(--ink-muted); }
+.faq-item { border-bottom: 1px solid var(--cream-dark); padding: 1.25rem 0; }
+.faq-q { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+.faq-a { font-size: 16px; color: var(--ink-soft); }
+footer { background: var(--ink); color: rgba(255,255,255,0.5); text-align: center; padding: 2rem; font-size: 13px; }
+footer a { color: var(--gold); text-decoration: none; }
+@media (max-width: 640px) { .nav { gap: 1rem; } .nav a:not(.nav-cta) { display: none; } }
+
+.romeo-bar{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0}
+.romeo-avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.romeo-avatar{width:72px;height:72px;background:var(--gold-muted);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px;font-weight:700;color:var(--gold-dim);overflow:hidden}
+.romeo-linkedin{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--gold-dim);text-decoration:none;font-weight:600;letter-spacing:0.05em}
+.romeo-linkedin:hover{color:var(--gold)}
+.romeo-info .romeo-name{font-weight:700;font-size:17px;color:var(--ink)}
+.romeo-info .romeo-title{font-size:14px;color:var(--ink-muted);margin-top:2px;line-height:1.5}
+.romeo-info .romeo-bio{font-size:15px;color:var(--ink-soft);margin-top:0.75rem;line-height:1.6}
+.notice-links{background:var(--cream-warm);border-radius:6px;padding:1.5rem;margin:2rem 0}
+.notice-links h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:1rem}
+.notice-links ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:0.5rem}
+.notice-links li a{display:inline-block;background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--gold-dim);text-decoration:none;transition:border-color 0.2s}
+.notice-links li a:hover{border-color:var(--gold);color:var(--gold)}
+.video-callout{background:var(--ink);color:var(--white);border-radius:6px;padding:1.5rem 1.75rem;margin:2rem 0;display:flex;align-items:center;gap:1.25rem}
+.video-callout .play-icon{font-size:2rem;flex-shrink:0}
+.video-callout h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.25rem}
+.video-callout p{font-size:14px;color:rgba(255,255,255,0.65);margin:0}
+.video-callout a{color:var(--gold);text-decoration:none;font-weight:600}
+@media(max-width:640px){.romeo-bar{grid-template-columns:1fr}.romeo-avatar-wrap{flex-direction:row}}
+
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IRS CP504 Notice: What It Really Means | Former IRS Auditor",
+  "description": "A CP504 is serious but it is NOT the last notice before the IRS can levy wages or bank accounts. Former IRS Auditor Romeo Razi explains what CP504 actually authorizes.",
+  "url": "https://irsresolutionservice.com/cp504",
+  "dateModified": "2026-06-27",
+  "author": {
+    "@type": "Person",
+    "@id": "https://irsresolutionservice.com/#romeo-razi",
+    "name": "Romeo Razi",
+    "honorificSuffix": "CPA",
+    "jobTitle": "Former IRS Tax Examiner, CPA",
+    "sameAs": "https://www.linkedin.com/in/romeo-razi/"
+  },
+  "publisher": {
+    "@id": "https://irsresolutionservice.com/#organization"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://irsresolutionservice.com/cp504"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can the IRS take my paycheck because of a CP504?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not yet. Wage garnishment requires the IRS to first issue an LT11 or Letter 1058 (Final Notice of Intent to Levy) and give you 30 days. That notice triggers your right to a Collection Due Process hearing, which temporarily stops the levy while your case is reviewed. The CP504 alone does not give the IRS authority to touch your wages from a private employer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "The CP504 says the IRS may take my property \u2014 does that mean my house?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Real property seizure is extremely rare and requires additional legal steps beyond the LT11. In practice, the IRS seizes financial assets (wages, bank accounts, retirement funds) far more commonly than real property. That said, a federal tax lien attaches to all your property including real estate, which matters when you try to sell or refinance."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I already have a payment plan \u2014 why did I get a CP504?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This often happens if your installment agreement defaulted (a missed payment, a new tax liability you didn't include, or unfiled returns). Check whether your agreement is still active. If it defaulted, you may be able to reinstate it, which would stop further escalation."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://irsresolutionservice.com" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <nav class="nav">
+      <a href="/#services">Services</a>
+      <a href="/#founders">About</a>
+      <a href="/#tool">Notice Decoder</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#contact" class="nav-cta">Get Help Now</a>
+    </nav>
+  </div>
+</header>
+<section class="notice-hero">
+  <div class="notice-hero-inner">
+    <div class="notice-eyebrow">⚠ IRS Notice Explained</div>
+    <div class="notice-code-display">CP504</div>
+    <h1>You received a CP504 — is the IRS actually about to seize your assets?</h1>
+    <div class="direct-answer"><p><strong>The short answer:</strong> A CP504 is a serious escalation notice — it means the IRS intends to levy your state tax refund and may begin other collection actions. But it is <em>not</em> the final notice before they can take your wages or bank account. You still have a critical notice coming (LT11) and important rights to exercise before enforcement reaches that stage.</p></div>
+    <div class="deadline-badge">⏱ Response deadline: 30 days — act immediately, this notice means escalation is imminent</div>
+  </div>
+</section>
+<div class="notice-body">
+
+  <div class="section">
+    <h2>What a CP504 actually authorizes — and what it doesn't</h2>
+    <p>The CP504 is one of the most misunderstood notices the IRS sends. Most taxpayers who receive it believe they're one step from having their wages garnished or their bank account frozen. That's not accurate — and understanding the distinction matters enormously for how you respond.</p>
+    <p>What a CP504 does authorize: the IRS can immediately levy your <strong>state tax refund</strong> to offset your federal debt. They can also begin levying certain federal payments through the Federal Payment Levy Program (FPLP) — Social Security benefits, federal contractor payments, and similar federal sources.</p>
+    <p>What a CP504 does not authorize: taking money from your private bank account, garnishing wages from a private employer, or seizing other property. For those actions, the IRS must first send you a Final Notice of Intent to Levy (LT11 or Letter 1058) and give you 30 days to request a Collection Due Process hearing.</p>
+    <div class="insider">
+      <div class="insider-label">Romeo Razi — Former IRS Auditor</div>
+      <p>"The CP504 scares people into thinking it's over. It's not. It's the IRS applying real pressure, but there's still a critical step between here and them touching your paycheck or bank account. That step — the LT11 — comes with rights that can stop enforcement entirely if you use them correctly."</p>
+    </div>
+  </div>
+  <div class="section">
+    <h2>The collection sequence that led to your CP504</h2>
+    <p>The CP504 doesn't arrive out of nowhere. By this point, the IRS has typically sent:</p>
+    <ul>
+      <li><strong>CP14</strong> — first balance-due notice (21-day response window)</li>
+      <li><strong>CP501</strong> — first reminder (21 days)</li>
+      <li><strong>CP503</strong> — second reminder, more urgent language (30 days)</li>
+      <li><strong>CP504</strong> — you are here. Intent to levy state refunds. Final warning before LT11.</li>
+    </ul>
+    <p>After CP504, if you still don't respond, the IRS sends the LT11 or Letter 1058 — the Final Notice of Intent to Levy. That's when the 30-day clock for your Collection Due Process (CDP) hearing rights begins. Missing that deadline is where people lose the most important options.</p>
+  </div>
+  <div class="section">
+    <h2>What to do the moment you receive a CP504</h2>
+    <ol class="step-list">
+      <li><span><strong>Do not ignore it.</strong> Every day you wait narrows your options. The LT11 may already be in process.</span></li>
+      <li><span><strong>Review the balance for accuracy.</strong> Pull your tax account transcripts and verify the underlying tax is correct. Penalties and interest are often a large portion — and some of it may be abatable.</span></li>
+      <li><span><strong>Contact the IRS to explore resolution options.</strong> An active installment agreement prevents levy action. An Offer in Compromise, once submitted, also pauses collection. Currently Not Collectible status pauses collection if you genuinely can't pay.</span></li>
+      <li><span><strong>Get professional help before the LT11 arrives.</strong> Once the LT11 is issued, you have 30 days to request a CDP hearing — and that hearing is your last legal mechanism to stop a levy, challenge the amount, and propose alternatives before enforcement begins.</span></li>
+    </ol>
+    <div class="warning-box">
+      <p>⚠ If you're receiving Social Security retirement or disability benefits, act immediately. The Federal Payment Levy Program can begin taking 15% of your Social Security payments as soon as the CP504 is issued, without a separate warning.</p>
+    </div>
+  </div>
+  <div class="section">
+    <h2>Resolution options at the CP504 stage</h2>
+    <h3>Installment Agreement</h3>
+    <p>If you can pay over time, getting an installment agreement in place stops active levy action. You must be current on all required tax return filings to qualify. Balances up to $50,000 can often be handled through the IRS's online payment agreement tool.</p>
+    <h3>Offer in Compromise</h3>
+    <p>If the debt is more than you can ever realistically pay based on your income, assets, and expenses, an OIC lets you settle for less. The IRS uses a specific formula — Reasonable Collection Potential — to evaluate offers. While the OIC is pending, collection is paused.</p>
+    <h3>Currently Not Collectible (CNC) Status</h3>
+    <p>If your allowable monthly expenses equal or exceed your monthly income, the IRS can place your account in CNC hardship status. Collection pauses, though the debt and interest continue. The IRS will reassign you as your financial situation changes.</p>
+    <h3>Penalty Abatement</h3>
+    <p>Even at the CP504 stage, penalty abatement is worth pursuing. First Time Abatement can eliminate failure-to-pay and failure-to-file penalties for taxpayers with a clean prior history. Reasonable cause abatement is available if you can document why you couldn't comply (illness, natural disaster, erroneous advice, etc.).</p>
+  </div>
+  <div class="section">
+    <h2>Frequently asked questions about CP504</h2>
+    <div class="faq-item">
+      <div class="faq-q">Can the IRS take my paycheck because of a CP504?</div>
+      <div class="faq-a">Not yet. Wage garnishment requires the IRS to first issue an LT11 or Letter 1058 (Final Notice of Intent to Levy) and give you 30 days. That notice triggers your right to a Collection Due Process hearing, which temporarily stops the levy while your case is reviewed. The CP504 alone does not give the IRS authority to touch your wages from a private employer.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">The CP504 says the IRS may take my property — does that mean my house?</div>
+      <div class="faq-a">Real property seizure is extremely rare and requires additional legal steps beyond the LT11. In practice, the IRS seizes financial assets (wages, bank accounts, retirement funds) far more commonly than real property. That said, a federal tax lien attaches to all your property including real estate, which matters when you try to sell or refinance.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">I already have a payment plan — why did I get a CP504?</div>
+      <div class="faq-a">This often happens if your installment agreement defaulted (a missed payment, a new tax liability you didn't include, or unfiled returns). Check whether your agreement is still active. If it defaulted, you may be able to reinstate it, which would stop further escalation.</div>
+    </div>
+  </div>
+  
+<div class="romeo-bar">
+  <div class="romeo-avatar-wrap">
+    <div class="romeo-avatar">RR</div>
+    <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener" class="romeo-linkedin">&#128101; LinkedIn</a>
+  </div>
+  <div class="romeo-info">
+    <div class="romeo-name">Romeo Razi, CPA</div>
+    <div class="romeo-title">Former IRS Tax Examiner (Individual &amp; Employment Tax Division) &middot; CPA &middot; Featured in MarketWatch, U.S. News &amp; World Report, Realtor</div>
+    <div class="romeo-bio">Romeo conducted face-to-face audits at the IRS across sole proprietors to mid-sized businesses, worked on worker reclassification audits with the Department of Labor, and prepared disputed returns for Tax Court and Appeals. He founded <a href="https://taxedright.com" target="_blank" rel="noopener" style="color:var(--gold-dim)">Taxed Right LLC</a> in 2015 to put that insider knowledge to work for taxpayers.</div>
+  </div>
+</div>
+<div style="background:var(--ink);color:#fff;border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0;display:flex;align-items:flex-start;gap:1rem">
+  <div style="font-size:1.75rem;flex-shrink:0;line-height:1">▶</div>
+  <div>
+    <p style="font-size:14px;color:rgba(255,255,255,.75);margin:0 0 .35rem;font-style:normal">IRS collection activity exploded in 2024–2025 as the IRS released COVID-held notices. Romeo and Yoav discuss what the wave looks like from the practitioner side.</p>
+    <a href="https://www.youtube.com/watch?v=tb6IfQqRaMM" target="_blank" rel="noopener" style="color:var(--gold);font-size:13px;font-weight:600;text-decoration:none">Watch: IRS Insider Interview — Romeo Razi & Yoav Betsion, EA &rarr;</a>
+  </div>
+</div>
+<div class="notice-links">
+  <h3>Other IRS notices &amp; strategies explained by a former IRS auditor:</h3>
+  <ul>
+    <li><a href="/cp2000">CP2000 &mdash; Proposed Adjustment</a></li>
+    <li><a href="/cp14">CP14 &mdash; Balance Due</a></li>
+    <li><a href="/cp504">CP504 &mdash; Intent to Levy</a></li>
+    <li><a href="/lt11">LT11 &mdash; Final Notice Before Levy</a></li>
+    <li><a href="/cp3219a">CP3219A &mdash; Notice of Deficiency</a></li>
+    <li><a href="/cp59">CP59 &mdash; Unfiled Return</a></li>
+    <li><a href="/cp523">CP523 &mdash; Payment Plan Terminated</a></li>
+    <li><a href="/irs-installment-agreement">IRS Installment Agreements</a></li>
+    <li><a href="/irs-offer-in-compromise">Offer in Compromise</a></li>
+    <li><a href="/irs-collection-statute">IRS 10-Year Collection Statute</a></li>
+    <li><a href="/irs-budget-cuts-2025">IRS Budget Cuts 2025</a></li>
+    <li><a href="/irs-audit-appeals-strategy">Audit &amp; Appeals Strategy</a></li>
+  </ul>
+</div>
+<div class="cta-box">
+  <h2>Received a CP504? The next notice is the one that matters most.</h2>
+  <p>The LT11 that follows CP504 triggers a 30-day window to request a hearing that can stop levy action entirely. Romeo knows exactly how to use it and what resolution to propose.</p>
+  <a href="/#contact" class="cta-btn">Get a Free Case Review →</a>
+</div>
+</div>
+<footer>
+  <p>IRS Resolution Service LLC · 9673 Camino Capistrano, Las Vegas, NV · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
+  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice.</p>
+</footer>
+</body>
+</html>

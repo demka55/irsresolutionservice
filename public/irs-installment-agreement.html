@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRS Installment Agreement: How Payment Plans Actually Work (From Someone Who Was There)</title>
+<meta name="description" content="Everything the IRS doesn't tell you about installment agreements — exact thresholds, lien rules, expense table negotiations, and the partial payment strategy. From a former IRS auditor.">
+<link rel="canonical" href="https://irsresolutionservice.com/irs-installment-agreement">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#c9a84c;--gold-light:#e8c97a;--gold-dim:#8a6e2f;--gold-muted:#f5ecd8;
+  --cream:#f5f0e8;--cream-warm:#ede5d5;--cream-dark:#d9cdb8;
+  --ink:#1a1410;--ink-soft:#4a3f32;--ink-muted:#7a6e60;--white:#ffffff;
+  --red:#c0392b;--red-light:#fdf0f0;--green:#1a5c2a;--green-light:#f0fdf4;
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Outfit',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:18px;line-height:1.7}
+.site-header{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(255,255,255,0.97);border-bottom:1px solid var(--cream-dark);backdrop-filter:blur(12px)}
+.header-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-mark{width:36px;height:36px;border:1.5px solid var(--gold);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;font-weight:700;color:var(--gold)}
+.logo-text{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--ink)}
+.logo-text span{color:var(--gold)}
+.nav{display:flex;align-items:center;gap:1.75rem}
+.nav a{font-size:15px;color:var(--ink-muted);text-decoration:none;letter-spacing:0.03em;transition:color 0.2s}
+.nav a:hover{color:var(--gold-dim)}
+.nav-cta{background:var(--gold)!important;color:var(--white)!important;padding:9px 22px;border-radius:2px;font-weight:600}
+.notice-hero{background:var(--white);padding:120px 2rem 64px;border-bottom:1px solid var(--cream-dark)}
+.notice-hero-inner{max-width:840px;margin:0 auto}
+.notice-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--gold-muted);color:var(--gold-dim);font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;border-radius:2px;margin-bottom:1.5rem}
+.notice-code-display{font-family:var(--serif);font-size:clamp(3rem,8vw,5.5rem);font-weight:700;color:var(--ink);line-height:1;margin-bottom:0.5rem;letter-spacing:-0.02em}
+.notice-hero h1{font-family:var(--serif);font-size:clamp(1.5rem,3.5vw,2.25rem);font-weight:600;color:var(--ink-soft);line-height:1.3;margin-bottom:1.5rem}
+.direct-answer{background:var(--green-light);border-left:4px solid var(--green);padding:1.25rem 1.5rem;border-radius:0 6px 6px 0;margin-bottom:2rem}
+.direct-answer p{font-size:17px;line-height:1.65;color:var(--ink-soft)}
+.direct-answer strong{color:var(--green)}
+.deadline-badge{display:inline-flex;align-items:center;gap:10px;background:var(--red-light);border:1.5px solid #e8b0b0;border-radius:4px;padding:10px 18px;font-size:15px;font-weight:600;color:var(--red)}
+.notice-body{max-width:840px;margin:0 auto;padding:4rem 2rem 6rem}
+.section{margin-bottom:3.5rem}
+.section h2{font-family:var(--serif);font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--cream-dark)}
+.section h3{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink);margin:1.5rem 0 0.75rem}
+.section p{color:var(--ink-soft);margin-bottom:1rem}
+.section ul,.section ol{color:var(--ink-soft);padding-left:1.5rem;margin-bottom:1rem}
+.section li{margin-bottom:0.5rem}
+.insider{background:var(--gold-muted);border:1px solid var(--cream-dark);border-left:4px solid var(--gold);border-radius:0 6px 6px 0;padding:1.25rem 1.5rem;margin:1.5rem 0}
+.insider-label{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.4rem}
+.insider p{font-size:16px;color:var(--ink-soft);margin:0;font-style:italic}
+.warning-box{background:var(--red-light);border:1px solid #e8b0b0;border-left:4px solid var(--red);border-radius:0 6px 6px 0;padding:1.25rem 1.5rem;margin:1.5rem 0}
+.warning-box p{font-size:16px;color:var(--ink-soft);margin:0}
+.step-list{list-style:none;padding:0;counter-reset:steps}
+.step-list li{counter-increment:steps;display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.25rem}
+.step-list li::before{content:counter(steps);background:var(--gold);color:var(--white);min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-top:2px;flex-shrink:0}
+.cta-box{background:var(--ink);color:var(--white);border-radius:6px;padding:2.5rem 2rem;text-align:center;margin:3rem 0}
+.cta-box h2{font-family:var(--serif);font-size:1.8rem;font-weight:700;color:var(--white);margin-bottom:0.75rem}
+.cta-box p{color:rgba(255,255,255,0.7);font-size:16px;margin-bottom:1.5rem}
+.cta-btn{display:inline-block;background:var(--gold);color:var(--ink);text-decoration:none;padding:14px 32px;border-radius:2px;font-weight:700;font-size:16px;letter-spacing:0.04em}
+.romeo-bar{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0}
+.romeo-avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.romeo-avatar{width:72px;height:72px;background:var(--gold-muted);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px;font-weight:700;color:var(--gold-dim);overflow:hidden}
+.romeo-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.romeo-linkedin{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--gold-dim);text-decoration:none;font-weight:600;letter-spacing:0.05em}
+.romeo-linkedin:hover{color:var(--gold)}
+.romeo-info .romeo-name{font-weight:700;font-size:17px;color:var(--ink)}
+.romeo-info .romeo-title{font-size:14px;color:var(--ink-muted);margin-top:2px;line-height:1.5}
+.romeo-info .romeo-bio{font-size:15px;color:var(--ink-soft);margin-top:0.75rem;line-height:1.6}
+.faq-item{border-bottom:1px solid var(--cream-dark);padding:1.25rem 0}
+.faq-q{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--ink);margin-bottom:0.5rem}
+.faq-a{font-size:16px;color:var(--ink-soft)}
+.notice-links{background:var(--cream-warm);border-radius:6px;padding:1.5rem;margin:2rem 0}
+.notice-links h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:1rem}
+.notice-links ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:0.5rem}
+.notice-links li a{display:inline-block;background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--gold-dim);text-decoration:none;transition:border-color 0.2s}
+.notice-links li a:hover{border-color:var(--gold);color:var(--gold)}
+.video-callout{background:var(--ink);color:var(--white);border-radius:6px;padding:1.5rem 1.75rem;margin:2rem 0;display:flex;align-items:center;gap:1.25rem}
+.video-callout .play-icon{font-size:2rem;flex-shrink:0}
+.video-callout h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.25rem}
+.video-callout p{font-size:14px;color:rgba(255,255,255,0.65);margin:0}
+.video-callout a{color:var(--gold);text-decoration:none;font-weight:600}
+footer{background:var(--ink);color:rgba(255,255,255,0.5);text-align:center;padding:2rem;font-size:13px}
+footer a{color:var(--gold);text-decoration:none}
+@media(max-width:640px){.nav{gap:1rem}.nav a:not(.nav-cta){display:none}.romeo-bar{grid-template-columns:1fr}.romeo-avatar-wrap{flex-direction:row}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IRS Installment Agreements: How Payment Plans Actually Work",
+  "description": "IRS payment plan thresholds, lien rules, expense table negotiations, and partial payment strategy \u2014 explained by a former IRS auditor with insider knowledge.",
+  "url": "https://irsresolutionservice.com/irs-installment-agreement",
+  "dateModified": "2026-06-27",
+  "author": {
+    "@type": "Person",
+    "@id": "https://irsresolutionservice.com/#romeo-razi",
+    "name": "Romeo Razi",
+    "honorificSuffix": "CPA",
+    "jobTitle": "Former IRS Tax Examiner, CPA",
+    "sameAs": "https://www.linkedin.com/in/romeo-razi/"
+  },
+  "publisher": {
+    "@id": "https://irsresolutionservice.com/#organization"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://irsresolutionservice.com/irs-installment-agreement"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do penalties and interest keep accruing while I'm on a payment plan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. An installment agreement stops active collection (no levies, no wage garnishments), but penalties and interest continue to accrue on the remaining balance until it's paid in full. This is why paying as much as possible per month, and paying off the balance as quickly as you can afford to, matters financially."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I negotiate the monthly payment after the IRS gives me their number?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes \u2014 this is one of the areas where professional representation genuinely matters. The IRS's formula-derived number is often higher than what someone can realistically sustain. Experienced practitioners push back on expense calculations and sometimes get the payment reduced. The IRS would rather close the case with a payment they can count on than have the agreement default."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I set up a payment plan if I haven't filed all my returns?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The IRS requires you to be in compliance \u2014 all required returns filed \u2014 before they will enter into an installment agreement. If you have unfiled returns, those need to be addressed first. See our page on CP59 unfiled return notices for guidance on how to handle that situation."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo"><div class="logo-mark">IRS</div><span class="logo-text">Resolution <span>Service</span></span></a>
+    <nav class="nav">
+      <a href="/#services">Services</a>
+      <a href="/#founders">About</a>
+      <a href="/#tool">Notice Decoder</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#contact" class="nav-cta">Get Help Now</a>
+    </nav>
+  </div>
+</header>
+<section class="notice-hero">
+  <div class="notice-hero-inner">
+    <div class="notice-eyebrow">IRS Collection — Explained</div>
+    <div class="notice-code-display" style="font-size:clamp(2rem,5vw,3.5rem)">IRS Installment<br>Agreements</div>
+    <h1>How IRS payment plans actually work — and what they don't tell you about lien thresholds, expense limits, and negotiating room</h1>
+    <div class="direct-answer"><p><strong>The short answer:</strong> You can get on a payment plan almost regardless of how much you owe. But the IRS uses strict expense tables that often set your required payment higher than you can realistically afford — and that gap is where negotiation actually happens. There are also lien thresholds most people don't know about that affect your credit and your ability to sell property.</p></div>
+  </div>
+</section>
+<div class="notice-body">
+
+  <div class="video-callout">
+  <div class="play-icon">&#9654;</div>
+  <div>
+    <h3>Watch: IRS Insider Interview with Romeo Razi &amp; Yoav Betsion, EA</h3>
+    <p>20 years of IRS collection, audit strategy, and real case stories — including the details on this page. <a href="https://www.youtube.com/watch?v=tb6IfQqRaMM" target="_blank" rel="noopener">Watch on YouTube &rarr;</a></p>
+  </div>
+</div>
+  <div class="section">
+    <h2>The three installment agreement tiers — and what changes at each threshold</h2>
+    <p>Most people don't realize IRS payment plans work in three distinct tiers based on how much you owe. The tier you're in determines whether you face a public tax lien, whether you need to disclose your finances, and what the process looks like.</p>
+    <h3>Under $25,000 — Streamline Agreement</h3>
+    <p>The simplest path. The IRS spreads your balance over the remaining life of the collection statute (typically up to 72 months) without requiring you to disclose income, expenses, or assets. You can set this up online at IRS.gov in minutes. No lien will be publicly filed as long as you stay current.</p>
+    <h3>$25,000 to $50,000 — Streamline with direct debit requirement</h3>
+    <p>You can still get a streamline agreement, but only if you agree to automatic bank withdrawal for the payments. If you don't do direct debit, the IRS will file a Notice of Federal Tax Lien — which is the public document that appears in county records, affects your ability to get a mortgage, and shows up in title searches when you sell property.</p>
+    <div class="insider">
+      <div class="insider-label">Romeo Razi &amp; Yoav Betsion, EA — IRS Insider Interview</div>
+      <p>"A lien technically exists from the moment you owe money and are given notice — even on $1,000. But the IRS doesn't file the notice publicly until you cross these thresholds. Over $25,000 without direct debit, they will file. Over $50,000, they file regardless. Most people don't realize the lien is already there — filing just makes it public."</p>
+    </div>
+    <h3>Over $50,000 — Full financial disclosure required</h3>
+    <p>The IRS requires a complete financial picture — income, expenses, assets, equity in property, bank accounts, retirement accounts. They use this information to calculate your ability to pay, and the resulting required payment is often significantly higher than what people can actually afford. This is where professional representation makes the biggest difference.</p>
+    <p><strong>Critical additional risk over $50,000:</strong> if you ignore the balance at this level, the IRS can notify the State Department, which can deny or revoke your U.S. passport. This actually happens — it's not a theoretical risk.</p>
+  </div>
+  <div class="section">
+    <h2>The IRS expense table problem — and where negotiation actually happens</h2>
+    <p>This is one of the most important things most taxpayers (and many tax professionals) don't understand about IRS installment agreements: the IRS doesn't calculate your payment based on what you actually spend. They use national and local expense standards that tell them what you're <em>allowed</em> to spend, regardless of your actual expenses.</p>
+    <div class="insider">
+      <div class="insider-label">Real Example from the Interview — Yoav Betsion, EA</div>
+      <p>"If you're paying $2,000 a month on your car lease for a Bentley, the IRS formula might only allow $300 toward vehicle expenses. I tell clients: don't sell the Bentley. We don't need you to change your lifestyle — but in the payment plan calculation, we're only going to get credit for $300. So the number they come up with is higher than what you can actually pay after real expenses. That's where we negotiate."</p>
+    </div>
+    <p>The same logic applies to groceries, housing, utilities, and healthcare. The IRS has tables for every state, county, and household size. For a household of three people, they might allow $400 per week for food. If you're actually spending $600, they won't change their number — which means your "ability to pay" according to their formula is higher than reality.</p>
+    <p>This is the actual negotiation space in installment agreements: arguing that the formula-derived payment is unrealistic given actual life circumstances. Experienced practitioners push back on these calculations, and the IRS does sometimes bend on final payment amounts to close cases.</p>
+  </div>
+  <div class="section">
+    <h2>The partial payment plan strategy</h2>
+    <p>When the IRS's formula produces a required payment that's genuinely more than you can afford even after negotiation, there's a structured alternative: a partial payment installment agreement (PPIA).</p>
+    <p>In a PPIA, you pay less than the formula says you should — but the amount is structured to meet certain IRS criteria. The agreement is typically set for a shorter period (say two years), with the understanding that it will be renegotiated at the end of that term based on updated financial information.</p>
+    <div class="insider">
+      <div class="insider-label">IRS Insider Interview — Yoav Betsion, EA</div>
+      <p>"We've had cases where the formula says $1,500 a month and we get them to $500 for two years. After two years we renegotiate again. Meanwhile, the client has time to get their finances together and sometimes they're buying time toward the collection statute expiration — which, if it runs out, makes the whole remaining balance disappear."</p>
+    </div>
+  </div>
+  <div class="section">
+    <h2>The most important thing most people don't know: CP523 and installment agreement defaults</h2>
+    <p>Getting on a payment plan is not the finish line — maintaining it is. Installment agreements terminate if you miss a payment, fail to file a required return for a subsequent year, or accumulate a new tax balance that isn't included in the agreement.</p>
+    <p>When this happens, the IRS sends a <a href="/cp523" style="color:var(--gold-dim);font-weight:600">CP523 notice</a>, which means the agreement is about to be terminated and your full remaining balance becomes immediately due. Levy action can resume.</p>
+    <p>If you receive a CP523, act the same day. You often have 30 days to cure the default by making the missed payment or filing the missing return — and the IRS will frequently reinstate an agreement that had a single default if you address it quickly.</p>
+  </div>
+  <div class="section">
+    <h2>Frequently asked questions about IRS installment agreements</h2>
+    <div class="faq-item">
+      <div class="faq-q">Do penalties and interest keep accruing while I'm on a payment plan?</div>
+      <div class="faq-a">Yes. An installment agreement stops active collection (no levies, no wage garnishments), but penalties and interest continue to accrue on the remaining balance until it's paid in full. This is why paying as much as possible per month, and paying off the balance as quickly as you can afford to, matters financially.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I negotiate the monthly payment after the IRS gives me their number?</div>
+      <div class="faq-a">Yes — this is one of the areas where professional representation genuinely matters. The IRS's formula-derived number is often higher than what someone can realistically sustain. Experienced practitioners push back on expense calculations and sometimes get the payment reduced. The IRS would rather close the case with a payment they can count on than have the agreement default.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I set up a payment plan if I haven't filed all my returns?</div>
+      <div class="faq-a">No. The IRS requires you to be in compliance — all required returns filed — before they will enter into an installment agreement. If you have unfiled returns, those need to be addressed first. See our page on <a href="/cp59" style="color:var(--gold-dim)">CP59 unfiled return notices</a> for guidance on how to handle that situation.</div>
+    </div>
+  </div>
+  
+
+  <div class="section">
+    <h2>Payment method: all IRS payments now must be electronic</h2>
+    <p>Whether you're making a one-time payment on a CP14 balance or regular monthly installment agreement payments, the IRS is moving to an all-electronic payment system. Set up your IRS.gov account and use Direct Pay or the Electronic Federal Tax Payment System (EFTPS) for all payments.</p>
+    <p>For installment agreements specifically, direct debit (automatic bank withdrawal) is required for balances between $25,000 and $50,000. For balances under $25,000, you can pay manually each month electronically — but direct debit enrollment removes the risk of forgetting a payment and triggering a default.</p>
+    <div class="warning-box">
+      <p>⚠ Missing even one installment agreement payment can trigger a <a href="/cp523" style="color:var(--red);font-weight:600">CP523 notice</a> and terminate your agreement. If your payment method changes (bank account closed, card expired), update your payment information with the IRS immediately — before the payment is missed, not after.</p>
+    </div>
+  </div>
+
+<div class="notice-links">
+  <h3>Other IRS notices explained by a former IRS auditor:</h3>
+  <ul>
+    <li><a href="/cp2000">CP2000 &mdash; Proposed Adjustment</a></li>
+    <li><a href="/cp14">CP14 &mdash; Balance Due</a></li>
+    <li><a href="/cp504">CP504 &mdash; Intent to Levy</a></li>
+    <li><a href="/lt11">LT11 &mdash; Final Notice Before Levy</a></li>
+    <li><a href="/cp3219a">CP3219A &mdash; Statutory Notice of Deficiency</a></li>
+    <li><a href="/cp59">CP59 &mdash; Unfiled Return</a></li>
+    <li><a href="/cp523">CP523 &mdash; Payment Plan Terminated</a></li>
+    <li><a href="/irs-installment-agreement">IRS Installment Agreements Explained</a></li>
+    <li><a href="/irs-offer-in-compromise">Offer in Compromise: The Real Story</a></li>
+    <li><a href="/irs-collection-statute">IRS 10-Year Collection Statute</a></li>
+    <li><a href="/irs-budget-cuts-2025">IRS Budget Cuts: What It Means for You</a></li>
+    <li><a href="/irs-audit-appeals-strategy">IRS Audit &amp; Appeals Strategy</a></li>
+  </ul>
+</div>
+<div class="romeo-bar">
+  <div class="romeo-avatar-wrap">
+    <div class="romeo-avatar">RR</div>
+    <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener" class="romeo-linkedin">&#128101; LinkedIn</a>
+  </div>
+  <div class="romeo-info">
+    <div class="romeo-name">Romeo Razi, CPA</div>
+    <div class="romeo-title">Former IRS Tax Examiner (Individual &amp; Employment Tax Division) &middot; CPA &middot; Featured in MarketWatch, U.S. News &amp; World Report, Realtor</div>
+    <div class="romeo-bio">Romeo conducted face-to-face audits at the IRS across sole proprietors to mid-sized businesses, worked on worker reclassification audits with the Department of Labor, and prepared disputed returns for Tax Court and Appeals. He founded <a href="https://taxedright.com" target="_blank" rel="noopener" style="color:var(--gold-dim)">Taxed Right LLC</a> in 2015 to put that insider knowledge to work for taxpayers.</div>
+  </div>
+</div>
+<div class="cta-box">
+  <h2>Have an IRS problem? Talk to someone who used to work there.</h2>
+  <p>Romeo Razi spent years inside the IRS as an auditor. He knows how the agency thinks, where they make mistakes, and how to get you the best possible outcome.</p>
+  <a href="/#contact" class="cta-btn">Get a Free Case Review &rarr;</a>
+</div>
+</div>
+<footer>
+  <p>IRS Resolution Service LLC &middot; 9673 Camino Capistrano, Las Vegas, NV &middot; <a href="/privacy">Privacy Policy</a> &middot; <a href="/terms">Terms</a></p>
+  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice.</p>
+</footer>
+</body>
+</html>

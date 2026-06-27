@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRS Offer in Compromise: What the TV Commercials Don't Tell You | Former IRS Auditor</title>
+<meta name="description" content="The real story on IRS Offers in Compromise — who actually qualifies, how the formula works, the 2-year deemed-acceptance rule, and why commercial firms charge you for OICs when you don't qualify.">
+<link rel="canonical" href="https://irsresolutionservice.com/irs-offer-in-compromise">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#c9a84c;--gold-light:#e8c97a;--gold-dim:#8a6e2f;--gold-muted:#f5ecd8;
+  --cream:#f5f0e8;--cream-warm:#ede5d5;--cream-dark:#d9cdb8;
+  --ink:#1a1410;--ink-soft:#4a3f32;--ink-muted:#7a6e60;--white:#ffffff;
+  --red:#c0392b;--red-light:#fdf0f0;--green:#1a5c2a;--green-light:#f0fdf4;
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Outfit',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:18px;line-height:1.7}
+.site-header{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(255,255,255,0.97);border-bottom:1px solid var(--cream-dark);backdrop-filter:blur(12px)}
+.header-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-mark{width:36px;height:36px;border:1.5px solid var(--gold);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;font-weight:700;color:var(--gold)}
+.logo-text{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--ink)}
+.logo-text span{color:var(--gold)}
+.nav{display:flex;align-items:center;gap:1.75rem}
+.nav a{font-size:15px;color:var(--ink-muted);text-decoration:none;letter-spacing:0.03em;transition:color 0.2s}
+.nav a:hover{color:var(--gold-dim)}
+.nav-cta{background:var(--gold)!important;color:var(--white)!important;padding:9px 22px;border-radius:2px;font-weight:600}
+.notice-hero{background:var(--white);padding:120px 2rem 64px;border-bottom:1px solid var(--cream-dark)}
+.notice-hero-inner{max-width:840px;margin:0 auto}
+.notice-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--gold-muted);color:var(--gold-dim);font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;border-radius:2px;margin-bottom:1.5rem}
+.notice-code-display{font-family:var(--serif);font-size:clamp(3rem,8vw,5.5rem);font-weight:700;color:var(--ink);line-height:1;margin-bottom:0.5rem;letter-spacing:-0.02em}
+.notice-hero h1{font-family:var(--serif);font-size:clamp(1.5rem,3.5vw,2.25rem);font-weight:600;color:var(--ink-soft);line-height:1.3;margin-bottom:1.5rem}
+.direct-answer{background:var(--green-light);border-left:4px solid var(--green);padding:1.25rem 1.5rem;border-radius:0 6px 6px 0;margin-bottom:2rem}
+.direct-answer p{font-size:17px;line-height:1.65;color:var(--ink-soft)}
+.direct-answer strong{color:var(--green)}
+.deadline-badge{display:inline-flex;align-items:center;gap:10px;background:var(--red-light);border:1.5px solid #e8b0b0;border-radius:4px;padding:10px 18px;font-size:15px;font-weight:600;color:var(--red)}
+.notice-body{max-width:840px;margin:0 auto;padding:4rem 2rem 6rem}
+.section{margin-bottom:3.5rem}
+.section h2{font-family:var(--serif);font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--cream-dark)}
+.section h3{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink);margin:1.5rem 0 0.75rem}
+.section p{color:var(--ink-soft);margin-bottom:1rem}
+.section ul,.section ol{color:var(--ink-soft);padding-left:1.5rem;margin-bottom:1rem}
+.section li{margin-bottom:0.5rem}
+.insider{background:var(--gold-muted);border:1px solid var(--cream-dark);border-left:4px solid var(--gold);border-radius:0 6px 6px 0;padding:1.25rem 1.5rem;margin:1.5rem 0}
+.insider-label{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.4rem}
+.insider p{font-size:16px;color:var(--ink-soft);margin:0;font-style:italic}
+.warning-box{background:var(--red-light);border:1px solid #e8b0b0;border-left:4px solid var(--red);border-radius:0 6px 6px 0;padding:1.25rem 1.5rem;margin:1.5rem 0}
+.warning-box p{font-size:16px;color:var(--ink-soft);margin:0}
+.step-list{list-style:none;padding:0;counter-reset:steps}
+.step-list li{counter-increment:steps;display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.25rem}
+.step-list li::before{content:counter(steps);background:var(--gold);color:var(--white);min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-top:2px;flex-shrink:0}
+.cta-box{background:var(--ink);color:var(--white);border-radius:6px;padding:2.5rem 2rem;text-align:center;margin:3rem 0}
+.cta-box h2{font-family:var(--serif);font-size:1.8rem;font-weight:700;color:var(--white);margin-bottom:0.75rem}
+.cta-box p{color:rgba(255,255,255,0.7);font-size:16px;margin-bottom:1.5rem}
+.cta-btn{display:inline-block;background:var(--gold);color:var(--ink);text-decoration:none;padding:14px 32px;border-radius:2px;font-weight:700;font-size:16px;letter-spacing:0.04em}
+.romeo-bar{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0}
+.romeo-avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.romeo-avatar{width:72px;height:72px;background:var(--gold-muted);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px;font-weight:700;color:var(--gold-dim);overflow:hidden}
+.romeo-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.romeo-linkedin{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--gold-dim);text-decoration:none;font-weight:600;letter-spacing:0.05em}
+.romeo-linkedin:hover{color:var(--gold)}
+.romeo-info .romeo-name{font-weight:700;font-size:17px;color:var(--ink)}
+.romeo-info .romeo-title{font-size:14px;color:var(--ink-muted);margin-top:2px;line-height:1.5}
+.romeo-info .romeo-bio{font-size:15px;color:var(--ink-soft);margin-top:0.75rem;line-height:1.6}
+.faq-item{border-bottom:1px solid var(--cream-dark);padding:1.25rem 0}
+.faq-q{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--ink);margin-bottom:0.5rem}
+.faq-a{font-size:16px;color:var(--ink-soft)}
+.notice-links{background:var(--cream-warm);border-radius:6px;padding:1.5rem;margin:2rem 0}
+.notice-links h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:1rem}
+.notice-links ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:0.5rem}
+.notice-links li a{display:inline-block;background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--gold-dim);text-decoration:none;transition:border-color 0.2s}
+.notice-links li a:hover{border-color:var(--gold);color:var(--gold)}
+.video-callout{background:var(--ink);color:var(--white);border-radius:6px;padding:1.5rem 1.75rem;margin:2rem 0;display:flex;align-items:center;gap:1.25rem}
+.video-callout .play-icon{font-size:2rem;flex-shrink:0}
+.video-callout h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.25rem}
+.video-callout p{font-size:14px;color:rgba(255,255,255,0.65);margin:0}
+.video-callout a{color:var(--gold);text-decoration:none;font-weight:600}
+footer{background:var(--ink);color:rgba(255,255,255,0.5);text-align:center;padding:2rem;font-size:13px}
+footer a{color:var(--gold);text-decoration:none}
+@media(max-width:640px){.nav{gap:1rem}.nav a:not(.nav-cta){display:none}.romeo-bar{grid-template-columns:1fr}.romeo-avatar-wrap{flex-direction:row}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IRS Offer in Compromise: What TV Commercials Don't Tell You",
+  "description": "The real mechanics of an OIC, who actually qualifies, the 2-year deem-accepted rule, and a $2.1M\u2192$205K real case \u2014 from a former IRS auditor.",
+  "url": "https://irsresolutionservice.com/irs-offer-in-compromise",
+  "dateModified": "2026-06-27",
+  "author": {
+    "@type": "Person",
+    "@id": "https://irsresolutionservice.com/#romeo-razi",
+    "name": "Romeo Razi",
+    "honorificSuffix": "CPA",
+    "jobTitle": "Former IRS Tax Examiner, CPA",
+    "sameAs": "https://www.linkedin.com/in/romeo-razi/"
+  },
+  "publisher": {
+    "@id": "https://irsresolutionservice.com/#organization"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://irsresolutionservice.com/irs-offer-in-compromise"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does filing an OIC stop collection action?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes \u2014 while an OIC is pending (and during the 30-day appeal period if rejected), the IRS is prohibited from levying. This is one reason practitioners sometimes use OIC filing strategically to pause collection while resolving a broader situation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does filing an OIC toll the 10-year collection statute?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The time the OIC is pending, plus 30 days after rejection, is added to the end of the CSED. This is important for people who are close to the end of their statute \u2014 filing an OIC could extend the IRS's collection window. See our page on the IRS 10-year collection statute for context on when this matters."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I appeal a rejected OIC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You have 30 days from the rejection date to request an appeal with the IRS's Independent Office of Appeals. In the case from the interview, filing an OIC appeal also automatically reinstated a passport that had been revoked due to seriously delinquent tax debt \u2014 because pending OIC appeals are one of the exceptions to the passport revocation rule."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the $205 application fee for an OIC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The IRS charges a $205 non-refundable application fee when you submit an OIC, unless you qualify for low-income certification (in which case it's waived). This is the IRS's own fee \u2014 separate from any professional fees charged by a tax practitioner. If the OIC is rejected or withdrawn, this fee is not returned."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo"><div class="logo-mark">IRS</div><span class="logo-text">Resolution <span>Service</span></span></a>
+    <nav class="nav">
+      <a href="/#services">Services</a>
+      <a href="/#founders">About</a>
+      <a href="/#tool">Notice Decoder</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#contact" class="nav-cta">Get Help Now</a>
+    </nav>
+  </div>
+</header>
+<section class="notice-hero">
+  <div class="notice-hero-inner">
+    <div class="notice-eyebrow">IRS Collection — Explained</div>
+    <div class="notice-code-display" style="font-size:clamp(2rem,5vw,3.5rem)">Offer in<br>Compromise</div>
+    <h1>What the IRS Offer in Compromise really is — and why you probably can't negotiate the amount the way the commercials suggest</h1>
+    <div class="direct-answer"><p><strong>The short answer:</strong> An Offer in Compromise lets you settle your IRS debt for less than you owe — but only if you meet a strict mathematical formula based on your income, expenses, and assets. The IRS doesn't negotiate. The formula is the formula. What experienced practitioners actually do is argue about how the formula is applied, using interpretations of the IRS manual. And the commercials that promise to "settle your debt" often charge you for an OIC application when you don't actually qualify.</p></div>
+  </div>
+</section>
+<div class="notice-body">
+
+  <div class="video-callout">
+  <div class="play-icon">&#9654;</div>
+  <div>
+    <h3>Watch: IRS Insider Interview with Romeo Razi &amp; Yoav Betsion, EA</h3>
+    <p>20 years of IRS collection, audit strategy, and real case stories — including the details on this page. <a href="https://www.youtube.com/watch?v=tb6IfQqRaMM" target="_blank" rel="noopener">Watch on YouTube &rarr;</a></p>
+  </div>
+</div>
+  <div class="section">
+    <h2>The real mechanics of an Offer in Compromise</h2>
+    <p>When you file an OIC, you're telling the IRS: I owe you $X, but based on your own criteria, here's what I can actually pay — and that's the offer. The IRS evaluates your offer against a specific formula called Reasonable Collection Potential (RCP). If your offer equals or exceeds your RCP, the IRS is supposed to accept it.</p>
+    <p>RCP is calculated as: the quick-sale value of your assets (property, equity, retirement accounts, vehicles, etc.) plus your future ability to pay based on net monthly income multiplied by a specified number of months.</p>
+    <p>The IRS is strict about this for a reason that's explicitly political: Congress monitors the OIC program closely because it creates an inherent fairness problem. Compliant taxpayers who paid their taxes on time shouldn't watch neighbors settle for pennies on the dollar while they followed the rules. So the IRS applies the formula rigidly, and acceptance rates are significantly lower than the commercials imply.</p>
+    <div class="insider">
+      <div class="insider-label">Yoav Betsion, EA — IRS Insider Interview</div>
+      <p>"People always say 'oh, you negotiated.' I tell them no. We never negotiate on an OIC. The formula is the formula. What we do is argue about interpretation — what counts as an allowable expense, what the correct value of an asset is, what parts of the IRS manual apply to this specific situation. That's our work. When the OIC gets accepted, it's because the client fit the criteria of the program. Not because we talked the IRS into something."</p>
+    </div>
+  </div>
+  <div class="section">
+    <h2>A real case: $2.1 million settled for $205,000</h2>
+    <p>Here's what a real OIC actually looks like in practice.</p>
+    <p>A client owed $2.1 million to the IRS. Based on their financial situation — income, assets, expenses, equity — the RCP formula supported an initial offer of $75,000. That offer was submitted. The IRS took approximately 18 months to evaluate it (this timeline is typical).</p>
+    <p>During that 18 months, the client's income increased. The IRS discovered this during their evaluation, ran the updated numbers, and counter-offered at $205,000. The client accepted. $2.1 million became $205,000.</p>
+    <div class="warning-box">
+      <p>⚠ Critical lesson from this case: Do not increase your income, take on new assets, or change your financial picture while an OIC is pending. The IRS evaluates your financial situation as of the time they review the offer — which could be a year or more after you submitted. If your ability to pay has increased, their counter-offer will reflect it.</p>
+    </div>
+    <p>Also critical: the 5-year compliance requirement. Once an OIC is accepted, you must file all required returns and pay all taxes on time for 5 years. If you miss a single return or payment during that period, the offer is voided and you owe the original full balance — potentially with additional penalties and interest added.</p>
+  </div>
+  <div class="section">
+    <h2>The 2-year rule most people don't know</h2>
+    <p>If the IRS does not formally accept or reject your Offer in Compromise within two years of receiving it, the offer is automatically deemed accepted by law.</p>
+    <div class="insider">
+      <div class="insider-label">Yoav Betsion, EA — IRS Insider Interview</div>
+      <p>"We had a case in our office where the IRS lost the OIC — it was transferred four times across different processing centers, sat for close to two years with no decision. We cited the two-year rule and pushed. The IRS was backed into a corner because the statute is clear: no decision within two years means it's accepted. This is a real legal protection, but you have to know it exists to use it."</p>
+    </div>
+    <p>In practice, the two-year clock is difficult to enforce because the IRS disputes the receipt date, claims tolling events, and generally doesn't simply roll over on a technicality. But knowing the rule exists — and actively tracking your submission date — gives your representative leverage.</p>
+  </div>
+  <div class="section">
+    <h2>What the TV commercials don't tell you</h2>
+    <p>Commercial tax resolution firms advertise heavily around OICs because the program is real and the success stories are dramatic. A $2.1 million debt settled for $205,000 is a real thing that happens.</p>
+    <p>What they don't prominently advertise: most people who call after seeing those commercials don't qualify for an OIC. The formula is strict, and if you have sufficient income, significant assets, or equity in property, your RCP may be high enough that an OIC wouldn't be accepted.</p>
+    <div class="insider">
+      <div class="insider-label">Yoav Betsion, EA — IRS Insider Interview</div>
+      <p>"Stop the commercial and read the fine print. Most of those callers don't qualify. And what happens? The firm charges them the OIC application fee and preparation fee — and then they end up doing a payment plan. They got charged for an OIC they were never going to get accepted. That's the business model."</p>
+    </div>
+    <p>An honest evaluation of whether you qualify for an OIC requires someone who will tell you the truth about your Reasonable Collection Potential — even if that truth is that a payment plan is the right answer.</p>
+  </div>
+  <div class="section">
+    <h2>OIC vs. installment agreement vs. Currently Not Collectible — how to decide</h2>
+    <ul>
+      <li><strong>OIC</strong>: Best when your assets and future income make your RCP substantially less than your total debt. Requires financial hardship in the IRS's formula, not just in your perception. Requires 5-year post-acceptance compliance.</li>
+      <li><strong>Installment agreement</strong>: Best when you can pay something reasonable monthly over time, even if not the full balance before the collection statute expires. More common than OIC. Payment may be negotiable. See our full guide at <a href="/irs-installment-agreement" style="color:var(--gold-dim)">IRS Installment Agreements Explained</a>.</li>
+      <li><strong>Currently Not Collectible (CNC)</strong>: Best when your monthly income doesn't exceed allowable expenses, leaving no ability to pay. Pauses collection while you're in hardship status. Debt continues to accrue interest. If the collection statute expires while you're in CNC, the debt disappears.</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h2>Frequently asked questions about Offer in Compromise</h2>
+    <div class="faq-item">
+      <div class="faq-q">Does filing an OIC stop collection action?</div>
+      <div class="faq-a">Yes — while an OIC is pending (and during the 30-day appeal period if rejected), the IRS is prohibited from levying. This is one reason practitioners sometimes use OIC filing strategically to pause collection while resolving a broader situation.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Does filing an OIC toll the 10-year collection statute?</div>
+      <div class="faq-a">Yes. The time the OIC is pending, plus 30 days after rejection, is added to the end of the CSED. This is important for people who are close to the end of their statute — filing an OIC could extend the IRS's collection window. See our page on the <a href="/irs-collection-statute" style="color:var(--gold-dim)">IRS 10-year collection statute</a> for context on when this matters.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I appeal a rejected OIC?</div>
+      <div class="faq-a">Yes. You have 30 days from the rejection date to request an appeal with the IRS's Independent Office of Appeals. In the case from the interview, filing an OIC appeal also automatically reinstated a passport that had been revoked due to seriously delinquent tax debt — because pending OIC appeals are one of the exceptions to the passport revocation rule.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is the $205 application fee for an OIC?</div>
+      <div class="faq-a">The IRS charges a $205 non-refundable application fee when you submit an OIC, unless you qualify for low-income certification (in which case it's waived). This is the IRS's own fee — separate from any professional fees charged by a tax practitioner. If the OIC is rejected or withdrawn, this fee is not returned.</div>
+    </div>
+  </div>
+  
+<div class="notice-links">
+  <h3>Other IRS notices explained by a former IRS auditor:</h3>
+  <ul>
+    <li><a href="/cp2000">CP2000 &mdash; Proposed Adjustment</a></li>
+    <li><a href="/cp14">CP14 &mdash; Balance Due</a></li>
+    <li><a href="/cp504">CP504 &mdash; Intent to Levy</a></li>
+    <li><a href="/lt11">LT11 &mdash; Final Notice Before Levy</a></li>
+    <li><a href="/cp3219a">CP3219A &mdash; Statutory Notice of Deficiency</a></li>
+    <li><a href="/cp59">CP59 &mdash; Unfiled Return</a></li>
+    <li><a href="/cp523">CP523 &mdash; Payment Plan Terminated</a></li>
+    <li><a href="/irs-installment-agreement">IRS Installment Agreements Explained</a></li>
+    <li><a href="/irs-offer-in-compromise">Offer in Compromise: The Real Story</a></li>
+    <li><a href="/irs-collection-statute">IRS 10-Year Collection Statute</a></li>
+    <li><a href="/irs-budget-cuts-2025">IRS Budget Cuts: What It Means for You</a></li>
+    <li><a href="/irs-audit-appeals-strategy">IRS Audit &amp; Appeals Strategy</a></li>
+  </ul>
+</div>
+<div class="romeo-bar">
+  <div class="romeo-avatar-wrap">
+    <div class="romeo-avatar">RR</div>
+    <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener" class="romeo-linkedin">&#128101; LinkedIn</a>
+  </div>
+  <div class="romeo-info">
+    <div class="romeo-name">Romeo Razi, CPA</div>
+    <div class="romeo-title">Former IRS Tax Examiner (Individual &amp; Employment Tax Division) &middot; CPA &middot; Featured in MarketWatch, U.S. News &amp; World Report, Realtor</div>
+    <div class="romeo-bio">Romeo conducted face-to-face audits at the IRS across sole proprietors to mid-sized businesses, worked on worker reclassification audits with the Department of Labor, and prepared disputed returns for Tax Court and Appeals. He founded <a href="https://taxedright.com" target="_blank" rel="noopener" style="color:var(--gold-dim)">Taxed Right LLC</a> in 2015 to put that insider knowledge to work for taxpayers.</div>
+  </div>
+</div>
+<div class="cta-box">
+  <h2>Have an IRS problem? Talk to someone who used to work there.</h2>
+  <p>Romeo Razi spent years inside the IRS as an auditor. He knows how the agency thinks, where they make mistakes, and how to get you the best possible outcome.</p>
+  <a href="/#contact" class="cta-btn">Get a Free Case Review &rarr;</a>
+</div>
+</div>
+<footer>
+  <p>IRS Resolution Service LLC &middot; 9673 Camino Capistrano, Las Vegas, NV &middot; <a href="/privacy">Privacy Policy</a> &middot; <a href="/terms">Terms</a></p>
+  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice.</p>
+</footer>
+</body>
+</html>

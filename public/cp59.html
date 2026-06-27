@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRS CP59 Notice (Unfiled Tax Return): What Happens Next and How to Handle It</title>
+<meta name="description" content="A CP59 means the IRS believes you didn't file a required tax return. Former IRS Auditor Romeo Razi explains the risks of ignoring it and why filing late is almost always better than not filing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c; --gold-light: #e8c97a; --gold-dim: #8a6e2f; --gold-muted: #f5ecd8;
+  --cream: #f5f0e8; --cream-warm: #ede5d5; --cream-dark: #d9cdb8;
+  --ink: #1a1410; --ink-soft: #4a3f32; --ink-muted: #7a6e60; --white: #ffffff;
+  --red: #c0392b; --red-light: #fdf0f0; --green: #1a5c2a; --green-light: #f0fdf4;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 18px; line-height: 1.7; }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--cream-dark); backdrop-filter: blur(12px); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-mark { width: 36px; height: 36px; border: 1.5px solid var(--gold); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--gold); }
+.logo-text { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+.logo-text span { color: var(--gold); }
+.nav { display: flex; align-items: center; gap: 1.75rem; }
+.nav a { font-size: 15px; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+.nav a:hover { color: var(--gold-dim); }
+.nav-cta { background: var(--gold) !important; color: var(--white) !important; padding: 9px 22px; border-radius: 2px; font-weight: 600; }
+.notice-hero { background: var(--white); padding: 120px 2rem 64px; border-bottom: 1px solid var(--cream-dark); }
+.notice-hero-inner { max-width: 840px; margin: 0 auto; }
+.notice-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--gold-muted); color: var(--gold-dim); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; margin-bottom: 1.5rem; }
+.notice-code-display { font-family: var(--serif); font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.notice-hero h1 { font-family: var(--serif); font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 600; color: var(--ink-soft); line-height: 1.3; margin-bottom: 1.5rem; }
+.direct-answer { background: var(--green-light); border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 2rem; }
+.direct-answer p { font-size: 17px; line-height: 1.65; color: var(--ink-soft); }
+.direct-answer strong { color: var(--green); }
+.deadline-badge { display: inline-flex; align-items: center; gap: 10px; background: var(--red-light); border: 1.5px solid #e8b0b0; border-radius: 4px; padding: 10px 18px; font-size: 15px; font-weight: 600; color: var(--red); }
+.notice-body { max-width: 840px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+.section { margin-bottom: 3.5rem; }
+.section h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
+.section h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); margin: 1.5rem 0 0.75rem; }
+.section p { color: var(--ink-soft); margin-bottom: 1rem; }
+.section ul, .section ol { color: var(--ink-soft); padding-left: 1.5rem; margin-bottom: 1rem; }
+.section li { margin-bottom: 0.5rem; }
+.insider { background: var(--gold-muted); border: 1px solid var(--cream-dark); border-left: 4px solid var(--gold); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.insider-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.4rem; }
+.insider p { font-size: 16px; color: var(--ink-soft); margin: 0; font-style: italic; }
+.warning-box { background: var(--red-light); border: 1px solid #e8b0b0; border-left: 4px solid var(--red); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.warning-box p { font-size: 16px; color: var(--ink-soft); margin: 0; }
+.step-list { list-style: none; padding: 0; counter-reset: steps; }
+.step-list li { counter-increment: steps; display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.25rem; }
+.step-list li::before { content: counter(steps); background: var(--gold); color: var(--white); min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; margin-top: 2px; flex-shrink: 0; }
+.cta-box { background: var(--ink); color: var(--white); border-radius: 6px; padding: 2.5rem 2rem; text-align: center; margin: 3rem 0; }
+.cta-box h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; }
+.cta-box p { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 1.5rem; }
+.cta-btn { display: inline-block; background: var(--gold); color: var(--ink); text-decoration: none; padding: 14px 32px; border-radius: 2px; font-weight: 700; font-size: 16px; letter-spacing: 0.04em; }
+.romeo-bar { display: flex; align-items: center; gap: 1.5rem; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+.romeo-avatar { width: 56px; height: 56px; background: var(--gold-muted); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--gold-dim); flex-shrink: 0; }
+.romeo-name { font-weight: 700; font-size: 16px; color: var(--ink); }
+.romeo-title { font-size: 13px; color: var(--ink-muted); }
+.faq-item { border-bottom: 1px solid var(--cream-dark); padding: 1.25rem 0; }
+.faq-q { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+.faq-a { font-size: 16px; color: var(--ink-soft); }
+footer { background: var(--ink); color: rgba(255,255,255,0.5); text-align: center; padding: 2rem; font-size: 13px; }
+footer a { color: var(--gold); text-decoration: none; }
+@media (max-width: 640px) { .nav { gap: 1rem; } .nav a:not(.nav-cta) { display: none; } }
+
+.romeo-bar{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0}
+.romeo-avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.romeo-avatar{width:72px;height:72px;background:var(--gold-muted);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px;font-weight:700;color:var(--gold-dim);overflow:hidden}
+.romeo-linkedin{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--gold-dim);text-decoration:none;font-weight:600;letter-spacing:0.05em}
+.romeo-linkedin:hover{color:var(--gold)}
+.romeo-info .romeo-name{font-weight:700;font-size:17px;color:var(--ink)}
+.romeo-info .romeo-title{font-size:14px;color:var(--ink-muted);margin-top:2px;line-height:1.5}
+.romeo-info .romeo-bio{font-size:15px;color:var(--ink-soft);margin-top:0.75rem;line-height:1.6}
+.notice-links{background:var(--cream-warm);border-radius:6px;padding:1.5rem;margin:2rem 0}
+.notice-links h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:1rem}
+.notice-links ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:0.5rem}
+.notice-links li a{display:inline-block;background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--gold-dim);text-decoration:none;transition:border-color 0.2s}
+.notice-links li a:hover{border-color:var(--gold);color:var(--gold)}
+.video-callout{background:var(--ink);color:var(--white);border-radius:6px;padding:1.5rem 1.75rem;margin:2rem 0;display:flex;align-items:center;gap:1.25rem}
+.video-callout .play-icon{font-size:2rem;flex-shrink:0}
+.video-callout h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.25rem}
+.video-callout p{font-size:14px;color:rgba(255,255,255,0.65);margin:0}
+.video-callout a{color:var(--gold);text-decoration:none;font-weight:600}
+@media(max-width:640px){.romeo-bar{grid-template-columns:1fr}.romeo-avatar-wrap{flex-direction:row}}
+
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IRS CP59 Notice: Unfiled Return \u2014 What Happens Next",
+  "description": "A CP59 means the IRS has no record of your return. Former IRS Auditor Romeo Razi explains the failure-to-file penalty, the 6-year compliance rule, and what to do.",
+  "url": "https://irsresolutionservice.com/cp59",
+  "dateModified": "2026-06-27",
+  "author": {
+    "@type": "Person",
+    "@id": "https://irsresolutionservice.com/#romeo-razi",
+    "name": "Romeo Razi",
+    "honorificSuffix": "CPA",
+    "jobTitle": "Former IRS Tax Examiner, CPA",
+    "sameAs": "https://www.linkedin.com/in/romeo-razi/"
+  },
+  "publisher": {
+    "@id": "https://irsresolutionservice.com/#organization"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://irsresolutionservice.com/cp59"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What if I wasn't required to file that year?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If your income was below the filing threshold, or if all your income was Social Security below the combined income thresholds, you may not have been required to file. Respond to the CP59 in writing explaining this, including the income figures that show why filing wasn't required. The IRS will close the inquiry if your explanation is supported."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I be criminally prosecuted for not filing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Criminal prosecution for failure to file (a misdemeanor under IRC \u00a77203) is extremely rare and reserved for willful, repeated non-filers, typically with large amounts at stake. The IRS's goal with CP59 is to get the return filed, not to prosecute. Civil penalties are the overwhelming reality for late filers. That said, continued non-response to escalating notices does increase risk."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will I have to pay penalties on top of filing late?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, failure-to-file penalties will be assessed on the balance due from the original return due date. However, penalty abatement is available: First Time Abatement applies if you have no penalties in the prior three tax years, and Reasonable Cause abatement is available if you can document why you didn't file (illness, natural disaster, erroneous advice from a tax professional, etc.)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I can't afford a tax professional to prepare the late return?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The IRS offers free preparation assistance through VITA (Volunteer Income Tax Assistance) for taxpayers who generally earn $67,000 or less, are disabled, or have limited English. For taxpayers who qualify, VITA volunteers can prepare prior-year returns. Additionally, most commercial software supports prior-year returns, though you typically can't e-file returns older than three years and must mail them."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://irsresolutionservice.com" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <nav class="nav">
+      <a href="/#services">Services</a>
+      <a href="/#founders">About</a>
+      <a href="/#tool">Notice Decoder</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#contact" class="nav-cta">Get Help Now</a>
+    </nav>
+  </div>
+</header>
+<section class="notice-hero">
+  <div class="notice-hero-inner">
+    <div class="notice-eyebrow">⚠ IRS Notice Explained</div>
+    <div class="notice-code-display">CP59</div>
+    <h1>You received a CP59 — the IRS says you didn't file a required return. Here's what actually happens next.</h1>
+    <div class="direct-answer"><p><strong>The short answer:</strong> A CP59 is the IRS notifying you they have no record of your tax return for a specific year. If you genuinely didn't file, you need to file as soon as possible — the penalties for not filing are significantly worse than penalties for not paying. If you did file, you need to provide proof the return was received.</p></div>
+    <div class="deadline-badge">⏱ Respond promptly — the IRS can prepare a Substitute for Return on your behalf that ignores your deductions and results in a much higher tax bill</div>
+  </div>
+</section>
+<div class="notice-body">
+
+  <div class="section">
+    <h2>What CP59 means and what triggers it</h2>
+    <p>The IRS's filing compliance division runs a program called the Automated Substitute for Return (ASFR) process. When third-party income documents (W-2s, 1099s) show income reported under your Social Security number for a given tax year, but no tax return was filed, the system generates a CP59 notice asking you to file or explain why filing wasn't required.</p>
+    <p>The CP59 is typically the first notice — it may be followed by CP515, CP516, and ultimately a Notice of Deficiency (CP3219A) if the IRS prepares their own return on your behalf. Their substitute return will use gross income figures from third-party documents and apply only the standard deduction and one personal exemption — ignoring every deduction, credit, and expense you actually had.</p>
+    <div class="insider">
+      <div class="insider-label">Romeo Razi, CPA — "What to Do If You Missed the Tax Deadline" (YouTube)</div>
+      <p>"Unfiled returns are one of the things I saw escalate fastest inside the IRS. People assume 'if I don't file, they can't tax me.' That's backwards. If you don't file, the IRS can file for you — and they will use the worst possible assumptions. I've seen people owe triple what they actually owed because a Substitute for Return missed their business expenses. Filing late is almost always the right move, even years late."</p>
+    </div>
+  </div>
+  <div class="section">
+    <h2>The penalties for not filing vs. not paying</h2>
+    <p>This distinction matters enormously. People often conflate "I can't afford to pay, so I won't file" — but the penalties work in opposite directions:</p>
+    <ul>
+      <li><strong>Failure-to-file penalty:</strong> 5% of the unpaid tax per month, up to a maximum of 25%. This is applied to the balance from the original due date of the return.</li>
+      <li><strong>Failure-to-pay penalty:</strong> 0.5% of the unpaid tax per month, up to 25%.</li>
+    </ul>
+    <p>If both apply, they overlap — but the failure-to-file penalty is 10 times larger per month. If you can't pay but file your return on time (or as soon as possible), you eliminate the larger of the two penalties entirely and are left only with the smaller failure-to-pay penalty plus interest.</p>
+    <p>Additionally: the failure-to-file penalty clock stops when you file. The failure-to-pay penalty continues until the balance is paid. Filing now, even years late, cuts off the 5%/month penalty from the date you file.</p>
+  </div>
+  <div class="section">
+    <h2>If you did file — here's what to do</h2>
+    <p>CP59 notices sometimes go out even when a return was filed, due to IRS processing delays, mailing errors, or address mismatches. If you filed:</p>
+    <ul>
+      <li>Find your proof of filing — certified mail receipt, IRS acceptance confirmation (for e-filed returns), or your tax software's filing confirmation number.</li>
+      <li>Respond in writing to the address on the notice with a copy of your first two pages of the return and your proof of filing date.</li>
+      <li>If you filed electronically, you can also log into your IRS Online Account to view account transcripts and confirm the return was received.</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h2>If you genuinely didn't file — the case for acting quickly</h2>
+    <p>The most important thing to understand: the IRS's ability to assess tax based on a Substitute for Return doesn't expire in the same way the normal 3-year statute of limitations works. If you never filed, the clock on the IRS's right to assess never started running. You could receive a notice for a return from 10 years ago.</p>
+    <p>Conversely: once you file, the clock starts. The IRS generally has three years from your filing date to audit the return. If they've already prepared a Substitute for Return and issued a deficiency notice, getting your actual return on file can override theirs — but you need to act before the Tax Court petition deadline passes.</p>
+    <ol class="step-list">
+      <li><span><strong>Gather your income documents</strong> for the missing year. Order IRS transcripts (Wage and Income Transcript) from IRS.gov — they show every W-2 and 1099 filed under your SSN for that year, which is exactly what the IRS has.</span></li>
+      <li><span><strong>Prepare the actual return.</strong> This includes every deduction and credit you're entitled to — the IRS's version won't have any of these. Business expenses, retirement contributions, itemized deductions, credits for dependents — all of it reduces your real tax liability significantly below the Substitute for Return estimate.</span></li>
+      <li><span><strong>File as soon as possible.</strong> There's no special process for late returns — file the same way you would a current return. Attach a brief explanation if the return is significantly late. If there will be a balance due, include payment or indicate you want to set up a payment plan.</span></li>
+      <li><span><strong>Address any balance due separately.</strong> Installment agreements, OIC, and penalty abatement requests (including First Time Abatement if applicable) are all still available after late filing.</span></li>
+    </ol>
+  </div>
+  <div class="section">
+    <h2>Frequently asked questions about CP59</h2>
+    <div class="faq-item">
+      <div class="faq-q">What if I wasn't required to file that year?</div>
+      <div class="faq-a">If your income was below the filing threshold, or if all your income was Social Security below the combined income thresholds, you may not have been required to file. Respond to the CP59 in writing explaining this, including the income figures that show why filing wasn't required. The IRS will close the inquiry if your explanation is supported.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I be criminally prosecuted for not filing?</div>
+      <div class="faq-a">Criminal prosecution for failure to file (a misdemeanor under IRC §7203) is extremely rare and reserved for willful, repeated non-filers, typically with large amounts at stake. The IRS's goal with CP59 is to get the return filed, not to prosecute. Civil penalties are the overwhelming reality for late filers. That said, continued non-response to escalating notices does increase risk.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Will I have to pay penalties on top of filing late?</div>
+      <div class="faq-a">Yes, failure-to-file penalties will be assessed on the balance due from the original return due date. However, penalty abatement is available: First Time Abatement applies if you have no penalties in the prior three tax years, and Reasonable Cause abatement is available if you can document why you didn't file (illness, natural disaster, erroneous advice from a tax professional, etc.).</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if I can't afford a tax professional to prepare the late return?</div>
+      <div class="faq-a">The IRS offers free preparation assistance through VITA (Volunteer Income Tax Assistance) for taxpayers who generally earn $67,000 or less, are disabled, or have limited English. For taxpayers who qualify, VITA volunteers can prepare prior-year returns. Additionally, most commercial software supports prior-year returns, though you typically can't e-file returns older than three years and must mail them.</div>
+    </div>
+  </div>
+  
+<div class="romeo-bar">
+  <div class="romeo-avatar-wrap">
+    <div class="romeo-avatar">RR</div>
+    <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener" class="romeo-linkedin">&#128101; LinkedIn</a>
+  </div>
+  <div class="romeo-info">
+    <div class="romeo-name">Romeo Razi, CPA</div>
+    <div class="romeo-title">Former IRS Tax Examiner (Individual &amp; Employment Tax Division) &middot; CPA &middot; Featured in MarketWatch, U.S. News &amp; World Report, Realtor</div>
+    <div class="romeo-bio">Romeo conducted face-to-face audits at the IRS across sole proprietors to mid-sized businesses, worked on worker reclassification audits with the Department of Labor, and prepared disputed returns for Tax Court and Appeals. He founded <a href="https://taxedright.com" target="_blank" rel="noopener" style="color:var(--gold-dim)">Taxed Right LLC</a> in 2015 to put that insider knowledge to work for taxpayers.</div>
+  </div>
+</div>
+<div style="background:var(--ink);color:#fff;border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0;display:flex;align-items:flex-start;gap:1rem">
+  <div style="font-size:1.75rem;flex-shrink:0;line-height:1">▶</div>
+  <div>
+    <p style="font-size:14px;color:rgba(255,255,255,.75);margin:0 0 .35rem;font-style:normal">Romeo Razi, CPA: "In the last three weeks of tax season, I had three people contact me — one 3 years behind, one 5 years, one 4 years behind on trust returns. I helped all three."</p>
+    <a href="https://www.youtube.com/watch?v=X72vEtA_b0s" target="_blank" rel="noopener" style="color:var(--gold);font-size:13px;font-weight:600;text-decoration:none">Watch: What to Do If You Missed the Tax Deadline (YouTube) &rarr;</a>
+  </div>
+</div>
+
+  <div class="section">
+    <h2>How many years do you actually need to file? The IRS 6-year compliance rule</h2>
+    <p>One of the most important things most people don't know when dealing with a CP59 for unfiled returns: the IRS's definition of compliance is the <em>last 6 years</em> — not 10 years, not every year back to the beginning.</p>
+    <div class="insider">
+      <div class="insider-label">Yoav Betsion, EA — IRS Insider Interview</div>
+      <p>"The IRS definition of compliance is the last 6 years. As long as you file the last 6 years, they feel you're brought up to compliance. Now, there are exceptions — if the IRS already filed a Substitute for Return for a year outside the 6 years, you might want to file your actual return for that year if it saves you money. Or if you have losses to carry forward. But otherwise, we prepare the last 6 years and that brings you into compliance."</p>
+    </div>
+    <p>What this means practically: if you haven't filed for 10 years, you don't necessarily need to file all 10 returns to get right with the IRS. Filing the last 6 years in order — starting with the oldest — brings you into compliance. The IRS can still assess and collect on the older years, but requiring you to file returns older than 6 years as a condition of current compliance is not standard practice.</p>
+    <h3>When you should file outside the 6-year window</h3>
+    <ul>
+      <li><strong>The IRS has filed a Substitute for Return for that year</strong> and their numbers are significantly higher than your actual liability. You always have the right to file your actual return to override the SFR — and it can save substantial amounts.</li>
+      <li><strong>You have net operating losses (NOLs)</strong> from that year that you want to carry forward to offset future income. Those losses disappear if you don't establish them on a filed return.</li>
+    </ul>
+  </div>
+
+<div class="notice-links">
+  <h3>Other IRS notices &amp; strategies explained by a former IRS auditor:</h3>
+  <ul>
+    <li><a href="/cp2000">CP2000 &mdash; Proposed Adjustment</a></li>
+    <li><a href="/cp14">CP14 &mdash; Balance Due</a></li>
+    <li><a href="/cp504">CP504 &mdash; Intent to Levy</a></li>
+    <li><a href="/lt11">LT11 &mdash; Final Notice Before Levy</a></li>
+    <li><a href="/cp3219a">CP3219A &mdash; Notice of Deficiency</a></li>
+    <li><a href="/cp59">CP59 &mdash; Unfiled Return</a></li>
+    <li><a href="/cp523">CP523 &mdash; Payment Plan Terminated</a></li>
+    <li><a href="/irs-installment-agreement">IRS Installment Agreements</a></li>
+    <li><a href="/irs-offer-in-compromise">Offer in Compromise</a></li>
+    <li><a href="/irs-collection-statute">IRS 10-Year Collection Statute</a></li>
+    <li><a href="/irs-budget-cuts-2025">IRS Budget Cuts 2025</a></li>
+    <li><a href="/irs-audit-appeals-strategy">Audit &amp; Appeals Strategy</a></li>
+  </ul>
+</div>
+<div class="cta-box">
+  <h2>Received a CP59 for an unfiled return? The time to act is now.</h2>
+  <p>Romeo specializes in unfiled returns — he knows how to pull your income records, prepare accurate returns that reflect your real deductions, and minimize the penalty exposure that comes with late filing.</p>
+  <a href="/#contact" class="cta-btn">Get a Free Case Review →</a>
+</div>
+</div>
+<footer>
+  <p>IRS Resolution Service LLC · 9673 Camino Capistrano, Las Vegas, NV · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
+  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice.</p>
+</footer>
+</body>
+</html>

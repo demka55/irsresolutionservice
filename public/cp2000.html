@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRS CP2000 Notice: What It Means and How to Respond | Former IRS Auditor Explains</title>
+<meta name="description" content="A CP2000 is not a bill and not an audit — it's a proposed adjustment. Former IRS Auditor Romeo Razi explains exactly what the IRS is doing, what your deadline is, and how to dispute it if they're wrong.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c; --gold-light: #e8c97a; --gold-dim: #8a6e2f; --gold-muted: #f5ecd8;
+  --cream: #f5f0e8; --cream-warm: #ede5d5; --cream-dark: #d9cdb8;
+  --ink: #1a1410; --ink-soft: #4a3f32; --ink-muted: #7a6e60; --white: #ffffff;
+  --red: #c0392b; --red-light: #fdf0f0; --green: #1a5c2a; --green-light: #f0fdf4;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 18px; line-height: 1.7; }
+
+/* HEADER */
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--cream-dark); backdrop-filter: blur(12px); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-mark { width: 36px; height: 36px; border: 1.5px solid var(--gold); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--gold); }
+.logo-text { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+.logo-text span { color: var(--gold); }
+.nav { display: flex; align-items: center; gap: 1.75rem; }
+.nav a { font-size: 15px; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+.nav a:hover { color: var(--gold-dim); }
+.nav-cta { background: var(--gold) !important; color: var(--white) !important; padding: 9px 22px; border-radius: 2px; font-weight: 600; }
+
+/* HERO */
+.notice-hero { background: var(--white); padding: 120px 2rem 64px; border-bottom: 1px solid var(--cream-dark); }
+.notice-hero-inner { max-width: 840px; margin: 0 auto; }
+.notice-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--gold-muted); color: var(--gold-dim); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; margin-bottom: 1.5rem; }
+.notice-code-display { font-family: var(--serif); font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.notice-hero h1 { font-family: var(--serif); font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 600; color: var(--ink-soft); line-height: 1.3; margin-bottom: 1.5rem; }
+.direct-answer { background: var(--green-light); border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 2rem; }
+.direct-answer p { font-size: 17px; line-height: 1.65; color: var(--ink-soft); }
+.direct-answer strong { color: var(--green); }
+.deadline-badge { display: inline-flex; align-items: center; gap: 10px; background: var(--red-light); border: 1.5px solid #e8b0b0; border-radius: 4px; padding: 10px 18px; font-size: 15px; font-weight: 600; color: var(--red); }
+
+/* CONTENT */
+.notice-body { max-width: 840px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+.section { margin-bottom: 3.5rem; }
+.section h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
+.section h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); margin: 1.5rem 0 0.75rem; }
+.section p { color: var(--ink-soft); margin-bottom: 1rem; }
+.section ul, .section ol { color: var(--ink-soft); padding-left: 1.5rem; margin-bottom: 1rem; }
+.section li { margin-bottom: 0.5rem; }
+
+/* INSIDER CALLOUT */
+.insider { background: var(--gold-muted); border: 1px solid var(--cream-dark); border-left: 4px solid var(--gold); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.insider-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.4rem; }
+.insider p { font-size: 16px; color: var(--ink-soft); margin: 0; font-style: italic; }
+
+/* WARNING CALLOUT */
+.warning-box { background: var(--red-light); border: 1px solid #e8b0b0; border-left: 4px solid var(--red); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.warning-box p { font-size: 16px; color: var(--ink-soft); margin: 0; }
+
+/* STEP LIST */
+.step-list { list-style: none; padding: 0; counter-reset: steps; }
+.step-list li { counter-increment: steps; display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.25rem; }
+.step-list li::before { content: counter(steps); background: var(--gold); color: var(--white); min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; margin-top: 2px; flex-shrink: 0; }
+
+/* CTA */
+.cta-box { background: var(--ink); color: var(--white); border-radius: 6px; padding: 2.5rem 2rem; text-align: center; margin: 3rem 0; }
+.cta-box h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; }
+.cta-box p { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 1.5rem; }
+.cta-btn { display: inline-block; background: var(--gold); color: var(--ink); text-decoration: none; padding: 14px 32px; border-radius: 2px; font-weight: 700; font-size: 16px; letter-spacing: 0.04em; transition: background 0.2s; }
+.cta-btn:hover { background: var(--gold-light); }
+
+/* ROMEO */
+.romeo-bar { display: flex; align-items: center; gap: 1.5rem; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+.romeo-avatar { width: 56px; height: 56px; background: var(--gold-muted); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--gold-dim); flex-shrink: 0; }
+.romeo-info { flex: 1; }
+.romeo-name { font-weight: 700; font-size: 16px; color: var(--ink); }
+.romeo-title { font-size: 13px; color: var(--ink-muted); }
+
+/* FAQ */
+.faq-item { border-bottom: 1px solid var(--cream-dark); padding: 1.25rem 0; }
+.faq-q { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+.faq-a { font-size: 16px; color: var(--ink-soft); }
+
+/* FOOTER */
+footer { background: var(--ink); color: rgba(255,255,255,0.5); text-align: center; padding: 2rem; font-size: 13px; }
+footer a { color: var(--gold); text-decoration: none; }
+
+@media (max-width: 640px) {
+  .nav { gap: 1rem; }
+  .nav a:not(.nav-cta) { display: none; }
+}
+
+.romeo-bar{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0}
+.romeo-avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.romeo-avatar{width:72px;height:72px;background:var(--gold-muted);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px;font-weight:700;color:var(--gold-dim);overflow:hidden}
+.romeo-linkedin{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--gold-dim);text-decoration:none;font-weight:600;letter-spacing:0.05em}
+.romeo-linkedin:hover{color:var(--gold)}
+.romeo-info .romeo-name{font-weight:700;font-size:17px;color:var(--ink)}
+.romeo-info .romeo-title{font-size:14px;color:var(--ink-muted);margin-top:2px;line-height:1.5}
+.romeo-info .romeo-bio{font-size:15px;color:var(--ink-soft);margin-top:0.75rem;line-height:1.6}
+.notice-links{background:var(--cream-warm);border-radius:6px;padding:1.5rem;margin:2rem 0}
+.notice-links h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:1rem}
+.notice-links ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:0.5rem}
+.notice-links li a{display:inline-block;background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--gold-dim);text-decoration:none;transition:border-color 0.2s}
+.notice-links li a:hover{border-color:var(--gold);color:var(--gold)}
+.video-callout{background:var(--ink);color:var(--white);border-radius:6px;padding:1.5rem 1.75rem;margin:2rem 0;display:flex;align-items:center;gap:1.25rem}
+.video-callout .play-icon{font-size:2rem;flex-shrink:0}
+.video-callout h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.25rem}
+.video-callout p{font-size:14px;color:rgba(255,255,255,0.65);margin:0}
+.video-callout a{color:var(--gold);text-decoration:none;font-weight:600}
+@media(max-width:640px){.romeo-bar{grid-template-columns:1fr}.romeo-avatar-wrap{flex-direction:row}}
+
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IRS CP2000 Notice: What It Means and How to Respond | Former IRS Auditor Explains",
+  "description": "A CP2000 is not a bill and not an audit. Former IRS Auditor Romeo Razi explains what the IRS is actually doing, your 30-day deadline, and how to dispute if they're wrong.",
+  "url": "https://irsresolutionservice.com/cp2000",
+  "dateModified": "2026-06-27",
+  "author": {
+    "@type": "Person",
+    "@id": "https://irsresolutionservice.com/#romeo-razi",
+    "name": "Romeo Razi",
+    "honorificSuffix": "CPA",
+    "jobTitle": "Former IRS Tax Examiner, CPA",
+    "sameAs": "https://www.linkedin.com/in/romeo-razi/"
+  },
+  "publisher": {
+    "@id": "https://irsresolutionservice.com/#organization"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://irsresolutionservice.com/cp2000"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does a CP2000 affect my credit score?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not directly. The CP2000 itself is not reported to credit bureaus. However, if the proposed amount becomes an assessed tax debt and escalates to a federal tax lien filing, a lien can appear in public records and affect your ability to obtain credit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I actually do owe the money on the CP2000?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Agreeing is fine \u2014 just do it in writing before the deadline and include payment or a payment arrangement. The IRS will calculate penalty and interest from the original due date of the return, which is unavoidable. But responding promptly prevents further escalation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I call the IRS about a CP2000?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can, and sometimes a call is useful to request a deadline extension or clarify what specific income item they're referencing. But your actual response \u2014 agreement, disagreement, or documentation \u2014 should always be in writing. A phone call without a written record doesn't stop the clock or preserve your rights."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I already filed an amended return (1040-X) for the same year?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Send a copy of the 1040-X with your CP2000 response. The IRS's two processes sometimes run independently and the left hand doesn't always know what the right hand is doing. Your response letter should explicitly reference both the CP2000 and the pending amended return so they can link the records."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if the income on the CP2000 isn't mine at all?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This can happen with identity theft, clerical errors by an employer or contractor, or a name/SSN mismatch. Respond in writing explaining that the income isn't yours, and include whatever documentation you have \u2014 your own records, a corrected 1099 from the issuer if you can get one. If it's identity theft, you'll also want to file Form 14039 (Identity Theft Affidavit) and contact the IRS Identity Protection Specialized Unit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does the IRS have to audit me after a CP2000?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A CP2000 itself is not an audit and doesn't restart the statute of limitations. The IRS generally has three years from the return due date (or filing date, whichever is later) to assess additional tax. If you understated income by more than 25%, the window extends to six years. If there's fraud, there's no limit."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://irsresolutionservice.com" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <nav class="nav">
+      <a href="/#services">Services</a>
+      <a href="/#founders">About</a>
+      <a href="/#tool">Notice Decoder</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#contact" class="nav-cta">Get Help Now</a>
+    </nav>
+  </div>
+</header>
+
+<section class="notice-hero">
+  <div class="notice-hero-inner">
+    <div class="notice-eyebrow">⚠ IRS Notice Explained</div>
+    <div class="notice-code-display">CP2000</div>
+    <h1>What does a CP2000 notice mean — and do you actually owe the money?</h1>
+
+    <div class="direct-answer">
+      <p><strong>The short answer:</strong> A CP2000 is not a bill and not an audit. It is a proposed adjustment — the IRS is telling you their records show income you didn't report, and asking you to either agree or explain the difference. You have roughly 30 days to respond, and the IRS is often wrong.</p>
+    </div>
+
+    <div class="deadline-badge">
+      ⏱ Response deadline: approximately 30 days from the date printed on your notice — not the day you received it
+    </div>
+  </div>
+</section>
+
+<div class="notice-body">
+
+  <div class="section">
+    <h2>What the IRS is actually doing with a CP2000</h2>
+    <p>Every year, the IRS runs a matching program called the Automated Underreporter (AUR) system. It compares what you reported on your tax return against every W-2, 1099, 1098, and K-1 that your employer, bank, broker, or any other third party reported under your Social Security number.</p>
+    <p>When those numbers don't match — even slightly — the AUR system automatically generates a CP2000. No human reviewed your case. No auditor decided you were suspicious. A computer flagged a discrepancy and mailed a letter. The IRS sends roughly 3 million CP2000 notices every year, which tells you something about how automated and imperfect this process is.</p>
+
+    <div class="insider">
+      <div class="insider-label">Romeo Razi — Former IRS Auditor</div>
+      <p>"When I worked inside the IRS, I saw how the AUR system worked. It matches numbers mechanically — it doesn't know that you reinvested dividends, that you had a cost basis the 1099 didn't reflect, or that a freelance client filed a 1099 with the wrong amount. The CP2000 is the IRS's first word, not their last. Responding well is how you make sure it stays a proposal instead of becoming a bill."</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Three things that make CP2000 different from an audit or a bill</h2>
+
+    <h3>1. It is not an audit</h3>
+    <p>An audit involves an IRS examiner reviewing your entire return — your deductions, your credits, your documentation. A CP2000 is narrower: the IRS is specifically pointing to a mismatch between your return and one or more third-party documents. If you respond correctly and the issue is resolved, it stays out of audit territory. If you ignore it or respond carelessly, it can escalate into one.</p>
+
+    <h3>2. It is not a bill</h3>
+    <p>The notice proposes an adjustment and a resulting tax amount. That amount is not legally owed until you either agree to it or fail to respond by the deadline. Many taxpayers make the mistake of paying immediately, before checking whether the IRS's proposed adjustment is even correct — and in a significant number of cases, it isn't.</p>
+
+    <h3>3. The IRS can be wrong</h3>
+    <p>The most common reasons the proposed amount is incorrect: you reported the income correctly but on a different line, you have a cost basis the IRS's third-party data doesn't account for, the income was reported to the IRS under your SSN but actually belongs to someone else, or there was a genuine error on the third-party form (a broker's 1099, a client's 1099-NEC). Before you pay anything, compare the proposed adjustment line-by-line against your actual return and the underlying documents.</p>
+  </div>
+
+  <div class="section">
+    <h2>What income types most commonly trigger a CP2000</h2>
+    <ul>
+      <li><strong>1099-B brokerage transactions</strong> — the IRS sees your gross proceeds but not your cost basis. If you sold stock and reported the gain correctly on Schedule D, the AUR may still flag it because the gross sale price doesn't match your return.</li>
+      <li><strong>1099-NEC freelance income</strong> — a client files a 1099-NEC under your SSN; if you forgot to include that income or the amount differs, you'll get a CP2000.</li>
+      <li><strong>1099-R retirement distributions</strong> — especially 60-day rollovers, which are non-taxable but appear on the 1099-R as a full distribution. If you didn't report it properly as a rollover, the IRS may propose tax on the full amount.</li>
+      <li><strong>1099-K payment platform income</strong> — Venmo, PayPal, Cash App, and Stripe now report gross payments. Business expenses that offset this income aren't reflected in what the IRS sees.</li>
+      <li><strong>Canceled debt (1099-C)</strong> — lenders report forgiven debt as income. Many exclusions exist (insolvency, bankruptcy, certain mortgage debt) that the IRS doesn't know about until you respond.</li>
+      <li><strong>Alimony received</strong> — for pre-2019 divorce agreements, alimony is taxable income. The paying spouse reports it; if you didn't, you'll get flagged.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>How to respond to a CP2000 — step by step</h2>
+    <ol class="step-list">
+      <li><span><strong>Find your actual deadline.</strong> The date printed on the notice (upper right) is day one of your clock, not the day the letter arrived. Mail can take 7–10 days. If you're close to the deadline, call the number on the notice immediately to request an extension — the IRS routinely grants 30–60 extra days if you ask proactively.</span></li>
+      <li><span><strong>Pull the original documents.</strong> Get your W-2s, all 1099s, your Schedule D, your K-1s — every income document that should have been on your return. Then look at what the IRS says they received that you didn't report.</span></li>
+      <li><span><strong>Decide: agree, partially agree, or disagree.</strong> If the IRS is right and you simply missed income, agreeing is often the fastest and cheapest path. If they're wrong — even partially — you need to say so in writing with documentation.</span></li>
+      <li><span><strong>Respond in writing, not by phone.</strong> Everything you tell the IRS about a CP2000 should be in writing because it creates a permanent record. A phone call doesn't. Use the response form included with your notice, or write a letter referencing your CP2000 notice date and Social Security number.</span></li>
+      <li><span><strong>Include copies of supporting documents.</strong> If you're disputing the proposed adjustment, show your work — the 1099-B with cost basis, the proof of rollover, the corrected 1099. Don't send originals; keep those.</span></li>
+      <li><span><strong>Track your response.</strong> Send by certified mail with return receipt so you have dated proof the IRS received it. If the deadline passes without their acknowledgment, you need that documentation.</span></li>
+    </ol>
+
+    <div class="warning-box">
+      <p>⚠ The single most common CP2000 mistake: ignoring the notice or paying without checking the math. If you don't respond, the IRS automatically assesses the proposed amount and it becomes a real debt — with penalties and interest accruing from the original due date of the return. Responding late is better than not responding at all, but the right response sent before the deadline gives you the most options.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>What happens after you respond</h2>
+    <p>If you agree with the full amount: the IRS assesses the additional tax and sends a bill. You can pay in full, set up an installment agreement, or, if the amount is genuinely more than you can pay, explore an Offer in Compromise.</p>
+    <p>If you disagree and the IRS accepts your documentation: the case closes, the proposed adjustment is withdrawn, and you owe nothing additional. You'll receive a CP2000 series letter confirming the resolution.</p>
+    <p>If you disagree and the IRS doesn't accept your documentation: they'll send a Letter 3219 (Statutory Notice of Deficiency). At that point you have 90 days to petition the Tax Court — this is a hard, statutory deadline. Missing it means the IRS proceeds to assess the tax as proposed.</p>
+  </div>
+
+  <div class="section">
+    <h2>What a former IRS auditor does differently on a CP2000</h2>
+    <p>Most generic responses to a CP2000 are either too short (just "I disagree") or too long and emotional. What actually moves the IRS: a concise, well-organized letter that maps each disputed item to a specific line on the notice, provides one or two clear pieces of documentary evidence per item, and presents a correct calculation of what the tax would be if their adjustment were corrected. Auditors are busy. A response that makes it easy for them to say "this person is right" gets resolved faster than one that requires investigation.</p>
+
+    <div class="insider">
+      <div class="insider-label">Romeo Razi — Former IRS Auditor</div>
+      <p>"The thing I always tell people is that the IRS doesn't know you. All they have is the mismatch. When you respond with documentation that clearly explains the mismatch — without hostility, without panic, with organized evidence — the AUR unit almost always resolves it correctly. The people responding to these notices aren't trying to squeeze money out of you. They're trying to clear the case."</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Frequently asked questions about CP2000</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Does a CP2000 affect my credit score?</div>
+      <div class="faq-a">Not directly. The CP2000 itself is not reported to credit bureaus. However, if the proposed amount becomes an assessed tax debt and escalates to a federal tax lien filing, a lien can appear in public records and affect your ability to obtain credit.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if I actually do owe the money on the CP2000?</div>
+      <div class="faq-a">Agreeing is fine — just do it in writing before the deadline and include payment or a payment arrangement. The IRS will calculate penalty and interest from the original due date of the return, which is unavoidable. But responding promptly prevents further escalation.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I call the IRS about a CP2000?</div>
+      <div class="faq-a">You can, and sometimes a call is useful to request a deadline extension or clarify what specific income item they're referencing. But your actual response — agreement, disagreement, or documentation — should always be in writing. A phone call without a written record doesn't stop the clock or preserve your rights.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if I already filed an amended return (1040-X) for the same year?</div>
+      <div class="faq-a">Send a copy of the 1040-X with your CP2000 response. The IRS's two processes sometimes run independently and the left hand doesn't always know what the right hand is doing. Your response letter should explicitly reference both the CP2000 and the pending amended return so they can link the records.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if the income on the CP2000 isn't mine at all?</div>
+      <div class="faq-a">This can happen with identity theft, clerical errors by an employer or contractor, or a name/SSN mismatch. Respond in writing explaining that the income isn't yours, and include whatever documentation you have — your own records, a corrected 1099 from the issuer if you can get one. If it's identity theft, you'll also want to file Form 14039 (Identity Theft Affidavit) and contact the IRS Identity Protection Specialized Unit.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How long does the IRS have to audit me after a CP2000?</div>
+      <div class="faq-a">A CP2000 itself is not an audit and doesn't restart the statute of limitations. The IRS generally has three years from the return due date (or filing date, whichever is later) to assess additional tax. If you understated income by more than 25%, the window extends to six years. If there's fraud, there's no limit.</div>
+    </div>
+  </div>
+
+  <div class="romeo-bar">
+  <div class="romeo-avatar-wrap">
+    <div class="romeo-avatar">RR</div>
+    <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener" class="romeo-linkedin">&#128101; LinkedIn</a>
+  </div>
+  <div class="romeo-info">
+    <div class="romeo-name">Romeo Razi, CPA</div>
+    <div class="romeo-title">Former IRS Tax Examiner (Individual &amp; Employment Tax Division) &middot; CPA &middot; Featured in MarketWatch, U.S. News &amp; World Report, Realtor</div>
+    <div class="romeo-bio">Romeo conducted face-to-face audits at the IRS across sole proprietors to mid-sized businesses, worked on worker reclassification audits with the Department of Labor, and prepared disputed returns for Tax Court and Appeals. He founded <a href="https://taxedright.com" target="_blank" rel="noopener" style="color:var(--gold-dim)">Taxed Right LLC</a> in 2015 to put that insider knowledge to work for taxpayers.</div>
+  </div>
+
+  <div style="background:var(--ink);color:#fff;border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0;display:flex;align-items:flex-start;gap:1rem">
+  <div style="font-size:1.75rem;flex-shrink:0;line-height:1">💬</div>
+  <div>
+    <p style="font-size:14px;color:rgba(255,255,255,.75);margin:0 0 .35rem;font-style:normal">Romeo Razi, CPA: "The transcript verification found two errors in my CP2000 before I paid anything — saved the client over $3,000."</p>
+    <a href="https://irsresolutionservice.com" target="_blank" rel="noopener" style="color:var(--gold);font-size:13px;font-weight:600;text-decoration:none">IRS Resolution Service — Client Review &rarr;</a>
+  </div>
+</div>
+
+  <div class="section">
+    <h2>How the One Big Beautiful Act reduces future CP2000 volume</h2>
+    <p>One meaningful side effect of the One Big Beautiful Act: fewer CP2000 notices will be generated going forward. The 1099 reporting threshold has been raised from $600 to $2,000 for contractors and freelancers. For payment app income (Venmo, Cash App, PayPal), the threshold is now $20,000.</p>
+    <p>Since CP2000 notices are generated when the IRS receives third-party income reports that don't match your return, fewer 1099s being issued means fewer potential mismatches. If you previously received a CP2000 based on payment app income under $20,000, that situation is much less likely to recur under the new rules.</p>
+    <p>However, if you <em>have</em> received a CP2000, the income in question was typically reported to the IRS before these threshold changes. The new rules are prospective — they don't affect notices for prior years.</p>
+    <div class="insider">
+      <div class="insider-label">Romeo Razi, CPA — One Big Beautiful Act Video</div>
+      <p>"The 1099 threshold going from $600 to $2,000 makes everyone happy. I love it because I don't have to prepare as many 1099s. And the Venmo and PayPal threshold going to $20,000 means most people are not going to get a 1099 from those apps at all unless they have a really big business. Fewer 1099s means fewer mismatches and fewer CP2000 notices."</p>
+    </div>
+  </div>
+
+<div class="notice-links">
+  <h3>Other IRS notices &amp; strategies explained by a former IRS auditor:</h3>
+  <ul>
+    <li><a href="/cp2000">CP2000 &mdash; Proposed Adjustment</a></li>
+    <li><a href="/cp14">CP14 &mdash; Balance Due</a></li>
+    <li><a href="/cp504">CP504 &mdash; Intent to Levy</a></li>
+    <li><a href="/lt11">LT11 &mdash; Final Notice Before Levy</a></li>
+    <li><a href="/cp3219a">CP3219A &mdash; Notice of Deficiency</a></li>
+    <li><a href="/cp59">CP59 &mdash; Unfiled Return</a></li>
+    <li><a href="/cp523">CP523 &mdash; Payment Plan Terminated</a></li>
+    <li><a href="/irs-installment-agreement">IRS Installment Agreements</a></li>
+    <li><a href="/irs-offer-in-compromise">Offer in Compromise</a></li>
+    <li><a href="/irs-collection-statute">IRS 10-Year Collection Statute</a></li>
+    <li><a href="/irs-budget-cuts-2025">IRS Budget Cuts 2025</a></li>
+    <li><a href="/irs-audit-appeals-strategy">Audit &amp; Appeals Strategy</a></li>
+  </ul>
+</div>
+<div class="cta-box">
+    <h2>Received a CP2000? Let a former IRS auditor review it first.</h2>
+    <p>Romeo spent years inside the IRS. He knows exactly what the AUR unit is looking for — and where they get it wrong. Don't pay until someone who's been on the other side of the desk takes a look.</p>
+    <a href="/#contact" class="cta-btn">Get a Free Case Review →</a>
+  </div>
+
+</div>
+
+</div>
+<footer>
+  <p>IRS Resolution Service LLC · 9673 Camino Capistrano, Las Vegas, NV · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
+  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice.</p>
+</footer>
+
+</body>
+</html>

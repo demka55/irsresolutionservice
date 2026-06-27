@@ -308,17 +308,24 @@ body { font-family: var(--sans); background: var(--cream); color: var(--ink); fo
 /* FOOTER */
 footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); padding:4rem 2rem 2.5rem; }
 .footer-inner { max-width:1200px; margin:0 auto; }
-.footer-top { display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:3rem; margin-bottom:3rem; }
-.footer-brand p { font-size:15px; color:var(--ink-muted); line-height:1.7; font-weight:400; max-width:300px; margin-top:1rem; }
-.footer-partners { display:flex; gap:1.25rem; margin-top:0.75rem; }
-.footer-pl { font-size:14px; color:var(--ink-muted); text-decoration:none; transition:color 0.2s; }
+.footer-top { display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:2.5rem; margin-bottom:2.5rem; }
+.footer-brand p { font-size:14px; color:var(--ink-muted); line-height:1.7; font-weight:400; max-width:280px; margin-top:0.75rem; }
+.footer-partners { display:flex; flex-wrap:wrap; gap:0.75rem 1.25rem; margin-top:0.75rem; }
+.footer-pl { font-size:13px; color:var(--ink-muted); text-decoration:none; transition:color 0.2s; }
 .footer-pl:hover { color:var(--gold-dim); }
-.footer-col h4 { font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:1rem; }
-.footer-col a { display:block; font-size:15px; color:var(--ink-muted); text-decoration:none; margin-bottom:0.65rem; transition:color 0.2s; }
+.footer-col h4 { font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:0.875rem; }
+.footer-col a { display:block; font-size:14px; color:var(--ink-muted); text-decoration:none; margin-bottom:0.5rem; transition:color 0.2s; }
 .footer-col a:hover { color:var(--ink); }
+.footer-guides { border-top:1px solid var(--cream-dark); padding-top:2rem; margin-bottom:2rem; }
+.footer-guides h4 { font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:1rem; }
+.footer-guides-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:0.35rem 2rem; }
+.footer-guides-grid a { font-size:13px; color:var(--ink-muted); text-decoration:none; padding:2px 0; transition:color 0.2s; }
+.footer-guides-grid a:hover { color:var(--ink); }
 .footer-bottom { border-top:1px solid var(--cream-dark); padding-top:2rem; display:flex; align-items:flex-start; justify-content:space-between; gap:2rem; flex-wrap:wrap; }
 .footer-copy { font-size:13px; color:var(--ink-muted); }
 .disclaimer { font-size:12px; color:var(--ink-muted); line-height:1.6; max-width:620px; }
+@media(max-width:900px){ .footer-top { grid-template-columns:1fr 1fr; } }
+@media(max-width:560px){ .footer-top { grid-template-columns:1fr; } }
 
 /* MODAL */
 .modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); z-index:1000; align-items:center; justify-content:center; padding:1rem; backdrop-filter:blur(4px); }
@@ -366,6 +373,56 @@ footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); p
   .notice-title { order:3; width:100%; padding-top:4px; }
 }
 </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://irsresolutionservice.com/#organization",
+      "name": "IRS Resolution Service",
+      "url": "https://irsresolutionservice.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://irsresolutionservice.com/favicon.ico"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Tax Resolution Services",
+        "areaServed": "US",
+        "availableLanguage": "English",
+        "url": "https://irsresolutionservice.com/#contact"
+      },
+      "founder": {
+        "@type": "Person",
+        "@id": "https://irsresolutionservice.com/#romeo-razi",
+        "name": "Romeo Razi",
+        "honorificSuffix": "CPA",
+        "jobTitle": "Former IRS Tax Examiner, CPA",
+        "description": "Former IRS Tax Examiner (Individual & Employment Tax Division). Licensed CPA. Founded TaxedRight LLC in 2015. Featured in MarketWatch, U.S. News & World Report.",
+        "sameAs": [
+          "https://www.linkedin.com/in/romeo-razi/",
+          "https://taxedright.com",
+          "https://www.youtube.com/@taxedright"
+        ]
+      },
+      "sameAs": [
+        "https://irsresolutionservice.com"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://irsresolutionservice.com/#website",
+      "url": "https://irsresolutionservice.com",
+      "name": "IRS Resolution Service",
+      "publisher": {
+        "@id": "https://irsresolutionservice.com/#organization"
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -917,59 +974,82 @@ footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); p
 
 <footer>
   <div class="footer-inner">
+
     <div class="footer-top">
       <div class="footer-brand">
-        <a href="#" class="logo"><div class="logo-mark">IRS</div><span class="logo-text">Resolution <span>Service</span></span></a>
-        <p>A joint venture by Romeo Razi, CPA (ex-IRS Auditor) and Dmitry Dragilev (4× SaaS founder). Built to give everyone access to insider IRS knowledge.</p>
+        <a href="/" class="logo"><div class="logo-mark">IRS</div><span class="logo-text">Resolution <span>Service</span></span></a>
+        <p>Built by Romeo Razi, CPA (ex-IRS Auditor) and Dmitry Dragilev (4&times; SaaS founder). Insider IRS knowledge, now on your side.</p>
         <div class="footer-partners">
           <a href="https://taxedright.com/" target="_blank" class="footer-pl">taxedright.com</a>
           <a href="https://www.criminallyprolific.com/" target="_blank" class="footer-pl">criminallyprolific.com</a>
+          <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank" class="footer-pl">&#128101; Romeo on LinkedIn</a>
         </div>
       </div>
       <div class="footer-col">
-        <h4>Community</h4>
-        <a href="#community">CPA &amp; EA Community</a>
-        <a href="#community">Monthly calls</a>
-        <a href="#community">Join the waitlist</a>
-        <a href="#community">$99/mo or $999/yr</a>
-        <a href="#community">First month free</a>
+        <h4>Services</h4>
+        <a href="/#services">What We Handle</a>
+        <a href="/#services">Unfiled Returns</a>
+        <a href="/irs-offer-in-compromise">Offer in Compromise</a>
+        <a href="/irs-installment-agreement">Payment Plans</a>
+        <a href="/#services">Penalty Abatement</a>
+        <a href="/#services">Back Taxes</a>
+        <a href="/irs-audit-appeals-strategy">IRS Audits &amp; Appeals</a>
       </div>
       <div class="footer-col">
-        <h4>Services</h4>
-        <a href="#services">What we handle</a>
-        <a href="#services">Unfiled Returns</a>
-        <a href="#services">Offer in Compromise</a>
-        <a href="#services">Penalty Abatement</a>
-        <a href="#services">Back Taxes</a>
-        <a href="#services">IRS Audits &amp; Appeals</a>
-        <a href="#services">IRS Notices</a>
+        <h4>IRS Notices</h4>
+        <a href="/cp2000">CP2000 — Proposed Adjustment</a>
+        <a href="/cp14">CP14 — Balance Due</a>
+        <a href="/cp504">CP504 — Intent to Levy</a>
+        <a href="/lt11">LT11 — Final Levy Notice</a>
+        <a href="/cp3219a">CP3219A — Notice of Deficiency</a>
+        <a href="/cp59">CP59 — Unfiled Return</a>
+        <a href="/cp523">CP523 — Payment Plan Terminated</a>
       </div>
       <div class="footer-col">
         <h4>Resources</h4>
-        <a href="#tool">Notice Decoder</a>
-        <a href="#faq">FAQ</a>
-        <a href="#community">CPA Community</a>
-        <a href="#contact">Get Help</a>
-        <a href="#founders">About Us</a>
-      </div>
-      <div class="footer-col">
-        <h4>Team</h4>
-        <a href="https://taxedright.com/" target="_blank">Romeo Razi, CPA</a>
-        <a href="https://www.criminallyprolific.com/" target="_blank">Dmitry Dragilev</a>
-        <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank">LinkedIn</a>
-        <a href="mailto:romeo@taxedright.com">romeo@taxedright.com</a>
-        <a href="mailto:dmitry.dragilev@hey.com">dmitry.dragilev@hey.com</a>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
+        <a href="/#tool">Notice Decoder</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/#community">CPA Community</a>
+        <a href="/#contact">Get Help Now</a>
+        <a href="/#founders">About Us</a>
         <a href="/privacy">Privacy Policy</a>
         <a href="/terms">Terms of Service</a>
       </div>
     </div>
-    <div class="footer-bottom">
-      <div class="footer-copy">© 2026 IRS Resolution Service LLC. All rights reserved.</div>
-      <p class="disclaimer">IRS Resolution Service is not affiliated with the Internal Revenue Service. This tool provides general informational guidance only and does not constitute legal or tax advice. · <a href="/privacy" style="color:var(--ink-muted);text-decoration:none">Privacy Policy</a> · <a href="/terms" style="color:var(--ink-muted);text-decoration:none">Terms of Service</a></p>
+
+    <!-- IRS Notices & Tax Guides — full link directory for SEO and discoverability -->
+    <div class="footer-guides">
+      <h4>IRS Notices &amp; Tax Guides — Explained by a Former IRS Auditor</h4>
+      <div class="footer-guides-grid">
+        <a href="/cp2000">CP2000: Proposed Adjustment Notice</a>
+        <a href="/cp14">CP14: First Balance Due Notice</a>
+        <a href="/cp504">CP504: Notice of Intent to Levy</a>
+        <a href="/lt11">LT11: Final Notice Before Levy</a>
+        <a href="/cp3219a">CP3219A: Statutory Notice of Deficiency</a>
+        <a href="/cp59">CP59: Unfiled Return Notice</a>
+        <a href="/cp523">CP523: Payment Plan Termination</a>
+        <a href="/irs-installment-agreement">IRS Installment Agreements Explained</a>
+        <a href="/irs-offer-in-compromise">Offer in Compromise: The Real Story</a>
+        <a href="/irs-collection-statute">IRS 10-Year Collection Statute</a>
+        <a href="/irs-budget-cuts-2025">IRS Budget Cuts: What It Means for You</a>
+        <a href="/irs-audit-appeals-strategy">IRS Audit &amp; Appeals Strategy</a>
+        <a href="/one-big-beautiful-act">One Big Beautiful Act: 9 Tax Changes</a>
+        <a href="/irs-tips-overtime-tax">Tax-Free Tips &amp; Overtime Explained</a>
+        <a href="/salt-deduction-2025">SALT Deduction Raised to $40,000</a>
+        <a href="/bonus-depreciation-2025">100% Bonus Depreciation (Permanent)</a>
+        <a href="/rd-expense-deduction">R&amp;D Expense Deduction Restored</a>
+        <a href="/qualified-small-business-stock">QSBS Exclusion: $15M Limit</a>
+        <a href="/year-end-tax-planning">Year-End Business Tax Planning</a>
+        <a href="/missed-tax-deadline">Missed the Tax Deadline? What to Do</a>
+        <a href="/tax-brackets-2026">2026 Federal Tax Brackets</a>
+      </div>
     </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2026 IRS Resolution Service LLC. All rights reserved.</div>
+      <p class="disclaimer">IRS Resolution Service is not affiliated with the Internal Revenue Service. This tool provides general informational guidance only and does not constitute legal or tax advice. &middot; <a href="/privacy" style="color:var(--ink-muted);text-decoration:none">Privacy Policy</a> &middot; <a href="/terms" style="color:var(--ink-muted);text-decoration:none">Terms of Service</a></p>
+    </div>
+
   </div>
 </footer>
 

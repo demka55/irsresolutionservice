@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRS CP3219A (Statutory Notice of Deficiency): What It Means and Your 90-Day Deadline</title>
+<meta name="description" content="A CP3219A is the highest-stakes IRS notice — you have 90 days to petition Tax Court or the proposed tax becomes permanently assessed. Former IRS Auditor Romeo Razi explains your options.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c; --gold-light: #e8c97a; --gold-dim: #8a6e2f; --gold-muted: #f5ecd8;
+  --cream: #f5f0e8; --cream-warm: #ede5d5; --cream-dark: #d9cdb8;
+  --ink: #1a1410; --ink-soft: #4a3f32; --ink-muted: #7a6e60; --white: #ffffff;
+  --red: #c0392b; --red-light: #fdf0f0; --green: #1a5c2a; --green-light: #f0fdf4;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 18px; line-height: 1.7; }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--cream-dark); backdrop-filter: blur(12px); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-mark { width: 36px; height: 36px; border: 1.5px solid var(--gold); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--gold); }
+.logo-text { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+.logo-text span { color: var(--gold); }
+.nav { display: flex; align-items: center; gap: 1.75rem; }
+.nav a { font-size: 15px; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+.nav a:hover { color: var(--gold-dim); }
+.nav-cta { background: var(--gold) !important; color: var(--white) !important; padding: 9px 22px; border-radius: 2px; font-weight: 600; }
+.notice-hero { background: var(--white); padding: 120px 2rem 64px; border-bottom: 1px solid var(--cream-dark); }
+.notice-hero-inner { max-width: 840px; margin: 0 auto; }
+.notice-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--gold-muted); color: var(--gold-dim); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; margin-bottom: 1.5rem; }
+.notice-code-display { font-family: var(--serif); font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.notice-hero h1 { font-family: var(--serif); font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 600; color: var(--ink-soft); line-height: 1.3; margin-bottom: 1.5rem; }
+.direct-answer { background: var(--green-light); border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 2rem; }
+.direct-answer p { font-size: 17px; line-height: 1.65; color: var(--ink-soft); }
+.direct-answer strong { color: var(--green); }
+.deadline-badge { display: inline-flex; align-items: center; gap: 10px; background: var(--red-light); border: 1.5px solid #e8b0b0; border-radius: 4px; padding: 10px 18px; font-size: 15px; font-weight: 600; color: var(--red); }
+.notice-body { max-width: 840px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+.section { margin-bottom: 3.5rem; }
+.section h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
+.section h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); margin: 1.5rem 0 0.75rem; }
+.section p { color: var(--ink-soft); margin-bottom: 1rem; }
+.section ul, .section ol { color: var(--ink-soft); padding-left: 1.5rem; margin-bottom: 1rem; }
+.section li { margin-bottom: 0.5rem; }
+.insider { background: var(--gold-muted); border: 1px solid var(--cream-dark); border-left: 4px solid var(--gold); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.insider-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.4rem; }
+.insider p { font-size: 16px; color: var(--ink-soft); margin: 0; font-style: italic; }
+.warning-box { background: var(--red-light); border: 1px solid #e8b0b0; border-left: 4px solid var(--red); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.warning-box p { font-size: 16px; color: var(--ink-soft); margin: 0; }
+.step-list { list-style: none; padding: 0; counter-reset: steps; }
+.step-list li { counter-increment: steps; display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.25rem; }
+.step-list li::before { content: counter(steps); background: var(--gold); color: var(--white); min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; margin-top: 2px; flex-shrink: 0; }
+.cta-box { background: var(--ink); color: var(--white); border-radius: 6px; padding: 2.5rem 2rem; text-align: center; margin: 3rem 0; }
+.cta-box h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; }
+.cta-box p { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 1.5rem; }
+.cta-btn { display: inline-block; background: var(--gold); color: var(--ink); text-decoration: none; padding: 14px 32px; border-radius: 2px; font-weight: 700; font-size: 16px; letter-spacing: 0.04em; }
+.romeo-bar { display: flex; align-items: center; gap: 1.5rem; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+.romeo-avatar { width: 56px; height: 56px; background: var(--gold-muted); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--gold-dim); flex-shrink: 0; }
+.romeo-name { font-weight: 700; font-size: 16px; color: var(--ink); }
+.romeo-title { font-size: 13px; color: var(--ink-muted); }
+.faq-item { border-bottom: 1px solid var(--cream-dark); padding: 1.25rem 0; }
+.faq-q { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+.faq-a { font-size: 16px; color: var(--ink-soft); }
+footer { background: var(--ink); color: rgba(255,255,255,0.5); text-align: center; padding: 2rem; font-size: 13px; }
+footer a { color: var(--gold); text-decoration: none; }
+@media (max-width: 640px) { .nav { gap: 1rem; } .nav a:not(.nav-cta) { display: none; } }
+
+.romeo-bar{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0}
+.romeo-avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.romeo-avatar{width:72px;height:72px;background:var(--gold-muted);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px;font-weight:700;color:var(--gold-dim);overflow:hidden}
+.romeo-linkedin{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--gold-dim);text-decoration:none;font-weight:600;letter-spacing:0.05em}
+.romeo-linkedin:hover{color:var(--gold)}
+.romeo-info .romeo-name{font-weight:700;font-size:17px;color:var(--ink)}
+.romeo-info .romeo-title{font-size:14px;color:var(--ink-muted);margin-top:2px;line-height:1.5}
+.romeo-info .romeo-bio{font-size:15px;color:var(--ink-soft);margin-top:0.75rem;line-height:1.6}
+.notice-links{background:var(--cream-warm);border-radius:6px;padding:1.5rem;margin:2rem 0}
+.notice-links h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:1rem}
+.notice-links ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:0.5rem}
+.notice-links li a{display:inline-block;background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--gold-dim);text-decoration:none;transition:border-color 0.2s}
+.notice-links li a:hover{border-color:var(--gold);color:var(--gold)}
+.video-callout{background:var(--ink);color:var(--white);border-radius:6px;padding:1.5rem 1.75rem;margin:2rem 0;display:flex;align-items:center;gap:1.25rem}
+.video-callout .play-icon{font-size:2rem;flex-shrink:0}
+.video-callout h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.25rem}
+.video-callout p{font-size:14px;color:rgba(255,255,255,0.65);margin:0}
+.video-callout a{color:var(--gold);text-decoration:none;font-weight:600}
+@media(max-width:640px){.romeo-bar{grid-template-columns:1fr}.romeo-avatar-wrap{flex-direction:row}}
+
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IRS CP3219A: Statutory Notice of Deficiency \u2014 90-Day Deadline",
+  "description": "A CP3219A gives you exactly 90 days to petition Tax Court. Former IRS Auditor Romeo Razi explains your three paths and what happens if you miss the deadline.",
+  "url": "https://irsresolutionservice.com/cp3219a",
+  "dateModified": "2026-06-27",
+  "author": {
+    "@type": "Person",
+    "@id": "https://irsresolutionservice.com/#romeo-razi",
+    "name": "Romeo Razi",
+    "honorificSuffix": "CPA",
+    "jobTitle": "Former IRS Tax Examiner, CPA",
+    "sameAs": "https://www.linkedin.com/in/romeo-razi/"
+  },
+  "publisher": {
+    "@id": "https://irsresolutionservice.com/#organization"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://irsresolutionservice.com/cp3219a"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I need an attorney to file a Tax Court petition?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. For S cases ($50,000 or less per year), the Tax Court's procedures are simplified and many taxpayers represent themselves. A CPA with Tax Court experience or an enrolled agent can also represent you \u2014 it doesn't have to be an attorney. The petition itself is a two-page form available at ustaxcourt.gov. The most important thing is filing it before the 90-day deadline."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I already paid the tax shown on the CP3219A \u2014 can I still petition Tax Court?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you paid the full proposed amount, you lose the right to petition the Tax Court for that tax year \u2014 Tax Court jurisdiction requires that the tax hasn't been assessed or paid. Your remaining option is to file a claim for refund (Form 1040-X or Form 843) and, if the IRS denies the refund claim, sue in U.S. District Court or the Court of Federal Claims."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I still go to IRS Appeals after filing a Tax Court petition?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes \u2014 in fact, the Tax Court actively encourages this. After you file the petition, the IRS's Counsel division typically contacts you and offers an opportunity to settle through a pre-trial conference. Most cases that reach Tax Court resolve in settlement without ever going to trial."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I received a CP3219A but also want to file my late returns \u2014 which takes priority?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "File the Tax Court petition first if the deadline is approaching. Then pursue filing the late returns in parallel. A late-filed original return for the year in question can sometimes override the IRS's Substitute for Return and change the tax owed \u2014 but you want the petition on file as insurance while that process plays out."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://irsresolutionservice.com" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <nav class="nav">
+      <a href="/#services">Services</a>
+      <a href="/#founders">About</a>
+      <a href="/#tool">Notice Decoder</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#contact" class="nav-cta">Get Help Now</a>
+    </nav>
+  </div>
+</header>
+<section class="notice-hero">
+  <div class="notice-hero-inner">
+    <div class="notice-eyebrow">⚠ IRS Notice Explained</div>
+    <div class="notice-code-display">CP3219A</div>
+    <h1>You received a CP3219A — this is the IRS's formal notice that they intend to assess additional tax. You have 90 days to stop it.</h1>
+    <div class="direct-answer"><p><strong>The short answer:</strong> A CP3219A (Statutory Notice of Deficiency, also called a "90-day letter") means the IRS has completed their analysis and formally proposes to assess additional tax. You have exactly 90 days from the notice date to petition the United States Tax Court. If you don't, the IRS assesses the tax and it becomes a legally owed debt with no further opportunity to contest it in Tax Court.</p></div>
+    <div class="deadline-badge">⏱ ⚠ 90-day deadline to petition Tax Court — 150 days if you're outside the U.S. This is a hard statutory deadline. Missing it means the IRS proceeds.</div>
+  </div>
+</section>
+<div class="notice-body">
+
+  <div class="section">
+    <h2>What makes the CP3219A different from other IRS notices</h2>
+    <p>Most IRS notices propose something and ask you to respond to the IRS. The CP3219A is different: it formally notifies you that the IRS intends to assess additional tax, and it opens a specific legal pathway — a petition to the U.S. Tax Court — that is the only way to dispute the proposed assessment before paying it.</p>
+    <p>This is sometimes called the "90-day letter" because the window to petition Tax Court is 90 days from the notice date (150 days if your address of record is outside the U.S.). That deadline is statutory and absolute — no extensions are available.</p>
+    <div class="insider">
+      <div class="insider-label">Romeo Razi — Former IRS Auditor</div>
+      <p>"The CP3219A is the notice that separates the people who kept their options open from the people who didn't. Once those 90 days pass without a Tax Court petition, the IRS assesses the tax — full stop. You can still fight it afterward, but you're doing it from a position of owing the money rather than contesting it before assessment. That's a fundamentally different and harder situation."</p>
+    </div>
+  </div>
+  <div class="section">
+    <h2>What typically leads to a CP3219A</h2>
+    <p>The most common paths to a CP3219A:</p>
+    <ul>
+      <li><strong>CP2000 that wasn't resolved.</strong> If you didn't respond to a CP2000 (proposed adjustment for unreported income) within the response window, it escalates to a CP3219A.</li>
+      <li><strong>Audit (examination) that resulted in proposed changes.</strong> After a correspondence or field audit, if you disagree with the proposed changes and the case doesn't resolve in Appeals, the IRS issues a CP3219A.</li>
+      <li><strong>Missing return with IRS-prepared substitute.</strong> If you didn't file and the IRS prepared a Substitute for Return (SFR) under IRC §6020(b), they may issue a CP3219A based on their SFR calculation — which notoriously ignores deductions and credits you're entitled to.</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h2>Your three paths when you receive a CP3219A</h2>
+    <h3>1. Petition the U.S. Tax Court</h3>
+    <p>Filing a Tax Court petition stops the IRS from assessing the proposed tax until the case is resolved. The Tax Court has a Small Tax Case (S case) procedure for disputes of $50,000 or less per tax year — it's designed to be accessible to taxpayers without attorneys, with simplified procedures and a lower filing fee ($60). Larger disputes go through regular Tax Court procedures.</p>
+    <p>Importantly, filing a Tax Court petition doesn't mean the case goes to trial. The majority of Tax Court cases resolve in settlement — either through IRS Appeals or through Tax Court's pre-trial settlement process. Filing the petition keeps your options open while the case settles.</p>
+    <h3>2. Sign the agreement and pay (or arrange payment)</h3>
+    <p>If you agree with the proposed assessment, you can sign the enclosed consent form (Form 5564) and the IRS will formally assess the tax. At that point, your focus shifts to payment — installment agreement, OIC, or CNC status based on your financial situation.</p>
+    <h3>3. Let the deadline pass (not recommended)</h3>
+    <p>If you neither petition Tax Court nor sign the agreement by the deadline, the IRS automatically assesses the proposed tax. You can still dispute the underlying tax amount afterward by paying and filing a claim for refund — but you must pay first, which is a significant disadvantage versus the pre-assessment Tax Court path.</p>
+    <div class="warning-box">
+      <p>⚠ The 90-day window cannot be extended under any circumstances. The only exception is if the notice was mailed to an address outside the U.S., in which case you have 150 days. Do not call the IRS asking for more time on a CP3219A — they cannot give it to you. Only the Tax Court can.</p>
+    </div>
+  </div>
+  <div class="section">
+    <h2>When the proposed amount on a CP3219A is wrong</h2>
+    <p>A significant percentage of CP3219As contain errors — particularly those originating from CP2000 disputes or Substitute for Return situations. The IRS's Substitute for Return uses gross income data from third-party forms and applies standard deductions, but it doesn't reflect your actual deductions, credits, business expenses, basis in assets, or retirement contributions.</p>
+    <p>If you filed late returns for the year in question after receiving the CP3219A, those returns can sometimes affect the assessment — but the Tax Court petition is still often the right protective step while that's being sorted out.</p>
+    <div class="insider">
+      <div class="insider-label">Romeo Razi — Former IRS Auditor</div>
+      <p>"When the IRS builds a Substitute for Return, they're working with whatever income documents they have. They're not going to find your Schedule C expenses, your depreciation, or your retirement contributions. I've seen CP3219As that proposed three times what the taxpayer actually owed, simply because nobody filed a real return first. The Tax Court petition buys time to get the actual numbers right."</p>
+    </div>
+  </div>
+  <div class="section">
+    <h2>Frequently asked questions about CP3219A</h2>
+    <div class="faq-item">
+      <div class="faq-q">Do I need an attorney to file a Tax Court petition?</div>
+      <div class="faq-a">No. For S cases ($50,000 or less per year), the Tax Court's procedures are simplified and many taxpayers represent themselves. A CPA with Tax Court experience or an enrolled agent can also represent you — it doesn't have to be an attorney. The petition itself is a two-page form available at ustaxcourt.gov. The most important thing is filing it before the 90-day deadline.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if I already paid the tax shown on the CP3219A — can I still petition Tax Court?</div>
+      <div class="faq-a">If you paid the full proposed amount, you lose the right to petition the Tax Court for that tax year — Tax Court jurisdiction requires that the tax hasn't been assessed or paid. Your remaining option is to file a claim for refund (Form 1040-X or Form 843) and, if the IRS denies the refund claim, sue in U.S. District Court or the Court of Federal Claims.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I still go to IRS Appeals after filing a Tax Court petition?</div>
+      <div class="faq-a">Yes — in fact, the Tax Court actively encourages this. After you file the petition, the IRS's Counsel division typically contacts you and offers an opportunity to settle through a pre-trial conference. Most cases that reach Tax Court resolve in settlement without ever going to trial.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">I received a CP3219A but also want to file my late returns — which takes priority?</div>
+      <div class="faq-a">File the Tax Court petition first if the deadline is approaching. Then pursue filing the late returns in parallel. A late-filed original return for the year in question can sometimes override the IRS's Substitute for Return and change the tax owed — but you want the petition on file as insurance while that process plays out.</div>
+    </div>
+  </div>
+  
+<div class="romeo-bar">
+  <div class="romeo-avatar-wrap">
+    <div class="romeo-avatar">RR</div>
+    <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener" class="romeo-linkedin">&#128101; LinkedIn</a>
+  </div>
+  <div class="romeo-info">
+    <div class="romeo-name">Romeo Razi, CPA</div>
+    <div class="romeo-title">Former IRS Tax Examiner (Individual &amp; Employment Tax Division) &middot; CPA &middot; Featured in MarketWatch, U.S. News &amp; World Report, Realtor</div>
+    <div class="romeo-bio">Romeo conducted face-to-face audits at the IRS across sole proprietors to mid-sized businesses, worked on worker reclassification audits with the Department of Labor, and prepared disputed returns for Tax Court and Appeals. He founded <a href="https://taxedright.com" target="_blank" rel="noopener" style="color:var(--gold-dim)">Taxed Right LLC</a> in 2015 to put that insider knowledge to work for taxpayers.</div>
+  </div>
+</div>
+<div style="background:var(--ink);color:#fff;border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0;display:flex;align-items:flex-start;gap:1rem">
+  <div style="font-size:1.75rem;flex-shrink:0;line-height:1">▶</div>
+  <div>
+    <p style="font-size:14px;color:rgba(255,255,255,.75);margin:0 0 .35rem;font-style:normal">The IRS Audit & Appeals strategy Romeo and Yoav use — why they route cases through Tax Court instead of going directly to Appeals, and what that means for a CP3219A.</p>
+    <a href="https://www.youtube.com/watch?v=tb6IfQqRaMM" target="_blank" rel="noopener" style="color:var(--gold);font-size:13px;font-weight:600;text-decoration:none">IRS Insider Interview: Audit & Appeals Strategy &rarr;</a>
+  </div>
+</div>
+<div class="notice-links">
+  <h3>Other IRS notices &amp; strategies explained by a former IRS auditor:</h3>
+  <ul>
+    <li><a href="/cp2000">CP2000 &mdash; Proposed Adjustment</a></li>
+    <li><a href="/cp14">CP14 &mdash; Balance Due</a></li>
+    <li><a href="/cp504">CP504 &mdash; Intent to Levy</a></li>
+    <li><a href="/lt11">LT11 &mdash; Final Notice Before Levy</a></li>
+    <li><a href="/cp3219a">CP3219A &mdash; Notice of Deficiency</a></li>
+    <li><a href="/cp59">CP59 &mdash; Unfiled Return</a></li>
+    <li><a href="/cp523">CP523 &mdash; Payment Plan Terminated</a></li>
+    <li><a href="/irs-installment-agreement">IRS Installment Agreements</a></li>
+    <li><a href="/irs-offer-in-compromise">Offer in Compromise</a></li>
+    <li><a href="/irs-collection-statute">IRS 10-Year Collection Statute</a></li>
+    <li><a href="/irs-budget-cuts-2025">IRS Budget Cuts 2025</a></li>
+    <li><a href="/irs-audit-appeals-strategy">Audit &amp; Appeals Strategy</a></li>
+  </ul>
+</div>
+<div class="cta-box">
+  <h2>Received a CP3219A? The 90-day deadline is absolute.</h2>
+  <p>Romeo knows how to evaluate whether to petition Tax Court, what the proposed amount is actually based on, and whether the IRS's calculation is correct. Don't let this deadline pass without understanding your options.</p>
+  <a href="/#contact" class="cta-btn">Get a Free Case Review →</a>
+</div>
+</div>
+<footer>
+  <p>IRS Resolution Service LLC · 9673 Camino Capistrano, Las Vegas, NV · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
+  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice.</p>
+</footer>
+</body>
+</html>

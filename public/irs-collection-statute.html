@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRS 10-Year Collection Statute: How It Works, What Tolls It, and When to Wait It Out</title>
+<meta name="description" content="The IRS generally has 10 years to collect. A former IRS auditor explains exactly how the CSED works, what stops the clock, and when the right strategy is to do nothing at all.">
+<link rel="canonical" href="https://irsresolutionservice.com/irs-collection-statute">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#c9a84c;--gold-light:#e8c97a;--gold-dim:#8a6e2f;--gold-muted:#f5ecd8;
+  --cream:#f5f0e8;--cream-warm:#ede5d5;--cream-dark:#d9cdb8;
+  --ink:#1a1410;--ink-soft:#4a3f32;--ink-muted:#7a6e60;--white:#ffffff;
+  --red:#c0392b;--red-light:#fdf0f0;--green:#1a5c2a;--green-light:#f0fdf4;
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Outfit',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:18px;line-height:1.7}
+.site-header{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(255,255,255,0.97);border-bottom:1px solid var(--cream-dark);backdrop-filter:blur(12px)}
+.header-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-mark{width:36px;height:36px;border:1.5px solid var(--gold);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;font-weight:700;color:var(--gold)}
+.logo-text{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--ink)}
+.logo-text span{color:var(--gold)}
+.nav{display:flex;align-items:center;gap:1.75rem}
+.nav a{font-size:15px;color:var(--ink-muted);text-decoration:none;letter-spacing:0.03em;transition:color 0.2s}
+.nav a:hover{color:var(--gold-dim)}
+.nav-cta{background:var(--gold)!important;color:var(--white)!important;padding:9px 22px;border-radius:2px;font-weight:600}
+.notice-hero{background:var(--white);padding:120px 2rem 64px;border-bottom:1px solid var(--cream-dark)}
+.notice-hero-inner{max-width:840px;margin:0 auto}
+.notice-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--gold-muted);color:var(--gold-dim);font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;border-radius:2px;margin-bottom:1.5rem}
+.notice-code-display{font-family:var(--serif);font-size:clamp(3rem,8vw,5.5rem);font-weight:700;color:var(--ink);line-height:1;margin-bottom:0.5rem;letter-spacing:-0.02em}
+.notice-hero h1{font-family:var(--serif);font-size:clamp(1.5rem,3.5vw,2.25rem);font-weight:600;color:var(--ink-soft);line-height:1.3;margin-bottom:1.5rem}
+.direct-answer{background:var(--green-light);border-left:4px solid var(--green);padding:1.25rem 1.5rem;border-radius:0 6px 6px 0;margin-bottom:2rem}
+.direct-answer p{font-size:17px;line-height:1.65;color:var(--ink-soft)}
+.direct-answer strong{color:var(--green)}
+.deadline-badge{display:inline-flex;align-items:center;gap:10px;background:var(--red-light);border:1.5px solid #e8b0b0;border-radius:4px;padding:10px 18px;font-size:15px;font-weight:600;color:var(--red)}
+.notice-body{max-width:840px;margin:0 auto;padding:4rem 2rem 6rem}
+.section{margin-bottom:3.5rem}
+.section h2{font-family:var(--serif);font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--cream-dark)}
+.section h3{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink);margin:1.5rem 0 0.75rem}
+.section p{color:var(--ink-soft);margin-bottom:1rem}
+.section ul,.section ol{color:var(--ink-soft);padding-left:1.5rem;margin-bottom:1rem}
+.section li{margin-bottom:0.5rem}
+.insider{background:var(--gold-muted);border:1px solid var(--cream-dark);border-left:4px solid var(--gold);border-radius:0 6px 6px 0;padding:1.25rem 1.5rem;margin:1.5rem 0}
+.insider-label{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.4rem}
+.insider p{font-size:16px;color:var(--ink-soft);margin:0;font-style:italic}
+.warning-box{background:var(--red-light);border:1px solid #e8b0b0;border-left:4px solid var(--red);border-radius:0 6px 6px 0;padding:1.25rem 1.5rem;margin:1.5rem 0}
+.warning-box p{font-size:16px;color:var(--ink-soft);margin:0}
+.step-list{list-style:none;padding:0;counter-reset:steps}
+.step-list li{counter-increment:steps;display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.25rem}
+.step-list li::before{content:counter(steps);background:var(--gold);color:var(--white);min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-top:2px;flex-shrink:0}
+.cta-box{background:var(--ink);color:var(--white);border-radius:6px;padding:2.5rem 2rem;text-align:center;margin:3rem 0}
+.cta-box h2{font-family:var(--serif);font-size:1.8rem;font-weight:700;color:var(--white);margin-bottom:0.75rem}
+.cta-box p{color:rgba(255,255,255,0.7);font-size:16px;margin-bottom:1.5rem}
+.cta-btn{display:inline-block;background:var(--gold);color:var(--ink);text-decoration:none;padding:14px 32px;border-radius:2px;font-weight:700;font-size:16px;letter-spacing:0.04em}
+.romeo-bar{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0}
+.romeo-avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.romeo-avatar{width:72px;height:72px;background:var(--gold-muted);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px;font-weight:700;color:var(--gold-dim);overflow:hidden}
+.romeo-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.romeo-linkedin{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--gold-dim);text-decoration:none;font-weight:600;letter-spacing:0.05em}
+.romeo-linkedin:hover{color:var(--gold)}
+.romeo-info .romeo-name{font-weight:700;font-size:17px;color:var(--ink)}
+.romeo-info .romeo-title{font-size:14px;color:var(--ink-muted);margin-top:2px;line-height:1.5}
+.romeo-info .romeo-bio{font-size:15px;color:var(--ink-soft);margin-top:0.75rem;line-height:1.6}
+.faq-item{border-bottom:1px solid var(--cream-dark);padding:1.25rem 0}
+.faq-q{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--ink);margin-bottom:0.5rem}
+.faq-a{font-size:16px;color:var(--ink-soft)}
+.notice-links{background:var(--cream-warm);border-radius:6px;padding:1.5rem;margin:2rem 0}
+.notice-links h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:1rem}
+.notice-links ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:0.5rem}
+.notice-links li a{display:inline-block;background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--gold-dim);text-decoration:none;transition:border-color 0.2s}
+.notice-links li a:hover{border-color:var(--gold);color:var(--gold)}
+.video-callout{background:var(--ink);color:var(--white);border-radius:6px;padding:1.5rem 1.75rem;margin:2rem 0;display:flex;align-items:center;gap:1.25rem}
+.video-callout .play-icon{font-size:2rem;flex-shrink:0}
+.video-callout h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.25rem}
+.video-callout p{font-size:14px;color:rgba(255,255,255,0.65);margin:0}
+.video-callout a{color:var(--gold);text-decoration:none;font-weight:600}
+footer{background:var(--ink);color:rgba(255,255,255,0.5);text-align:center;padding:2rem;font-size:13px}
+footer a{color:var(--gold);text-decoration:none}
+@media(max-width:640px){.nav{gap:1rem}.nav a:not(.nav-cta){display:none}.romeo-bar{grid-template-columns:1fr}.romeo-avatar-wrap{flex-direction:row}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IRS 10-Year Collection Statute: How It Works, What Tolls It, When to Wait",
+  "description": "The IRS has 10 years to collect \u2014 then the debt disappears. Former IRS Auditor Romeo Razi explains the CSED, tolling events, and when doing nothing is the right strategy.",
+  "url": "https://irsresolutionservice.com/irs-collection-statute",
+  "dateModified": "2026-06-27",
+  "author": {
+    "@type": "Person",
+    "@id": "https://irsresolutionservice.com/#romeo-razi",
+    "name": "Romeo Razi",
+    "honorificSuffix": "CPA",
+    "jobTitle": "Former IRS Tax Examiner, CPA",
+    "sameAs": "https://www.linkedin.com/in/romeo-razi/"
+  },
+  "publisher": {
+    "@id": "https://irsresolutionservice.com/#organization"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://irsresolutionservice.com/irs-collection-statute"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does the 10-year clock apply to all types of IRS debt?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The 10-year CSED applies to assessed income tax and most other assessed federal taxes. Trust Fund Recovery Penalties (\u00a76672 liabilities) have their own assessment and statute rules. Fraudulent returns have no statute of limitations on assessment. Returns that were never filed have no statute of limitations until they are filed or a Substitute for Return is assessed \u2014 meaning the IRS's ability to assess is unlimited, even if the collection clock hasn't started."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens when the CSED expires \u2014 do I have to do anything?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nothing. The balance extinguishes automatically by operation of law. You don't need to call the IRS or file anything. However, it's worth following up to confirm the balance is showing as zero on your IRS transcript, and to verify that any filed tax liens (which are public records) have been released \u2014 liens don't automatically release on their own in all cases."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can the IRS renew the collection statute?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Unlike some state tax authorities, the IRS cannot renew or extend the CSED by filing a lien or taking other action. Once the date passes, collection authority is extinguished permanently. The only ways the CSED date moves are the tolling events listed above \u2014 and those must occur before the original expiration date."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo"><div class="logo-mark">IRS</div><span class="logo-text">Resolution <span>Service</span></span></a>
+    <nav class="nav">
+      <a href="/#services">Services</a>
+      <a href="/#founders">About</a>
+      <a href="/#tool">Notice Decoder</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#contact" class="nav-cta">Get Help Now</a>
+    </nav>
+  </div>
+</header>
+<section class="notice-hero">
+  <div class="notice-hero-inner">
+    <div class="notice-eyebrow">IRS Strategy — Explained</div>
+    <div class="notice-code-display" style="font-size:clamp(2rem,5vw,3rem)">IRS 10-Year Collection<br>Statute (CSED)</div>
+    <h1>Does IRS debt ever go away on its own? The 10-year collection statute — and when doing nothing is actually the right strategy</h1>
+    <div class="direct-answer"><p><strong>The short answer:</strong> Yes. The IRS generally has exactly 10 years from the date a tax is assessed to collect it. After that date — called the Collection Statute Expiration Date (CSED) — the debt legally disappears. It drops off automatically; you don't have to call anyone. But almost any action you take — filing for a payment plan, requesting an OIC, filing for CDP — can toll (pause and extend) the clock, sometimes for years.</p></div>
+  </div>
+</section>
+<div class="notice-body">
+
+  <div class="video-callout">
+  <div class="play-icon">&#9654;</div>
+  <div>
+    <h3>Watch: IRS Insider Interview with Romeo Razi &amp; Yoav Betsion, EA</h3>
+    <p>20 years of IRS collection, audit strategy, and real case stories — including the details on this page. <a href="https://www.youtube.com/watch?v=tb6IfQqRaMM" target="_blank" rel="noopener">Watch on YouTube &rarr;</a></p>
+  </div>
+</div>
+  <div class="section">
+    <h2>How the 10-year clock works</h2>
+    <p>The Collection Statute Expiration Date begins on the date the IRS formally assesses the tax — not the date you filed the return, and not the date you received a notice. For most returns you file yourself, assessment happens shortly after filing. For IRS-prepared Substitute for Returns, assessment happens after the IRS processes their version.</p>
+    <p>From that assessment date, the IRS has exactly 10 years to collect. If they haven't collected (or tolled the clock) by that date, the debt is extinguished by law. Permanently. No further collection action is possible.</p>
+    <div class="insider">
+      <div class="insider-label">Real Case — Yoav Betsion, EA, IRS Insider Interview</div>
+      <p>"We had a lady last year who owed $110,000. We waited exactly one year. On the day the 10 years expired, the debt just dropped. She didn't have to call. She didn't have to do anything. It's automatic. The IRS can't collect anymore, and the balance is gone."</p>
+    </div>
+  </div>
+  <div class="section">
+    <h2>What tolls (pauses and extends) the 10-year clock</h2>
+    <p>This is the part most people don't understand — and it's the most important part. Any of the following actions pauses the CSED clock for the duration of the action, plus an additional period after:</p>
+    <ul>
+      <li><strong>Filing for bankruptcy</strong> — clock pauses while the case is active, plus 6 months after discharge</li>
+      <li><strong>Submitting an Offer in Compromise</strong> — clock pauses while the OIC is pending, plus 30 days after rejection (and longer if you appeal)</li>
+      <li><strong>Requesting an Installment Agreement</strong> — clock pauses while the request is pending</li>
+      <li><strong>Requesting a Collection Due Process (CDP) hearing</strong> — clock pauses while the CDP is pending (and while any Tax Court proceedings following it are active)</li>
+      <li><strong>Being outside the U.S. for more than 6 months</strong> — clock pauses until you return</li>
+      <li><strong>Filing for Innocent Spouse relief</strong> — clock pauses during the pendency</li>
+      <li><strong>Entering Currently Not Collectible (CNC) status</strong> — the clock continues to run in CNC (this is one of CNC's advantages)</li>
+    </ul>
+    <div class="warning-box">
+      <p>⚠ The most common clock-tolling mistake: people who are close to the end of their CSED call the IRS or contact a representative who begins negotiating a payment plan — which pauses the clock right before it would have expired. If you're within a year or two of your CSED and the IRS hasn't successfully collected, the right strategy may be to do nothing.</p>
+    </div>
+  </div>
+  <div class="section">
+    <h2>When doing nothing is the right answer</h2>
+    <p>This goes against every instinct — and against what most tax practitioners will tell you to do. But sometimes the strategically correct move is to not engage with the IRS at all.</p>
+    <div class="insider">
+      <div class="insider-label">Real Case — Yoav Betsion, EA, IRS Insider Interview</div>
+      <p>"We had a client two days ago — $60,000 owed, CSED expiring March 2026. I told everyone in the office: do not touch it. Don't do anything. Because if you start negotiating a payment plan, you stop the clock. If you request a CDP hearing, you stop the clock. I told the client: I don't want to help you. I don't want your money. We're just going to wait. Because if the IRS hasn't collected in nearly 10 years and there's only months left — I might be committing malpractice if I interfere."</p>
+    </div>
+    <p>If you're in this situation — close to your CSED with a large balance the IRS hasn't collected — the strategy is to not respond to collection notices, not engage in negotiations, and wait. This requires knowing your CSED (your tax account transcript will show it), having assets that the IRS either doesn't know about or can't easily reach, and having the nerve to let the clock run.</p>
+    <p>This doesn't work for everyone. If the IRS has a revenue officer actively working your case, if you have wages or bank accounts they can reach with a levy, or if you need to take actions that would toll the clock (like filing for bankruptcy), waiting isn't viable. But for people with limited attachable assets and a CSED close to expiring, it's a real strategy.</p>
+  </div>
+  <div class="section">
+    <h2>How to find your CSED</h2>
+    <p>Your Collection Statute Expiration Date appears on your IRS account transcript — specifically the Tax Account Transcript for each relevant tax year. You can request transcripts from IRS.gov, call the IRS, or have a representative with a Power of Attorney request them on your behalf.</p>
+    <p>When reviewing the transcript, look for the "CSED" notation or the "Assessment Date" for each tax period, then add exactly 10 years. If there are tolled periods, those add time to the end date — making the calculation more complex and requiring someone who knows what to look for.</p>
+  </div>
+  <div class="section">
+    <h2>Frequently asked questions about the IRS collection statute</h2>
+    <div class="faq-item">
+      <div class="faq-q">Does the 10-year clock apply to all types of IRS debt?</div>
+      <div class="faq-a">The 10-year CSED applies to assessed income tax and most other assessed federal taxes. Trust Fund Recovery Penalties (§6672 liabilities) have their own assessment and statute rules. Fraudulent returns have no statute of limitations on assessment. Returns that were never filed have no statute of limitations until they are filed or a Substitute for Return is assessed — meaning the IRS's ability to assess is unlimited, even if the collection clock hasn't started.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What happens when the CSED expires — do I have to do anything?</div>
+      <div class="faq-a">Nothing. The balance extinguishes automatically by operation of law. You don't need to call the IRS or file anything. However, it's worth following up to confirm the balance is showing as zero on your IRS transcript, and to verify that any filed tax liens (which are public records) have been released — liens don't automatically release on their own in all cases.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can the IRS renew the collection statute?</div>
+      <div class="faq-a">No. Unlike some state tax authorities, the IRS cannot renew or extend the CSED by filing a lien or taking other action. Once the date passes, collection authority is extinguished permanently. The only ways the CSED date moves are the tolling events listed above — and those must occur before the original expiration date.</div>
+    </div>
+  </div>
+  
+<div class="notice-links">
+  <h3>Other IRS notices explained by a former IRS auditor:</h3>
+  <ul>
+    <li><a href="/cp2000">CP2000 &mdash; Proposed Adjustment</a></li>
+    <li><a href="/cp14">CP14 &mdash; Balance Due</a></li>
+    <li><a href="/cp504">CP504 &mdash; Intent to Levy</a></li>
+    <li><a href="/lt11">LT11 &mdash; Final Notice Before Levy</a></li>
+    <li><a href="/cp3219a">CP3219A &mdash; Statutory Notice of Deficiency</a></li>
+    <li><a href="/cp59">CP59 &mdash; Unfiled Return</a></li>
+    <li><a href="/cp523">CP523 &mdash; Payment Plan Terminated</a></li>
+    <li><a href="/irs-installment-agreement">IRS Installment Agreements Explained</a></li>
+    <li><a href="/irs-offer-in-compromise">Offer in Compromise: The Real Story</a></li>
+    <li><a href="/irs-collection-statute">IRS 10-Year Collection Statute</a></li>
+    <li><a href="/irs-budget-cuts-2025">IRS Budget Cuts: What It Means for You</a></li>
+    <li><a href="/irs-audit-appeals-strategy">IRS Audit &amp; Appeals Strategy</a></li>
+  </ul>
+</div>
+<div class="romeo-bar">
+  <div class="romeo-avatar-wrap">
+    <div class="romeo-avatar">RR</div>
+    <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener" class="romeo-linkedin">&#128101; LinkedIn</a>
+  </div>
+  <div class="romeo-info">
+    <div class="romeo-name">Romeo Razi, CPA</div>
+    <div class="romeo-title">Former IRS Tax Examiner (Individual &amp; Employment Tax Division) &middot; CPA &middot; Featured in MarketWatch, U.S. News &amp; World Report, Realtor</div>
+    <div class="romeo-bio">Romeo conducted face-to-face audits at the IRS across sole proprietors to mid-sized businesses, worked on worker reclassification audits with the Department of Labor, and prepared disputed returns for Tax Court and Appeals. He founded <a href="https://taxedright.com" target="_blank" rel="noopener" style="color:var(--gold-dim)">Taxed Right LLC</a> in 2015 to put that insider knowledge to work for taxpayers.</div>
+  </div>
+</div>
+<div class="cta-box">
+  <h2>Have an IRS problem? Talk to someone who used to work there.</h2>
+  <p>Romeo Razi spent years inside the IRS as an auditor. He knows how the agency thinks, where they make mistakes, and how to get you the best possible outcome.</p>
+  <a href="/#contact" class="cta-btn">Get a Free Case Review &rarr;</a>
+</div>
+</div>
+<footer>
+  <p>IRS Resolution Service LLC &middot; 9673 Camino Capistrano, Las Vegas, NV &middot; <a href="/privacy">Privacy Policy</a> &middot; <a href="/terms">Terms</a></p>
+  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice.</p>
+</footer>
+</body>
+</html>

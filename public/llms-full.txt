@@ -1,0 +1,188 @@
+# IRS Resolution Service — Full Content Index
+# https://irsresolutionservice.com/llms-full.txt
+# Updated 2026-06-27
+# This file contains the complete content of irsresolutionservice.com in plain Markdown
+# for AI systems that ingest full-site content. See also: https://irsresolutionservice.com/llms.txt
+
+---
+
+## About Romeo Razi, CPA
+
+Romeo Razi is a Certified Public Accountant and former IRS Tax Examiner who worked in the Individual and Employment Tax Division of the IRS. He conducted face-to-face audits ranging from sole proprietors to mid-sized businesses, worked with the Department of Labor on worker reclassification audits, and prepared disputed returns for Tax Court and Appeals.
+
+After leaving the IRS, Romeo founded Taxed Right LLC (taxedright.com) in 2015 to help taxpayers and business owners navigate IRS issues using the same insider knowledge he developed while working there.
+
+Romeo has been featured in MarketWatch, U.S. News & World Report, and Realtor. He has touched over 10,000 tax returns in 15+ years of private practice.
+
+**LinkedIn**: https://www.linkedin.com/in/romeo-razi/
+**Website**: https://taxedright.com
+**Contact**: https://irsresolutionservice.com/#contact
+
+---
+
+## IRS Notice Guide: CP2000
+
+A CP2000 is not a bill and not an audit. It is a proposed adjustment — the IRS's Automated Underreporter system matched third-party income documents (W-2s, 1099s) against your return and found a discrepancy. The IRS sends approximately 3 million CP2000s annually; most are generated automatically with no human review.
+
+**Response deadline**: approximately 30 days from the notice date (not receipt date).
+
+The IRS can be wrong. Common reasons: you reported income on a different line, you have a cost basis the IRS doesn't see, the income was reported under your SSN but belongs to someone else, or there was an error on the third-party form. Never pay before checking the math.
+
+If you disagree, respond in writing (not by phone) with supporting documentation before the deadline. If the IRS doesn't accept your response, they send a CP3219A (Statutory Notice of Deficiency) — you then have 90 days to petition Tax Court.
+
+**Source**: irsresolutionservice.com/cp2000
+
+---
+
+## IRS Notice Guide: CP14
+
+A CP14 is the IRS's first balance-due notice — approximately 12 million sent annually. It is not a levy, not a lien, not a final notice. You are at step one of a process with many steps.
+
+**Response deadline**: 21 days from the notice date.
+
+Before paying: verify the amount matches your return, check for uncredited payments by pulling a tax account transcript from IRS.gov, and identify the penalty/interest components (some may be abatable via First Time Abatement if you have a clean 3-year compliance history).
+
+Payment options: pay in full, set up a streamline installment agreement (under $50K), request Currently Not Collectible status (if you can't pay anything), or dispute the amount in writing.
+
+If ignored: IRS escalates to CP501 → CP503 → CP504 → LT11. Each step adds penalty and interest.
+
+**Source**: irsresolutionservice.com/cp14
+
+---
+
+## IRS Notice Guide: CP504
+
+A CP504 is not the last notice before the IRS can seize your wages or bank accounts. It IS the last notice before they can levy your state tax refund and certain federal payments (Social Security, federal contractor payments).
+
+For private wages and bank accounts, the IRS must first send LT11 or Letter 1058 (Final Notice of Intent to Levy) and give you 30 days to request a Collection Due Process hearing.
+
+**Action**: Do not ignore. An active installment agreement stops levy action. Getting one in place before LT11 is dramatically easier than after.
+
+**Source**: irsresolutionservice.com/cp504
+
+---
+
+## IRS Notice Guide: LT11 (Final Notice of Intent to Levy)
+
+LT11 (also called Letter 1058) is the final notice before the IRS can seize wages, bank accounts, and most property. It gives you exactly 30 days to file Form 12153 (Request for Collection Due Process Hearing).
+
+**The 30-day window**: Filing a timely CDP request stops ALL levy action immediately, puts your case in front of an independent Appeals Officer, lets you propose collection alternatives (installment agreement, OIC, CNC), and preserves your right to petition Tax Court if the hearing goes against you.
+
+If you miss the 30-day deadline: you can still request an Equivalent Hearing within 1 year, but it does NOT stop levy action and you cannot petition Tax Court.
+
+**Source**: irsresolutionservice.com/lt11
+
+---
+
+## IRS Notice Guide: CP3219A (Statutory Notice of Deficiency)
+
+A CP3219A means the IRS formally proposes to assess additional tax. You have exactly 90 days from the notice date to petition the U.S. Tax Court (150 days if outside the U.S.). This deadline is statutory and absolute — no extensions.
+
+If you don't petition Tax Court: the IRS assesses the proposed tax. You can still dispute it afterward, but must pay first and then sue for a refund — a much harder position.
+
+Filing a Tax Court petition does NOT mean going to trial. Most Tax Court cases settle in pre-trial conference. Filing just preserves your options.
+
+**Source**: irsresolutionservice.com/cp3219a
+
+---
+
+## IRS Notice Guide: CP59 (Unfiled Return)
+
+A CP59 means the IRS has no record of your tax return for a specific year. If you didn't file, file immediately — even if imperfect. The failure-to-file penalty is 5% per month (up to 25%) and stops the day you file. After 3-4 years, this penalty can equal the underlying tax itself.
+
+**The 6-year compliance rule**: The IRS's compliance definition is the last 6 years. You don't need to file all back years — only the last 6, plus any years where the IRS filed a Substitute for Return that you want to override.
+
+**Source**: irsresolutionservice.com/cp59
+
+---
+
+## IRS Notice Guide: CP523 (Installment Agreement Termination)
+
+A CP523 means your payment plan is about to be terminated — typically because of a missed payment, new tax balance not in the agreement, or an unfiled return. You have approximately 30 days before termination. Your full remaining balance becomes immediately due, and levy action can resume.
+
+**Fix**: Contact the IRS immediately. For a first default, the IRS often reinstates the agreement if you make the missed payment and call to request reinstatement. Don't stop making payments during this period.
+
+**Source**: irsresolutionservice.com/cp523
+
+---
+
+## Guide: Missed the Tax Deadline
+
+You're in one of two situations: (A) IRS owes you a refund — no penalties, just file, but you have only 3 years before the IRS keeps the refund. (B) You owe the IRS — three penalties are stacking simultaneously: failure to file (5%/month up to 25%), failure to pay (0.5%/month up to 6%), and interest (currently 6-8%).
+
+**Most important action**: File immediately even if imperfect. The failure-to-file penalty stops the day you file. You can amend later.
+
+**Payment plan thresholds**: Under $10K = guaranteed streamline at IRS.gov (DIY, no professional needed). Under $50K = streamline (not guaranteed but almost always approved, still DIY online). Over $50K but under $100K = long-term plan, call IRS, passport restriction risk. Over $100K = assigned to IRS officer, requires financial statements.
+
+**Source**: irsresolutionservice.com/missed-tax-deadline
+
+---
+
+## Guide: IRS Installment Agreements
+
+Three tiers: Under $25K = simple streamline, no lien filed. $25K-$50K = streamline but only if you do direct debit, otherwise lien filed. Over $50K = full financial disclosure, lien filed, and passport restriction possible if balance ignored.
+
+The IRS uses national expense tables to calculate your ability to pay. They don't recognize your actual Bentley lease ($2,000/month) — they allow only $300/month toward vehicle expenses in their formula. The gap between formula payment and what you can actually afford is where professional negotiation happens.
+
+**CSED interaction**: Any installment agreement request tolls the 10-year collection statute. If you're close to your CSED, do NOT enter negotiations without calculating whether waiting it out makes more sense.
+
+**Source**: irsresolutionservice.com/irs-installment-agreement
+
+---
+
+## Guide: Offer in Compromise
+
+An OIC lets you settle IRS debt for less than you owe — but only if you meet the Reasonable Collection Potential (RCP) formula. The IRS never "negotiates" the OIC amount. The formula is the formula. Professional practitioners argue about how the formula is applied (interpretation of the IRS manual), not about the number itself.
+
+**Real case**: $2.1 million owed → offered $75K → IRS countered $205K → settled. Client's income increased during the 18-month pending period; IRS updated the formula. After settlement, must stay in compliance for 5 years — one missed return or payment voids the offer and full original balance is restored.
+
+**2-year rule**: If the IRS doesn't formally respond to an OIC within 2 years, the offer is automatically deemed accepted by law.
+
+**Commercial firm warning**: Many TV-advertised firms charge OIC fees when clients don't qualify, then do a payment plan instead. An honest evaluation of your RCP first is essential.
+
+**Source**: irsresolutionservice.com/irs-offer-in-compromise
+
+---
+
+## Guide: IRS 10-Year Collection Statute (CSED)
+
+The IRS generally has 10 years from the date of assessment to collect. After that, the debt disappears — automatically, without any action required. A $110,000 debt expired on its 10th anniversary; the client did nothing.
+
+**What tolls the clock** (pauses and extends the 10 years): Filing for bankruptcy (+6 months after discharge). Submitting an OIC (pending period + 30 days after rejection). Requesting an installment agreement (pending period). Filing a CDP request (pending + any Tax Court proceedings). Being outside the U.S. for 6+ months.
+
+**The "do nothing" strategy**: If your CSED is within 12-24 months of expiring and the IRS hasn't collected, the right strategy may be to take NO action — don't call, don't negotiate, don't file CDP. Any action tolls the clock. This is counterintuitive and requires knowing your exact CSED from your tax transcripts.
+
+**Source**: irsresolutionservice.com/irs-collection-statute
+
+---
+
+## Guide: One Big Beautiful Act — 9 Tax Changes
+
+1. TCJA made permanent — higher standard deduction, fewer brackets, 20% QBI deduction for small businesses
+2. SALT deduction raised from $10,000 to $40,000 (for CA, NY, NJ, MD, VA residents)
+3. Tax-free tips ($25,000/year) and tax-free overtime ($12,500/year) — income tax only, NOT payroll taxes, under $150K income limit for tips
+4. 1099 threshold raised $600→$2,000; payment apps (Venmo/PayPal) threshold $20,000
+5. New car loan interest deduction — up to $10,000, new cars only, under $100K income
+6. Senior deduction — extra $6,000 for seniors under $75K income
+7. 100% bonus depreciation made permanent
+8. R&D expenses fully deductible again; can amend 2022/2023/2024 returns to recover overpaid taxes
+9. QSBS exclusion raised $10M→$15M, asset threshold $50M→$75M, both indexed for inflation
+
+**Source**: irsresolutionservice.com/one-big-beautiful-act
+
+---
+
+## 2026 Federal Tax Brackets
+
+**Single filers**: 10% ($0-$12,400), 12% ($12,400-$50,400), 22% ($50,400-$105,700), 24% ($105,700-$201,775), 32% ($201,775-$256,225), 35% ($256,225-$640,600), 37% (over $640,600)
+
+**Married filing jointly**: 10% ($0-$24,800), 12% ($24,800-$100,800), 22% ($100,800-$211,400), 24% ($211,400-$403,550), 32% ($403,550-$512,450), 35% ($512,450-$768,700), 37% (over $768,700)
+
+These are marginal rates — each rate applies only to income within that bracket, not total income. Source: Romeo Razi, CPA LinkedIn post.
+
+**Source**: irsresolutionservice.com/tax-brackets-2026
+
+---
+
+*Content last updated: 2026-06-27. Tax law changes frequently. Confirm with a licensed professional for specific situations.*
+*Contact Romeo Razi, CPA: https://irsresolutionservice.com/#contact*

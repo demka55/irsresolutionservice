@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRS CP14 Notice: What It Means and Your Options | Former IRS Auditor Explains</title>
+<meta name="description" content="A CP14 is the IRS's first balance-due notice. Former IRS Auditor Romeo Razi explains why you may not owe what they say, what happens if you ignore it, and your actual options.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c; --gold-light: #e8c97a; --gold-dim: #8a6e2f; --gold-muted: #f5ecd8;
+  --cream: #f5f0e8; --cream-warm: #ede5d5; --cream-dark: #d9cdb8;
+  --ink: #1a1410; --ink-soft: #4a3f32; --ink-muted: #7a6e60; --white: #ffffff;
+  --red: #c0392b; --red-light: #fdf0f0; --green: #1a5c2a; --green-light: #f0fdf4;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 18px; line-height: 1.7; }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--cream-dark); backdrop-filter: blur(12px); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-mark { width: 36px; height: 36px; border: 1.5px solid var(--gold); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--gold); }
+.logo-text { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+.logo-text span { color: var(--gold); }
+.nav { display: flex; align-items: center; gap: 1.75rem; }
+.nav a { font-size: 15px; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+.nav a:hover { color: var(--gold-dim); }
+.nav-cta { background: var(--gold) !important; color: var(--white) !important; padding: 9px 22px; border-radius: 2px; font-weight: 600; }
+.notice-hero { background: var(--white); padding: 120px 2rem 64px; border-bottom: 1px solid var(--cream-dark); }
+.notice-hero-inner { max-width: 840px; margin: 0 auto; }
+.notice-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--gold-muted); color: var(--gold-dim); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; margin-bottom: 1.5rem; }
+.notice-code-display { font-family: var(--serif); font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.notice-hero h1 { font-family: var(--serif); font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 600; color: var(--ink-soft); line-height: 1.3; margin-bottom: 1.5rem; }
+.direct-answer { background: var(--green-light); border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 2rem; }
+.direct-answer p { font-size: 17px; line-height: 1.65; color: var(--ink-soft); }
+.direct-answer strong { color: var(--green); }
+.deadline-badge { display: inline-flex; align-items: center; gap: 10px; background: var(--red-light); border: 1.5px solid #e8b0b0; border-radius: 4px; padding: 10px 18px; font-size: 15px; font-weight: 600; color: var(--red); }
+.notice-body { max-width: 840px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+.section { margin-bottom: 3.5rem; }
+.section h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
+.section h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); margin: 1.5rem 0 0.75rem; }
+.section p { color: var(--ink-soft); margin-bottom: 1rem; }
+.section ul, .section ol { color: var(--ink-soft); padding-left: 1.5rem; margin-bottom: 1rem; }
+.section li { margin-bottom: 0.5rem; }
+.insider { background: var(--gold-muted); border: 1px solid var(--cream-dark); border-left: 4px solid var(--gold); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.insider-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.4rem; }
+.insider p { font-size: 16px; color: var(--ink-soft); margin: 0; font-style: italic; }
+.warning-box { background: var(--red-light); border: 1px solid #e8b0b0; border-left: 4px solid var(--red); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.warning-box p { font-size: 16px; color: var(--ink-soft); margin: 0; }
+.step-list { list-style: none; padding: 0; counter-reset: steps; }
+.step-list li { counter-increment: steps; display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.25rem; }
+.step-list li::before { content: counter(steps); background: var(--gold); color: var(--white); min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; margin-top: 2px; flex-shrink: 0; }
+.cta-box { background: var(--ink); color: var(--white); border-radius: 6px; padding: 2.5rem 2rem; text-align: center; margin: 3rem 0; }
+.cta-box h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; }
+.cta-box p { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 1.5rem; }
+.cta-btn { display: inline-block; background: var(--gold); color: var(--ink); text-decoration: none; padding: 14px 32px; border-radius: 2px; font-weight: 700; font-size: 16px; letter-spacing: 0.04em; }
+.romeo-bar { display: flex; align-items: center; gap: 1.5rem; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+.romeo-avatar { width: 56px; height: 56px; background: var(--gold-muted); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--gold-dim); flex-shrink: 0; }
+.romeo-name { font-weight: 700; font-size: 16px; color: var(--ink); }
+.romeo-title { font-size: 13px; color: var(--ink-muted); }
+.faq-item { border-bottom: 1px solid var(--cream-dark); padding: 1.25rem 0; }
+.faq-q { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+.faq-a { font-size: 16px; color: var(--ink-soft); }
+footer { background: var(--ink); color: rgba(255,255,255,0.5); text-align: center; padding: 2rem; font-size: 13px; }
+footer a { color: var(--gold); text-decoration: none; }
+@media (max-width: 640px) { .nav { gap: 1rem; } .nav a:not(.nav-cta) { display: none; } }
+
+.romeo-bar{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0}
+.romeo-avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.romeo-avatar{width:72px;height:72px;background:var(--gold-muted);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px;font-weight:700;color:var(--gold-dim);overflow:hidden}
+.romeo-linkedin{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--gold-dim);text-decoration:none;font-weight:600;letter-spacing:0.05em}
+.romeo-linkedin:hover{color:var(--gold)}
+.romeo-info .romeo-name{font-weight:700;font-size:17px;color:var(--ink)}
+.romeo-info .romeo-title{font-size:14px;color:var(--ink-muted);margin-top:2px;line-height:1.5}
+.romeo-info .romeo-bio{font-size:15px;color:var(--ink-soft);margin-top:0.75rem;line-height:1.6}
+.notice-links{background:var(--cream-warm);border-radius:6px;padding:1.5rem;margin:2rem 0}
+.notice-links h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:1rem}
+.notice-links ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:0.5rem}
+.notice-links li a{display:inline-block;background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--gold-dim);text-decoration:none;transition:border-color 0.2s}
+.notice-links li a:hover{border-color:var(--gold);color:var(--gold)}
+.video-callout{background:var(--ink);color:var(--white);border-radius:6px;padding:1.5rem 1.75rem;margin:2rem 0;display:flex;align-items:center;gap:1.25rem}
+.video-callout .play-icon{font-size:2rem;flex-shrink:0}
+.video-callout h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.25rem}
+.video-callout p{font-size:14px;color:rgba(255,255,255,0.65);margin:0}
+.video-callout a{color:var(--gold);text-decoration:none;font-weight:600}
+@media(max-width:640px){.romeo-bar{grid-template-columns:1fr}.romeo-avatar-wrap{flex-direction:row}}
+
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IRS CP14 Notice: What It Means and Your Options | Former IRS Auditor Explains",
+  "description": "A CP14 is the IRS's first balance-due notice. Former IRS Auditor Romeo Razi explains your options, the First Time Abatement opportunity, and what not to do.",
+  "url": "https://irsresolutionservice.com/cp14",
+  "dateModified": "2026-06-27",
+  "author": {
+    "@type": "Person",
+    "@id": "https://irsresolutionservice.com/#romeo-razi",
+    "name": "Romeo Razi",
+    "honorificSuffix": "CPA",
+    "jobTitle": "Former IRS Tax Examiner, CPA",
+    "sameAs": "https://www.linkedin.com/in/romeo-razi/"
+  },
+  "publisher": {
+    "@id": "https://irsresolutionservice.com/#organization"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://irsresolutionservice.com/cp14"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Will the IRS levy my wages or bank account because of a CP14?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not immediately. The IRS must send a series of notices and, critically, a Final Notice of Intent to Levy (LT11 or Letter 1058) before levying. You have the right to request a Collection Due Process hearing when that notice arrives. A CP14 alone does not give the IRS levy authority."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can the IRS file a tax lien based on a CP14?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A federal tax lien arises automatically when the IRS assesses a tax, you're given notice and demand for payment (which the CP14 represents), and you fail to pay. The lien exists in the background from that point. However, the IRS typically won't file a Notice of Federal Tax Lien (which is the public document that affects your credit and ability to sell assets) until the balance escalates significantly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I think the IRS made a math error?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Respond in writing before the deadline. Include your calculation and a copy of your return showing the correct numbers. Math errors are common and the IRS corrects them when you point them out with documentation."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://irsresolutionservice.com" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <nav class="nav">
+      <a href="/#services">Services</a>
+      <a href="/#founders">About</a>
+      <a href="/#tool">Notice Decoder</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#contact" class="nav-cta">Get Help Now</a>
+    </nav>
+  </div>
+</header>
+<section class="notice-hero">
+  <div class="notice-hero-inner">
+    <div class="notice-eyebrow">⚠ IRS Notice Explained</div>
+    <div class="notice-code-display">CP14</div>
+    <h1>You received a CP14 — is this really what you owe, and what happens if you can't pay?</h1>
+    <div class="direct-answer"><p><strong>The short answer:</strong> A CP14 is the IRS's opening notice that your account shows a balance due. It is not a final demand, not a levy, and not a lien. You have 21 days to respond — and you have more options than you think, including payment plans, penalty abatement, and disputing the amount if you believe it's wrong.</p></div>
+    <div class="deadline-badge">⏱ Response deadline: 21 days from the date printed on your notice (not the date you received it)</div>
+  </div>
+</section>
+<div class="notice-body">
+
+  <div class="section">
+    <h2>What a CP14 actually is</h2>
+    <p>The CP14 is the IRS's first notice in the balance-due sequence. It means their records show you filed a return with a tax liability you didn't pay in full, or that they've processed your return and believe you owe money. Approximately 12 million CP14 notices go out every year — it is by far the most common IRS notice.</p>
+    <p>Receiving a CP14 does not mean the IRS is about to seize your wages or bank account. Before that can happen, the IRS is required by law to send you multiple additional notices and provide you with an opportunity to appeal. You are at step one of a process that has many steps.</p>
+    <div class="insider">
+      <div class="insider-label">Romeo Razi, CPA — "What to Do If You Missed the Tax Deadline" (YouTube)</div>
+      <p>"The CP14 is the IRS saying 'we think you owe money — let's figure this out.' People panic and either ignore it or pay immediately without checking the number. Both are mistakes. The amount shown includes penalties and interest that may be negotiable, and the underlying tax itself may be wrong if the IRS processed your return differently than you filed it."</p>
+    </div>
+  </div>
+  <div class="section">
+    <h2>Before you pay — check these things</h2>
+    <ul>
+      <li><strong>Compare to your return.</strong> Pull your filed return and compare the tax shown on line 24 to what the IRS says you owe. If the numbers differ, the IRS may have made an adjustment when they processed your return — you need to know what changed before you pay.</li>
+      <li><strong>Check for payments you made.</strong> If you made estimated tax payments, a prior year overpayment applied, or a payment that wasn't credited, the balance on your CP14 may not reflect it. Request a tax transcript from IRS.gov to see your full account history.</li>
+      <li><strong>Identify the penalties and interest.</strong> The balance shown often includes a failure-to-pay penalty (0.5% per month) and interest. These aren't always fixed — penalty abatement is available if you have a clean compliance history or a reasonable cause explanation.</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h2>Your options when you receive a CP14</h2>
+    <h3>If you agree with the amount and can pay in full</h3>
+    <p>Pay by the date on the notice to stop interest and penalties from growing. The IRS accepts payment online at irs.gov/payments, by check, or by phone. Include your SSN and tax year on any check.</p>
+    <h3>If you agree but can't pay in full</h3>
+    <p>You can request an installment agreement — a monthly payment plan. If you owe $50,000 or less and have filed all your returns, you can set one up online at irs.gov/opa in about 10 minutes. The IRS also doesn't immediately levy when you're in an active installment agreement.</p>
+    <h3>If you can't afford to pay anything</h3>
+    <p>Currently Not Collectible (CNC) status is available if your income and allowable expenses leave no room for IRS payments. The IRS temporarily pauses collection while you're in CNC, though the debt continues to accrue interest. You'll need to provide financial information to qualify.</p>
+    <h3>If you disagree with the amount</h3>
+    <p>Respond in writing before the deadline, explaining why you believe the balance is incorrect and including any supporting documentation. Don't call — put it in writing so there's a record.</p>
+    <h3>If the amount is genuinely more than you'll ever be able to pay</h3>
+    <p>An Offer in Compromise (OIC) lets you settle for less than the full amount if you meet the financial criteria. This is a more complex process but can be the right path for people with genuine hardship.</p>
+    <div class="warning-box">
+      <p>⚠ What happens if you ignore a CP14: The IRS escalates to CP501, then CP503, then CP504. Each notice is more serious and adds penalties and interest to your balance. Eventually you'll receive an LT11 or Letter 1058 — the final notice before levy — at which point the IRS can legally seize wages, bank accounts, and assets. Ignoring the CP14 doesn't make it go away; it makes it more expensive.</p>
+    </div>
+  </div>
+  <div class="section">
+    <h2>Penalty abatement — something most people don't know to ask for</h2>
+    <p>If this is your first year with a balance due, or if you have a clean compliance history for the prior three years, you may qualify for First Time Abatement (FTA) — a penalty waiver the IRS grants automatically to eligible taxpayers who ask. FTA can eliminate the failure-to-pay and failure-to-file penalties, which often represent a meaningful portion of the CP14 balance. You have to request it; the IRS won't offer it unprompted.</p>
+    <div class="insider">
+      <div class="insider-label">Romeo Razi, CPA — "What to Do If You Missed the Tax Deadline" (YouTube)</div>
+      <p>"First Time Abatement is one of the cleanest wins available on a CP14. If someone has three years of clean returns and this is their first year owing, I go straight for it. The IRS grants it over the phone in most cases. It doesn't reduce the underlying tax, but getting rid of a 25% penalty is real money."</p>
+    </div>
+  </div>
+  <div class="section">
+    <h2>Frequently asked questions about CP14</h2>
+    <div class="faq-item">
+      <div class="faq-q">Will the IRS levy my wages or bank account because of a CP14?</div>
+      <div class="faq-a">Not immediately. The IRS must send a series of notices and, critically, a Final Notice of Intent to Levy (LT11 or Letter 1058) before levying. You have the right to request a Collection Due Process hearing when that notice arrives. A CP14 alone does not give the IRS levy authority.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can the IRS file a tax lien based on a CP14?</div>
+      <div class="faq-a">A federal tax lien arises automatically when the IRS assesses a tax, you're given notice and demand for payment (which the CP14 represents), and you fail to pay. The lien exists in the background from that point. However, the IRS typically won't file a Notice of Federal Tax Lien (which is the public document that affects your credit and ability to sell assets) until the balance escalates significantly.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if I think the IRS made a math error?</div>
+      <div class="faq-a">Respond in writing before the deadline. Include your calculation and a copy of your return showing the correct numbers. Math errors are common and the IRS corrects them when you point them out with documentation.</div>
+    </div>
+  </div>
+  
+<div class="romeo-bar">
+  <div class="romeo-avatar-wrap">
+    <div class="romeo-avatar">RR</div>
+    <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener" class="romeo-linkedin">&#128101; LinkedIn</a>
+  </div>
+  <div class="romeo-info">
+    <div class="romeo-name">Romeo Razi, CPA</div>
+    <div class="romeo-title">Former IRS Tax Examiner (Individual &amp; Employment Tax Division) &middot; CPA &middot; Featured in MarketWatch, U.S. News &amp; World Report, Realtor</div>
+    <div class="romeo-bio">Romeo conducted face-to-face audits at the IRS across sole proprietors to mid-sized businesses, worked on worker reclassification audits with the Department of Labor, and prepared disputed returns for Tax Court and Appeals. He founded <a href="https://taxedright.com" target="_blank" rel="noopener" style="color:var(--gold-dim)">Taxed Right LLC</a> in 2015 to put that insider knowledge to work for taxpayers.</div>
+  </div>
+</div>
+<div style="background:var(--ink);color:#fff;border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0;display:flex;align-items:flex-start;gap:1rem">
+  <div style="font-size:1.75rem;flex-shrink:0;line-height:1">▶</div>
+  <div>
+    <p style="font-size:14px;color:rgba(255,255,255,.75);margin:0 0 .35rem;font-style:normal">Romeo Razi, CPA explains missed deadline penalties, payment plan thresholds, and how to stop the failure-to-file penalty immediately.</p>
+    <a href="https://www.youtube.com/watch?v=X72vEtA_b0s" target="_blank" rel="noopener" style="color:var(--gold);font-size:13px;font-weight:600;text-decoration:none">Watch on YouTube: What to Do If You Missed the Tax Deadline &rarr;</a>
+  </div>
+</div>
+
+  <div class="section">
+    <h2>Important: All IRS payments must now be made electronically</h2>
+    <p>If you're paying the balance on your CP14, be aware that the IRS now requires all tax payments to be made electronically. Paper checks are still accepted for certain situations, but the IRS strongly prefers and in some cases requires electronic payment.</p>
+    <p>The easiest method: set up an account at <strong>IRS.gov</strong> and pay directly through the IRS Direct Pay system. It's free, posts to your account immediately (same or next business day), and you get instant confirmation. This matters because mailed checks can take weeks to be processed and credited, during which interest and penalties continue to accrue.</p>
+    <div class="info-box">
+      <p>&#9432; If you also have quarterly estimated taxes due (Form 1040-ES), those must also be paid electronically through IRS.gov. The Q4 estimated payment is due January 15 each year. A CP14 balance and estimated taxes are separate — an installment agreement for a prior-year CP14 does not cover your current-year estimated tax obligations.</p>
+    </div>
+    <h3>One Big Beautiful Act: did it change what you owe?</h3>
+    <p>If you received a CP14 for a recent tax year, worth noting: the One Big Beautiful Act made the Tax Cuts and Jobs Act provisions permanent, including a higher standard deduction. If your prior-year return used the old standard deduction amounts, your liability may differ from what you'd expect under the current rules. This doesn't change a CP14 for a prior year — but it's context for why your tax situation may look different going forward.</p>
+  </div>
+
+<div class="notice-links">
+  <h3>Other IRS notices &amp; strategies explained by a former IRS auditor:</h3>
+  <ul>
+    <li><a href="/cp2000">CP2000 &mdash; Proposed Adjustment</a></li>
+    <li><a href="/cp14">CP14 &mdash; Balance Due</a></li>
+    <li><a href="/cp504">CP504 &mdash; Intent to Levy</a></li>
+    <li><a href="/lt11">LT11 &mdash; Final Notice Before Levy</a></li>
+    <li><a href="/cp3219a">CP3219A &mdash; Notice of Deficiency</a></li>
+    <li><a href="/cp59">CP59 &mdash; Unfiled Return</a></li>
+    <li><a href="/cp523">CP523 &mdash; Payment Plan Terminated</a></li>
+    <li><a href="/irs-installment-agreement">IRS Installment Agreements</a></li>
+    <li><a href="/irs-offer-in-compromise">Offer in Compromise</a></li>
+    <li><a href="/irs-collection-statute">IRS 10-Year Collection Statute</a></li>
+    <li><a href="/irs-budget-cuts-2025">IRS Budget Cuts 2025</a></li>
+    <li><a href="/irs-audit-appeals-strategy">Audit &amp; Appeals Strategy</a></li>
+  </ul>
+</div>
+<div class="cta-box">
+  <h2>Received a CP14? Don't pay until you know what you're actually looking at.</h2>
+  <p>Romeo spent years inside the IRS and knows the full range of options — penalty abatement, payment plans, and when to push back on the number itself. The first step is making sure the amount is even right.</p>
+  <a href="/#contact" class="cta-btn">Get a Free Case Review →</a>
+</div>
+</div>
+<footer>
+  <p>IRS Resolution Service LLC · 9673 Camino Capistrano, Las Vegas, NV · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
+  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice.</p>
+</footer>
+</body>
+</html>
