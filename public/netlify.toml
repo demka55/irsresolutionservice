@@ -1,40 +1,13 @@
-functionsDirectory = "netlify/functions"
-functionsDirectoryOrigin = "config-v1"
-plugins = []
-headers = []
-redirects = []
-
 [build]
-publish = "public"
-publishOrigin = "config"
-commandOrigin = "config"
-command = "echo 'No build step required'"
-functions = "netlify/functions"
-
-  [build.environment]
-
-  [build.processing]
-
-    [build.processing.css]
-
-    [build.processing.html]
-
-    [build.processing.images]
-
-    [build.processing.js]
-
-  [build.services]
+  publish = "public"
+  command = "echo 'No build step required'"
+  functions = "netlify/functions"
 
 [dev]
-port = 8888
+  port = 8888
 
-[functions]
-
-  [functions."*"]
-
-  # Daily SEO tracker — 6am UTC
-  [functions.seo-track]
-    schedule = "0 6 * * *"
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "VALUESERP_API"
 
 [[redirects]]
   from = "/seo"
