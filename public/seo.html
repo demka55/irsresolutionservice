@@ -257,13 +257,14 @@ async function loadResults() {
 
 // ── Run now: browser drives keyword loop, one fetch per keyword ──────────────
 let runAborted = false;
+const SESSION_KEY = 'seo_run_results';
 
 async function runNow() {
   const btn = document.getElementById('runBtn');
   runAborted = false;
   btn.disabled = true;
 
-  // Fetch keyword list from server
+  // Fetch keyword list
   let keywords;
   try {
     const r = await fetch('/api/seo-track?action=keywords');
@@ -271,57 +272,70 @@ async function runNow() {
     keywords = d.keywords || [];
   } catch(e) { setStatus('amber', 'Could not fetch keyword list: ' + e.message); btn.disabled=false; btn.innerHTML='↻ Run now'; return; }
 
-  const results = [];
+  // Resume: load any already-completed results from sessionStorage
+  let savedResults = [];
+  try { savedResults = JSON.parse(sessionStorage.getItem(SESSION_KEY) || '[]'); } catch {}
+  const doneKeywords = new Set(savedResults.map(r => r.keyword));
+  const results = [...savedResults];
+  if (savedResults.length > 0) {
+    setStatus('amber', `Resuming from keyword ${savedResults.length + 1}/${keywords.length}…`);
+  }
 
   for (let i = 0; i < keywords.length; i++) {
     if (runAborted) break;
     const kw = keywords[i];
-    const pct = Math.round((i / keywords.length) * 100);
-    btn.innerHTML = `<span class="spinner"></span> ${i+1}/${keywords.length}`;
-    setStatus('amber', `Checking ${i+1} of ${keywords.length} — "${kw.substring(0,50)}…"`);
+    
+    // Skip already-done keywords
+    if (doneKeywords.has(kw)) continue;
+
+    btn.innerHTML = `<span class="spinner"></span> ${results.length+1}/${keywords.length}`;
+    setStatus('amber', `Checking ${results.length+1} of ${keywords.length} — "${kw.substring(0,50)}…"`);
 
     try {
-      // Try up to 2 times — ValueSERP can occasionally hit Netlify's 40s limit
+      // Try up to 2 times — ValueSERP can hit Netlify's 40s limit
       let r, result, attempts = 0;
       while (attempts < 2) {
         attempts++;
         r = await fetch(`/api/seo-track?action=check&password=${encodeURIComponent(apw)}&kw=${encodeURIComponent(kw)}`);
         if (r.status === 502 && attempts < 2) {
-          setStatus('amber', `Keyword ${i+1}/${keywords.length} timed out, retrying once…`);
-          await sleep(2000);
+          setStatus('amber', `Keyword ${results.length+1}/${keywords.length} timed out — retrying…`);
+          await sleep(3000);
           continue;
         }
         try { result = await r.json(); } catch(e) { result = { error: `HTTP ${r.status}: ${e.message}` }; }
         break;
       }
-      if (!r.ok) { results.push({ keyword: kw, error: result?.error || `HTTP ${r.status}`, our_pages: [], in_aio: false }); }
-      else { results.push(result); }
-
-      // Update table live after each keyword
-      allResults = results;
-      renderTable(curFilter);
-      renderKpis({ keywords: results, summary: {
-        total: keywords.length, in_aio: results.filter(r=>r.in_aio).length,
-        site_cited: results.filter(r=>r.site_cited).length,
-        ranked: results.filter(r=>r.our_pages&&r.our_pages.length>0).length
-      }});
+      results.push(r.ok ? result : { keyword: kw, error: result?.error || `HTTP ${r.status}`, our_pages: [], in_aio: false, checkedAt: new Date().toISOString() });
     } catch(e) {
-      results.push({ keyword: kw, error: e.message, our_pages: [], in_aio: false });
+      results.push({ keyword: kw, error: e.message, our_pages: [], in_aio: false, checkedAt: new Date().toISOString() });
     }
 
-    // Small pause between calls
+    // Save progress to sessionStorage after each keyword (survives page refresh)
+    try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(results)); } catch {}
+
+    // Update table live
+    allResults = results;
+    renderTable(curFilter);
+    renderKpis({ keywords: results, summary: {
+      total: keywords.length,
+      in_aio: results.filter(r=>r.in_aio).length,
+      site_cited: results.filter(r=>r.site_cited).length,
+      ranked: results.filter(r=>r.our_pages&&r.our_pages.length>0).length,
+    }});
+
     if (i < keywords.length - 1) await sleep(500);
   }
 
-  // Save final summary
-  try {
-    await fetch(`/api/seo-track?action=finish&password=${encodeURIComponent(apw)}`);
-  } catch(e) {}
+  // Save final summary to blobs
+  try { await fetch(`/api/seo-track?action=finish&password=${encodeURIComponent(apw)}`); } catch {}
+
+  // Clear session storage on completion
+  try { sessionStorage.removeItem(SESSION_KEY); } catch {}
 
   const appeared = results.filter(r => r.our_pages && r.our_pages.length > 0).length;
   const cited    = results.filter(r => r.site_cited).length;
   const errors   = results.filter(r => r.error).length;
-  setStatus('green', `Done — we appear in ${appeared} searches · ${cited} cited in AIO${errors ? ` · ${errors} errors` : ''}`);
+  setStatus('green', `Complete — we appear in ${appeared} searches · ${cited} cited in AIO${errors ? ` · ${errors} errors` : ''}`);
   btn.disabled = false;
   btn.innerHTML = '↻ Run now';
   allResults = results;
@@ -422,6 +436,10 @@ function renderTable(filter) {
       const dt = r.checkedAt ? r.checkedAt.slice(5, 10) : '—';
 
       // AIO badge
+      // Row highlight: green if we appear in AIO, amber if AIO exists but not us
+      const rowBg = r.site_cited ? 'background:linear-gradient(90deg,#edf7f0 0%,transparent 100%)' 
+                  : r.in_aio     ? 'background:linear-gradient(90deg,#fffbeb 0%,transparent 100%)'
+                  : '';
       const aioBadge = r.error
         ? `<span class="badge err" title="${esc(r.error)}">Error</span>`
         : r.in_aio
@@ -465,7 +483,7 @@ function renderTable(filter) {
         ? `<span class="badge rank">#${r.organic_rank}</span>`
         : `<span class="badge no-rank">—</span>`;
 
-      return `<tr>
+      return `<tr style="${rowBg}"
         <td><strong style="font-size:14px">${esc(r.keyword)}</strong></td>
         <td style="color:var(--ink-muted);font-size:12px;white-space:nowrap">${dt}</td>
         <td>${aioBadge}${aioBtn}</td>

@@ -964,10 +964,17 @@ function renderDetail(c){
       }).join('');
     })()}
   </div>
-  <div class="dp">
-    <div class="dp-h">📝 Notes</div>
-    <textarea class="notes-ta" id="nt-${esc(c.email)}">${esc(c.notes||'')}</textarea>
-    <button class="btn btn-ghost btn-sm" style="margin-top:.4rem" onclick="saveNotes('${esc(c.email)}')">Save</button>
+  <div class="dp" style="border-left:3px solid var(--gold)">
+    <div class="dp-h" style="display:flex;align-items:center;justify-content:space-between">
+      <span>📝 Notes</span>
+      <span id="note-status-${esc(c.email)}" style="font-size:11px;color:var(--ink-muted);font-weight:400"></span>
+    </div>
+    <textarea class="notes-ta" id="nt-${esc(c.email)}" style="min-height:120px;font-size:15px"
+      placeholder="Add notes about this client — calls, status updates, strategy decisions…"
+      oninput="noteChanged('${esc(c.email)}')"
+      onblur="saveNotes('${esc(c.email)}')"
+    >${esc(c.notes||'')}</textarea>
+    <button class="btn btn-gold btn-sm" style="margin-top:.5rem" onclick="saveNotes('${esc(c.email)}')">Save notes</button>
   </div>
   <div class="dp s3" style="background:var(--cream-warm)">
     <div class="dp-h">👤 Client Info (editable)</div>
@@ -1004,7 +1011,22 @@ function toggleRow(email){
 
 async function adv(email,status,stepKey){await upd(email,{status,steps:{[stepKey]:new Date().toISOString()}});}
 async function overrideStatus(email){const v=document.getElementById('so-'+email).value;await upd(email,{status:v});toast('Status → '+SL[v]);}
-async function saveNotes(email){await upd(email,{notes:document.getElementById('nt-'+email).value});toast('Notes saved');}
+async function saveNotes(email){
+  const ta=document.getElementById('nt-'+email);
+  if(!ta) return;
+  const st=document.getElementById('note-status-'+email);
+  if(st) st.textContent='Saving…';
+  await upd(email,{notes:ta.value});
+  if(st){ st.textContent='Saved ✓'; st.style.color='var(--green)'; setTimeout(()=>{st.textContent='';},3000); }
+  toast('Notes saved');
+  // Update local client object
+  const cl=clients.find(x=>x.email===email);
+  if(cl) cl.notes=ta.value;
+}
+function noteChanged(email){
+  const st=document.getElementById('note-status-'+email);
+  if(st){ st.textContent='Unsaved'; st.style.color='var(--amber)'; }
+}
 async function saveInfo(email){
   await upd(email,{name:document.getElementById('ci-n-'+email).value,company:document.getElementById('ci-co-'+email).value,phone:document.getElementById('ci-ph-'+email).value,sessionId:document.getElementById('ci-sid-'+email).value});
   toast('Client info saved');
