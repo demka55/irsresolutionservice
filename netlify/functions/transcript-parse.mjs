@@ -37,7 +37,7 @@ export default async (req) => {
     const vitals = parseTranscriptHTML(transcriptHtml)
 
     // Store parsed vitals into client blob
-    const store = getStore('clients')
+    const store = getStore('client-status')
     const key = clientEmail.toLowerCase().trim()
     let existing = {}
     try {

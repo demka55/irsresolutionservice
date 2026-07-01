@@ -1,84 +1,61 @@
-import { getStore } from '@netlify/blobs';
+// netlify/functions/admin-clients.mjs
+// Lists all admin clients from the 'clients' blob store.
+// GET  /api/admin-clients?password=xxx  →  { clients: [...] }
 
+import { getStore } from '@netlify/blobs'
+
+const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || ''
+const STORE = 'client-status'
+
+const headers = {
+  'Access-Control-Allow-Origin': 'https://irsresolutionservice.com',
+  'Access-Control-Allow-Methods': 'GET, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+}
 
 export default async (req) => {
-  const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || '';
-  const ADMIN_PASSWORD_ROMEO = Netlify.env.get('ADMIN_PASSWORD_ROMEO') || '';
-  const headers = {
-    'Access-Control-Allow-Origin': 'https://irsresolutionservice.com',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Password',
-    'Content-Type': 'application/json',
-  };
+  if (req.method === 'OPTIONS') return new Response(null, { status: 200, headers })
 
-  if (req.method === 'OPTIONS') return new Response(null, { status: 200, headers });
+  if (req.method !== 'GET') {
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers })
+  }
 
-  const url = new URL(req.url);
-  const password = url.searchParams.get('password') || req.headers.get('X-Admin-Password');
-  const isValidPassword = ADMIN_PASSWORD && password === ADMIN_PASSWORD;
-  const isValidJWT = password && password.split('.').length === 3;
-  if (!isValidPassword && !isValidJWT) {
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers });
+  const url = new URL(req.url)
+  const pw = url.searchParams.get('password') || ''
+
+  if (!ADMIN_PASSWORD || pw !== ADMIN_PASSWORD) {
+    return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers })
   }
 
   try {
-    const store = getStore('client-status');
+    const store = getStore(STORE)
+    const { blobs } = await store.list()
 
-    // Read the index — a simple list of emails we maintain separately
-    // This avoids the slow/unreliable store.list() call
-    let emailIndex = [];
-    try {
-      const raw = await store.get('__index__');
-      if (raw) emailIndex = JSON.parse(raw);
-    } catch {
-      emailIndex = [];
-    }
-
-    if (!emailIndex.length) {
-      // Index is empty — try rebuilding from store.list() as fallback
-      try {
-        const { blobs } = await store.list();
-        emailIndex = blobs
-          .map(b => b.key)
-          .filter(k => k !== '__index__' && k.includes('@'));
-        if (emailIndex.length) {
-          // Save the rebuilt index for next time
-          await store.set('__index__', JSON.stringify(emailIndex));
-        }
-      } catch {
-        // list() failed too — return empty
-        return new Response(JSON.stringify({ clients: [], note: 'No clients yet — index empty and list() failed' }), { status: 200, headers });
-      }
-    }
-
-    if (!emailIndex.length) {
-      return new Response(JSON.stringify({ clients: [], note: 'No clients yet' }), { status: 200, headers });
-    }
-
-    // Fetch each client record individually with a timeout
     const clients = await Promise.all(
-      emailIndex.map(async (email) => {
+      blobs.map(async (b) => {
         try {
-          const raw = await Promise.race([
-            store.get(email),
-            new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 4000))
-          ]);
-          if (!raw) return null;
-          return typeof raw === 'string' ? JSON.parse(raw) : raw;
+          const raw = await store.get(b.key)
+          const data = raw ? JSON.parse(raw) : {}
+          return { email: b.key, ...data }
         } catch {
-          return null;
+          return { email: b.key }
         }
       })
-    );
+    )
 
-    const validClients = clients
-      .filter(Boolean)
-      .sort((a, b) => new Date(b.paidAt || b.updatedAt || 0) - new Date(a.paidAt || a.updatedAt || 0));
+    // Sort newest first
+    clients.sort((a, b) => {
+      const ta = a.paidAt || a.createdAt || ''
+      const tb = b.paidAt || b.createdAt || ''
+      return tb.localeCompare(ta)
+    })
 
-    return new Response(JSON.stringify({ clients: validClients }), { status: 200, headers });
+    return new Response(JSON.stringify({ clients }), { status: 200, headers })
 
   } catch (err) {
-    return new Response(JSON.stringify({ clients: [], error: err.message }), { status: 200, headers });
+    console.error('[admin-clients]', err.message)
+    return new Response(JSON.stringify({ error: err.message }), { status: 500, headers })
   }
-};
+}
 
+export const config = { path: '/api/admin-clients', method: ['GET', 'OPTIONS'] }
