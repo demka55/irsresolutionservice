@@ -1,15 +1,15 @@
 // netlify/functions/seo-track.mjs
-// Scheduled function — runs daily at 6am UTC
-// NO path — scheduled functions cannot expose HTTP endpoints
+// Scheduled function ONLY — runs daily at 6am UTC
+// NO path — calls the same checkKeyword logic inline (no cross-import)
 
 import { getStore } from '@netlify/blobs'
 
 const STORE       = 'seo-tracking'
 const RESULTS_KEY = 'latest-results'
 const HISTORY_KEY = 'history'
-const SITE_DOMAIN = 'irsresolutionservice.com'
+const SITE        = 'irsresolutionservice.com'
 
-export const KEYWORDS = [
+const KEYWORDS = [
   "IRS hasn't replied to appeal 45 days",
   "offer in compromise 2 year rule",
   "IRS compliance last 6 years",
@@ -32,177 +32,79 @@ export const KEYWORDS = [
 ]
 
 export default async () => {
+  const API_KEY = Netlify.env.get('VALUESERP_API') || ''
+  if (!API_KEY) { console.error('[seo-track] VALUESERP_API not set'); return }
   try {
-    await runChecks()
+    await runChecks(API_KEY)
     console.log('[seo-track] Daily check complete')
   } catch (err) {
-    console.error('[seo-track] Daily check failed:', err.message)
+    console.error('[seo-track] Failed:', err.message)
   }
 }
 
 export const config = { schedule: '0 6 * * *' }
 
-// ── Shared exports ────────────────────────────────────────────────────────────
-export async function runChecks() {
-  const API_KEY = Netlify.env.get('VALUESERP_API') || ''
-  if (!API_KEY) throw new Error('VALUESERP_API environment variable not set')
-
+async function runChecks(apiKey) {
   const store     = getStore(STORE)
   const checkedAt = new Date().toISOString()
   const results   = []
-
-  for (const keyword of KEYWORDS) {
-    const result = await checkKeyword(keyword, API_KEY)
-    results.push(result)
-
-    // Store each keyword result individually by keyword slug
-    const slug = keyword.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 60)
-    try {
-      await store.set(`kw:${slug}`, JSON.stringify(result))
-    } catch (e) {
-      console.warn('[seo-track] could not store keyword result:', e.message)
-    }
-
-    await new Promise(r => setTimeout(r, 300))
+  const BATCH = 5
+  for (let i = 0; i < KEYWORDS.length; i += BATCH) {
+    const batch = KEYWORDS.slice(i, i + BATCH)
+    const batchResults = await Promise.all(batch.map(kw => checkKeyword(kw, apiKey)))
+    results.push(...batchResults)
+    await Promise.all(batchResults.map(async (r) => {
+      const slug = r.keyword.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 60)
+      try { await store.set(`kw:${slug}`, JSON.stringify(r)) } catch {}
+    }))
   }
-
-  const inAio  = results.filter(r => r.in_aio).length
-  const cited  = results.filter(r => r.site_cited).length
-  const ranked = results.filter(r => r.organic_rank).length
-
-  const data = {
-    checkedAt,
-    summary: { total: results.length, in_aio: inAio, site_cited: cited, ranked },
-    keywords: results,
-  }
-
+  const inAio = results.filter(r => r.in_aio).length
+  const cited = results.filter(r => r.site_cited).length
+  const ranked = results.filter(r => r.our_pages && r.our_pages.length > 0).length
+  const data = { checkedAt, summary: { total: results.length, in_aio: inAio, site_cited: cited, ranked }, keywords: results }
   await store.set(RESULTS_KEY, JSON.stringify(data))
-
-  // Append to 30-day history
   let history = []
-  try {
-    const raw = await store.get(HISTORY_KEY)
-    if (raw) history = JSON.parse(raw)
-  } catch (e) {}
-
+  try { const raw = await store.get(HISTORY_KEY); if (raw) history = JSON.parse(raw) } catch {}
   history.unshift({ date: checkedAt.slice(0, 10), in_aio: inAio, site_cited: cited, total: results.length })
   if (history.length > 30) history = history.slice(0, 30)
   await store.set(HISTORY_KEY, JSON.stringify(history))
-
   return data
 }
 
-export async function getResults() {
-  const store = getStore(STORE)
-  const [raw, histRaw] = await Promise.all([
-    store.get(RESULTS_KEY).catch(() => null),
-    store.get(HISTORY_KEY).catch(() => null),
-  ])
-  return {
-    results: raw     ? JSON.parse(raw)     : null,
-    history: histRaw ? JSON.parse(histRaw) : [],
-  }
-}
-
-// ── Core keyword check ────────────────────────────────────────────────────────
 async function checkKeyword(keyword, apiKey) {
-  const result = {
-    keyword,
-    in_aio:       false,
-    site_cited:   false,
-    aio_text:     null,   // full AIO summary text
-    aio_sources:  [],     // array of {title, link}
-    organic_rank: null,
-    error:        null,
-    checkedAt:    new Date().toISOString(),
-  }
-
+  const result = { keyword, in_aio: false, site_cited: false, aio_text: null, aio_sources: [], our_pages: [], organic_rank: null, error: null, checkedAt: new Date().toISOString() }
   try {
-    const params = new URLSearchParams({
-      api_key:             apiKey,
-      q:                   keyword,
-      engine:              'google',
-      google_domain:       'google.com',
-      gl:                  'us',
-      hl:                  'en',
-      device:              'desktop',
-      include_ai_overview: 'true',
-      num:                 '10',
-    })
-
-    const res = await fetch(`https://api.valueserp.com/search?${params}`, {
-      signal: AbortSignal.timeout(9000),
-    })
-
-    if (!res.ok) {
-      // Try to get error body but don't crash if it's empty
-      let errText = `HTTP ${res.status}`
-      try { const t = await res.text(); if (t) errText += ': ' + t.slice(0, 200) } catch (e) {}
-      result.error = errText
-      return result
-    }
-
+    const params = new URLSearchParams({ api_key: apiKey, q: keyword, engine: 'google', google_domain: 'google.com', gl: 'us', hl: 'en', device: 'desktop', include_ai_overview: 'true', num: '10' })
+    const res = await fetch(`https://api.valueserp.com/search?${params}`, { signal: AbortSignal.timeout(8000) })
+    if (!res.ok) { let e = `HTTP ${res.status}`; try { const t = await res.text(); if (t) e += ': ' + t.slice(0,200) } catch {} result.error = e; return result }
     let data
-    try {
-      const text = await res.text()
-      if (!text || !text.trim()) { result.error = 'Empty response from ValueSERP'; return result }
-      data = JSON.parse(text)
-    } catch (e) {
-      result.error = 'JSON parse error: ' + e.message
-      return result
-    }
-
-    // ── AI Overview ──────────────────────────────────────────────────────
+    try { const text = await res.text(); if (!text?.trim()) { result.error = 'Empty response'; return result }; data = JSON.parse(text) } catch (e) { result.error = 'Parse error: ' + e.message; return result }
     const aio = data.ai_overview
     if (aio) {
       result.in_aio = true
-
-      // Extract text blocks into a readable summary
       const textParts = []
-      if (aio.text_blocks) {
-        for (const block of aio.text_blocks) {
-          if (block.snippet) textParts.push(block.snippet)
-          if (block.list) {
-            for (const item of block.list) {
-              if (item.snippet) textParts.push('• ' + item.snippet)
-            }
-          }
-        }
-      }
-      // Fallback: check for direct text fields
+      if (aio.text_blocks) { for (const b of aio.text_blocks) { if (b.snippet) textParts.push(b.snippet); if (b.list) for (const i of b.list) if (i.snippet) textParts.push('• ' + i.snippet) } }
       if (!textParts.length && aio.snippet) textParts.push(aio.snippet)
-      if (!textParts.length && typeof aio === 'object') {
-        const aioStr = JSON.stringify(aio)
-        if (aioStr.length > 20) textParts.push('(AIO data available — ' + aioStr.length + ' chars)')
-      }
       result.aio_text = textParts.join('\n\n').slice(0, 3000) || null
-
-      // Extract sources
-      const sources = [
-        ...(aio.ai_overview_sources || []),
-        ...(aio.sources             || []),
-        ...(aio.references          || []),
-      ]
-      result.aio_sources = sources
-        .map(s => ({ title: s.title || s.name || '', link: s.link || s.url || '' }))
-        .filter(s => s.link)
-        .slice(0, 10)
-
-      result.site_cited = result.aio_sources.some(s => s.link.includes(SITE_DOMAIN))
-
-      if (!result.site_cited && JSON.stringify(aio).toLowerCase().includes(SITE_DOMAIN)) {
-        result.site_cited = true
+      const sources = [...(aio.ai_overview_sources||[]), ...(aio.sources||[]), ...(aio.references||[])]
+      result.aio_sources = sources.map(s => ({ title: s.title||s.name||'', link: s.link||s.url||'' })).filter(s => s.link).slice(0, 10)
+      result.site_cited = result.aio_sources.some(s => s.link.includes(SITE)) || JSON.stringify(aio).toLowerCase().includes(SITE)
+      if (result.site_cited) {
+        const ourAio = result.aio_sources.filter(s => s.link.includes(SITE))
+        ourAio.forEach(p => result.our_pages.push({ where: 'AIO source', link: p.link, title: p.title }))
+        if (!ourAio.length) result.our_pages.push({ where: 'AIO text mention', link: '', title: '' })
       }
     }
-
-    // ── Organic rank ─────────────────────────────────────────────────────
-    const organic = data.organic_results || []
-    const ours = organic.find(r => r.link && r.link.includes(SITE_DOMAIN))
-    if (ours) result.organic_rank = ours.position
-
-  } catch (err) {
-    result.error = err.message
-  }
-
+    ;(data.organic_results||[]).forEach((r, idx) => {
+      if (r.link?.includes(SITE)) {
+        const pos = r.position || (idx + 1)
+        if (!result.organic_rank || pos < result.organic_rank) result.organic_rank = pos
+        result.our_pages.push({ where: `Organic #${pos}`, link: r.link, title: r.title||'' })
+      }
+    })
+    if (!result.our_pages.length && JSON.stringify(data).toLowerCase().includes(SITE)) {
+      result.our_pages.push({ where: 'Appears in response', link: '', title: 'Found in SERP data' })
+    }
+  } catch (err) { result.error = err.message }
   return result
 }

@@ -6,13 +6,20 @@
 <title>AI Overview Tracker — IRS Resolution Service</title>
 <meta name="robots" content="noindex,nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-</head>
-<body>
 <style>
-:root{--gold:#c9a84c;--gold-dim:#8a6e2f;--gold-muted:#f5ecd8;--ink:#1a1410;--ink-soft:#4a3f32;--ink-muted:#7a6e60;--cream:#f5f0e8;--cream-dark:#d9cdb8;--white:#fff;--red:#c0392b;--green:#1a5c2a;--green-bg:#edf7f0;--red-bg:#fdf0f0;--amber:#b7791f;--amber-bg:#fffbeb;--blue-bg:#eff6ff;--blue:#1a4a8a;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Outfit',system-ui,sans-serif}
+:root{
+  --gold:#c9a84c;--gold-dim:#8a6e2f;--gold-muted:#f5ecd8;
+  --ink:#1a1410;--ink-soft:#4a3f32;--ink-muted:#7a6e60;
+  --cream:#f5f0e8;--cream-dark:#d9cdb8;--white:#fff;
+  --red:#c0392b;--green:#1a5c2a;--green-bg:#edf7f0;
+  --red-bg:#fdf0f0;--amber:#b7791f;--amber-bg:#fffbeb;
+  --blue-bg:#eff6ff;--blue:#1a4a8a;
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Outfit',system-ui,sans-serif;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height:100vh;font-size:15px}
-/* Login */
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height:100vh}
+
+/* ── Login ── */
 #login{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
 .lbox{background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;padding:2.5rem;width:100%;max-width:380px;text-align:center}
 .lbox h2{font-family:var(--serif);font-size:1.5rem;margin-bottom:.25rem}
@@ -20,89 +27,111 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 .linput{width:100%;padding:10px 14px;border:1px solid var(--cream-dark);border-radius:4px;font-family:var(--sans);font-size:15px;background:var(--cream);color:var(--ink);margin-bottom:.75rem}
 .lbtn{width:100%;padding:11px;background:var(--gold);color:var(--white);border:none;border-radius:4px;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer}
 .lerr{font-size:13px;color:var(--red);margin-top:.5rem;display:none}
-/* App */
-#app{display:none;max-width:1140px;margin:0 auto;padding:2rem 1.5rem 4rem}
+
+/* ── App shell ── */
+#app{display:none;max-width:1200px;margin:0 auto;padding:2rem 1.5rem 4rem}
 .topbar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.75rem;flex-wrap:wrap;gap:1rem}
-.topbar h1{font-family:var(--serif);font-size:2rem;font-weight:700}
-.topbar p{font-size:13px;color:var(--ink-muted);margin-top:3px}
-.actions{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:4px;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--cream-dark);background:var(--white);color:var(--ink);transition:background .12s}
+.topbar h1{font-family:var(--serif);font-size:2.25rem;font-weight:700}
+.topbar p{font-size:14px;color:var(--ink-muted);margin-top:3px}
+.actions{display:flex;gap:.5rem;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 18px;border-radius:4px;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--cream-dark);background:var(--white);color:var(--ink)}
 .btn:hover{background:var(--cream)}
 .btn.gold{background:var(--gold);color:var(--white);border-color:transparent}
 .btn.gold:hover{background:var(--gold-dim)}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-/* Status */
-.sbar{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;padding:8px 14px;font-size:12px;color:var(--ink-muted);margin-bottom:1.25rem}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--cream-dark);flex-shrink:0}
+
+/* ── Status bar ── */
+.sbar{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;padding:9px 16px;font-size:13px;color:var(--ink-muted);margin-bottom:1.25rem}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--cream-dark);flex-shrink:0}
 .dot.green{background:#27ae60}
 .dot.amber{background:var(--amber);animation:pulse 1.2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-/* KPI cards */
+
+/* ── KPI cards ── */
 .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:1.5rem}
-.kpi{background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:12px 16px}
-.kpi-l{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted);margin-bottom:4px}
-.kpi-v{font-size:26px;font-weight:700;font-family:var(--serif);color:var(--ink)}
+.kpi{background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:14px 18px}
+.kpi-l{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted);margin-bottom:5px}
+.kpi-v{font-size:28px;font-weight:700;font-family:var(--serif);color:var(--ink)}
 .kpi-s{font-size:12px;color:var(--ink-muted);margin-top:3px}
 .kpi-v.green{color:var(--green)}
 .kpi-v.amber{color:var(--amber)}
-/* History chart */
+.kpi-v.red{color:var(--red)}
+
+/* ── History chart ── */
 .hist{background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem;margin-bottom:1.5rem}
 .hist h3{font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.875rem;display:flex;align-items:center;gap:1rem}
 .hist-legend{display:flex;gap:.75rem;font-weight:400;text-transform:none;letter-spacing:0}
 .hist-legend span{display:flex;align-items:center;gap:4px;font-size:12px}
-.hist-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
-.hchart{display:flex;align-items:flex-end;gap:3px;height:64px;overflow-x:auto;padding-bottom:2px}
+.hdot{width:10px;height:10px;border-radius:2px}
+.hchart{display:flex;align-items:flex-end;gap:3px;height:64px;overflow-x:auto}
 .hcol{display:flex;flex-direction:column;align-items:center;gap:1px;flex-shrink:0}
 .hbar{width:18px;border-radius:2px 2px 0 0;min-height:2px}
-.hbar.aio{background:#b3d4f0}
-.hbar.cited{background:var(--green)}
-.hdate{font-size:9px;color:var(--ink-muted);writing-mode:vertical-lr;transform:rotate(180deg);margin-top:4px;white-space:nowrap}
-/* Filters */
+.hdate{font-size:9px;color:var(--ink-muted);writing-mode:vertical-lr;transform:rotate(180deg);margin-top:4px}
+
+/* ── Filters ── */
 .filters{display:flex;gap:.35rem;margin-bottom:.875rem;flex-wrap:wrap}
-.ftab{padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--cream-dark);background:var(--white);color:var(--ink-muted);font-family:var(--sans)}
+.ftab{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--cream-dark);background:var(--white);color:var(--ink-muted);font-family:var(--sans)}
 .ftab.active{background:var(--ink);color:var(--white);border-color:transparent}
-/* Table */
+
+/* ── Keyword table ── */
 .tbl-wrap{background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;overflow:hidden}
-.tbl-head{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;border-bottom:1px solid var(--cream-dark);font-size:12px;color:var(--ink-muted)}
-table{width:100%;border-collapse:collapse}
-th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-muted);padding:7px 10px;text-align:left;background:var(--cream);border-bottom:1px solid var(--cream-dark)}
-td{padding:9px 10px;border-bottom:1px solid var(--cream-dark);font-size:13px;color:var(--ink-soft);vertical-align:top}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:#faf8f4}
-/* Badges */
-.badge{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.tbl-count{padding:.625rem 1rem;font-size:12px;color:var(--ink-muted);border-bottom:1px solid var(--cream-dark)}
+table.kw{width:100%;border-collapse:collapse}
+table.kw th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-muted);padding:8px 12px;text-align:left;background:var(--cream);border-bottom:1px solid var(--cream-dark)}
+table.kw td{padding:11px 12px;border-bottom:1px solid var(--cream-dark);font-size:14px;color:var(--ink-soft);vertical-align:top}
+table.kw tr:last-child td{border-bottom:none}
+table.kw tr:hover td{background:#faf8f4}
+
+/* ── Badges ── */
+.badge{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:3px;white-space:nowrap}
 .badge.cited{background:var(--green-bg);color:var(--green)}
-.badge.aio-yes{background:var(--blue-bg);color:var(--blue)}
-.badge.aio-no{background:var(--cream);color:var(--ink-muted)}
+.badge.aio{background:var(--blue-bg);color:var(--blue)}
+.badge.no-aio{background:var(--cream);color:var(--ink-muted)}
 .badge.rank{background:var(--gold-muted);color:var(--gold-dim)}
 .badge.no-rank{background:var(--cream);color:var(--ink-muted)}
-.badge.error{background:var(--red-bg);color:var(--red)}
-.btn-aio-view{font-size:11px;color:var(--gold-dim);background:none;border:none;cursor:pointer;font-family:var(--sans);padding:2px 4px;margin-left:4px;text-decoration:underline;text-underline-offset:2px}
-.btn-aio-view:hover{color:var(--gold)}
-/* Sources */
-.sources{display:flex;flex-direction:column;gap:2px;margin-top:4px}
-.src-link{font-size:11px;color:var(--gold-dim);text-decoration:none;word-break:break-all}
-.src-link:hover{text-decoration:underline}
-.src-link.ours{font-weight:700;color:var(--green)}
+.badge.err{background:var(--red-bg);color:var(--red)}
+
+/* ── Our pages appearances ── */
+.our-pages{display:flex;flex-direction:column;gap:4px;margin-top:5px}
+.our-page{font-size:12px;display:flex;align-items:baseline;gap:5px}
+.our-page-where{font-weight:600;color:var(--green);white-space:nowrap}
+.our-page-link{color:var(--gold-dim);text-decoration:none;word-break:break-all}
+.our-page-link:hover{text-decoration:underline}
+.our-page-title{color:var(--ink-muted);font-size:11px}
+.not-found{font-size:12px;color:var(--ink-muted);font-style:italic;margin-top:4px}
+
+/* ── AIO sources ── */
+.aio-srcs{display:flex;flex-direction:column;gap:3px;margin-top:5px}
+.aio-src{font-size:12px;color:var(--ink-muted);display:flex;gap:4px}
+.aio-src a{color:var(--gold-dim);text-decoration:none}
+.aio-src a.ours{color:var(--green);font-weight:600}
+.aio-src a:hover{text-decoration:underline}
+.btn-aio{font-size:12px;color:var(--gold-dim);background:none;border:none;cursor:pointer;font-family:var(--sans);padding:3px 0;text-decoration:underline;text-underline-offset:2px;margin-top:4px;display:block}
+
+/* ── AIO Detail modal ── */
+.modal-bg{position:fixed;inset:0;background:rgba(26,20,16,.5);z-index:500;display:none;align-items:center;justify-content:center;padding:1rem}
+.modal-bg.open{display:flex}
+.modal{background:var(--white);border-radius:6px;width:100%;max-width:740px;max-height:88vh;overflow-y:auto;border-top:3px solid var(--gold);box-shadow:0 16px 48px rgba(0,0,0,.18)}
+.modal-hd{display:flex;align-items:flex-start;justify-content:space-between;padding:1.25rem 1.5rem .75rem;gap:1rem;border-bottom:1px solid var(--cream-dark)}
+.modal-hd h2{font-family:var(--serif);font-size:1.35rem;font-weight:600;flex:1}
+.modal-x{background:none;border:none;font-size:24px;cursor:pointer;color:var(--ink-muted);line-height:1;padding:0;flex-shrink:0}
+.modal-body{padding:1.25rem 1.5rem 1.5rem}
+.modal-kw{font-size:13px;color:var(--ink-muted);margin-bottom:1rem}
+.aio-fulltext{font-size:14px;line-height:1.75;color:var(--ink-soft);background:var(--cream);border-radius:4px;padding:1rem;margin-bottom:1.25rem;white-space:pre-wrap;max-height:300px;overflow-y:auto}
+.src-heading{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:.625rem}
+.src-row{display:flex;align-items:baseline;gap:8px;padding:6px 0;border-bottom:1px solid var(--cream-dark);font-size:13px}
+.src-row:last-child{border-bottom:none}
+.src-num{color:var(--ink-muted);font-size:12px;min-width:18px}
+.src-domain{font-size:11px;color:var(--ink-muted)}
+.src-row a{color:var(--gold-dim);text-decoration:none;word-break:break-all}
+.src-row a.ours{color:var(--green);font-weight:600}
+.src-row a:hover{text-decoration:underline}
 .empty{text-align:center;padding:3rem;color:var(--ink-muted);font-size:14px}
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--cream-dark);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* AIO modal */
-.modal-bg{position:fixed;inset:0;background:rgba(26,20,16,.5);z-index:500;display:none;align-items:center;justify-content:center;padding:1rem}
-.modal-bg.open{display:flex}
-.modal{background:var(--white);border-radius:6px;width:100%;max-width:720px;max-height:85vh;overflow-y:auto;border-top:3px solid var(--gold);box-shadow:0 16px 48px rgba(0,0,0,.18)}
-.modal-hd{display:flex;align-items:flex-start;justify-content:space-between;padding:1.25rem 1.5rem .5rem;gap:1rem}
-.modal-hd h2{font-family:var(--serif);font-size:1.3rem;font-weight:600;flex:1}
-.modal-x{background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink-muted);line-height:1;padding:0;flex-shrink:0}
-.modal-body{padding:.75rem 1.5rem 1.5rem}
-.aio-text{font-size:13px;line-height:1.7;color:var(--ink-soft);background:var(--cream);border-radius:4px;padding:1rem;margin-bottom:1rem;white-space:pre-wrap;max-height:300px;overflow-y:auto}
-.aio-sources-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted);margin-bottom:.5rem}
-.aio-source{display:flex;align-items:baseline;gap:6px;padding:5px 0;border-bottom:1px solid var(--cream-dark);font-size:13px}
-.aio-source:last-child{border-bottom:none}
-.aio-source a{color:var(--gold-dim);text-decoration:none;word-break:break-all}
-.aio-source a:hover{text-decoration:underline}
-.aio-source a.ours{color:var(--green);font-weight:600}
 </style>
+</head>
+<body>
 
 <div id="login">
   <div class="lbox">
@@ -136,26 +165,17 @@ tr:hover td{background:#faf8f4}
   <div class="hist" id="histWrap" style="display:none">
     <h3>30-day trend
       <span class="hist-legend">
-        <span><span class="hist-dot" style="background:#b3d4f0"></span>AIO shown</span>
-        <span><span class="hist-dot" style="background:var(--green)"></span>We're cited</span>
+        <span><span class="hdot" style="background:#b3d4f0"></span>AIO shown</span>
+        <span><span class="hdot" style="background:var(--green)"></span>We appear</span>
       </span>
     </h3>
     <div class="hchart" id="hchart"></div>
   </div>
 
-  <div class="filters">
-    <button class="ftab active" onclick="setF('all',this)">All (19)</button>
-    <button class="ftab" onclick="setF('cited',this)">✓ Cited in AIO</button>
-    <button class="ftab" onclick="setF('aio_only',this)">AIO — not cited</button>
-    <button class="ftab" onclick="setF('no_aio',this)">No AIO</button>
-    <button class="ftab" onclick="setF('ranked',this)">Organic rank</button>
-    <button class="ftab" onclick="setF('error',this)">Errors</button>
-  </div>
+  <div class="filters" id="filterBar"></div>
 
   <div class="tbl-wrap">
-    <div class="tbl-head">
-      <span id="tblCount"></span>
-    </div>
+    <div class="tbl-count" id="tblCount"></div>
     <div id="tblBody"><div class="empty">Loading…</div></div>
   </div>
 </div>
@@ -164,169 +184,271 @@ tr:hover td{background:#faf8f4}
 <div class="modal-bg" id="aioModal">
   <div class="modal">
     <div class="modal-hd">
-      <h2 id="aioTitle">AI Overview</h2>
-      <button class="modal-x" onclick="document.getElementById('aioModal').classList.remove('open')">✕</button>
+      <h2>AI Overview</h2>
+      <button class="modal-x" onclick="closeAio()">✕</button>
     </div>
     <div class="modal-body">
-      <div id="aioContent"></div>
+      <div class="modal-kw" id="aioKw"></div>
+      <div id="aioBody"></div>
     </div>
   </div>
 </div>
 
 <script>
-const PW_KEY='seo_pw';
-let apw='', allResults=[], curFilter='all';
+const PW_KEY = 'seo_pw';
+let apw = '', allResults = [], curFilter = 'all';
 
-// ── Auth ────────────────────────────────────────────────────────────────────
-async function doLogin(){
-  const pw=document.getElementById('pw').value.trim();
-  if(!pw) return;
-  const r=await fetch('/api/admin-auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
-  if(r.ok){ apw=pw; sessionStorage.setItem(PW_KEY,pw); showApp(); }
-  else document.getElementById('lerr').style.display='block';
+// ── Auth ──────────────────────────────────────────────────────────────────────
+async function doLogin() {
+  const pw = document.getElementById('pw').value.trim();
+  if (!pw) return;
+  const r = await fetch('/api/admin-auth', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pw})});
+  if (r.ok) { apw = pw; sessionStorage.setItem(PW_KEY, pw); showApp(); }
+  else document.getElementById('lerr').style.display = 'block';
 }
-function logout(){ sessionStorage.removeItem(PW_KEY); location.reload(); }
-document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
-const saved=sessionStorage.getItem(PW_KEY);
-if(saved){
-  fetch('/api/admin-auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:saved})})
-    .then(r=>{if(r.ok){apw=saved;showApp();}else sessionStorage.removeItem(PW_KEY);})
-    .catch(()=>{});
+function logout() { sessionStorage.removeItem(PW_KEY); location.reload(); }
+document.getElementById('pw').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+const saved = sessionStorage.getItem(PW_KEY);
+if (saved) {
+  fetch('/api/admin-auth', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:saved})})
+    .then(r => { if(r.ok){apw=saved;showApp();} else sessionStorage.removeItem(PW_KEY); })
+    .catch(() => {});
 }
 
-// ── App ─────────────────────────────────────────────────────────────────────
-function showApp(){ document.getElementById('login').style.display='none'; document.getElementById('app').style.display='block'; loadResults(); }
+// ── App ───────────────────────────────────────────────────────────────────────
+function showApp() {
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  loadResults();
+}
 
-async function loadResults(){
-  setStatus('amber','Fetching latest results…');
-  try{
-    const r=await fetch('/api/seo-track?action=results');
-    const d=await r.json();
-    if(d.results){
-      allResults=d.results.keywords||[];
+async function loadResults() {
+  setStatus('amber', 'Fetching latest results…');
+  try {
+    const r = await fetch('/api/seo-track?action=results');
+    if (!r.ok) { setStatus('amber', `Server error ${r.status} — check Netlify function logs`); return; }
+    let d;
+    try { d = await r.json(); }
+    catch(e) { setStatus('amber', 'Response parse error — function may have crashed. Check Netlify logs.'); return; }
+
+    if (d.results && d.results.keywords && d.results.keywords.length) {
+      allResults = d.results.keywords;
       renderKpis(d.results);
+      renderFilters();
       renderTable(curFilter);
-      renderHistory(d.history||[]);
-      const dt=new Date(d.results.checkedAt);
-      document.getElementById('lastChecked').textContent=`19 keywords · last checked ${dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})} at ${dt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}`;
-      setStatus('green',`${d.results.summary.site_cited} of ${d.results.summary.total} keywords cited in Google AI Overview`);
+      renderHistory(d.history || []);
+      const dt = new Date(d.results.checkedAt);
+      document.getElementById('lastChecked').textContent =
+        `19 keywords · last checked ${dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})} at ${dt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}`;
+      const appearing = d.results.keywords.filter(k => k.our_pages && k.our_pages.length > 0).length;
+      setStatus('green', `We appear in ${appearing} of ${d.results.summary.total} searches · ${d.results.summary.site_cited} in AI Overview`);
     } else {
-      setStatus('amber','No data yet — click "Run now" to check all 19 keywords');
-      document.getElementById('tblBody').innerHTML='<div class="empty">No results yet. Click "Run now" above.</div>';
+      setStatus('amber', 'No data yet — click "Run now" to check all 19 keywords (takes ~30 seconds)');
+      document.getElementById('tblBody').innerHTML = '<div class="empty">No results yet. Click "Run now" above to run the first check.</div>';
+      renderFilters();
     }
-  }catch(e){ setStatus('amber','Error: '+e.message); }
+  } catch(e) { setStatus('amber', 'Fetch error: ' + e.message); }
 }
 
-async function runNow(){
-  const btn=document.getElementById('runBtn');
-  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Checking 19 keywords…';
-  setStatus('amber','Running — ~30 seconds…');
-  try{
-    const r=await fetch(`/api/seo-track?action=run&password=${encodeURIComponent(apw)}`);
-    const d=await r.json();
-    if(!r.ok) setStatus('amber','Error: '+(d.error||'unknown'));
-    else { setStatus('green','Done — refreshing results…'); await loadResults(); }
-  }catch(e){ setStatus('amber','Error: '+e.message); }
-  btn.disabled=false; btn.innerHTML='↻ Run now';
+async function runNow() {
+  const btn = document.getElementById('runBtn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Checking 19 keywords…';
+  setStatus('amber', 'Running — checking all 19 keywords in parallel, ~20 seconds…');
+  try {
+    const r = await fetch(`/api/seo-track?action=run&password=${encodeURIComponent(apw)}`);
+    let d;
+    try { d = await r.json(); } catch(e) { setStatus('amber', `Function error (${r.status}) — check Netlify logs`); btn.disabled=false; btn.innerHTML='↻ Run now'; return; }
+    if (!r.ok) { setStatus('amber', 'Error: ' + (d.error || `HTTP ${r.status}`)); }
+    else { setStatus('green', 'Done — reloading results…'); await loadResults(); }
+  } catch(e) { setStatus('amber', 'Error: ' + e.message); }
+  btn.disabled = false; btn.innerHTML = '↻ Run now';
 }
 
-function setStatus(state,text){ document.getElementById('statusDot').className='dot '+(state==='loading'?'amber':state); document.getElementById('statusText').textContent=text; }
+function setStatus(state, text) {
+  document.getElementById('statusDot').className = 'dot ' + (state === 'green' ? 'green' : 'amber');
+  document.getElementById('statusText').textContent = text;
+}
 
-function setF(f,el){ curFilter=f; document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active')); el.classList.add('active'); renderTable(f); }
-
-// ── KPIs ────────────────────────────────────────────────────────────────────
-function renderKpis(data){
-  const kw=data.keywords||[], t=kw.length;
-  const aio=kw.filter(r=>r.in_aio).length, cited=kw.filter(r=>r.site_cited).length;
-  const ranked=kw.filter(r=>r.organic_rank).length, errs=kw.filter(r=>r.error).length;
-  document.getElementById('kpis').innerHTML=`
+// ── KPIs ──────────────────────────────────────────────────────────────────────
+function renderKpis(data) {
+  const kw = data.keywords || [], t = kw.length;
+  const appearing = kw.filter(r => r.our_pages && r.our_pages.length > 0).length;
+  const inAio     = kw.filter(r => r.in_aio).length;
+  const cited     = kw.filter(r => r.site_cited).length;
+  const organic   = kw.filter(r => r.organic_rank).length;
+  const errs      = kw.filter(r => r.error).length;
+  document.getElementById('kpis').innerHTML = `
     <div class="kpi"><div class="kpi-l">Keywords tracked</div><div class="kpi-v">${t}</div><div class="kpi-s">daily check</div></div>
-    <div class="kpi"><div class="kpi-l">AIO shown</div><div class="kpi-v ${aio>0?'amber':''}">${aio}</div><div class="kpi-s">${t?Math.round(aio/t*100):0}% of keywords</div></div>
-    <div class="kpi"><div class="kpi-l">We're cited</div><div class="kpi-v ${cited>0?'green':''}">${cited}</div><div class="kpi-s">${aio?Math.round(cited/aio*100):0}% of AIO results</div></div>
-    <div class="kpi"><div class="kpi-l">Organic rank</div><div class="kpi-v">${ranked}</div><div class="kpi-s">in Google top 10</div></div>
-    ${errs?`<div class="kpi"><div class="kpi-l">Check errors</div><div class="kpi-v" style="color:var(--red)">${errs}</div><div class="kpi-s">retry Run now</div></div>`:''}`;
+    <div class="kpi"><div class="kpi-l">We appear</div><div class="kpi-v ${appearing>0?'green':''}">${appearing}</div><div class="kpi-s">anywhere in results</div></div>
+    <div class="kpi"><div class="kpi-l">AIO shown</div><div class="kpi-v ${inAio>0?'amber':''}">${inAio}</div><div class="kpi-s">${t?Math.round(inAio/t*100):0}% of keywords</div></div>
+    <div class="kpi"><div class="kpi-l">Cited in AIO</div><div class="kpi-v ${cited>0?'green':''}">${cited}</div><div class="kpi-s">${inAio?Math.round(cited/inAio*100):0}% of AIO results</div></div>
+    <div class="kpi"><div class="kpi-l">Organic rank</div><div class="kpi-v">${organic}</div><div class="kpi-s">in top 10</div></div>
+    ${errs ? `<div class="kpi"><div class="kpi-l">Errors</div><div class="kpi-v red">${errs}</div><div class="kpi-s">check API key</div></div>` : ''}`;
 }
 
-// ── History chart ───────────────────────────────────────────────────────────
-function renderHistory(hist){
-  if(!hist.length){ document.getElementById('histWrap').style.display='none'; return; }
-  document.getElementById('histWrap').style.display='block';
-  const maxAio=Math.max(...hist.map(h=>h.in_aio),1), maxCited=Math.max(...hist.map(h=>h.site_cited),1);
-  document.getElementById('hchart').innerHTML=[...hist].reverse().map(h=>{
-    const ah=Math.round((h.in_aio/maxAio)*56), ch=Math.round((h.site_cited/maxCited)*56);
+// ── History ───────────────────────────────────────────────────────────────────
+function renderHistory(hist) {
+  if (!hist.length) { document.getElementById('histWrap').style.display='none'; return; }
+  document.getElementById('histWrap').style.display = 'block';
+  const maxA = Math.max(...hist.map(h=>h.in_aio), 1);
+  const maxC = Math.max(...hist.map(h=>h.site_cited), 1);
+  document.getElementById('hchart').innerHTML = [...hist].reverse().map(h => {
+    const ah = Math.round((h.in_aio / maxA) * 56);
+    const ch = Math.round((h.site_cited / maxC) * 56);
     return `<div class="hcol">
       <div style="display:flex;align-items:flex-end;gap:1px;height:58px">
-        <div class="hbar aio" style="height:${ah}px" title="AIO: ${h.in_aio}"></div>
-        <div class="hbar cited" style="height:${ch}px" title="Cited: ${h.site_cited}"></div>
+        <div class="hbar" style="height:${ah}px;background:#b3d4f0" title="AIO: ${h.in_aio}"></div>
+        <div class="hbar" style="height:${ch}px;background:var(--green)" title="Cited: ${h.site_cited}"></div>
       </div>
-      <div class="hdate">${esc(h.date?h.date.slice(5):'')}</div>
+      <div class="hdate">${esc(h.date ? h.date.slice(5) : '')}</div>
     </div>`;
   }).join('');
 }
 
-// ── Table ───────────────────────────────────────────────────────────────────
-function renderTable(filter){
-  let rows=allResults;
-  if(filter==='cited')    rows=rows.filter(r=>r.site_cited);
-  if(filter==='aio_only') rows=rows.filter(r=>r.in_aio&&!r.site_cited);
-  if(filter==='no_aio')   rows=rows.filter(r=>!r.in_aio);
-  if(filter==='ranked')   rows=rows.filter(r=>r.organic_rank);
-  if(filter==='error')    rows=rows.filter(r=>r.error);
-  document.getElementById('tblCount').textContent=`${rows.length} keyword${rows.length!==1?'s':''}`;
-  if(!rows.length){ document.getElementById('tblBody').innerHTML='<div class="empty">No keywords match this filter</div>'; return; }
-
-  const html=`<table>
-    <thead><tr>
-      <th style="width:32%">Keyword</th>
-      <th style="width:70px">Checked</th>
-      <th>AI Overview</th>
-      <th style="width:100px">Cited</th>
-      <th style="width:100px">Organic</th>
-    </tr></thead>
-    <tbody>${rows.map(r=>{
-      const dt=r.checkedAt?r.checkedAt.slice(5,10):'—';
-      const aioB=r.error
-        ?`<span class="badge error" title="${esc(r.error)}">Error</span>`
-        :r.in_aio?'<span class="badge aio-yes">✓ AIO</span>':'<span class="badge aio-no">No AIO</span>';
-      const citedB=r.site_cited?'<span class="badge cited">✓ Cited</span>':r.in_aio?'<span class="badge aio-no">Not cited</span>':'<span class="badge aio-no">—</span>';
-      const rankB=r.organic_rank?`<span class="badge rank">#${r.organic_rank}</span>`:'<span class="badge no-rank">—</span>';
-      const aioBtn=(r.in_aio&&(r.aio_text||r.aio_sources&&r.aio_sources.length))
-        ?`<button class="btn-aio-view" onclick='showAio(this)' data-result='${esc(JSON.stringify(r))}'>View full AIO ↗</button>`:'';
-      const srcs=(r.aio_sources||[]).slice(0,3).map(s=>{
-        const isOurs=s.link&&s.link.includes('irsresolutionservice.com');
-        let dom='';try{dom=new URL(s.link).hostname.replace('www.','');}catch(e){dom=s.link||'';}
-        return `<a class="src-link ${isOurs?'ours':''}" href="${esc(s.link)}" target="_blank" rel="noopener">${esc(s.title||dom)}</a>`;
-      }).join('');
-      return `<tr>
-        <td><strong>${esc(r.keyword)}</strong></td>
-        <td style="color:var(--ink-muted);font-size:12px;white-space:nowrap">${dt}</td>
-        <td>${aioB}${aioBtn}${srcs?`<div class="sources">${srcs}</div>`:''}</td>
-        <td>${citedB}</td>
-        <td>${rankB}</td>
-      </tr>`;
-    }).join('')}</tbody></table>`;
-  document.getElementById('tblBody').innerHTML=html;
+// ── Filters ───────────────────────────────────────────────────────────────────
+function renderFilters() {
+  const appearing = allResults.filter(r => r.our_pages && r.our_pages.length > 0).length;
+  const filters = [
+    {id:'all',     label:`All (${allResults.length || 19})`},
+    {id:'we_appear', label:'✓ We appear'},
+    {id:'cited',   label:'In AIO'},
+    {id:'organic', label:'Organic rank'},
+    {id:'no_us',   label:'Not found'},
+    {id:'error',   label:'Errors'},
+  ];
+  document.getElementById('filterBar').innerHTML = filters.map(f =>
+    `<button class="ftab ${curFilter===f.id?'active':''}" onclick="setF('${f.id}',this)">${esc(f.label)}</button>`
+  ).join('');
 }
 
-// ── AIO detail modal ────────────────────────────────────────────────────────
-function showAio(btn){
-  const r=JSON.parse(btn.dataset.result||'{}');
-  document.getElementById('aioTitle').textContent=r.keyword||'AI Overview';
-  const sources=(r.aio_sources||[]).map(s=>{
-    const isOurs=s.link&&s.link.includes('irsresolutionservice.com');
-    let dom='';try{dom=new URL(s.link).hostname.replace('www.','');}catch(e){dom=s.link||'';}
-    return `<div class="aio-source"><span style="color:var(--ink-muted);font-size:12px;min-width:18px">${(r.aio_sources||[]).indexOf(s)+1}</span><div><a class="${isOurs?'ours':''}" href="${esc(s.link)}" target="_blank" rel="noopener">${esc(s.title||dom)}</a><div style="font-size:11px;color:var(--ink-muted)">${esc(dom)}</div></div></div>`;
+function setF(f, el) {
+  curFilter = f;
+  document.querySelectorAll('.ftab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderTable(f);
+}
+
+// ── Table ─────────────────────────────────────────────────────────────────────
+function renderTable(filter) {
+  let rows = allResults;
+  if (filter === 'we_appear') rows = rows.filter(r => r.our_pages && r.our_pages.length > 0);
+  if (filter === 'cited')     rows = rows.filter(r => r.site_cited);
+  if (filter === 'organic')   rows = rows.filter(r => r.organic_rank);
+  if (filter === 'no_us')     rows = rows.filter(r => !r.our_pages || r.our_pages.length === 0);
+  if (filter === 'error')     rows = rows.filter(r => r.error);
+
+  document.getElementById('tblCount').textContent = `${rows.length} keyword${rows.length !== 1 ? 's' : ''}`;
+
+  if (!rows.length) {
+    document.getElementById('tblBody').innerHTML = '<div class="empty">No keywords match this filter</div>';
+    return;
+  }
+
+  const html = `<table class="kw">
+    <thead><tr>
+      <th style="width:30%">Keyword</th>
+      <th style="width:70px">Checked</th>
+      <th style="width:90px">AI Overview</th>
+      <th>Where we appear</th>
+      <th style="width:90px">Organic</th>
+    </tr></thead>
+    <tbody>${rows.map(r => {
+      const dt = r.checkedAt ? r.checkedAt.slice(5, 10) : '—';
+
+      // AIO badge
+      const aioBadge = r.error
+        ? `<span class="badge err" title="${esc(r.error)}">Error</span>`
+        : r.in_aio
+          ? `<span class="badge aio">✓ AIO</span>`
+          : `<span class="badge no-aio">No AIO</span>`;
+
+      // "View AIO" button if there's content
+      const aioBtn = (r.in_aio && (r.aio_text || (r.aio_sources && r.aio_sources.length)))
+        ? `<button class="btn-aio" onclick='openAio(this)' data-r='${esc(JSON.stringify(r))}'>View full AIO ↗</button>`
+        : '';
+
+      // Where we appear column
+      let appearHtml = '';
+      if (r.our_pages && r.our_pages.length > 0) {
+        appearHtml = `<div class="our-pages">${r.our_pages.map(p => {
+          const isAio = p.where.startsWith('AIO');
+          const isOrg = p.where.startsWith('Organic');
+          const col = isAio ? 'var(--green)' : isOrg ? 'var(--blue)' : 'var(--amber)';
+          const linkPart = p.link
+            ? `<a class="our-page-link" href="${esc(p.link)}" target="_blank" rel="noopener">${esc(slugify(p.link))}</a>`
+            : '';
+          const titlePart = p.title ? `<span class="our-page-title"> — ${esc(p.title.substring(0,50))}</span>` : '';
+          return `<div class="our-page">
+            <span class="our-page-where" style="color:${col}">${esc(p.where)}</span>
+            ${linkPart}${titlePart}
+          </div>`;
+        }).join('')}</div>`;
+      } else {
+        appearHtml = `<span class="not-found">Not found in this search</span>`;
+      }
+
+      // Organic badge
+      const orgBadge = r.organic_rank
+        ? `<span class="badge rank">#${r.organic_rank}</span>`
+        : `<span class="badge no-rank">—</span>`;
+
+      return `<tr>
+        <td><strong style="font-size:14px">${esc(r.keyword)}</strong></td>
+        <td style="color:var(--ink-muted);font-size:12px;white-space:nowrap">${dt}</td>
+        <td>${aioBadge}${aioBtn}</td>
+        <td>${appearHtml}</td>
+        <td>${orgBadge}</td>
+      </tr>`;
+    }).join('')}</tbody></table>`;
+
+  document.getElementById('tblBody').innerHTML = html;
+}
+
+// ── AIO modal ─────────────────────────────────────────────────────────────────
+function openAio(btn) {
+  let r;
+  try { r = JSON.parse(btn.dataset.r || '{}'); } catch { return; }
+  document.getElementById('aioKw').textContent = `Keyword: "${r.keyword}" · checked ${r.checkedAt ? new Date(r.checkedAt).toLocaleString() : '—'}`;
+
+  const sources = (r.aio_sources || []).map((s, i) => {
+    const isOurs = s.link && s.link.includes('irsresolutionservice.com');
+    let dom = '';
+    try { dom = new URL(s.link).hostname.replace('www.',''); } catch { dom = s.link || ''; }
+    return `<div class="src-row">
+      <span class="src-num">${i+1}</span>
+      <div>
+        <a href="${esc(s.link)}" target="_blank" rel="noopener" class="${isOurs?'ours':''}">${esc(s.title || dom)}</a>
+        <div class="src-domain">${esc(dom)}${isOurs?' ← our site':''}</div>
+      </div>
+    </div>`;
   }).join('');
-  document.getElementById('aioContent').innerHTML=`
-    ${r.aio_text?`<div class="aio-text">${esc(r.aio_text)}</div>`:'<div style="color:var(--ink-muted);font-size:13px;margin-bottom:1rem">AIO text not captured — re-run to fetch full text</div>'}
-    ${sources?`<div class="aio-sources-title">Sources cited in AI Overview (${(r.aio_sources||[]).length})</div><div>${sources}</div>`:'<div style="color:var(--ink-muted);font-size:13px">No sources recorded</div>'}
-    <div style="font-size:11px;color:var(--ink-muted);margin-top:1rem">Checked: ${r.checkedAt?new Date(r.checkedAt).toLocaleString():'—'}</div>`;
+
+  document.getElementById('aioBody').innerHTML = `
+    ${r.aio_text
+      ? `<div class="aio-fulltext">${esc(r.aio_text)}</div>`
+      : '<p style="color:var(--ink-muted);font-size:13px;margin-bottom:1rem">No AIO text captured — re-run to fetch.</p>'}
+    ${sources
+      ? `<div class="src-heading">Sources cited in AI Overview (${(r.aio_sources||[]).length})</div>${sources}`
+      : '<p style="color:var(--ink-muted);font-size:13px">No sources recorded</p>'}`;
+
   document.getElementById('aioModal').classList.add('open');
 }
 
-document.getElementById('aioModal').addEventListener('click',e=>{if(e.target===document.getElementById('aioModal'))document.getElementById('aioModal').classList.remove('open');});
+function closeAio() { document.getElementById('aioModal').classList.remove('open'); }
+document.getElementById('aioModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('aioModal')) closeAio();
+});
 
-function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+// ── Utilities ─────────────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function slugify(url) {
+  try {
+    const u = new URL(url);
+    return u.hostname.replace('www.','') + u.pathname;
+  } catch { return url; }
+}
 </script>
 </body>
 </html>
