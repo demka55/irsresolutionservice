@@ -837,8 +837,11 @@ async function pullTranscript(){
       curTx=d.transcript||'';
       curTxEmail=ce;
       curTxKey=txKey;
-      // Save pull metadata only (not the HTML)
-      await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:ce,adminPassword:apw,update:{adminAction:true,steps:{['txPulled_'+txKey]:new Date().toISOString()}}})});
+      // Store transcript HTML + pull metadata to blob
+      await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:ce,adminPassword:apw,update:{adminAction:true,steps:{
+        ['txPulled_'+txKey]:new Date().toISOString(),
+        ['transcript_'+txKey]:curTx
+      }}})});
       res.innerHTML=`<span style="color:var(--green)">✅ Transcript pulled. <button class="btn btn-ghost btn-sm" onclick="openTxModal(curTx,'${txKey}')">View raw</button> <button class="btn btn-green btn-sm" onclick="dlTx()">⬇ Download</button> <button class="btn btn-gold btn-sm" onclick="parseVitals()">🔬 Parse Vitals</button></span>`;
       document.getElementById('vitalsPanel').style.display='none';
       await loadClients();
@@ -866,40 +869,71 @@ async function deleteClient(btn){
 
 function openTxModal(html,title){document.getElementById('txSub').textContent=title;document.getElementById('txContent').innerHTML=html||'No content';curTx=html;document.getElementById('txModal').classList.add('open');}
 
-function openClientVitals(email){
+async function openClientVitals(email){
   const c=clients.find(x=>x.email===email);
   if(!c){toast('Client not found',true);return;}
   const s=c.steps||{};
-  // Check steps.vitals_* keys (set by transcript-parse.mjs)
+
+  // ── 1. Already have parsed vitals stored → show immediately ─────────────────
   const vKeys=Object.keys(s).filter(k=>k.startsWith('vitals_'));
-  // Also check top-level latestVitals
   const topLevel=c.latestVitals||null;
-  if(!vKeys.length && !topLevel){
-    // No parsed vitals yet — show modal with instructions instead of navigating away
-    document.getElementById('txSub').textContent=`${c.name||email} — No Vitals Yet`;
-    document.getElementById('txContent').innerHTML=`
-      <div style="padding:1.5rem;text-align:center">
-        <div style="font-size:32px;margin-bottom:.75rem">📋</div>
-        <div style="font-weight:600;color:var(--ink);margin-bottom:.5rem">No vitals parsed for this client yet</div>
-        <div style="font-size:13px;color:var(--ink-muted);margin-bottom:1.25rem">Pull a transcript from the IRS Connection tab, then click 🔬 Parse Vitals to generate the vitals dashboard.</div>
-        <button class="btn btn-gold btn-sm" onclick="closeM('txModal');quickPull('${esc(email)}')">→ Go to IRS Pull</button>
-      </div>`;
+  if(vKeys.length||topLevel){
+    let html='';
+    if(vKeys.length){
+      html=vKeys.map(k=>{let vv;try{vv=typeof s[k]==='string'?JSON.parse(s[k]):s[k];}catch{return '';}return renderVitalsPanel(vv,k.replace('vitals_',''));}).join('');
+    } else { html=renderVitalsPanel(topLevel,'latest'); }
+    document.getElementById('txSub').textContent=`${c.name||email} — Transcript Vitals`;
+    document.getElementById('txContent').innerHTML=`<div style="font-size:12px;color:var(--ink-muted);margin-bottom:.5rem">${vKeys.length} transcript(s) parsed. <button class="btn btn-gold btn-sm" onclick="reParseVitals('${esc(email)}')">↻ Re-parse latest</button></div>${html}`;
     document.getElementById('txModal').classList.add('open');
     return;
   }
-  // Build vitals HTML — use steps keys first, fall back to top-level latestVitals
-  let allVitalsHtml='';
-  if(vKeys.length){
-    allVitalsHtml=vKeys.map(k=>{
-      let vv;try{vv=typeof s[k]==='string'?JSON.parse(s[k]):s[k];}catch{return '';}
-      return renderVitalsPanel(vv,k.replace('vitals_',''));
-    }).join('');
-  } else if(topLevel){
-    allVitalsHtml=renderVitalsPanel(topLevel,'latest');
+
+  // ── 2. curTx in memory for this client → parse now, no navigation ────────────
+  if(curTx && curTxEmail===email){
+    _parseAndShowVitals(email, c.name||email, curTx, curTxKey);
+    return;
   }
-  document.getElementById('txSub').textContent=`${c.name||email} — Transcript Vitals`;
-  document.getElementById('txContent').innerHTML=`<div style="font-size:12px;color:var(--ink-muted);margin-bottom:.5rem">${vKeys.length} parsed transcript(s).</div>${allVitalsHtml}`;
+
+  // ── 3. Transcript HTML stored in blob → fetch and parse ─────────────────────
+  const txStoredKeys=Object.keys(s).filter(k=>k.startsWith('transcript_'));
+  if(txStoredKeys.length){
+    const latestKey=txStoredKeys.sort().reverse()[0];
+    const txHtml=s[latestKey];
+    if(txHtml && txHtml.length>100){
+      _parseAndShowVitals(email, c.name||email, txHtml, latestKey.replace('transcript_',''));
+      return;
+    }
+  }
+
+  // ── 4. Nothing available → show instructions ─────────────────────────────────
+  document.getElementById('txSub').textContent=`${c.name||email} — No Transcript On File`;
+  document.getElementById('txContent').innerHTML=`<div style="padding:1.5rem;text-align:center"><div style="font-size:32px;margin-bottom:.75rem">📋</div><div style="font-weight:600;color:var(--ink);margin-bottom:.5rem">No transcript on file for this client yet</div><div style="font-size:13px;color:var(--ink-muted);margin-bottom:1.25rem">Pull a transcript from IRS Connection — it will be stored automatically and analysed on the next click.</div><button class="btn btn-gold btn-sm" onclick="closeM('txModal');quickPull('${esc(email)}')">→ Pull from IRS</button></div>`;
   document.getElementById('txModal').classList.add('open');
+}
+
+async function reParseVitals(email){
+  const c=clients.find(x=>x.email===email);
+  if(!c) return;
+  const s=c.steps||{};
+  if(curTx && curTxEmail===email){ _parseAndShowVitals(email,c.name||email,curTx,curTxKey); return; }
+  const txKeys=Object.keys(s).filter(k=>k.startsWith('transcript_'));
+  if(!txKeys.length){ toast('No stored transcript to re-parse',true); return; }
+  const latest=txKeys.sort().reverse()[0];
+  _parseAndShowVitals(email,c.name||email,s[latest],latest.replace('transcript_',''));
+}
+
+async function _parseAndShowVitals(email, displayName, txHtml, txKey){
+  document.getElementById('txSub').textContent=`${displayName} — Parsing…`;
+  document.getElementById('txContent').innerHTML='<div class="vitals-loading"><span>⏳</span> Analysing transcript…</div>';
+  document.getElementById('txModal').classList.add('open');
+  try{
+    const r=await fetch('/api/transcript-parse',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,clientEmail:email,transcriptHtml:txHtml,txKey})});
+    const d=await r.json();
+    if(!r.ok){document.getElementById('txContent').innerHTML=`<span style="color:var(--red)">❌ ${esc(d.error||'Parse error')}</span>`;return;}
+    document.getElementById('txSub').textContent=`${displayName} — Transcript Vitals`;
+    document.getElementById('txContent').innerHTML=`<div style="font-size:12px;color:var(--ink-muted);margin-bottom:.5rem">Parsed: ${txKey}.</div>${renderVitalsPanel(d.vitals,txKey)}`;
+    await loadClients();
+  }catch(e){document.getElementById('txContent').innerHTML=`<span style="color:var(--red)">❌ ${esc(e.message)}</span>`;}
 }
 
 // ── Transcript Vitals Parser ─────────────────────────────────
