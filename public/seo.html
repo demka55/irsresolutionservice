@@ -252,16 +252,55 @@ async function loadResults() {
 
 async function runNow() {
   const btn = document.getElementById('runBtn');
-  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Checking 19 keywords…';
-  setStatus('amber', 'Running — checking all 19 keywords in parallel, ~20 seconds…');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Starting…';
+  setStatus('amber', 'Sending request…');
   try {
     const r = await fetch(`/api/seo-track?action=run&password=${encodeURIComponent(apw)}`);
     let d;
-    try { d = await r.json(); } catch(e) { setStatus('amber', `Function error (${r.status}) — check Netlify logs`); btn.disabled=false; btn.innerHTML='↻ Run now'; return; }
-    if (!r.ok) { setStatus('amber', 'Error: ' + (d.error || `HTTP ${r.status}`)); }
-    else { setStatus('green', 'Done — reloading results…'); await loadResults(); }
-  } catch(e) { setStatus('amber', 'Error: ' + e.message); }
-  btn.disabled = false; btn.innerHTML = '↻ Run now';
+    try { d = await r.json(); } catch(e) {
+      setStatus('amber', `Server error (${r.status}) — check Netlify function logs`);
+      btn.disabled=false; btn.innerHTML='↻ Run now'; return;
+    }
+    if (!r.ok) {
+      setStatus('amber', 'Error: ' + (d.error || `HTTP ${r.status}`));
+      btn.disabled=false; btn.innerHTML='↻ Run now'; return;
+    }
+    // Started — now poll status
+    setStatus('amber', 'Running in background — checking keywords…');
+    btn.innerHTML = '<span class="spinner"></span> Running…';
+    pollStatus();
+  } catch(e) {
+    setStatus('amber', 'Error: ' + e.message);
+    btn.disabled=false; btn.innerHTML='↻ Run now';
+  }
+}
+
+let pollTimer = null;
+async function pollStatus() {
+  clearTimeout(pollTimer);
+  try {
+    const r = await fetch('/api/seo-track?action=status');
+    const d = await r.json();
+    if (d.status === 'running') {
+      const pct = d.total ? Math.round((d.done / d.total) * 100) : 0;
+      setStatus('amber', `Checking keywords… ${d.done || 0} of ${d.total || 19} done${d.current ? ' — "' + d.current.substring(0,40) + '…"' : ''}`);
+      document.getElementById('runBtn').innerHTML = `<span class="spinner"></span> ${pct}% (${d.done||0}/${d.total||19})`;
+      pollTimer = setTimeout(pollStatus, 2500);
+    } else if (d.status === 'done') {
+      setStatus('green', `Done — ${d.ranked || 0} keywords where we appear, ${d.site_cited || 0} in AIO`);
+      document.getElementById('runBtn').disabled = false;
+      document.getElementById('runBtn').innerHTML = '↻ Run now';
+      await loadResults();
+    } else {
+      // idle or unknown — stop polling
+      document.getElementById('runBtn').disabled = false;
+      document.getElementById('runBtn').innerHTML = '↻ Run now';
+      await loadResults();
+    }
+  } catch(e) {
+    // network error — keep polling
+    pollTimer = setTimeout(pollStatus, 3000);
+  }
 }
 
 function setStatus(state, text) {
