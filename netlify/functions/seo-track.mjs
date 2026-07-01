@@ -8,7 +8,6 @@ const STORE       = 'seo-tracking'
 const RESULTS_KEY = 'latest-results'
 const HISTORY_KEY = 'history'
 const SITE        = 'irsresolutionservice.com'
-const VALUESERP_KEY = '5F9922B09F88424FB70FE2451F028A4C'
 
 const KEYWORDS = [
   "IRS hasn't replied to appeal 45 days",
@@ -33,7 +32,7 @@ const KEYWORDS = [
 ]
 
 export default async () => {
-  const API_KEY = Netlify.env.get('VALUESERP_API') || VALUESERP_KEY
+  const API_KEY = Netlify.env.get('VALUESERP_API') || ''
   try {
     await runChecks(API_KEY)
     console.log('[seo-track] Daily check complete')
