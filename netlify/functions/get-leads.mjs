@@ -53,3 +53,5 @@ export default async (req) => {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers });
   }
 };
+
+export const config = { path: '/api/get-leads', method: ['GET', 'OPTIONS'] };
