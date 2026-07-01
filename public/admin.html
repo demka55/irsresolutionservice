@@ -435,7 +435,6 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 <div class="toast" id="toast"></div>
 
 <script>
-const PW='gdhERcgvJfqk3WhiPExi';
 let apw='',clients=[],filt='all',curTx='',curTxEmail='',curTxKey='';
 
 const SL={'paid':'Awaiting 8821','8821_signed':'8821 Signed','caf_pending':'CAF Pending','caf_active':'CAF Active','transcripts_pulled':'Transcripts Pulled','plan_sent':'Plan Sent','plan_approved':'Plan Approved','filed':'Filed','resolved':'Resolved'};
@@ -453,17 +452,43 @@ const STEPS=[
 
 document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
 
-function login(){
-  if(document.getElementById('pw').value===PW){
-    apw=PW; sessionStorage.setItem('a',PW);
-    document.getElementById('login').style.display='none';
-    document.getElementById('app').style.display='block';
-    loadClients(); loadCredsFromStorage();
-  } else { document.getElementById('lerr').style.display='block'; }
+async function login(){
+  const entered=document.getElementById('pw').value.trim();
+  if(!entered){document.getElementById('lerr').style.display='block';return;}
+  const btn=document.querySelector('.lbtn');
+  btn.disabled=true;btn.textContent='Checking…';
+  try{
+    const r=await fetch(`/api/admin-clients?password=${encodeURIComponent(entered)}`);
+    if(r.ok){
+      apw=entered;
+      sessionStorage.setItem('a',entered);
+      document.getElementById('login').style.display='none';
+      document.getElementById('app').style.display='block';
+      const d=await r.json();
+      clients=d.clients||[];
+      updateStats();renderTable();populateIrsSel();
+      loadCredsFromStorage();
+    } else {
+      document.getElementById('lerr').style.display='block';
+    }
+  }catch(e){document.getElementById('lerr').textContent='Connection error — try again.';document.getElementById('lerr').style.display='block';}
+  btn.disabled=false;btn.textContent='Sign in →';
 }
 function logout(){sessionStorage.removeItem('a');location.reload();}
 const sa=sessionStorage.getItem('a');
-if(sa===PW){apw=sa;document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';loadClients();loadCredsFromStorage();}
+if(sa){
+  // Validate stored session against backend on page load
+  fetch(`/api/admin-clients?password=${encodeURIComponent(sa)}`).then(r=>{
+    if(r.ok){
+      apw=sa;
+      document.getElementById('login').style.display='none';
+      document.getElementById('app').style.display='block';
+      r.json().then(d=>{clients=d.clients||[];updateStats();renderTable();populateIrsSel();loadCredsFromStorage();});
+    } else {
+      sessionStorage.removeItem('a');
+    }
+  }).catch(()=>sessionStorage.removeItem('a'));
+}
 
 function goPage(n,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -528,8 +553,8 @@ function renderRow(c){
   <div><div class="cc">${esc(co)}</div></div>
   <div><span class="sbadge ${sc}">${sl}</span></div>
   <div style="display:flex;gap:5px;align-items:center">
-    <button class="btn btn-ink btn-sm" onclick="event.stopPropagation();viewAsClient('${esc(c.email)}')" style="font-size:10px;padding:4px 8px;white-space:nowrap">👁 View</button>
-    <button class="btn btn-blue btn-sm" onclick="event.stopPropagation();quickPull('${esc(c.email)}')" style="font-size:10px;padding:4px 8px;white-space:nowrap">📋 Transcript</button>
+    <button class="btn btn-ink btn-sm" onclick="event.stopPropagation();viewAsClient('${esc(c.email)}')" style="font-size:10px;padding:4px 8px;white-space:nowrap">👁 View Dashboard</button>
+    <button class="btn btn-blue btn-sm" onclick="event.stopPropagation();openClientVitals('${esc(c.email)}')" style="font-size:10px;padding:4px 8px;white-space:nowrap">📊 View Vitals</button>
   </div>
   <div><div class="ct">${ud}</div><span class="chev" id="chv-${esc(c.email)}">▶</span></div>
 </div>
@@ -814,6 +839,31 @@ async function pullTranscript(){
 function quickPull(email){const c=clients.find(x=>x.email===email);if(!c)return;goPage('irs',document.querySelectorAll('.sb-i')[3]);if(c.steps?.form8821Data){const f=c.steps.form8821Data,pts=(f.taxpayerName||'').split(' ');document.getElementById('irsClient').value=email;document.getElementById('irsFirst').value=pts[0]||'';document.getElementById('irsLast').value=pts.slice(1).join(' ')||'';document.getElementById('irsYear').value=(f.taxYears||'').split(',')[0]?.trim()||new Date().getFullYear()-2;}}
 
 function openTxModal(html,title){document.getElementById('txSub').textContent=title;document.getElementById('txContent').innerHTML=html||'No content';curTx=html;document.getElementById('txModal').classList.add('open');}
+
+function openClientVitals(email){
+  const c=clients.find(x=>x.email===email);
+  if(!c){toast('Client not found',true);return;}
+  const s=c.steps||{};
+  const vKeys=Object.keys(s).filter(k=>k.startsWith('vitals_'));
+  if(!vKeys.length){
+    // No vitals yet — go to IRS Connection tab so they can pull+parse
+    toast('No vitals parsed yet — pull a transcript first, then click 🔬 Parse Vitals');
+    quickPull(email);
+    return;
+  }
+  // Show vitals in the transcript modal (reuse existing modal, swap content)
+  const latestKey=vKeys[vKeys.length-1];
+  let v;
+  try{v=typeof s[latestKey]==='string'?JSON.parse(s[latestKey]):s[latestKey];}
+  catch{toast('Could not read vitals data',true);return;}
+  const allVitalsHtml=vKeys.map(k=>{
+    let vv;try{vv=typeof s[k]==='string'?JSON.parse(s[k]):s[k];}catch{return '';}
+    return renderVitalsPanel(vv,k.replace('vitals_',''));
+  }).join('');
+  document.getElementById('txSub').textContent=`${c.name||email} — Transcript Vitals`;
+  document.getElementById('txContent').innerHTML=`<div style="font-size:12px;color:var(--ink-muted);margin-bottom:.5rem">Parsed ${vKeys.length} transcript(s). Showing all years.</div>${allVitalsHtml}`;
+  document.getElementById('txModal').classList.add('open');
+}
 
 // ── Transcript Vitals Parser ─────────────────────────────────
 async function parseVitals(reparse){
