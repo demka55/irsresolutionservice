@@ -625,7 +625,7 @@ function renderDetail(c){
     <div style="margin-top:1.25rem;padding-top:.875rem;border-top:1px solid var(--cream-dark)">
       <span class="lbl" style="color:var(--red)">Danger Zone</span>
       <div style="margin-top:3px">
-        <button class="btn btn-sm" style="background:transparent;border:1px solid var(--red);color:var(--red);font-size:11px" onclick="deleteClient('${esc(c.email)}','${esc(c.name||c.email)}')">🗑 Delete Client</button>
+        <button class="btn btn-sm" style="background:transparent;border:1px solid var(--red);color:var(--red);font-size:11px" data-email="${esc(c.email)}" data-name="${esc(c.name||c.email)}" onclick="deleteClient(this)">🗑 Delete Client</button>
       </div>
     </div>
   </div>
@@ -849,16 +849,19 @@ async function pullTranscript(){
 
 function quickPull(email){const c=clients.find(x=>x.email===email);if(!c)return;goPage('irs',document.querySelectorAll('.sb-i')[3]);if(c.steps?.form8821Data){const f=c.steps.form8821Data,pts=(f.taxpayerName||'').split(' ');document.getElementById('irsClient').value=email;document.getElementById('irsFirst').value=pts[0]||'';document.getElementById('irsLast').value=pts.slice(1).join(' ')||'';document.getElementById('irsYear').value=(f.taxYears||'').split(',')[0]?.trim()||new Date().getFullYear()-2;}}
 
-async function deleteClient(email,name){
-  if(!confirm(`Delete client "${name}" (${email})?\n\nThis permanently removes their record, steps, and vitals from the database. This cannot be undone.`)) return;
-  if(!confirm(`Are you sure? "${email}" will be permanently deleted.`)) return;
+async function deleteClient(btn){
+  const email=btn.dataset.email;
+  const name=btn.dataset.name||email;
+  if(!confirm(`Delete client "${name}" (${email})?\n\nThis permanently removes their record from the database. This cannot be undone.`)) return;
+  if(!confirm(`Final check — permanently delete "${email}"?`)) return;
+  btn.disabled=true;btn.textContent='Deleting…';
   try{
     const r=await fetch('/api/delete-client',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,email})});
     const d=await r.json();
-    if(!r.ok){toast(d.error||'Delete failed',true);return;}
+    if(!r.ok){toast(d.error||'Delete failed',true);btn.disabled=false;btn.textContent='🗑 Delete Client';return;}
     toast(`${name} deleted`);
     await loadClients();
-  }catch(e){toast(e.message,true);}
+  }catch(e){toast(e.message,true);btn.disabled=false;btn.textContent='🗑 Delete Client';}
 }
 
 function openTxModal(html,title){document.getElementById('txSub').textContent=title;document.getElementById('txContent').innerHTML=html||'No content';curTx=html;document.getElementById('txModal').classList.add('open');}
