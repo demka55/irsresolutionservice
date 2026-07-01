@@ -282,6 +282,9 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
     <div class="sb-i active" onclick="goPage('clients',this)"><span class="sb-ic">👥</span>All Clients<span class="sb-cnt" id="cntAll">—</span></div>
     <div class="sb-i" onclick="goPage('action',this)"><span class="sb-ic">⚡</span>Needs Action<span class="sb-cnt r" id="cntAct">—</span></div>
     <div class="sb-i" onclick="goPage('resolved',this)"><span class="sb-ic">✅</span>Resolved<span class="sb-cnt" id="cntRes">—</span></div>
+    <span class="sb-sec">Inbound</span>
+    <div class="sb-i" onclick="goPage('leads',this)"><span class="sb-ic">📥</span>Leads / Inquiries<span class="sb-cnt" id="cntLeads">—</span></div>
+    <div class="sb-i" onclick="goPage('community',this)"><span class="sb-ic">🌐</span>Community</div>
     <span class="sb-sec">IRS Tools</span>
     <div class="sb-i" onclick="goPage('irs',this)"><span class="sb-ic">🔗</span>IRS Connection</div>
     <span class="sb-sec">Settings</span>
@@ -402,6 +405,30 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
   </div>
 </div>
 
+<!-- LEADS PAGE -->
+<div id="pg-leads" class="page">
+  <div class="topbar">
+    <div><div class="tb-title">Leads &amp; Inquiries</div><div class="tb-sub">Inbound form submissions and contact requests</div></div>
+    <div class="tb-actions"><button class="btn btn-ghost btn-sm" onclick="loadLeads()">↻ Refresh</button></div>
+  </div>
+  <div class="body">
+    <div id="leads-kpis" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:1rem"></div>
+    <div id="leads-body"><div class="empty-state">Loading leads…</div></div>
+  </div>
+</div>
+
+<!-- COMMUNITY PAGE -->
+<div id="pg-community" class="page">
+  <div class="topbar">
+    <div><div class="tb-title">Community Members</div><div class="tb-sub">Newsletter subscribers and community signups</div></div>
+    <div class="tb-actions"><button class="btn btn-ghost btn-sm" onclick="loadCommunity()">↻ Refresh</button></div>
+  </div>
+  <div class="body">
+    <div id="community-kpis" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:1rem"></div>
+    <div id="community-body"><div class="empty-state">Loading community…</div></div>
+  </div>
+</div>
+
 <!-- CREDENTIALS PAGE -->
 <div id="pg-creds" class="page">
   <div class="topbar">
@@ -467,9 +494,12 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 <!-- TRANSCRIPT MODAL -->
 <div class="modal-bg" id="txModal">
   <div class="modal modal-fullscreen">
-    <div class="modal-h">
-      <div class="modal-title">IRS Transcript</div>
-      <div class="modal-sub" id="txSub">Transcript from IRS TDS API</div>
+    <div class="modal-h" style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem">
+      <div>
+        <div class="modal-title">IRS Transcript</div>
+        <div class="modal-sub" id="txSub">Transcript from IRS TDS API</div>
+      </div>
+      <button onclick="closeM('txModal')" style="background:none;border:none;cursor:pointer;font-size:22px;color:var(--ink-muted);line-height:1;padding:0;flex-shrink:0;margin-top:2px" aria-label="Close">✕</button>
     </div>
     <div class="modal-body">
       <div id="txContent" style="padding:0 0 1rem"></div>
@@ -554,6 +584,104 @@ function goPage(n,el){
   if(n==='action')renderTBody('tbody-action',clients.filter(needsAction));
   if(n==='resolved')renderTBody('tbody-resolved',clients.filter(c=>c.status==='resolved'));
   if(n==='irs')populateIrsSel();
+  if(n==='leads')loadLeads();
+  if(n==='community')loadCommunity();
+}
+
+// ── Leads ────────────────────────────────────────────────────────────────────
+const LEAD_STATUS_LABELS={new:'New',contacted:'Contacted',qualified:'Qualified',client:'Converted to Client',closed:'Closed'};
+const LEAD_STATUS_COLORS={new:'#e34948',contacted:'#d97706',qualified:'#2563eb',client:'#1baf7a',closed:'var(--ink-muted)'};
+
+async function loadLeads(){
+  document.getElementById('leads-body').innerHTML='<div class="empty-state">Loading…</div>';
+  try{
+    const r=await fetch(`/api/get-leads?password=${encodeURIComponent(apw)}`);
+    const d=await r.json();
+    if(!r.ok){document.getElementById('leads-body').innerHTML=`<div class="empty-state" style="color:var(--red)">${esc(d.error||'Error loading leads')}</div>`;return;}
+    const leads=(d.leads||[]).sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
+    // KPIs
+    const kpiEl=document.getElementById('leads-kpis');
+    const byStatus=leads.reduce((m,l)=>{m[l.status||'new']=(m[l.status||'new']||0)+1;return m;},{});
+    kpiEl.innerHTML=`
+      <div class="vd-kpi"><div class="vd-kpi-label">Total leads</div><div class="vd-kpi-val">${leads.length}</div></div>
+      <div class="vd-kpi"><div class="vd-kpi-label">New</div><div class="vd-kpi-val red">${byStatus.new||0}</div></div>
+      <div class="vd-kpi"><div class="vd-kpi-label">Contacted</div><div class="vd-kpi-val amber">${byStatus.contacted||0}</div></div>
+      <div class="vd-kpi"><div class="vd-kpi-label">Qualified</div><div class="vd-kpi-val">${byStatus.qualified||0}</div></div>
+      <div class="vd-kpi"><div class="vd-kpi-label">Converted</div><div class="vd-kpi-val green">${byStatus.client||0}</div></div>`;
+    document.getElementById('cntLeads').textContent=byStatus.new||'';
+    if(!leads.length){document.getElementById('leads-body').innerHTML='<div class="empty-state">No leads yet. Form submissions will appear here.</div>';return;}
+    const rows=leads.map(l=>{
+      const statusColor=LEAD_STATUS_COLORS[l.status||'new']||'var(--ink-muted)';
+      const dt=l.createdAt?new Date(l.createdAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
+      return `<tr>
+        <td style="white-space:nowrap;color:var(--ink-muted);font-size:12px">${esc(dt)}</td>
+        <td><strong>${esc(l.name||'—')}</strong><div style="font-size:12px;color:var(--ink-muted)">${esc(l.email||'')}</div></td>
+        <td>${l.phone?`<a href="tel:${esc(l.phone)}" style="color:var(--gold-dim)">${esc(l.phone)}</a>`:'—'}</td>
+        <td style="font-size:13px;max-width:260px">${esc((l.message||l.description||'').substring(0,120))}${(l.message||l.description||'').length>120?'…':''}</td>
+        <td><span style="font-size:11px;font-weight:600;color:${statusColor};background:var(--cream);border-radius:3px;padding:2px 8px;white-space:nowrap">${esc(LEAD_STATUS_LABELS[l.status||'new']||l.status||'New')}</span></td>
+        <td>
+          <select style="font-size:12px;padding:3px 6px;border:1px solid var(--cream-dark);border-radius:3px;background:var(--cream);font-family:var(--sans)" onchange="updateLeadStatus('${esc(l.id)}',this.value)">
+            ${Object.entries(LEAD_STATUS_LABELS).map(([k,v])=>`<option value="${k}" ${(l.status||'new')===k?'selected':''}>${v}</option>`).join('')}
+          </select>
+        </td>
+      </tr>`;
+    }).join('');
+    document.getElementById('leads-body').innerHTML=`
+      <table class="vt-table" style="font-size:13px">
+        <thead><tr>
+          <th style="width:100px">Date</th>
+          <th>Name / Email</th>
+          <th style="width:120px">Phone</th>
+          <th>Message</th>
+          <th style="width:110px">Status</th>
+          <th style="width:130px">Update</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }catch(e){document.getElementById('leads-body').innerHTML=`<div class="empty-state" style="color:var(--red)">Error: ${esc(e.message)}</div>`;}
+}
+
+async function updateLeadStatus(id,status){
+  try{
+    await fetch('/api/update-lead',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({adminPassword:apw,lead:{id,status}})});
+  }catch(e){console.error('updateLead error',e);}
+}
+
+// ── Community ────────────────────────────────────────────────────────────────
+async function loadCommunity(){
+  document.getElementById('community-body').innerHTML='<div class="empty-state">Loading…</div>';
+  try{
+    const r=await fetch(`/api/get-community?password=${encodeURIComponent(apw)}`);
+    const d=await r.json();
+    if(!r.ok){document.getElementById('community-body').innerHTML=`<div class="empty-state" style="color:var(--red)">${esc(d.error||'Error')}</div>`;return;}
+    const members=(d.members||[]).sort((a,b)=>new Date(b.joinedAt||0)-new Date(a.joinedAt||0));
+    document.getElementById('community-kpis').innerHTML=`
+      <div class="vd-kpi"><div class="vd-kpi-label">Total members</div><div class="vd-kpi-val">${members.length}</div></div>
+      <div class="vd-kpi"><div class="vd-kpi-label">This month</div><div class="vd-kpi-val">${members.filter(m=>{const d=new Date(m.joinedAt||0);const n=new Date();return d.getMonth()===n.getMonth()&&d.getFullYear()===n.getFullYear();}).length}</div></div>`;
+    if(!members.length){document.getElementById('community-body').innerHTML='<div class="empty-state">No community members yet.</div>';return;}
+    const rows=members.map(m=>{
+      const dt=m.joinedAt?new Date(m.joinedAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
+      return `<tr>
+        <td style="white-space:nowrap;color:var(--ink-muted);font-size:12px">${esc(dt)}</td>
+        <td><strong>${esc(m.name||'—')}</strong></td>
+        <td>${esc(m.email||'—')}</td>
+        <td>${esc(m.source||'—')}</td>
+        <td>${esc(m.interests||m.topic||'—')}</td>
+      </tr>`;
+    }).join('');
+    document.getElementById('community-body').innerHTML=`
+      <table class="vt-table" style="font-size:13px">
+        <thead><tr>
+          <th style="width:100px">Joined</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th style="width:120px">Source</th>
+          <th>Interests</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }catch(e){document.getElementById('community-body').innerHTML=`<div class="empty-state" style="color:var(--red)">Error: ${esc(e.message)}</div>`;}
 }
 
 function needsAction(c){return['8821_signed','caf_active','transcripts_pulled','plan_approved','filed'].includes(c.status);}
@@ -1155,6 +1283,7 @@ async function _parseAndShowVitals(email, displayName, txHtml, txKey){
     if(!r.ok){document.getElementById('txContent').innerHTML=`<span style="color:var(--red)">❌ ${esc(d.error||'Parse error')}</span>`;return;}
     document.getElementById('txSub').textContent=`${displayName} — Transcript Vitals`;
     document.getElementById('txContent').innerHTML=`<div style="font-size:12px;color:var(--ink-muted);margin-bottom:.5rem">Parsed: ${txKey}.</div>${renderVitalsPanel(d.vitals,txKey)}`;
+    setTimeout(()=>{ const tEl=document.querySelector('[id$="_body"]'); const tbl=tEl&&document.getElementById(tEl.id.replace('_body','')); if(tbl&&!tbl._tcData&&d.vitals) tbl._tcData=d.vitals.transactionCodes||[]; },50);
     await loadClients();
   }catch(e){document.getElementById('txContent').innerHTML=`<span style="color:var(--red)">❌ ${esc(e.message)}</span>`;}
 }
@@ -1196,14 +1325,60 @@ function renderVitalsPanel(v, label){
     const col=v.csedPct>=85?'#e34948':v.csedPct>=65?'#d97706':'#1baf7a';
     csedHtml=`<div style="font-size:22px;font-weight:700;font-family:var(--serif);color:var(--ink);margin-bottom:8px">${esc(v.csedDate||'—')}</div><div class="vd-csed-wrap"><div class="vd-csed-track"><div class="vd-csed-fill" style="width:${v.csedPct}%;background:${col}"></div></div><span class="vd-csed-label" style="color:${col};font-weight:600">${v.csedMonthsLeft}mo left</span></div><div style="font-size:11px;color:var(--ink-muted);margin-top:5px">Assessed ${esc(v.assessmentDate)} &nbsp;·&nbsp; ${v.csedPct}% of 10 years elapsed</div>`;
   }
-  const TC_LABELS={'150':'Tax return filed','151':'Replaced return','166':'Delinquency penalty','170':'Underpayment penalty','196':'Interest charged','300':'Additional tax assessed','360':'Interest accrued','420':'Under examination','460':'Extension granted','580':'OIC filed','582':'Federal tax lien filed','660':'Estimated tax payment','670':'Payment received','680':'OIC accepted','806':'W-2/1099 withholding','807':'Withholding reversed','810':'Refund freeze','820':'Credit transferred','830':'Overpayment credit','846':'Refund issued','971':'Notice / amended forwarded','976':'SFR filed by IRS','977':'Amended return filed'};
-  const keyTCs=new Set(['150','170','420','580','582','660','670','806','846','971','976','977']);
-  const tcRows=(v.transactionCodes||[]).map(t=>{
-    const amtClass=t.amount<0?'tc-credit':t.amount>0?'tc-debit':'tc-zero';
-    const amtStr=t.amount!==0?`${t.amount<0?'-':'+'}$${Math.abs(t.amount).toLocaleString()}`:'—';
-    const desc=TC_LABELS[t.code]||t.desc.split('\n')[0].substring(0,60);
-    return `<tr><td>${esc(t.code)}${keyTCs.has(t.code)?'<span class="tc-key">key</span>':''}</td><td>${esc(desc)}</td><td style="white-space:nowrap;color:var(--ink-muted)">${esc(t.date)}</td><td class="${amtClass}">${amtStr}</td></tr>`;
-  }).join('')||'<tr><td colspan="4" style="color:var(--ink-muted);padding:12px">No transactions</td></tr>';
+  const TC_LABELS={
+    '150':'Return filed — IRS received and processed the taxpayer return',
+    '151':'Return replaced — original return was substituted',
+    '166':'Delinquency penalty — failure-to-file or failure-to-pay penalty assessed',
+    '170':'Underpayment penalty — estimated tax penalty (not enough paid during year)',
+    '196':'Interest charged — IRS interest accruing on unpaid balance',
+    '300':'Additional tax assessed — IRS adjusted the return and added tax',
+    '360':'Interest accrued — interest added to outstanding balance',
+    '420':'Under examination — return selected for IRS audit',
+    '421':'Examination closed — audit completed, no change or agreed',
+    '460':'Extension granted — taxpayer was given more time to file',
+    '480':'OIC investigation — Offer in Compromise under review',
+    '520':'Collection suspended — temporary hold on collection activity',
+    '521':'Collection resumed — hold released, collection activity restarting',
+    '530':'Hardship/CNC — account placed in Currently Not Collectible status',
+    '534':'CNC released — account removed from Currently Not Collectible',
+    '570':'Hold on refund — refund is frozen pending review',
+    '571':'Hold released — refund freeze lifted',
+    '580':'OIC submitted — Offer in Compromise filed with the IRS',
+    '582':'Federal tax lien filed — IRS recorded lien against taxpayer property',
+    '583':'Lien released — federal tax lien has been removed',
+    '590':'CDP hearing requested — taxpayer requested Collection Due Process hearing',
+    '660':'Estimated tax payment — quarterly estimated tax payment received',
+    '670':'Payment received — payment applied to this tax module',
+    '680':'OIC accepted — Offer in Compromise approved by IRS',
+    '690':'Abatement — penalty or interest was removed',
+    '700':'Credit applied — overpayment credit applied from another period',
+    '806':'W-2/1099 withholding — federal income tax withheld by employer or payer',
+    '807':'Withholding reversed — previously credited withholding was reversed',
+    '810':'Refund freeze — refund held, usually pending identity verification or audit',
+    '820':'Credit transferred — overpayment moved to another tax period',
+    '821':'Credit reversed — transferred credit was reversed',
+    '830':'Overpayment credit — credit from prior year applied to this year',
+    '846':'Refund issued — IRS sent refund to taxpayer',
+    '971':'Notice issued — IRS sent a notice (CP or LT); also used for amended return forwarded',
+    '976':'SFR — Substitute for Return prepared by IRS (taxpayer did not file)',
+    '977':'Amended return — taxpayer filed an amended return (Form 1040-X)',
+    '9999':'Balance zeroed — module balance cleared'
+  };
+  const keyTCs=new Set(['150','170','420','530','570','580','582','660','670','806','846','971','976','977']);
+  const tcId='tc_'+Math.random().toString(36).slice(2,8);
+  const buildTcRows=(tcs,sortDir)=>{
+    const sorted=[...tcs].sort((a,b)=>{
+      const da=a.date||'', db=b.date||'';
+      return sortDir==='asc'?da.localeCompare(db):db.localeCompare(da);
+    });
+    return sorted.map(t=>{
+      const amtClass=t.amount<0?'tc-credit':t.amount>0?'tc-debit':'tc-zero';
+      const amtStr=t.amount!==0?`${t.amount<0?'-':'+'}$${Math.abs(t.amount).toLocaleString()}`:'—';
+      const plain=TC_LABELS[t.code]||(t.desc.split('\n')[0].substring(0,80))||'Unknown transaction';
+      return `<tr><td style="white-space:nowrap;color:var(--ink-muted)">${esc(t.date)||'—'}</td><td>${esc(t.code)}${keyTCs.has(t.code)?'<span class="tc-key">key</span>':''}</td><td><span style="font-weight:600;color:var(--ink)">${esc(t.code)}</span> <span style="color:var(--ink-soft)">${esc(plain)}</span></td><td class="${amtClass}">${amtStr}</td></tr>`;
+    }).join('')||'<tr><td colspan="4" style="color:var(--ink-muted);padding:12px">No transactions</td></tr>';
+  };
+  const tcRows=buildTcRows(v.transactionCodes||[],'desc');
   const noticeHtml=(v.notices||[]).length?v.notices.map(n=>`<span class="vtag sfr">${esc(n)}</span>`).join(' '):'<span style="color:var(--ink-muted);font-size:13px">None on record</span>';
   const balColor=bal>0?'var(--red)':refund>0?'var(--green)':'var(--ink)';
   const balStr=bal>0?`$${bal.toLocaleString()}`:refund>0?`-$${refund.toLocaleString()}`:'$0';
@@ -1246,16 +1421,48 @@ function renderVitalsPanel(v, label){
     </div>
   </div>
   <div class="vd-section">
-    <div class="vd-section-title">All transactions — ${(v.transactionCodes||[]).length} entries</div>
-    <div style="max-height:420px;overflow-y:auto;border:1px solid var(--cream-dark);border-radius:3px">
-      <table class="vd-tc-table">
-        <thead><tr><th style="width:80px">Code</th><th>Description</th><th style="width:110px">Date</th><th style="text-align:right;width:130px">Amount</th></tr></thead>
-        <tbody>${tcRows}</tbody>
+    <div class="vd-section-title" style="display:flex;align-items:center;justify-content:space-between">
+      <span>All transactions — ${(v.transactionCodes||[]).length} entries</span>
+      <div style="display:flex;gap:.4rem">
+        <button class="btn btn-ghost btn-sm" onclick="sortVdTc('${tcId}','asc')" id="${tcId}_asc" style="font-size:11px;padding:3px 9px">↑ Oldest first</button>
+        <button class="btn btn-ghost btn-sm" onclick="sortVdTc('${tcId}','desc')" id="${tcId}_desc" style="font-size:11px;padding:3px 9px;border-color:var(--gold-dim);color:var(--gold-dim)">↓ Newest first</button>
+      </div>
+    </div>
+    <div style="max-height:420px;overflow-y:auto;border:1px solid var(--cream-dark);border-radius:3px" id="${tcId}_wrap">
+      <table class="vd-tc-table" id="${tcId}">
+        <thead><tr>
+          <th style="width:100px">Date</th>
+          <th style="width:60px">Code</th>
+          <th>What it means</th>
+          <th style="text-align:right;width:130px">Amount</th>
+        </tr></thead>
+        <tbody id="${tcId}_body">${tcRows}</tbody>
       </table>
     </div>
   </div>
 </div>`;
 }
+
+function sortVdTc(id, dir){
+  const tbl=document.getElementById(id);
+  if(!tbl||!tbl._tcData) return;
+  const body=document.getElementById(id+'_body');
+  if(!body) return;
+  const TC_S={'150':'Return filed — IRS processed the return','151':'Return replaced','166':'Delinquency penalty','170':'Underpayment penalty — est. tax not paid during year','196':'Interest charged on balance','300':'Additional tax assessed','360':'Interest accrued','420':'Under examination — return selected for audit','460':'Extension granted','530':'Currently Not Collectible — hardship hold','570':'Refund frozen pending review','580':'OIC submitted','582':'Federal tax lien filed','660':'Estimated tax payment','670':'Payment received','680':'OIC accepted','806':'W-2/1099 withholding credit','807':'Withholding reversed','810':'Refund freeze','820':'Credit transferred','830':'Overpayment credit applied','846':'Refund issued to taxpayer','971':'Notice issued; or amended return forwarded','976':'Substitute for Return — IRS-prepared (taxpayer did not file)','977':'Amended return filed (1040-X)'};
+  const keyTCs=new Set(['150','170','420','530','570','580','582','660','670','806','846','971','976','977']);
+  const sorted=[...tbl._tcData].sort((a,b)=>(dir==='asc'?(a.date||'').localeCompare(b.date||''):(b.date||'').localeCompare(a.date||'')));
+  body.innerHTML=sorted.map(t=>{
+    const ac=t.amount<0?'tc-credit':t.amount>0?'tc-debit':'tc-zero';
+    const as2=t.amount!==0?`${t.amount<0?'-':'+'}$${Math.abs(t.amount).toLocaleString()}`:'—';
+    const pl=TC_S[t.code]||(t.desc||'').split('\n')[0].substring(0,80)||'Unknown';
+    return `<tr><td style="white-space:nowrap;color:var(--ink-muted)">${esc(t.date)||'—'}</td><td>${esc(t.code)}${keyTCs.has(t.code)?'<span class="tc-key">key</span>':''}</td><td><span style="font-weight:600;color:var(--ink)">${esc(t.code)}</span> <span style="color:var(--ink-soft)">${esc(pl)}</span></td><td class="${ac}">${as2}</td></tr>`;
+  }).join('');
+  ['asc','desc'].forEach(d=>{
+    const btn=document.getElementById(id+'_'+d);
+    if(btn){btn.style.borderColor=d===dir?'var(--gold-dim)':'';btn.style.color=d===dir?'var(--gold-dim)':'';}
+  });
+}
+
 
 async function dlTx(){
   // Record download date
