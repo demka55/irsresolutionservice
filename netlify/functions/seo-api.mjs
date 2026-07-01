@@ -13,7 +13,6 @@ const RESULTS_KEY = 'latest-results'
 const HISTORY_KEY = 'history'
 const STATUS_KEY  = 'run-status'
 const SITE        = 'irsresolutionservice.com'
-const VALUESERP_KEY = '5F9922B09F88424FB70FE2451F028A4C'
 
 const KEYWORDS = [
   "IRS hasn't replied to appeal 45 days",
@@ -86,7 +85,7 @@ export default async (req, context) => {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: H })
   }
 
-  const API_KEY = Netlify.env.get('VALUESERP_API') || VALUESERP_KEY
+  const API_KEY = Netlify.env.get('VALUESERP_API') || ''
 
   // Mark as running immediately
   const store = getStore(STORE)

@@ -417,6 +417,22 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
   </div>
 </div>
 
+<!-- LEAD DETAIL MODAL -->
+<div class="modal-bg" id="lead-modal">
+  <div class="modal" style="max-width:680px">
+    <div class="modal-h" style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem">
+      <div>
+        <div class="modal-title" id="lead-modal-title">Lead</div>
+        <div class="modal-sub" id="lead-modal-sub"></div>
+      </div>
+      <button onclick="document.getElementById('lead-modal').classList.remove('open')" style="background:none;border:none;cursor:pointer;font-size:22px;color:var(--ink-muted);line-height:1;padding:0;flex-shrink:0;margin-top:2px">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="lead-modal-body"></div>
+    </div>
+  </div>
+</div>
+
 <!-- COMMUNITY PAGE -->
 <div id="pg-community" class="page">
   <div class="topbar">
@@ -592,59 +608,164 @@ function goPage(n,el){
 const LEAD_STATUS_LABELS={new:'New',contacted:'Contacted',qualified:'Qualified',client:'Converted to Client',closed:'Closed'};
 const LEAD_STATUS_COLORS={new:'#e34948',contacted:'#d97706',qualified:'#2563eb',client:'#1baf7a',closed:'var(--ink-muted)'};
 
+// ── Lead detail modal ───────────────────────────────────────────────────────
+function openLeadDetail(id){
+  const l=allLeads.find(x=>x.id===id);
+  if(!l) return;
+  const isIRS=l.formType==='irs'||l.formType==='remediation';
+  const dt=l.submittedAt?new Date(l.submittedAt).toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
+
+  function row(label,val,full){
+    if(!val) return '';
+    const txt=full?esc(val):`<span style="white-space:pre-wrap">${esc(val)}</span>`;
+    return `<div style="display:grid;grid-template-columns:160px 1fr;gap:8px;padding:8px 0;border-bottom:1px solid var(--cream-dark)">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);padding-top:2px">${label}</div>
+      <div style="font-size:14px;color:var(--ink-soft)">${txt}</div>
+    </div>`;
+  }
+
+  const contactRows=`
+    ${row('Name', l.name)}
+    ${row('Email', l.email)}
+    ${row('Phone', l.phone)}
+    ${row('Address', l.address)}
+    ${row('Referral source', l.referral)}
+    ${row('Submitted', dt)}`;
+
+  const formRows=isIRS
+    ? row('IRS issue details', l.issue)
+    : `${row('Business info', l.business)}
+       ${row('Tax situation', l.situation)}
+       ${row('Why new accountant', l.why)}
+       ${row('Prior preparer', l.preparer)}
+       ${row('Unusual events', l.unusual)}`;
+
+  const statusColor=LEAD_STATUS_COLORS[l.status||'new']||'var(--ink-muted)';
+  const statusSelect=`<select style="font-size:13px;padding:5px 10px;border:1px solid var(--cream-dark);border-radius:4px;background:var(--cream);font-family:var(--sans)" onchange="updateLeadStatusAndRefresh('${esc(l.id)}',this.value)">
+    ${Object.entries(LEAD_STATUS_LABELS).map(([k,v])=>`<option value="${k}" ${(l.status||'new')===k?'selected':''}>${v}</option>`).join('')}
+  </select>`;
+
+  const notesArea=`<textarea id="lead-notes-${esc(l.id)}" style="width:100%;padding:8px 10px;border:1px solid var(--cream-dark);border-radius:4px;font-family:var(--sans);font-size:13px;background:var(--cream);resize:vertical;min-height:80px">${esc(l.notes||'')}</textarea>
+  <button onclick="saveLeadNotes('${esc(l.id)}')" class="btn btn-gold btn-sm" style="margin-top:6px">Save notes</button>`;
+
+  document.getElementById('lead-modal-title').textContent=l.name||'Lead';
+  document.getElementById('lead-modal-sub').textContent=`${isIRS?'IRS Remediation':'General Tax'} inquiry · ${dt}`;
+  document.getElementById('lead-modal-body').innerHTML=`
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
+      <span style="font-size:12px;font-weight:600;color:${statusColor};background:var(--cream);border:1px solid var(--cream-dark);border-radius:4px;padding:4px 10px">${esc(LEAD_STATUS_LABELS[l.status||'new']||'New')}</span>
+      ${statusSelect}
+    </div>
+    <div style="margin-bottom:1.25rem">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:.5rem">Contact info</div>
+      ${contactRows}
+    </div>
+    <div style="margin-bottom:1.25rem">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:.5rem">${isIRS?'IRS issue':'Form responses'}</div>
+      ${formRows}
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:.5rem">Notes</div>
+      ${notesArea}
+    </div>`;
+  document.getElementById('lead-modal').classList.add('open');
+}
+
+async function updateLeadStatusAndRefresh(id,status){
+  await updateLeadStatus(id,status);
+  // Update local array and refresh
+  const l=allLeads.find(x=>x.id===id);
+  if(l) l.status=status;
+  renderLeadsTable(allLeads);
+  // Update KPI counts
+  const byStatus=allLeads.reduce((m,l)=>{m[l.status||'new']=(m[l.status||'new']||0)+1;return m;},{});
+  document.getElementById('cntLeads').textContent=byStatus.new||'';
+}
+
+async function saveLeadNotes(id){
+  const ta=document.getElementById('lead-notes-'+id);
+  if(!ta) return;
+  const notes=ta.value;
+  const l=allLeads.find(x=>x.id===id);
+  if(l) l.notes=notes;
+  await fetch('/api/update-lead',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({adminPassword:apw,lead:{...l,notes}})});
+  ta.style.borderColor='var(--green)';
+  setTimeout(()=>{ta.style.borderColor='';},1500);
+}
+
+let allLeads=[];
+
+function renderLeadsTable(leads){
+  if(!leads.length){
+    document.getElementById('leads-body').innerHTML='<div class="empty-state">No leads yet. Form submissions will appear here.</div>';
+    return;
+  }
+  const rows=leads.map(l=>{
+    const isIRS=l.formType==='irs'||l.formType==='remediation';
+    const statusColor=LEAD_STATUS_COLORS[l.status||'new']||'var(--ink-muted)';
+    const dt=l.submittedAt?new Date(l.submittedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';
+    // Main text snippet — show most relevant field
+    const snippet=l.issue||l.situation||l.why||l.business||'';
+    return `<tr style="cursor:pointer" onclick="openLeadDetail('${esc(l.id)}')">
+      <td style="white-space:nowrap;font-size:12px;color:var(--ink-muted)">${dt}</td>
+      <td>
+        <div style="font-weight:600;font-size:14px">${esc(l.name||'—')}</div>
+        <div style="font-size:12px;color:var(--ink-muted)">${esc(l.email||'')}${l.phone?` · ${esc(l.phone)}`:''}</div>
+      </td>
+      <td>
+        <span style="font-size:11px;font-weight:600;padding:2px 7px;border-radius:3px;background:${isIRS?'#fdf0f0':'#eff6ff'};color:${isIRS?'var(--red)':'var(--blue,#1a4a8a)'}">${isIRS?'IRS':'General'}</span>
+      </td>
+      <td style="font-size:13px;color:var(--ink-soft);max-width:300px">
+        ${snippet?`<div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:300px">${esc(snippet.substring(0,100))}</div>`:'<span style="color:var(--ink-muted)">—</span>'}
+        ${l.address?`<div style="font-size:11px;color:var(--ink-muted);margin-top:2px">${esc(l.address)}</div>`:''}
+      </td>
+      <td>${l.referral?`<span style="font-size:12px;color:var(--ink-muted)">${esc(l.referral)}</span>`:'—'}</td>
+      <td>
+        <span style="font-size:11px;font-weight:600;color:${statusColor};background:var(--cream);border-radius:3px;padding:2px 8px;white-space:nowrap">${esc(LEAD_STATUS_LABELS[l.status||'new']||'New')}</span>
+      </td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('leads-body').innerHTML=`
+    <table class="vt-table" style="font-size:13px">
+      <thead><tr>
+        <th style="width:60px">Date</th>
+        <th style="width:200px">Contact</th>
+        <th style="width:80px">Type</th>
+        <th>Situation / Details</th>
+        <th style="width:120px">Referral</th>
+        <th style="width:100px">Status</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div style="font-size:12px;color:var(--ink-muted);padding:.75rem 0 0">Click any row to view full details &amp; update status</div>`;
+}
+
 async function loadLeads(){
   document.getElementById('leads-body').innerHTML='<div class="empty-state">Loading…</div>';
   try{
     const r=await fetch(`/api/get-leads?password=${encodeURIComponent(apw)}`);
     const d=await r.json();
     if(!r.ok){document.getElementById('leads-body').innerHTML=`<div class="empty-state" style="color:var(--red)">${esc(d.error||'Error loading leads')}</div>`;return;}
-    const leads=(d.leads||[]).sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
-    // KPIs
-    const kpiEl=document.getElementById('leads-kpis');
-    const byStatus=leads.reduce((m,l)=>{m[l.status||'new']=(m[l.status||'new']||0)+1;return m;},{});
-    kpiEl.innerHTML=`
-      <div class="vd-kpi"><div class="vd-kpi-label">Total leads</div><div class="vd-kpi-val">${leads.length}</div></div>
-      <div class="vd-kpi"><div class="vd-kpi-label">New</div><div class="vd-kpi-val red">${byStatus.new||0}</div></div>
+    allLeads=(d.leads||[]).sort((a,b)=>new Date(b.submittedAt||b.createdAt||0)-new Date(a.submittedAt||a.createdAt||0));
+    const byStatus=allLeads.reduce((m,l)=>{m[l.status||'new']=(m[l.status||'new']||0)+1;return m;},{});
+    const byType=allLeads.reduce((m,l)=>{const t=l.formType==='irs'||l.formType==='remediation'?'irs':'general';m[t]=(m[t]||0)+1;return m;},{});
+    document.getElementById('leads-kpis').innerHTML=`
+      <div class="vd-kpi"><div class="vd-kpi-label">Total leads</div><div class="vd-kpi-val">${allLeads.length}</div><div class="vd-kpi-sub">${byType.irs||0} IRS · ${byType.general||0} general</div></div>
+      <div class="vd-kpi"><div class="vd-kpi-label">New</div><div class="vd-kpi-val red">${byStatus.new||0}</div><div class="vd-kpi-sub">needs follow-up</div></div>
       <div class="vd-kpi"><div class="vd-kpi-label">Contacted</div><div class="vd-kpi-val amber">${byStatus.contacted||0}</div></div>
       <div class="vd-kpi"><div class="vd-kpi-label">Qualified</div><div class="vd-kpi-val">${byStatus.qualified||0}</div></div>
       <div class="vd-kpi"><div class="vd-kpi-label">Converted</div><div class="vd-kpi-val green">${byStatus.client||0}</div></div>`;
     document.getElementById('cntLeads').textContent=byStatus.new||'';
-    if(!leads.length){document.getElementById('leads-body').innerHTML='<div class="empty-state">No leads yet. Form submissions will appear here.</div>';return;}
-    const rows=leads.map(l=>{
-      const statusColor=LEAD_STATUS_COLORS[l.status||'new']||'var(--ink-muted)';
-      const dt=l.createdAt?new Date(l.createdAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
-      return `<tr>
-        <td style="white-space:nowrap;color:var(--ink-muted);font-size:12px">${esc(dt)}</td>
-        <td><strong>${esc(l.name||'—')}</strong><div style="font-size:12px;color:var(--ink-muted)">${esc(l.email||'')}</div></td>
-        <td>${l.phone?`<a href="tel:${esc(l.phone)}" style="color:var(--gold-dim)">${esc(l.phone)}</a>`:'—'}</td>
-        <td style="font-size:13px;max-width:260px">${esc((l.message||l.description||'').substring(0,120))}${(l.message||l.description||'').length>120?'…':''}</td>
-        <td><span style="font-size:11px;font-weight:600;color:${statusColor};background:var(--cream);border-radius:3px;padding:2px 8px;white-space:nowrap">${esc(LEAD_STATUS_LABELS[l.status||'new']||l.status||'New')}</span></td>
-        <td>
-          <select style="font-size:12px;padding:3px 6px;border:1px solid var(--cream-dark);border-radius:3px;background:var(--cream);font-family:var(--sans)" onchange="updateLeadStatus('${esc(l.id)}',this.value)">
-            ${Object.entries(LEAD_STATUS_LABELS).map(([k,v])=>`<option value="${k}" ${(l.status||'new')===k?'selected':''}>${v}</option>`).join('')}
-          </select>
-        </td>
-      </tr>`;
-    }).join('');
-    document.getElementById('leads-body').innerHTML=`
-      <table class="vt-table" style="font-size:13px">
-        <thead><tr>
-          <th style="width:100px">Date</th>
-          <th>Name / Email</th>
-          <th style="width:120px">Phone</th>
-          <th>Message</th>
-          <th style="width:110px">Status</th>
-          <th style="width:130px">Update</th>
-        </tr></thead>
-        <tbody>${rows}</tbody>
-      </table>`;
+    renderLeadsTable(allLeads);
   }catch(e){document.getElementById('leads-body').innerHTML=`<div class="empty-state" style="color:var(--red)">Error: ${esc(e.message)}</div>`;}
 }
 
 async function updateLeadStatus(id,status){
   try{
+    const l=allLeads.find(x=>x.id===id);
     await fetch('/api/update-lead',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({adminPassword:apw,lead:{id,status}})});
+      body:JSON.stringify({adminPassword:apw,lead:{...(l||{}),id,status}})});
   }catch(e){console.error('updateLead error',e);}
 }
 
