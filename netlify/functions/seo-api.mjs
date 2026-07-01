@@ -13,6 +13,7 @@ const RESULTS_KEY = 'latest-results'
 const HISTORY_KEY = 'history'
 const STATUS_KEY  = 'run-status'
 const SITE        = 'irsresolutionservice.com'
+const VALUESERP_KEY = '5F9922B09F88424FB70FE2451F028A4C'
 
 const KEYWORDS = [
   "IRS hasn't replied to appeal 45 days",
@@ -85,13 +86,7 @@ export default async (req, context) => {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: H })
   }
 
-  const API_KEY = Netlify.env.get('VALUESERP_API') || ''
-  if (!API_KEY) {
-    return new Response(
-      JSON.stringify({ error: 'VALUESERP_API env var not set in Netlify dashboard' }),
-      { status: 500, headers: H }
-    )
-  }
+  const API_KEY = Netlify.env.get('VALUESERP_API') || VALUESERP_KEY
 
   // Mark as running immediately
   const store = getStore(STORE)
@@ -129,6 +124,7 @@ async function runChecks(apiKey, store) {
     await store.set(STATUS_KEY, JSON.stringify({
       status: 'running',
       startedAt: checkedAt,
+      updatedAt: new Date().toISOString(),
       total: KEYWORDS.length,
       done: i,
       current: keyword,
@@ -142,7 +138,7 @@ async function runChecks(apiKey, store) {
     await store.set(`kw:${slug}`, JSON.stringify(result)).catch(() => {})
 
     // Small gap between calls
-    await sleep(400)
+    await sleep(200)
   }
 
   const inAio  = results.filter(r => r.in_aio).length
@@ -197,20 +193,22 @@ async function checkKeyword(keyword, apiKey) {
 
   try {
     const params = new URLSearchParams({
-      api_key:             apiKey,
-      q:                   keyword,
-      engine:              'google',
-      google_domain:       'google.com',
-      gl:                  'us',
-      hl:                  'en',
-      device:              'desktop',
-      include_ai_overview: 'true',
-      num:                 '10',
+      api_key:      apiKey,
+      q:            keyword,
+      location:     'Las Vegas, Nevada, United States',
+      gl:           'us',
+      hl:           'en',
+      google_domain:'google.com',
+      num:          '10',
     })
 
-    const res = await fetch(`https://api.valueserp.com/search?${params}`, {
-      signal: AbortSignal.timeout(9000),
+    const fetchWithTimeout = () => new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error('ValueSERP timeout after 7s')), 7000)
+      fetch(`https://api.valueserp.com/search?${params}`)
+        .then(r => { clearTimeout(timer); resolve(r) })
+        .catch(e => { clearTimeout(timer); reject(e) })
     })
+    const res = await fetchWithTimeout()
 
     if (!res.ok) {
       let e = `ValueSERP HTTP ${res.status}`

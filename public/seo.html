@@ -276,29 +276,50 @@ async function runNow() {
 }
 
 let pollTimer = null;
+let lastStatusUpdate = null;
+let lastDoneCount = -1;
+
 async function pollStatus() {
   clearTimeout(pollTimer);
   try {
     const r = await fetch('/api/seo-track?action=status');
     const d = await r.json();
+
     if (d.status === 'running') {
       const pct = d.total ? Math.round((d.done / d.total) * 100) : 0;
-      setStatus('amber', `Checking keywords… ${d.done || 0} of ${d.total || 19} done${d.current ? ' — "' + d.current.substring(0,40) + '…"' : ''}`);
+      const kwLabel = d.current ? ` — "${d.current.substring(0,45)}…"` : '';
+      setStatus('amber', `Checking keywords… ${d.done || 0} of ${d.total || 19} done${kwLabel}`);
       document.getElementById('runBtn').innerHTML = `<span class="spinner"></span> ${pct}% (${d.done||0}/${d.total||19})`;
+
+      // Stale detection: if done count hasn't moved in 45s, assume job died
+      const nowMs = Date.now();
+      if (d.done !== lastDoneCount) {
+        lastDoneCount = d.done;
+        lastStatusUpdate = nowMs;
+      }
+      if (lastStatusUpdate && (nowMs - lastStatusUpdate) > 45000) {
+        setStatus('amber', `Keyword check may have stalled on "${d.current||'?'}". Loading partial results…`);
+        document.getElementById('runBtn').disabled = false;
+        document.getElementById('runBtn').innerHTML = '↻ Run now';
+        await loadResults();
+        return;
+      }
+
       pollTimer = setTimeout(pollStatus, 2500);
+
     } else if (d.status === 'done') {
-      setStatus('green', `Done — ${d.ranked || 0} keywords where we appear, ${d.site_cited || 0} in AIO`);
+      setStatus('green', `Done — ${d.ranked || 0} keywords where we appear · ${d.site_cited || 0} cited in AIO`);
       document.getElementById('runBtn').disabled = false;
       document.getElementById('runBtn').innerHTML = '↻ Run now';
+      lastStatusUpdate = null; lastDoneCount = -1;
       await loadResults();
+
     } else {
-      // idle or unknown — stop polling
       document.getElementById('runBtn').disabled = false;
       document.getElementById('runBtn').innerHTML = '↻ Run now';
       await loadResults();
     }
   } catch(e) {
-    // network error — keep polling
     pollTimer = setTimeout(pollStatus, 3000);
   }
 }
