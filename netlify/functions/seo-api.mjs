@@ -137,7 +137,7 @@ async function runChecks(apiKey, store) {
     await store.set(`kw:${slug}`, JSON.stringify(result)).catch(() => {})
 
     // Small gap between calls
-    await sleep(200)
+    await sleep(800)
   }
 
   const inAio  = results.filter(r => r.in_aio).length
@@ -211,7 +211,19 @@ async function checkKeyword(keyword, apiKey) {
 
     if (!res.ok) {
       let e = `ValueSERP HTTP ${res.status}`
-      try { const t = await res.text(); if (t) e += ': ' + t.slice(0, 200) } catch {}
+      try {
+        const t = await res.text()
+        if (t) {
+          // Try to parse as JSON for cleaner error message
+          try {
+            const errJson = JSON.parse(t)
+            e += ': ' + (errJson.message || errJson.error || t.slice(0, 200))
+          } catch {
+            e += ': ' + t.slice(0, 200)
+          }
+        }
+      } catch {}
+      console.error(`[seo-api] keyword="${keyword}" error: ${e}`)
       result.error = e
       return result
     }

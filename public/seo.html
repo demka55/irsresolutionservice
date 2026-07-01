@@ -232,6 +232,11 @@ async function loadResults() {
     catch(e) { setStatus('amber', 'Response parse error — function may have crashed. Check Netlify logs.'); return; }
 
     if (d.results && d.results.keywords && d.results.keywords.length) {
+      const errCount = d.results.keywords.filter(k => k.error).length;
+      if (errCount > 5) {
+        document.getElementById('statusText').textContent = 
+          `⚠ ${errCount} errors — ValueSERP may be rate-limiting. Wait 1 min then Run again.`;
+      }
       allResults = d.results.keywords;
       renderKpis(d.results);
       renderFilters();
@@ -421,6 +426,11 @@ function renderTable(filter) {
         : r.in_aio
           ? `<span class="badge aio">✓ AIO</span>`
           : `<span class="badge no-aio">No AIO</span>`;
+      
+      // Error detail shown in where-we-appear column
+      const errorDetail = r.error
+        ? `<span style="font-size:12px;color:var(--red);font-family:monospace">${esc(r.error.substring(0,120))}</span>`
+        : null;
 
       // "View AIO" button if there's content
       const aioBtn = (r.in_aio && (r.aio_text || (r.aio_sources && r.aio_sources.length)))
@@ -429,7 +439,9 @@ function renderTable(filter) {
 
       // Where we appear column
       let appearHtml = '';
-      if (r.our_pages && r.our_pages.length > 0) {
+      if (errorDetail) {
+        appearHtml = errorDetail;
+      } else if (r.our_pages && r.our_pages.length > 0) {
         appearHtml = `<div class="our-pages">${r.our_pages.map(p => {
           const isAio = p.where.startsWith('AIO');
           const isOrg = p.where.startsWith('Organic');
