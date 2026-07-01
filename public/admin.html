@@ -190,6 +190,55 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 .modal-bg{position:fixed;inset:0;background:rgba(26,20,16,.4);z-index:500;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(3px)}
 .modal-bg.open{display:flex}
 .modal{background:var(--white);border-radius:4px;max-width:600px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:var(--sh-lg);border-top:3px solid var(--gold)}
+.modal-fullscreen{max-width:calc(100vw - 2rem)!important;width:calc(100vw - 2rem)!important;max-height:calc(100vh - 2rem)!important;height:calc(100vh - 2rem)!important;display:flex;flex-direction:column}
+.modal-fullscreen .modal-body{flex:1;overflow-y:auto;padding:0 1.5rem 1.5rem}
+/* Vitals dashboard */
+.vd{font-family:var(--sans)}
+.vd-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--cream-dark);flex-wrap:wrap}
+.vd-title{font-size:20px;font-weight:600;color:var(--ink);font-family:var(--serif)}
+.vd-meta{font-size:12px;color:var(--ink-muted);margin-top:2px}
+.vd-alerts{display:flex;flex-direction:column;gap:6px;margin-bottom:1.25rem}
+.vd-alert{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:4px;font-size:13px;font-weight:500;line-height:1.4}
+.vd-alert.danger{background:#fff0f0;border-left:3px solid var(--red);color:#7f1d1d}
+.vd-alert.warn{background:#fffbeb;border-left:3px solid #d97706;color:#78350f}
+.vd-alert.info{background:#eff6ff;border-left:3px solid #3b82f6;color:#1e3a5f}
+.vd-alert-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.vd-section{margin-bottom:1.5rem}
+.vd-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:.625rem;padding-bottom:.375rem;border-bottom:1px solid var(--cream-dark)}
+.vd-kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:1.5rem}
+.vd-kpi{background:var(--cream);border-radius:4px;padding:12px 14px;border:1px solid var(--cream-dark)}
+.vd-kpi-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted);margin-bottom:5px}
+.vd-kpi-val{font-size:24px;font-weight:600;color:var(--ink);line-height:1;font-family:var(--serif)}
+.vd-kpi-val.red{color:var(--red)}
+.vd-kpi-val.green{color:var(--green)}
+.vd-kpi-val.amber{color:#b45309}
+.vd-kpi-sub{font-size:11px;color:var(--ink-muted);margin-top:4px}
+.vd-csed-wrap{display:flex;align-items:center;gap:10px;margin-top:4px}
+.vd-csed-track{flex:1;height:8px;background:var(--cream-dark);border-radius:4px;overflow:hidden}
+.vd-csed-fill{height:100%;border-radius:4px;transition:width .4s}
+.vd-csed-label{font-size:11px;color:var(--ink-muted);white-space:nowrap}
+/* TC table */
+.vd-tc-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.vd-tc-table th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-muted);padding:6px 10px;text-align:left;background:var(--cream);border-bottom:1px solid var(--cream-dark);position:sticky;top:0}
+.vd-tc-table td{padding:7px 10px;border-bottom:1px solid var(--cream-dark);vertical-align:top;color:var(--ink-soft)}
+.vd-tc-table tr:last-child td{border-bottom:none}
+.vd-tc-table tr:hover td{background:#faf8f4}
+.vd-tc-table td:first-child{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;width:48px}
+.vd-tc-table td:last-child{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tc-credit{color:var(--green)!important;font-weight:600}
+.tc-debit{color:var(--red)!important;font-weight:600}
+.tc-zero{color:var(--ink-muted)!important}
+.tc-key{background:var(--gold-muted);border-radius:2px;padding:1px 5px;font-size:10px;color:var(--gold-dim);font-weight:700;margin-left:4px}
+/* Tags */
+.vtag{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:2px 7px;border-radius:3px}
+.vtag.filed{background:#d1fae5;color:#065f46}
+.vtag.sfr{background:#fef3c7;color:#92400e}
+.vtag.unfiled{background:#fee2e2;color:#991b1b}
+.vtag.exam{background:#fde8d8;color:#9a3412}
+.vtag.amended{background:#e0e7ff;color:#3730a3}
+/* Vitals layout grid */
+.vd-grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+@media(max-width:700px){.vd-grid2{grid-template-columns:1fr}.vd-kpis{grid-template-columns:repeat(2,1fr)}}
 .modal-h{padding:1.25rem 1.5rem 0}
 .modal-title{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink);margin-bottom:.2rem}
 .modal-sub{font-size:12px;color:var(--ink-muted);margin-bottom:1.1rem;line-height:1.6}
@@ -417,13 +466,13 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 
 <!-- TRANSCRIPT MODAL -->
 <div class="modal-bg" id="txModal">
-  <div class="modal" style="max-width:780px">
+  <div class="modal modal-fullscreen">
     <div class="modal-h">
       <div class="modal-title">IRS Transcript</div>
       <div class="modal-sub" id="txSub">Transcript from IRS TDS API</div>
     </div>
     <div class="modal-body">
-      <div class="tf" id="txContent"></div>
+      <div id="txContent" style="padding:0 0 1rem"></div>
       <div class="modal-foot">
         <button class="btn btn-ghost" onclick="dlTx()">⬇ Download</button>
         <button class="btn btn-ghost" onclick="closeM('txModal')">Close</button>
@@ -433,6 +482,8 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 </div>
 
 <div class="toast" id="toast"></div>
+<input type="file" id="txUploadInput" accept=".html,.htm" style="display:none" onchange="handleUploadFile(event)">
+<div id="txUploadTarget" style="display:none"></div>
 
 <script>
 let apw='',clients=[],filt='all',curTx='',curTxEmail='',curTxKey='';
@@ -632,32 +683,25 @@ function renderDetail(c){
   <div class="dp s2">
     <div class="dp-h" style="display:flex;align-items:center;justify-content:space-between">
       <span>📄 IRS Transcripts</span>
-      <label style="cursor:pointer;font-size:11px;padding:3px 10px;border:1px solid var(--gold-dim);border-radius:3px;color:var(--gold-dim);background:transparent;font-family:var(--sans)">
-        ⬆ Upload HTML
-        <input type="file" accept=".html,.htm" style="display:none" onchange="uploadTranscript(event,'${esc(c.email)}')">
-      </label>
+      <button class="btn btn-ghost btn-sm" onclick="triggerUpload('${esc(c.email)}')">⬆ Upload HTML</button>
     </div>
     ${(()=>{
       const pulls = Object.keys(s).filter(k=>k.startsWith('txPulled_'));
-      const downloads = Object.keys(s).filter(k=>k.startsWith('txDownloaded_'));
       if (!pulls.length) return '<div style="font-size:12px;color:var(--ink-muted)">No transcripts pulled yet — use Pull from IRS button</div>';
       return pulls.map(k=>{
         const key = k.replace('txPulled_','');
         const pulledAt = s[k] ? new Date(s[k]).toLocaleString() : '—';
-        const dlKey = 'txDownloaded_'+key;
-        const dlAt = s[dlKey] ? new Date(s[dlKey]).toLocaleString() : null;
+        const dlAt = s['txDownloaded_'+key] ? new Date(s['txDownloaded_'+key]).toLocaleString() : null;
         const hasHtml = !!(s['transcript_'+key] && s['transcript_'+key].length > 100);
-        const inMemory = (curTxEmail===c.email && curTxKey===key && curTx);
-        const canView = hasHtml || inMemory;
         return `<div style="background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:.75rem;margin-bottom:.5rem">
-          <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:4px">${key.replace(/_/g,' ')}</div>
+          <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:4px">${key.replace(/_/g,' ')} ${hasHtml ? '<span style="color:var(--green);font-size:10px">● stored</span>' : '<span style="color:var(--amber);font-size:10px">○ metadata only</span>'}</div>
           <div style="font-size:11px;color:var(--ink-muted)">Last pulled: ${pulledAt}</div>
           ${dlAt ? `<div style="font-size:11px;color:var(--green)">Downloaded: ${dlAt}</div>` : '<div style="font-size:11px;color:var(--amber)">Not yet downloaded</div>'}
           <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem">
             <button class="btn btn-blue btn-sm" onclick="rePullAndView('${esc(c.email)}','${key}')">↻ Re-pull</button>
-            ${canView ? `<button class="btn btn-ghost btn-sm" onclick="viewStoredTx('${esc(c.email)}','${key}')">👁 View</button>` : ''}
-            ${canView ? `<button class="btn btn-ghost btn-sm" onclick="dlStoredTx('${esc(c.email)}','${key}')">⬇ Download</button>` : ''}
-            ${canView ? `<button class="btn btn-gold btn-sm" onclick="parseStoredTx('${esc(c.email)}','${key}')">🔬 Parse Vitals</button>` : ''}
+            <button class="btn btn-ghost btn-sm" onclick="viewStoredTx('${esc(c.email)}','${key}')">👁 View</button>
+            <button class="btn btn-ghost btn-sm" onclick="dlStoredTx('${esc(c.email)}','${key}')">⬇ Download</button>
+            <button class="btn btn-gold btn-sm" onclick="parseStoredTx('${esc(c.email)}','${key}')">🔬 Parse Vitals</button>
           </div>
         </div>`;
       }).join('');
@@ -866,6 +910,43 @@ async function pullTranscript(){
 
 function quickPull(email){const c=clients.find(x=>x.email===email);if(!c)return;goPage('irs',document.querySelectorAll('.sb-i')[3]);if(c.steps?.form8821Data){const f=c.steps.form8821Data,pts=(f.taxpayerName||'').split(' ');document.getElementById('irsClient').value=email;document.getElementById('irsFirst').value=pts[0]||'';document.getElementById('irsLast').value=pts.slice(1).join(' ')||'';document.getElementById('irsYear').value=(f.taxYears||'').split(',')[0]?.trim()||new Date().getFullYear()-2;}}
 
+// ── Upload transcript ─────────────────────────────────────────────────────────
+let _uploadTargetEmail = '';
+function triggerUpload(email){
+  _uploadTargetEmail = email;
+  const inp = document.getElementById('txUploadInput');
+  inp.value = '';
+  inp.click();
+}
+async function handleUploadFile(evt){
+  const file = evt.target.files[0];
+  if(!file || !_uploadTargetEmail) return;
+  const email = _uploadTargetEmail;
+  // Parse txKey from filename: IRS-Transcript-1040-ACTR-2022-Name.html → 1040_ACTR_2022
+  let txKey = '';
+  const m = file.name.match(/(\d{4})[_\-]([A-Z]{3,4})[_\-](\d{4})/i);
+  if(m) txKey = `${m[1].toUpperCase()}_${m[2].toUpperCase()}_${m[3]}`;
+  else txKey = prompt('Enter transcript key (e.g. 1040_ACTR_2022):','1040_ACTR_2022')||'1040_ACTR_2022';
+  const reader = new FileReader();
+  reader.onload = async function(e){
+    const html = e.target.result;
+    if(!html || html.length < 100){toast('File appears empty',true);return;}
+    try{
+      toast('Uploading transcript…');
+      const r = await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({email,adminPassword:apw,update:{adminAction:true,steps:{
+          ['transcript_'+txKey]: html,
+          ['txPulled_'+txKey]: new Date().toISOString()
+        }}})});
+      if(!r.ok){const d=await r.json();toast(d.error||'Upload failed',true);return;}
+      curTx=html; curTxEmail=email; curTxKey=txKey;
+      toast(`✅ Uploaded ${txKey} — View Vitals now works`);
+      await loadClients();
+    }catch(e2){toast(e2.message,true);}
+  };
+  reader.readAsText(file);
+}
+
 // ── Stored transcript helpers ─────────────────────────────────────────────────
 function _getTxHtml(email, key){
   // 1. In-memory curTx (fastest)
@@ -890,19 +971,23 @@ async function viewTx(email, key){
 
 function viewStoredTx(email, key){
   const html=_getTxHtml(email,key);
-  if(html){ openTxModal(html,key.replace(/_/g,' ')); curTx=html;curTxEmail=email;curTxKey=key; return; }
-  // Fetch from blob
-  _fetchTxHtml(email,key).then(h=>{
-    if(!h){toast('Transcript not stored — click Re-pull first',true);return;}
-    curTx=h;curTxEmail=email;curTxKey=key;
-    openTxModal(h,key.replace(/_/g,' '));
-  });
+  if(!html){
+    // Metadata only - no HTML stored yet
+    toast('No HTML stored for this transcript — click Re-pull or Upload HTML',true);
+    return;
+  }
+  openTxModal(html,key.replace(/_/g,' '));
+  curTx=html; curTxEmail=email; curTxKey=key;
 }
 
 async function dlStoredTx(email, key){
   const html=await _fetchTxHtml(email,key);
-  if(!html){toast('Transcript not stored — click Re-pull first',true);return;}
-  try{ await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,adminPassword:apw,update:{adminAction:true,steps:{['txDownloaded_'+key]:new Date().toISOString()}}})}); await loadClients(); }catch(e){}
+  if(!html){toast('No HTML stored — click Re-pull or Upload HTML',true);return;}
+  try{
+    await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email,adminPassword:apw,update:{adminAction:true,steps:{['txDownloaded_'+key]:new Date().toISOString()}}})});
+    await loadClients();
+  }catch(e){}
   const b=new Blob([html],{type:'text/html'}),a=document.createElement('a');
   a.href=URL.createObjectURL(b);
   a.download=`irs-transcript-${key}.html`;
@@ -912,7 +997,7 @@ async function dlStoredTx(email, key){
 
 async function parseStoredTx(email, key){
   const html=await _fetchTxHtml(email,key);
-  if(!html){toast('Transcript not stored — click Re-pull first',true);return;}
+  if(!html){toast('No HTML stored — click Re-pull or Upload HTML',true);return;}
   curTx=html; curTxEmail=email; curTxKey=key;
   await _parseAndShowVitals(email, clients.find(x=>x.email===email)?.name||email, html, key);
 }
@@ -926,14 +1011,22 @@ async function deleteClient(btn){
   try{
     const r=await fetch('/api/delete-client',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,email})});
     const d=await r.json();
-    if(!r.ok){toast(d.error||'Delete failed',true);btn.disabled=false;btn.textContent='🗑 Delete Client';return;}
-    // Remove immediately from local array and re-render
+    if(!r.ok){
+      console.error('[delete] failed',r.status,d);
+      toast(`Delete failed (${r.status}): ${d.error||'unknown error'}`,true);
+      btn.disabled=false;btn.textContent='🗑 Delete Client';
+      return;
+    }
+    console.log('[delete] success',email);
     clients=clients.filter(c=>c.email!==email);
     updateStats();renderTable();populateIrsSel();
     toast(`${name} deleted`);
-    // Reload in background to confirm
     setTimeout(loadClients, 2000);
-  }catch(e){toast(e.message,true);btn.disabled=false;btn.textContent='🗑 Delete Client';}
+  }catch(e){
+    console.error('[delete] exception',e);
+    toast(e.message,true);
+    btn.disabled=false;btn.textContent='🗑 Delete Client';
+  }
 }
 
 async function uploadTranscript(evt, email){
@@ -1089,30 +1182,78 @@ async function parseVitals(reparse){
   }catch(e){content.innerHTML=`<span style="color:var(--red)">❌ ${esc(e.message)}</span>`;}
 }
 
-function renderVitalsPanel(v,label){
+function renderVitalsPanel(v, label){
   if(!v) return '';
-  const bal=v.accountBalance||0;
-  const balClass=bal>0?'danger':v.refundAmount>0?'ok':'ok';
-  const balDisplay=bal>0?`$${bal.toLocaleString()}`:v.refundAmount>0?`Refund $${v.refundAmount.toLocaleString()}`:'$0';
+  const bal=v.accountBalance||0,agi=v.adjustedGrossIncome||0,tax=v.taxPerReturn||0;
+  const intPen=(v.accruedInterest||0)+(v.accruedPenalty||0),refund=v.refundAmount||0,payments=v.totalPayments||0;
   const returnBadge=v.isSFR?'<span class="vtag sfr">SFR</span>':!v.returnFiled?'<span class="vtag unfiled">Not filed</span>':'<span class="vtag filed">Filed</span>';
-  const examBadge=v.underExamination?'<span class="vtag exam" style="margin-left:4px">Under exam</span>':'';
-  const alertsHtml=v.alerts&&v.alerts.length?v.alerts.map(a=>`<div class="vt-alert ${a.level}">${a.msg}</div>`).join(''):'';
-  const csedBar=v.csedPct!==undefined?`<div class="csed-mini"><div class="csed-mini-bar"><div class="csed-mini-fill" style="width:${v.csedPct}%;background:${v.csedPct>=85?'#e34948':v.csedPct>=65?'#d97706':'#1baf7a'}"></div></div><span style="font-size:10px;color:var(--ink-muted);min-width:64px;text-align:right">${v.csedDate||'—'} (${v.csedMonthsLeft}mo)</span></div>`:'—';
-  const tcRows=v.transactionCodes&&v.transactionCodes.length?v.transactionCodes.slice(0,12).map(t=>`<tr><td style="font-weight:600">${esc(t.code)}</td><td>${esc(t.desc.split('\n')[0].substring(0,55))}</td><td style="white-space:nowrap">${esc(t.date)}</td><td style="text-align:right;white-space:nowrap;color:${t.amount<0?'var(--green)':t.amount>0?'var(--red)':'var(--ink-muted)'}">${t.amount!==0?`$${Math.abs(t.amount).toLocaleString()}`:'—'}</td></tr>`).join(''):'<tr><td colspan="4" style="color:var(--ink-muted)">No transactions</td></tr>';
-  return `<div class="vt-wrap" style="border-top:1px solid var(--border);padding-top:.75rem;margin-top:.625rem">
-  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted);margin-bottom:.5rem">${esc(label||'Vitals')} · parsed ${v.parsedAt?new Date(v.parsedAt).toLocaleString():''}</div>
-  ${alertsHtml?`<div class="vt-alerts">${alertsHtml}</div>`:''}
-  <div class="vt-kpi-row">
-    <div class="vt-kpi"><div class="vk-l">Balance</div><div class="vk-v ${balClass}">${balDisplay}</div><div class="vk-s">Tax year ${v.taxYear||'—'}</div></div>
-    <div class="vt-kpi"><div class="vk-l">Return</div><div class="vk-v" style="font-size:14px">${returnBadge}${examBadge}</div><div class="vk-s">${v.filingStatus||'—'}</div></div>
-    <div class="vt-kpi"><div class="vk-l">AGI</div><div class="vk-v" style="font-size:15px">$${(v.adjustedGrossIncome||0).toLocaleString()}</div><div class="vk-s">Tax: $${(v.taxPerReturn||0).toLocaleString()}</div></div>
-    <div class="vt-kpi"><div class="vk-l">CSED</div><div class="vk-v" style="font-size:13px">${csedBar}</div><div class="vk-s">Assessed ${v.assessmentDate||'—'}</div></div>
-    <div class="vt-kpi"><div class="vk-l">Notices</div><div class="vk-v ${v.hasLevyNotice?'danger':v.notices&&v.notices.length?'warn':'ok'}" style="font-size:13px">${v.notices&&v.notices.length?v.notices.join(', '):'None'}</div><div class="vk-s">${v.hasPassportFlag?'⚠ Passport risk':''}</div></div>
-    <div class="vt-kpi"><div class="vk-l">Accrued int/pen</div><div class="vk-v ${(v.accruedInterest+v.accruedPenalty)>0?'warn':'ok'}" style="font-size:15px">$${((v.accruedInterest||0)+(v.accruedPenalty||0)).toLocaleString()}</div><div class="vk-s">Int $${(v.accruedInterest||0).toLocaleString()} / Pen $${(v.accruedPenalty||0).toLocaleString()}</div></div>
+  const examBadge=v.underExamination?' <span class="vtag exam">Under exam</span>':'';
+  const amendBadge=v.hasAmendedReturn?' <span class="vtag amended">Amended</span>':'';
+  const alertIcons={danger:'⚠️',warn:'⚡',info:'ℹ️'};
+  const alertsHtml=(v.alerts||[]).map(a=>`<div class="vd-alert ${a.level}"><span class="vd-alert-icon">${alertIcons[a.level]||'•'}</span><span>${esc(a.msg)}</span></div>`).join('');
+  let csedHtml='<span style="color:var(--ink-muted)">No assessment date on record</span>';
+  if(v.assessmentDate&&v.csedPct!==undefined){
+    const col=v.csedPct>=85?'#e34948':v.csedPct>=65?'#d97706':'#1baf7a';
+    csedHtml=`<div style="font-size:22px;font-weight:700;font-family:var(--serif);color:var(--ink);margin-bottom:8px">${esc(v.csedDate||'—')}</div><div class="vd-csed-wrap"><div class="vd-csed-track"><div class="vd-csed-fill" style="width:${v.csedPct}%;background:${col}"></div></div><span class="vd-csed-label" style="color:${col};font-weight:600">${v.csedMonthsLeft}mo left</span></div><div style="font-size:11px;color:var(--ink-muted);margin-top:5px">Assessed ${esc(v.assessmentDate)} &nbsp;·&nbsp; ${v.csedPct}% of 10 years elapsed</div>`;
+  }
+  const TC_LABELS={'150':'Tax return filed','151':'Replaced return','166':'Delinquency penalty','170':'Underpayment penalty','196':'Interest charged','300':'Additional tax assessed','360':'Interest accrued','420':'Under examination','460':'Extension granted','580':'OIC filed','582':'Federal tax lien filed','660':'Estimated tax payment','670':'Payment received','680':'OIC accepted','806':'W-2/1099 withholding','807':'Withholding reversed','810':'Refund freeze','820':'Credit transferred','830':'Overpayment credit','846':'Refund issued','971':'Notice / amended forwarded','976':'SFR filed by IRS','977':'Amended return filed'};
+  const keyTCs=new Set(['150','170','420','580','582','660','670','806','846','971','976','977']);
+  const tcRows=(v.transactionCodes||[]).map(t=>{
+    const amtClass=t.amount<0?'tc-credit':t.amount>0?'tc-debit':'tc-zero';
+    const amtStr=t.amount!==0?`${t.amount<0?'-':'+'}$${Math.abs(t.amount).toLocaleString()}`:'—';
+    const desc=TC_LABELS[t.code]||t.desc.split('\n')[0].substring(0,60);
+    return `<tr><td>${esc(t.code)}${keyTCs.has(t.code)?'<span class="tc-key">key</span>':''}</td><td>${esc(desc)}</td><td style="white-space:nowrap;color:var(--ink-muted)">${esc(t.date)}</td><td class="${amtClass}">${amtStr}</td></tr>`;
+  }).join('')||'<tr><td colspan="4" style="color:var(--ink-muted);padding:12px">No transactions</td></tr>';
+  const noticeHtml=(v.notices||[]).length?v.notices.map(n=>`<span class="vtag sfr">${esc(n)}</span>`).join(' '):'<span style="color:var(--ink-muted);font-size:13px">None on record</span>';
+  const balColor=bal>0?'var(--red)':refund>0?'var(--green)':'var(--ink)';
+  const balStr=bal>0?`$${bal.toLocaleString()}`:refund>0?`-$${refund.toLocaleString()}`:'$0';
+  const balLabel=bal>0?'balance due':refund>0?'refund issued':'balance clear';
+  return `<div class="vd">
+  <div class="vd-header">
+    <div>
+      <div class="vd-title">Tax Year ${esc(v.taxYear||label||'—')} — Account Transcript</div>
+      <div class="vd-meta">TIN: ${esc(v.tin||'—')} &nbsp;·&nbsp; ${esc(v.filingStatus||'—')} &nbsp;·&nbsp; Parsed: ${v.parsedAt?new Date(v.parsedAt).toLocaleString():'—'}</div>
+      <div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap">${returnBadge}${examBadge}${amendBadge}</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0">
+      <div class="vd-kpi-label">Account balance</div>
+      <div style="font-size:42px;font-weight:700;font-family:var(--serif);color:${balColor};line-height:1">${balStr}</div>
+      <div style="font-size:12px;color:var(--ink-muted);margin-top:3px">${balLabel}</div>
+    </div>
   </div>
-  <div class="vt-section-h">Transactions (${(v.transactionCodes||[]).length})</div>
-  <table class="vt-table"><thead><tr><th>Code</th><th>Description</th><th>Date</th><th style="text-align:right">Amount</th></tr></thead><tbody>${tcRows}</tbody></table>
-  ${(v.transactionCodes||[]).length>12?`<div style="font-size:11px;color:var(--ink-muted)">${(v.transactionCodes||[]).length-12} more transactions not shown</div>`:''}
+  ${alertsHtml?`<div class="vd-alerts">${alertsHtml}</div>`:''}
+  <div class="vd-kpis">
+    <div class="vd-kpi"><div class="vd-kpi-label">Adjusted gross income</div><div class="vd-kpi-val">$${agi.toLocaleString()}</div><div class="vd-kpi-sub">Tax year ${esc(v.taxYear||'—')}</div></div>
+    <div class="vd-kpi"><div class="vd-kpi-label">Tax per return</div><div class="vd-kpi-val">$${tax.toLocaleString()}</div><div class="vd-kpi-sub">Taxable income $${(v.taxableIncome||0).toLocaleString()}</div></div>
+    <div class="vd-kpi"><div class="vd-kpi-label">Total payments</div><div class="vd-kpi-val green">$${payments.toLocaleString()}</div><div class="vd-kpi-sub">Withholding + est. tax</div></div>
+    <div class="vd-kpi"><div class="vd-kpi-label">Accrued int + penalty</div><div class="vd-kpi-val ${intPen>0?'amber':'green'}">$${intPen.toLocaleString()}</div><div class="vd-kpi-sub">Int $${(v.accruedInterest||0).toLocaleString()} / Pen $${(v.accruedPenalty||0).toLocaleString()}</div></div>
+    <div class="vd-kpi"><div class="vd-kpi-label">Return processed</div><div class="vd-kpi-val" style="font-size:16px">${esc(v.processingDate||'—')}</div><div class="vd-kpi-sub">Due date: ${esc(v.returnDueDate||'—')}</div></div>
+    <div class="vd-kpi"><div class="vd-kpi-label">Active notices</div><div style="margin-top:4px">${noticeHtml}</div><div class="vd-kpi-sub" style="color:${v.hasPassportFlag?'var(--red)':v.hasLevyNotice?'var(--red)':'var(--ink-muted)'}">${v.hasPassportFlag?'⚠ Passport risk':v.hasLevyNotice?'⚠ Levy active':v.underExamination?'⚠ Under exam':'No active flags'}</div></div>
+  </div>
+  <div class="vd-grid2">
+    <div class="vd-section">
+      <div class="vd-section-title">Collection statute expiration (CSED)</div>
+      ${csedHtml}
+    </div>
+    <div class="vd-section">
+      <div class="vd-section-title">Return details</div>
+      <div style="font-size:13px;line-height:2.1;color:var(--ink-soft)">
+        <div><strong>Filed as:</strong> ${v.returnFiled?(v.returnType==='sfr'?'Substitute for Return (IRS-prepared)':v.returnType==='amended'?'Original + Amended':'Original taxpayer return'):'Not filed'}</div>
+        <div><strong>Assessment date:</strong> ${esc(v.assessmentDate||'—')}</div>
+        <div><strong>Filing status:</strong> ${esc(v.filingStatus||'—')}</div>
+        <div><strong>Passport risk:</strong> ${v.hasPassportFlag?'<span style="color:var(--red);font-weight:600">Yes — balance over $50K</span>':'No'}</div>
+      </div>
+    </div>
+  </div>
+  <div class="vd-section">
+    <div class="vd-section-title">All transactions — ${(v.transactionCodes||[]).length} entries</div>
+    <div style="max-height:420px;overflow-y:auto;border:1px solid var(--cream-dark);border-radius:3px">
+      <table class="vd-tc-table">
+        <thead><tr><th style="width:80px">Code</th><th>Description</th><th style="width:110px">Date</th><th style="text-align:right;width:130px">Amount</th></tr></thead>
+        <tbody>${tcRows}</tbody>
+      </table>
+    </div>
+  </div>
 </div>`;
 }
 

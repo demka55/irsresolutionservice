@@ -1,17 +1,17 @@
 // netlify/functions/seo-track.mjs
 // Checks each keyword against ValueSERP for AI Overview presence
-// and stores results in Netlify blobs.
-// Called by:
-//   - Netlify scheduled cron (daily at 6am UTC)
-//   - GET /api/seo-track?action=run&password=xxx  (manual trigger)
-//   - GET /api/seo-track?action=results           (read stored results, public)
+// Stores results in Netlify blobs.
+//
+// GET /api/seo-track?action=results           — public, returns stored data
+// GET /api/seo-track?action=run&password=xxx  — protected, triggers fresh check
+// Scheduled daily at 6am UTC automatically
 
 import { getStore } from '@netlify/blobs'
 
-const STORE        = 'seo-tracking'
-const RESULTS_KEY  = 'latest-results'
-const HISTORY_KEY  = 'history'
-const SITE_DOMAIN  = 'irsresolutionservice.com'
+const STORE       = 'seo-tracking'
+const RESULTS_KEY = 'latest-results'
+const HISTORY_KEY = 'history'
+const SITE_DOMAIN = 'irsresolutionservice.com'
 
 const KEYWORDS = [
   "IRS hasn't replied to appeal 45 days",
@@ -41,7 +41,6 @@ const headers = {
   'Access-Control-Allow-Headers': 'Content-Type',
 }
 
-// ── Main handler ─────────────────────────────────────────────────────────────
 export default async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 200, headers })
 
@@ -49,80 +48,85 @@ export default async (req) => {
   const action = url.searchParams.get('action') || 'results'
   const pw     = url.searchParams.get('password') || ''
 
-  // Public: read stored results
+  // ── Public: read stored results ───────────────────────────────────────
   if (action === 'results') {
     try {
       const store   = getStore(STORE)
-      const raw     = await store.get(RESULTS_KEY)
-      const history = await store.get(HISTORY_KEY).catch(() => null)
-      if (!raw) return new Response(JSON.stringify({ results: null, history: [] }), { status: 200, headers })
+      const [raw, histRaw] = await Promise.all([
+        store.get(RESULTS_KEY).catch(() => null),
+        store.get(HISTORY_KEY).catch(() => null),
+      ])
       return new Response(JSON.stringify({
-        results: JSON.parse(raw),
-        history: history ? JSON.parse(history) : []
-      }), { status: 200, headers })
+        results:  raw     ? JSON.parse(raw)     : null,
+        history:  histRaw ? JSON.parse(histRaw) : [],
+      }), { status: 200, headers: { ...headers, 'Content-Type': 'application/json' } })
     } catch (err) {
-      return new Response(JSON.stringify({ error: err.message }), { status: 500, headers })
+      return new Response(JSON.stringify({ results: null, history: [], error: err.message }),
+        { status: 200, headers: { ...headers, 'Content-Type': 'application/json' } })
     }
   }
 
-  // Protected: trigger a fresh run
+  // ── Protected: trigger a fresh run ────────────────────────────────────
   const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || ''
-  if (action === 'run' && pw !== ADMIN_PASSWORD) {
+  if (pw !== ADMIN_PASSWORD) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers })
   }
 
-  // Run the checks
   try {
-    const results = await runChecks()
-    return new Response(JSON.stringify({ ok: true, checkedAt: results.checkedAt, summary: results.summary }), { status: 200, headers })
+    const data = await runChecks()
+    return new Response(
+      JSON.stringify({ ok: true, checkedAt: data.checkedAt, summary: data.summary }),
+      { status: 200, headers: { ...headers, 'Content-Type': 'application/json' } }
+    )
   } catch (err) {
-    console.error('[seo-track]', err.message)
+    console.error('[seo-track] run error:', err.message)
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers })
   }
 }
 
-// ── Scheduled trigger (daily cron) ───────────────────────────────────────────
-export const schedule = '0 6 * * *'  // 6am UTC daily
+// Netlify v2 config — schedule goes inside config
+export const config = {
+  path: '/api/seo-track',
+  method: ['GET', 'OPTIONS'],
+  schedule: '0 6 * * *',  // 6am UTC daily
+}
 
-export const config = { path: '/api/seo-track', method: ['GET', 'OPTIONS'] }
-
-// ── Core logic ───────────────────────────────────────────────────────────────
+// ── Core: check all keywords ──────────────────────────────────────────────────
 async function runChecks() {
   const API_KEY = Netlify.env.get('VALUESERP_API') || ''
-  if (!API_KEY) throw new Error('VALUESERP_API not configured')
+  if (!API_KEY) throw new Error('VALUESERP_API environment variable not set')
 
-  const store = getStore(STORE)
-  const checkedAt = new Date().toISOString()
-  const keyword_results = []
+  const store      = getStore(STORE)
+  const checkedAt  = new Date().toISOString()
+  const results    = []
 
   for (const keyword of KEYWORDS) {
     const result = await checkKeyword(keyword, API_KEY)
-    keyword_results.push(result)
-    // Small delay to avoid rate limiting
-    await new Promise(r => setTimeout(r, 500))
+    results.push(result)
+    // 300ms gap between calls — keeps us under ValueSERP rate limits
+    await new Promise(r => setTimeout(r, 300))
   }
 
-  const inAIO  = keyword_results.filter(r => r.in_aio).length
-  const cited  = keyword_results.filter(r => r.site_cited).length
-  const total  = keyword_results.length
+  const inAio   = results.filter(r => r.in_aio).length
+  const cited   = results.filter(r => r.site_cited).length
+  const ranked  = results.filter(r => r.organic_rank).length
 
   const data = {
     checkedAt,
-    summary: { total, in_aio: inAIO, site_cited: cited },
-    keywords: keyword_results,
+    summary: { total: results.length, in_aio: inAio, site_cited: cited, ranked },
+    keywords: results,
   }
 
-  // Save latest results
+  // Save latest + append to 30-day history
   await store.set(RESULTS_KEY, JSON.stringify(data))
 
-  // Append to history (keep last 30 days)
   let history = []
   try {
     const raw = await store.get(HISTORY_KEY)
     if (raw) history = JSON.parse(raw)
   } catch (e) {}
 
-  history.unshift({ date: checkedAt.split('T')[0], in_aio: inAIO, site_cited: cited, total })
+  history.unshift({ date: checkedAt.slice(0, 10), in_aio: inAio, site_cited: cited, total: results.length })
   if (history.length > 30) history = history.slice(0, 30)
   await store.set(HISTORY_KEY, JSON.stringify(history))
 
@@ -132,63 +136,65 @@ async function runChecks() {
 async function checkKeyword(keyword, apiKey) {
   const result = {
     keyword,
-    in_aio: false,
-    site_cited: false,
-    aio_sources: [],
+    in_aio:       false,
+    site_cited:   false,
+    aio_sources:  [],
     organic_rank: null,
-    checkedAt: new Date().toISOString(),
-    error: null,
+    error:        null,
+    checkedAt:    new Date().toISOString(),
   }
 
   try {
     const params = new URLSearchParams({
-      api_key:           apiKey,
-      q:                 keyword,
-      engine:            'google',
-      google_domain:     'google.com',
-      gl:                'us',
-      hl:                'en',
-      device:            'desktop',
+      api_key:             apiKey,
+      q:                   keyword,
+      engine:              'google',
+      google_domain:       'google.com',
+      gl:                  'us',
+      hl:                  'en',
+      device:              'desktop',
       include_ai_overview: 'true',
-      num:               '10',
+      num:                 '10',
     })
 
-    const res = await fetch(`https://api.valueserp.com/search?${params}`)
-    if (!res.ok) throw new Error(`ValueSERP ${res.status}`)
+    const res = await fetch(`https://api.valueserp.com/search?${params}`, {
+      signal: AbortSignal.timeout(8000),
+    })
+
+    if (!res.ok) {
+      result.error = `ValueSERP HTTP ${res.status}`
+      return result
+    }
+
     const data = await res.json()
 
-    // ── AI Overview ───────────────────────────────────────────────────────
+    // ── AI Overview ──────────────────────────────────────────────────────
     const aio = data.ai_overview
     if (aio) {
       result.in_aio = true
 
-      // Sources cited in AIO
       const sources = [
         ...(aio.ai_overview_sources || []),
-        ...(aio.sources || []),
-        ...(aio.references || []),
+        ...(aio.sources             || []),
+        ...(aio.references          || []),
       ]
-      result.aio_sources = sources.map(s => ({
-        title: s.title || s.name || '',
-        link:  s.link  || s.url  || '',
-      })).filter(s => s.link)
+      result.aio_sources = sources
+        .map(s => ({ title: s.title || s.name || '', link: s.link || s.url || '' }))
+        .filter(s => s.link)
 
-      // Check if our site is cited
-      result.site_cited = result.aio_sources.some(s =>
-        s.link && s.link.includes(SITE_DOMAIN)
-      )
+      result.site_cited = result.aio_sources.some(s => s.link.includes(SITE_DOMAIN))
 
-      // Also check AIO text content for our domain
-      const aioText = JSON.stringify(aio).toLowerCase()
-      if (!result.site_cited && aioText.includes(SITE_DOMAIN)) {
-        result.site_cited = true
+      // Also check AIO text body for our domain
+      if (!result.site_cited) {
+        const body = JSON.stringify(aio).toLowerCase()
+        if (body.includes(SITE_DOMAIN)) result.site_cited = true
       }
     }
 
-    // ── Organic rank ──────────────────────────────────────────────────────
+    // ── Organic rank ─────────────────────────────────────────────────────
     const organic = data.organic_results || []
-    const ourResult = organic.find(r => r.link && r.link.includes(SITE_DOMAIN))
-    if (ourResult) result.organic_rank = ourResult.position
+    const ours = organic.find(r => r.link && r.link.includes(SITE_DOMAIN))
+    if (ours) result.organic_rank = ours.position
 
   } catch (err) {
     result.error = err.message
