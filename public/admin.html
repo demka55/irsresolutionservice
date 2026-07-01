@@ -862,8 +862,12 @@ async function deleteClient(btn){
     const r=await fetch('/api/delete-client',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,email})});
     const d=await r.json();
     if(!r.ok){toast(d.error||'Delete failed',true);btn.disabled=false;btn.textContent='🗑 Delete Client';return;}
+    // Remove immediately from local array and re-render — don't wait for blob propagation
+    clients=clients.filter(c=>c.email!==email);
+    updateStats();renderTable();populateIrsSel();
     toast(`${name} deleted`);
-    await loadClients();
+    // Reload in background to confirm
+    setTimeout(loadClients, 2000);
   }catch(e){toast(e.message,true);btn.disabled=false;btn.textContent='🗑 Delete Client';}
 }
 
