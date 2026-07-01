@@ -457,37 +457,42 @@ async function login(){
   if(!entered){document.getElementById('lerr').style.display='block';return;}
   const btn=document.querySelector('.lbtn');
   btn.disabled=true;btn.textContent='Checking…';
+  document.getElementById('lerr').style.display='none';
   try{
-    const r=await fetch(`/api/admin-clients?password=${encodeURIComponent(entered)}`);
+    const r=await fetch('/api/admin-auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:entered})});
+    const d=await r.json();
     if(r.ok){
       apw=entered;
       sessionStorage.setItem('a',entered);
       document.getElementById('login').style.display='none';
       document.getElementById('app').style.display='block';
-      const d=await r.json();
-      clients=d.clients||[];
-      updateStats();renderTable();populateIrsSel();
-      loadCredsFromStorage();
+      loadClients();loadCredsFromStorage();
     } else {
+      document.getElementById('lerr').textContent=d.error||'Incorrect password.';
       document.getElementById('lerr').style.display='block';
     }
-  }catch(e){document.getElementById('lerr').textContent='Connection error — try again.';document.getElementById('lerr').style.display='block';}
+  }catch(e){
+    document.getElementById('lerr').textContent='Connection error — try again.';
+    document.getElementById('lerr').style.display='block';
+  }
   btn.disabled=false;btn.textContent='Sign in →';
 }
 function logout(){sessionStorage.removeItem('a');location.reload();}
 const sa=sessionStorage.getItem('a');
 if(sa){
-  // Validate stored session against backend on page load
-  fetch(`/api/admin-clients?password=${encodeURIComponent(sa)}`).then(r=>{
-    if(r.ok){
-      apw=sa;
-      document.getElementById('login').style.display='none';
-      document.getElementById('app').style.display='block';
-      r.json().then(d=>{clients=d.clients||[];updateStats();renderTable();populateIrsSel();loadCredsFromStorage();});
-    } else {
-      sessionStorage.removeItem('a');
-    }
-  }).catch(()=>sessionStorage.removeItem('a'));
+  // Re-validate stored session against backend on page load
+  fetch('/api/admin-auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:sa})})
+    .then(r=>{
+      if(r.ok){
+        apw=sa;
+        document.getElementById('login').style.display='none';
+        document.getElementById('app').style.display='block';
+        loadClients();loadCredsFromStorage();
+      } else {
+        sessionStorage.removeItem('a');
+      }
+    })
+    .catch(()=>sessionStorage.removeItem('a'));
 }
 
 function goPage(n,el){
