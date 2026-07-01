@@ -622,6 +622,12 @@ function renderDetail(c){
       <span class="lbl">Email Client</span>
       <button class="btn btn-ghost btn-sm" style="margin-top:3px" onclick="emailCl('${esc(c.email)}','${esc(c.name||'')}')">✉ Email</button>
     </div>
+    <div style="margin-top:1.25rem;padding-top:.875rem;border-top:1px solid var(--cream-dark)">
+      <span class="lbl" style="color:var(--red)">Danger Zone</span>
+      <div style="margin-top:3px">
+        <button class="btn btn-sm" style="background:transparent;border:1px solid var(--red);color:var(--red);font-size:11px" onclick="deleteClient('${esc(c.email)}','${esc(c.name||c.email)}')">🗑 Delete Client</button>
+      </div>
+    </div>
   </div>
   <div class="dp s2">
     <div class="dp-h">📄 IRS Transcripts</div>
@@ -843,30 +849,53 @@ async function pullTranscript(){
 
 function quickPull(email){const c=clients.find(x=>x.email===email);if(!c)return;goPage('irs',document.querySelectorAll('.sb-i')[3]);if(c.steps?.form8821Data){const f=c.steps.form8821Data,pts=(f.taxpayerName||'').split(' ');document.getElementById('irsClient').value=email;document.getElementById('irsFirst').value=pts[0]||'';document.getElementById('irsLast').value=pts.slice(1).join(' ')||'';document.getElementById('irsYear').value=(f.taxYears||'').split(',')[0]?.trim()||new Date().getFullYear()-2;}}
 
+async function deleteClient(email,name){
+  if(!confirm(`Delete client "${name}" (${email})?\n\nThis permanently removes their record, steps, and vitals from the database. This cannot be undone.`)) return;
+  if(!confirm(`Are you sure? "${email}" will be permanently deleted.`)) return;
+  try{
+    const r=await fetch('/api/delete-client',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,email})});
+    const d=await r.json();
+    if(!r.ok){toast(d.error||'Delete failed',true);return;}
+    toast(`${name} deleted`);
+    await loadClients();
+  }catch(e){toast(e.message,true);}
+}
+
 function openTxModal(html,title){document.getElementById('txSub').textContent=title;document.getElementById('txContent').innerHTML=html||'No content';curTx=html;document.getElementById('txModal').classList.add('open');}
 
 function openClientVitals(email){
   const c=clients.find(x=>x.email===email);
   if(!c){toast('Client not found',true);return;}
   const s=c.steps||{};
+  // Check steps.vitals_* keys (set by transcript-parse.mjs)
   const vKeys=Object.keys(s).filter(k=>k.startsWith('vitals_'));
-  if(!vKeys.length){
-    // No vitals yet — go to IRS Connection tab so they can pull+parse
-    toast('No vitals parsed yet — pull a transcript first, then click 🔬 Parse Vitals');
-    quickPull(email);
+  // Also check top-level latestVitals
+  const topLevel=c.latestVitals||null;
+  if(!vKeys.length && !topLevel){
+    // No parsed vitals yet — show modal with instructions instead of navigating away
+    document.getElementById('txSub').textContent=`${c.name||email} — No Vitals Yet`;
+    document.getElementById('txContent').innerHTML=`
+      <div style="padding:1.5rem;text-align:center">
+        <div style="font-size:32px;margin-bottom:.75rem">📋</div>
+        <div style="font-weight:600;color:var(--ink);margin-bottom:.5rem">No vitals parsed for this client yet</div>
+        <div style="font-size:13px;color:var(--ink-muted);margin-bottom:1.25rem">Pull a transcript from the IRS Connection tab, then click 🔬 Parse Vitals to generate the vitals dashboard.</div>
+        <button class="btn btn-gold btn-sm" onclick="closeM('txModal');quickPull('${esc(email)}')">→ Go to IRS Pull</button>
+      </div>`;
+    document.getElementById('txModal').classList.add('open');
     return;
   }
-  // Show vitals in the transcript modal (reuse existing modal, swap content)
-  const latestKey=vKeys[vKeys.length-1];
-  let v;
-  try{v=typeof s[latestKey]==='string'?JSON.parse(s[latestKey]):s[latestKey];}
-  catch{toast('Could not read vitals data',true);return;}
-  const allVitalsHtml=vKeys.map(k=>{
-    let vv;try{vv=typeof s[k]==='string'?JSON.parse(s[k]):s[k];}catch{return '';}
-    return renderVitalsPanel(vv,k.replace('vitals_',''));
-  }).join('');
+  // Build vitals HTML — use steps keys first, fall back to top-level latestVitals
+  let allVitalsHtml='';
+  if(vKeys.length){
+    allVitalsHtml=vKeys.map(k=>{
+      let vv;try{vv=typeof s[k]==='string'?JSON.parse(s[k]):s[k];}catch{return '';}
+      return renderVitalsPanel(vv,k.replace('vitals_',''));
+    }).join('');
+  } else if(topLevel){
+    allVitalsHtml=renderVitalsPanel(topLevel,'latest');
+  }
   document.getElementById('txSub').textContent=`${c.name||email} — Transcript Vitals`;
-  document.getElementById('txContent').innerHTML=`<div style="font-size:12px;color:var(--ink-muted);margin-bottom:.5rem">Parsed ${vKeys.length} transcript(s). Showing all years.</div>${allVitalsHtml}`;
+  document.getElementById('txContent').innerHTML=`<div style="font-size:12px;color:var(--ink-muted);margin-bottom:.5rem">${vKeys.length} parsed transcript(s).</div>${allVitalsHtml}`;
   document.getElementById('txModal').classList.add('open');
 }
 
