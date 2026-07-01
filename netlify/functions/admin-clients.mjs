@@ -32,7 +32,9 @@ export default async (req) => {
     const { blobs } = await store.list()
 
     const clients = await Promise.all(
-      blobs.map(async (b) => {
+      blobs
+        .filter(b => b.key !== '__index__' && !b.key.startsWith('__'))
+        .map(async (b) => {
         try {
           const raw = await store.get(b.key)
           const data = raw ? JSON.parse(raw) : {}

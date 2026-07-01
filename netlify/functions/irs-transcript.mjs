@@ -5,6 +5,7 @@
 // older Netlify runtimes (crypto.subtle requires Node 19+; node:crypto works everywhere).
 
 import { createSign, createPrivateKey, randomUUID } from 'node:crypto';
+import { getStore } from '@netlify/blobs';
 
 const IRS_TOKEN_URL = 'https://api.www4.irs.gov/auth/oauth/v2/token';
 const IRS_TDS_URL   = 'https://api.www4.irs.gov/esrv/api/tds/request/caf';
@@ -239,6 +240,17 @@ export default async (req) => {
       }
 
       const transcriptHtml = await tdsRes.text();
+
+      // Store HTML to blob so it persists across sessions
+      // Key: email:formNumber_productType_taxYear  in 'transcripts' store
+      try {
+        const txStore = getStore('transcripts');
+        const txKey = `${clientEmail.toLowerCase().trim()}:${formNumber}_${productType}_${taxYear}`;
+        await txStore.set(txKey, transcriptHtml);
+      } catch (storeErr) {
+        console.warn('[IRS Transcript] blob store failed (non-fatal):', storeErr.message);
+      }
+
       return new Response(JSON.stringify({ ok: true, transcript: transcriptHtml }), { status: 200, headers });
     }
 

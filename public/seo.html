@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Overview Tracker — IRS Resolution Service</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<style>
+:root{
+  --gold:#c9a84c;--gold-dim:#8a6e2f;--gold-muted:#f5ecd8;
+  --ink:#1a1410;--ink-soft:#4a3f32;--ink-muted:#7a6e60;
+  --cream:#f5f0e8;--cream-dark:#d9cdb8;--white:#ffffff;
+  --red:#c0392b;--green:#1a5c2a;--green-bg:#edf7f0;--red-bg:#fdf0f0;--amber:#b7791f;--amber-bg:#fffbeb;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;min-height:100vh}
+
+/* Login */
+#login{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.login-box{background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;padding:2.5rem;width:100%;max-width:380px;text-align:center}
+.login-logo{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--ink);margin-bottom:.25rem}
+.login-sub{font-size:13px;color:var(--ink-muted);margin-bottom:1.75rem}
+.login-input{width:100%;padding:10px 14px;border:1px solid var(--cream-dark);border-radius:4px;font-family:var(--sans);font-size:15px;background:var(--cream);color:var(--ink);margin-bottom:.75rem}
+.login-btn{width:100%;padding:11px;background:var(--gold);color:var(--white);border:none;border-radius:4px;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer}
+.login-err{font-size:13px;color:var(--red);margin-top:.5rem;display:none}
+
+/* App */
+#app{display:none;max-width:1100px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+.header-left h1{font-family:var(--serif);font-size:2rem;font-weight:700;color:var(--ink)}
+.header-left p{font-size:13px;color:var(--ink-muted);margin-top:2px}
+.header-right{display:flex;gap:.5rem;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:4px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--cream-dark);background:var(--white);color:var(--ink)}
+.btn:hover{background:var(--cream)}
+.btn.gold{background:var(--gold);color:var(--white);border-color:transparent}
+.btn.gold:hover{background:var(--gold-dim)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* Summary cards */
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:2rem}
+.scard{background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1rem 1.25rem}
+.scard-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted);margin-bottom:4px}
+.scard-val{font-family:var(--serif);font-size:2.25rem;font-weight:700;line-height:1;color:var(--ink)}
+.scard-sub{font-size:12px;color:var(--ink-muted);margin-top:3px}
+.scard-val.green{color:var(--green)}
+.scard-val.amber{color:var(--amber)}
+
+/* Trend sparkline */
+.trend-row{display:flex;align-items:flex-end;gap:3px;height:32px;margin-top:.5rem}
+.trend-bar{background:var(--gold);border-radius:2px 2px 0 0;min-width:6px;transition:height .3s}
+
+/* Table */
+.table-wrap{background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;overflow:hidden;margin-bottom:1.5rem}
+.table-header{display:flex;align-items:center;justify-content:space-between;padding:.875rem 1.25rem;border-bottom:1px solid var(--cream-dark)}
+.table-title{font-size:13px;font-weight:600;color:var(--ink)}
+.table-meta{font-size:12px;color:var(--ink-muted)}
+table{width:100%;border-collapse:collapse}
+th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-muted);padding:8px 12px;text-align:left;background:var(--cream);border-bottom:1px solid var(--cream-dark)}
+td{padding:10px 12px;border-bottom:1px solid var(--cream-dark);font-size:13px;color:var(--ink-soft);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#faf8f4}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:3px;white-space:nowrap}
+.badge.cited{background:var(--green-bg);color:var(--green)}
+.badge.aio-yes{background:#e8f4fd;color:#1a5276}
+.badge.aio-no{background:var(--cream);color:var(--ink-muted)}
+.badge.rank{background:var(--gold-muted);color:var(--gold-dim)}
+.badge.no-rank{background:var(--cream);color:var(--ink-muted)}
+.badge.error{background:var(--red-bg);color:var(--red)}
+
+/* Sources list */
+.sources{display:flex;flex-direction:column;gap:2px;margin-top:4px}
+.src-link{font-size:11px;color:var(--gold-dim);text-decoration:none;word-break:break-all}
+.src-link:hover{text-decoration:underline}
+.src-link.ours{font-weight:700;color:var(--green)}
+
+/* Status */
+.status-bar{background:var(--cream);border-radius:4px;padding:8px 14px;font-size:12px;color:var(--ink-muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:8px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--cream-dark);flex-shrink:0}
+.dot.green{background:#27ae60}
+.dot.amber{animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.dot.amber{background:var(--amber)}
+
+/* History chart */
+.history-wrap{background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem;margin-bottom:1.5rem}
+.history-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:1rem}
+.history-chart{display:flex;align-items:flex-end;gap:4px;height:60px;border-bottom:1px solid var(--cream-dark);padding-bottom:4px;overflow-x:auto}
+.h-col{display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0}
+.h-bar{width:20px;border-radius:2px 2px 0 0;transition:height .3s}
+.h-bar.cited{background:var(--green)}
+.h-bar.aio{background:#3498db;opacity:.4}
+.h-date{font-size:9px;color:var(--ink-muted);transform:rotate(-45deg);transform-origin:top left;margin-top:6px;white-space:nowrap}
+
+/* Filter tabs */
+.filters{display:flex;gap:.4rem;margin-bottom:1rem;flex-wrap:wrap}
+.ftab{padding:5px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--cream-dark);background:var(--white);color:var(--ink-muted)}
+.ftab.active{background:var(--ink);color:var(--white);border-color:transparent}
+.empty{text-align:center;padding:3rem;color:var(--ink-muted);font-size:14px}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--cream-dark);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:640px){
+  th:nth-child(4),td:nth-child(4){display:none}
+  #app{padding:1rem .75rem 3rem}
+}
+</style>
+
+<!-- Login screen -->
+<div id="login">
+  <div class="login-box">
+    <div class="login-logo">IRS Resolution Service</div>
+    <div class="login-sub">AI Overview Tracker — internal tool</div>
+    <input type="password" class="login-input" id="pw" placeholder="Password" autocomplete="current-password">
+    <button class="login-btn" onclick="doLogin()">Sign in →</button>
+    <div class="login-err" id="lerr">Incorrect password</div>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div id="app">
+  <div class="header">
+    <div class="header-left">
+      <h1>AI Overview Tracker</h1>
+      <p>Tracking 19 keywords · irsresolutionservice.com · Updated daily at 6am UTC</p>
+    </div>
+    <div class="header-right">
+      <button class="btn" onclick="logout()">Sign out</button>
+      <button class="btn gold" id="runBtn" onclick="runNow()">↻ Run now</button>
+    </div>
+  </div>
+
+  <div class="status-bar" id="statusBar">
+    <span class="dot" id="statusDot"></span>
+    <span id="statusText">Loading…</span>
+  </div>
+
+  <div class="summary" id="summary"></div>
+
+  <div class="history-wrap" id="historyWrap" style="display:none">
+    <div class="history-title">30-day trend — keywords cited in AI Overview</div>
+    <div class="history-chart" id="historyChart"></div>
+  </div>
+
+  <div class="filters">
+    <button class="ftab active" onclick="setFilter('all',this)">All (19)</button>
+    <button class="ftab" onclick="setFilter('cited',this)">Cited in AIO</button>
+    <button class="ftab" onclick="setFilter('aio_only',this)">AIO — not cited</button>
+    <button class="ftab" onclick="setFilter('no_aio',this)">No AIO</button>
+    <button class="ftab" onclick="setFilter('ranked',this)">Organic rank</button>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-header">
+      <div class="table-title">Keyword results</div>
+      <div class="table-meta" id="tableCount"></div>
+    </div>
+    <div id="tableBody">
+      <div class="empty">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ADMIN_PW_KEY = 'seo_tracker_pw';
+let apw = '', allResults = [], currentFilter = 'all';
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+async function doLogin(){
+  const pw = document.getElementById('pw').value.trim();
+  if(!pw) return;
+  const r = await fetch(`/api/admin-auth`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
+  if(r.ok){
+    apw = pw;
+    sessionStorage.setItem(ADMIN_PW_KEY, pw);
+    showApp();
+  } else {
+    document.getElementById('lerr').style.display = 'block';
+  }
+}
+function logout(){ sessionStorage.removeItem(ADMIN_PW_KEY); location.reload(); }
+document.getElementById('pw').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
+
+// Auto-login from session
+const saved = sessionStorage.getItem(ADMIN_PW_KEY);
+if(saved){
+  fetch('/api/admin-auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:saved})})
+    .then(r=>{ if(r.ok){ apw=saved; showApp(); } else sessionStorage.removeItem(ADMIN_PW_KEY); })
+    .catch(()=>{});
+}
+
+// ── App ───────────────────────────────────────────────────────────────────────
+function showApp(){
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  loadResults();
+}
+
+async function loadResults(){
+  setStatus('loading', 'Fetching latest results…');
+  try {
+    const r = await fetch('/api/seo-track?action=results');
+    const d = await r.json();
+    if(d.results){
+      allResults = d.results.keywords || [];
+      renderSummary(d.results);
+      renderTable(currentFilter);
+      renderHistory(d.history || []);
+      const dt = new Date(d.results.checkedAt);
+      setStatus('green', `Last checked: ${dt.toLocaleDateString('en-US',{month:'short',day:'numeric'})} at ${dt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}`);
+    } else {
+      setStatus('amber', 'No data yet — click "Run now" to check all keywords');
+      document.getElementById('tableBody').innerHTML = '<div class="empty">No results yet. Click "Run now" to fetch data.</div>';
+    }
+  } catch(e){
+    setStatus('amber', 'Error loading results: ' + e.message);
+  }
+}
+
+async function runNow(){
+  const btn = document.getElementById('runBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Checking 19 keywords…';
+  setStatus('amber', 'Running checks — this takes ~30 seconds…');
+  try {
+    const r = await fetch(`/api/seo-track?action=run&password=${encodeURIComponent(apw)}`);
+    const d = await r.json();
+    if(!r.ok){ setStatus('amber', 'Error: ' + (d.error||'unknown')); }
+    else {
+      setStatus('green', `Done — ${d.summary.site_cited}/${d.summary.total} keywords have us cited in AIO`);
+      await loadResults();
+    }
+  } catch(e){ setStatus('amber', 'Error: ' + e.message); }
+  btn.disabled = false;
+  btn.innerHTML = '↻ Run now';
+}
+
+function setStatus(state, text){
+  const dot = document.getElementById('statusDot');
+  dot.className = 'dot ' + (state==='loading'?'amber':state);
+  document.getElementById('statusText').textContent = text;
+}
+
+function setFilter(f, el){
+  currentFilter = f;
+  document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderTable(f);
+}
+
+// ── Render summary ────────────────────────────────────────────────────────────
+function renderSummary(data){
+  const kw = data.keywords || [];
+  const total     = kw.length;
+  const inAio     = kw.filter(r=>r.in_aio).length;
+  const cited     = kw.filter(r=>r.site_cited).length;
+  const ranked    = kw.filter(r=>r.organic_rank).length;
+  const aioRate   = total ? Math.round(inAio/total*100) : 0;
+  const citeRate  = inAio ? Math.round(cited/inAio*100) : 0;
+
+  document.getElementById('summary').innerHTML = `
+    <div class="scard">
+      <div class="scard-label">Keywords tracked</div>
+      <div class="scard-val">${total}</div>
+      <div class="scard-sub">checked daily</div>
+    </div>
+    <div class="scard">
+      <div class="scard-label">AI Overview shown</div>
+      <div class="scard-val ${inAio>0?'amber':''}">${inAio}</div>
+      <div class="scard-sub">${aioRate}% of keywords</div>
+    </div>
+    <div class="scard">
+      <div class="scard-label">We're cited in AIO</div>
+      <div class="scard-val ${cited>0?'green':''}">${cited}</div>
+      <div class="scard-sub">${citeRate}% of AIO results</div>
+    </div>
+    <div class="scard">
+      <div class="scard-label">Organic rank</div>
+      <div class="scard-val">${ranked}</div>
+      <div class="scard-sub">keywords top 10</div>
+    </div>`;
+}
+
+// ── Render table ──────────────────────────────────────────────────────────────
+function renderTable(filter){
+  let rows = allResults;
+  if(filter==='cited')    rows = rows.filter(r=>r.site_cited);
+  if(filter==='aio_only') rows = rows.filter(r=>r.in_aio && !r.site_cited);
+  if(filter==='no_aio')   rows = rows.filter(r=>!r.in_aio);
+  if(filter==='ranked')   rows = rows.filter(r=>r.organic_rank);
+
+  document.getElementById('tableCount').textContent = `${rows.length} keyword${rows.length!==1?'s':''}`;
+
+  if(!rows.length){
+    document.getElementById('tableBody').innerHTML = '<div class="empty">No keywords match this filter</div>';
+    return;
+  }
+
+  const html = `<table>
+    <thead><tr>
+      <th style="width:38%">Keyword</th>
+      <th>AI Overview</th>
+      <th>Our site cited</th>
+      <th>Organic rank</th>
+    </tr></thead>
+    <tbody>${rows.map(r=>{
+      const aioBadge = r.error
+        ? `<span class="badge error">Error</span>`
+        : r.in_aio
+          ? `<span class="badge aio-yes">✓ AIO shown</span>`
+          : `<span class="badge aio-no">No AIO</span>`;
+
+      const citedBadge = r.site_cited
+        ? `<span class="badge cited">✓ Cited</span>`
+        : r.in_aio ? `<span class="badge aio-no">Not cited</span>` : `<span class="badge aio-no">—</span>`;
+
+      const rankBadge = r.organic_rank
+        ? `<span class="badge rank">#${r.organic_rank}</span>`
+        : `<span class="badge no-rank">Not ranked</span>`;
+
+      // Show AIO sources if present
+      let sourcesHtml = '';
+      if(r.aio_sources && r.aio_sources.length){
+        const srcLinks = r.aio_sources.slice(0,5).map(s=>{
+          const isOurs = s.link && s.link.includes('irsresolutionservice.com');
+          const domain = s.link ? (new URL(s.link).hostname.replace('www.','')) : s.link;
+          return `<a class="src-link ${isOurs?'ours':''}" href="${esc(s.link)}" target="_blank" rel="noopener">${esc(s.title||domain)}</a>`;
+        }).join('');
+        sourcesHtml = `<div class="sources">${srcLinks}</div>`;
+      }
+
+      return `<tr>
+        <td><strong>${esc(r.keyword)}</strong></td>
+        <td>${aioBadge}${sourcesHtml}</td>
+        <td>${citedBadge}</td>
+        <td>${rankBadge}</td>
+      </tr>`;
+    }).join('')}</tbody></table>`;
+
+  document.getElementById('tableBody').innerHTML = html;
+}
+
+// ── Render history chart ──────────────────────────────────────────────────────
+function renderHistory(history){
+  if(!history.length){ document.getElementById('historyWrap').style.display='none'; return; }
+  document.getElementById('historyWrap').style.display = 'block';
+  const maxCited = Math.max(...history.map(h=>h.site_cited), 1);
+  const maxAio   = Math.max(...history.map(h=>h.in_aio), 1);
+  const cols = [...history].reverse().map(h=>{
+    const cH = Math.round((h.site_cited/maxCited)*52);
+    const aH = Math.round((h.in_aio/maxAio)*52);
+    const date = h.date ? h.date.slice(5) : '';
+    return `<div class="h-col">
+      <div style="display:flex;align-items:flex-end;gap:2px;height:52px">
+        <div class="h-bar aio" style="height:${aH}px" title="AIO: ${h.in_aio}"></div>
+        <div class="h-bar cited" style="height:${cH}px" title="Cited: ${h.site_cited}"></div>
+      </div>
+      <div class="h-date">${esc(date)}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('historyChart').innerHTML = cols;
+}
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+</script>
+</body>
+</html>

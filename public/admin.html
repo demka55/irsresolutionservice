@@ -630,7 +630,13 @@ function renderDetail(c){
     </div>
   </div>
   <div class="dp s2">
-    <div class="dp-h">📄 IRS Transcripts</div>
+    <div class="dp-h" style="display:flex;align-items:center;justify-content:space-between">
+      <span>📄 IRS Transcripts</span>
+      <label style="cursor:pointer;font-size:11px;padding:3px 10px;border:1px solid var(--gold-dim);border-radius:3px;color:var(--gold-dim);background:transparent;font-family:var(--sans)">
+        ⬆ Upload HTML
+        <input type="file" accept=".html,.htm" style="display:none" onchange="uploadTranscript(event,'${esc(c.email)}')">
+      </label>
+    </div>
     ${(()=>{
       const pulls = Object.keys(s).filter(k=>k.startsWith('txPulled_'));
       const downloads = Object.keys(s).filter(k=>k.startsWith('txDownloaded_'));
@@ -640,11 +646,19 @@ function renderDetail(c){
         const pulledAt = s[k] ? new Date(s[k]).toLocaleString() : '—';
         const dlKey = 'txDownloaded_'+key;
         const dlAt = s[dlKey] ? new Date(s[dlKey]).toLocaleString() : null;
+        const hasHtml = !!(s['transcript_'+key] && s['transcript_'+key].length > 100);
+        const inMemory = (curTxEmail===c.email && curTxKey===key && curTx);
+        const canView = hasHtml || inMemory;
         return `<div style="background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:.75rem;margin-bottom:.5rem">
           <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:4px">${key.replace(/_/g,' ')}</div>
           <div style="font-size:11px;color:var(--ink-muted)">Last pulled: ${pulledAt}</div>
-          ${dlAt ? `<div style="font-size:11px;color:var(--green)">Downloaded by Romeo: ${dlAt}</div>` : '<div style="font-size:11px;color:var(--amber)">Not yet downloaded</div>'}
-          <button class="btn btn-blue btn-sm" style="margin-top:.5rem" onclick="rePullAndView('${esc(c.email)}','${key}')">↻ Pull &amp; View</button>
+          ${dlAt ? `<div style="font-size:11px;color:var(--green)">Downloaded: ${dlAt}</div>` : '<div style="font-size:11px;color:var(--amber)">Not yet downloaded</div>'}
+          <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem">
+            <button class="btn btn-blue btn-sm" onclick="rePullAndView('${esc(c.email)}','${key}')">↻ Re-pull</button>
+            ${canView ? `<button class="btn btn-ghost btn-sm" onclick="viewStoredTx('${esc(c.email)}','${key}')">👁 View</button>` : ''}
+            ${canView ? `<button class="btn btn-ghost btn-sm" onclick="dlStoredTx('${esc(c.email)}','${key}')">⬇ Download</button>` : ''}
+            ${canView ? `<button class="btn btn-gold btn-sm" onclick="parseStoredTx('${esc(c.email)}','${key}')">🔬 Parse Vitals</button>` : ''}
+          </div>
         </div>`;
       }).join('');
     })()}
@@ -852,6 +866,57 @@ async function pullTranscript(){
 
 function quickPull(email){const c=clients.find(x=>x.email===email);if(!c)return;goPage('irs',document.querySelectorAll('.sb-i')[3]);if(c.steps?.form8821Data){const f=c.steps.form8821Data,pts=(f.taxpayerName||'').split(' ');document.getElementById('irsClient').value=email;document.getElementById('irsFirst').value=pts[0]||'';document.getElementById('irsLast').value=pts.slice(1).join(' ')||'';document.getElementById('irsYear').value=(f.taxYears||'').split(',')[0]?.trim()||new Date().getFullYear()-2;}}
 
+// ── Stored transcript helpers ─────────────────────────────────────────────────
+function _getTxHtml(email, key){
+  // 1. In-memory curTx (fastest)
+  if(curTxEmail===email && curTxKey===key && curTx) return curTx;
+  // 2. Stored in client blob steps (transcript_ key)
+  const cl=clients.find(x=>x.email===email);
+  return cl?.steps?.['transcript_'+key] || null;
+}
+
+// Alias for async callers — same logic, no API needed
+async function _fetchTxHtml(email, key){
+  return _getTxHtml(email, key);
+}
+
+// viewTx — called from renderDetail transcript_ buttons (original pattern)
+async function viewTx(email, key){
+  const html=_getTxHtml(email, key.replace('transcript_',''));
+  if(!html){toast('Transcript not found in client record',true);return;}
+  openTxModal(html, key.replace('transcript_','').replace(/_/g,' '));
+  curTx=html; curTxEmail=email; curTxKey=key.replace('transcript_','');
+}
+
+function viewStoredTx(email, key){
+  const html=_getTxHtml(email,key);
+  if(html){ openTxModal(html,key.replace(/_/g,' ')); curTx=html;curTxEmail=email;curTxKey=key; return; }
+  // Fetch from blob
+  _fetchTxHtml(email,key).then(h=>{
+    if(!h){toast('Transcript not stored — click Re-pull first',true);return;}
+    curTx=h;curTxEmail=email;curTxKey=key;
+    openTxModal(h,key.replace(/_/g,' '));
+  });
+}
+
+async function dlStoredTx(email, key){
+  const html=await _fetchTxHtml(email,key);
+  if(!html){toast('Transcript not stored — click Re-pull first',true);return;}
+  try{ await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,adminPassword:apw,update:{adminAction:true,steps:{['txDownloaded_'+key]:new Date().toISOString()}}})}); await loadClients(); }catch(e){}
+  const b=new Blob([html],{type:'text/html'}),a=document.createElement('a');
+  a.href=URL.createObjectURL(b);
+  a.download=`irs-transcript-${key}.html`;
+  a.click();
+  toast('Transcript downloaded');
+}
+
+async function parseStoredTx(email, key){
+  const html=await _fetchTxHtml(email,key);
+  if(!html){toast('Transcript not stored — click Re-pull first',true);return;}
+  curTx=html; curTxEmail=email; curTxKey=key;
+  await _parseAndShowVitals(email, clients.find(x=>x.email===email)?.name||email, html, key);
+}
+
 async function deleteClient(btn){
   const email=btn.dataset.email;
   const name=btn.dataset.name||email;
@@ -862,13 +927,45 @@ async function deleteClient(btn){
     const r=await fetch('/api/delete-client',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminPassword:apw,email})});
     const d=await r.json();
     if(!r.ok){toast(d.error||'Delete failed',true);btn.disabled=false;btn.textContent='🗑 Delete Client';return;}
-    // Remove immediately from local array and re-render — don't wait for blob propagation
+    // Remove immediately from local array and re-render
     clients=clients.filter(c=>c.email!==email);
     updateStats();renderTable();populateIrsSel();
     toast(`${name} deleted`);
     // Reload in background to confirm
     setTimeout(loadClients, 2000);
   }catch(e){toast(e.message,true);btn.disabled=false;btn.textContent='🗑 Delete Client';}
+}
+
+async function uploadTranscript(evt, email){
+  const file=evt.target.files[0];
+  if(!file){return;}
+  // Parse txKey from filename e.g. IRS-Transcript-1040-ACTR-2022-Name.html → 1040_ACTR_2022
+  let txKey='';
+  const m=file.name.match(/(\d{4})[_\-]([A-Z]{3,4})[_\-](\d{4})/i);
+  if(m) txKey=`${m[1].toUpperCase()}_${m[2].toUpperCase()}_${m[3]}`;
+  else txKey=prompt('Enter transcript key (e.g. 1040_ACTR_2022):','1040_ACTR_2022')||'1040_ACTR_2022';
+
+  const reader=new FileReader();
+  reader.onload=async function(e){
+    const html=e.target.result;
+    if(!html||html.length<100){toast('File appears empty',true);return;}
+    // Store to client blob steps
+    try{
+      const r=await fetch('/api/client-status',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({email,adminPassword:apw,update:{adminAction:true,steps:{
+          ['transcript_'+txKey]:html,
+          ['txPulled_'+txKey]:new Date().toISOString()+'_uploaded'
+        }}})});
+      if(!r.ok){const d=await r.json();toast(d.error||'Upload failed',true);return;}
+      toast(`Transcript uploaded as ${txKey} — View Vitals will now work`);
+      // Set curTx so immediate actions work
+      curTx=html; curTxEmail=email; curTxKey=txKey;
+      await loadClients();
+    }catch(e2){toast(e2.message,true);}
+  };
+  reader.readAsText(file);
+  // Reset input so same file can be re-uploaded
+  evt.target.value='';
 }
 
 function openTxModal(html,title){document.getElementById('txSub').textContent=title;document.getElementById('txContent').innerHTML=html||'No content';curTx=html;document.getElementById('txModal').classList.add('open');}
@@ -898,20 +995,46 @@ async function openClientVitals(email){
     return;
   }
 
-  // ── 3. Transcript HTML stored in blob → fetch and parse ─────────────────────
+  // ── 3. Check transcript_ keys stored in client blob steps ───────────────────
   const txStoredKeys=Object.keys(s).filter(k=>k.startsWith('transcript_'));
   if(txStoredKeys.length){
-    const latestKey=txStoredKeys.sort().reverse()[0];
-    const txHtml=s[latestKey];
-    if(txHtml && txHtml.length>100){
-      _parseAndShowVitals(email, c.name||email, txHtml, latestKey.replace('transcript_',''));
+    // Sort by txPulled_ timestamp if available, else alphabetically
+    const latestKey=txStoredKeys.sort((a,b)=>{
+      const ka='txPulled_'+a.replace('transcript_',''), kb='txPulled_'+b.replace('transcript_','');
+      return ((s[kb]||'')>(s[ka]||''))?1:-1;
+    })[0];
+    const txKey=latestKey.replace('transcript_','');
+    const html=s[latestKey];
+    if(html && html.length>100){
+      await _parseAndShowVitals(email, c.name||email, html, txKey);
       return;
     }
   }
 
-  // ── 4. Nothing available → show instructions ─────────────────────────────────
-  document.getElementById('txSub').textContent=`${c.name||email} — No Transcript On File`;
-  document.getElementById('txContent').innerHTML=`<div style="padding:1.5rem;text-align:center"><div style="font-size:32px;margin-bottom:.75rem">📋</div><div style="font-weight:600;color:var(--ink);margin-bottom:.5rem">No transcript on file for this client yet</div><div style="font-size:13px;color:var(--ink-muted);margin-bottom:1.25rem">Pull a transcript from IRS Connection — it will be stored automatically and analysed on the next click.</div><button class="btn btn-gold btn-sm" onclick="closeM('txModal');quickPull('${esc(email)}')">→ Pull from IRS</button></div>`;
+  // ── 3b. txPulled_ exists but no HTML stored yet — need one re-pull ───────────
+  const txPulledKeys=Object.keys(s).filter(k=>k.startsWith('txPulled_'));
+  if(txPulledKeys.length){
+    const latestPullKey=txPulledKeys.sort((a,b)=>((s[b]||'')>(s[a]||''))?1:-1)[0];
+    const txKey=latestPullKey.replace('txPulled_','');
+    document.getElementById('txSub').textContent=`${c.name||email} — One Re-pull Needed`;
+    document.getElementById('txContent').innerHTML=`<div style="padding:1.5rem;text-align:center">
+      <div style="font-size:32px;margin-bottom:.75rem">📋</div>
+      <div style="font-weight:600;color:var(--ink);margin-bottom:.5rem">Pull once more to enable vitals</div>
+      <div style="font-size:13px;color:var(--ink-muted);margin-bottom:1.25rem">Previously pulled: ${txKey.replace(/_/g,' ')} on ${s[latestPullKey]?new Date(s[latestPullKey]).toLocaleString():'—'}<br>The HTML wasn't stored on that pull. One more pull fixes it permanently.</div>
+      <button class="btn btn-gold btn-sm" onclick="closeM('txModal');quickPull('${esc(email)}')">→ Re-pull ${txKey.replace(/_/g,' ')}</button>
+    </div>`;
+    document.getElementById('txModal').classList.add('open');
+    return;
+  }
+
+  // ── 4. Nothing at all ────────────────────────────────────────────────────────
+  document.getElementById('txSub').textContent=`${c.name||email} — No Transcript`;
+  document.getElementById('txContent').innerHTML=`<div style="padding:1.5rem;text-align:center">
+    <div style="font-size:32px;margin-bottom:.75rem">📋</div>
+    <div style="font-weight:600;color:var(--ink);margin-bottom:.5rem">No transcript on file yet</div>
+    <div style="font-size:13px;color:var(--ink-muted);margin-bottom:1.25rem">Pull a transcript from IRS Connection — it will be stored automatically and vitals will work from then on.</div>
+    <button class="btn btn-gold btn-sm" onclick="closeM('txModal');quickPull('${esc(email)}')">→ Pull from IRS</button>
+  </div>`;
   document.getElementById('txModal').classList.add('open');
 }
 
@@ -919,11 +1042,14 @@ async function reParseVitals(email){
   const c=clients.find(x=>x.email===email);
   if(!c) return;
   const s=c.steps||{};
-  if(curTx && curTxEmail===email){ _parseAndShowVitals(email,c.name||email,curTx,curTxKey); return; }
-  const txKeys=Object.keys(s).filter(k=>k.startsWith('transcript_'));
-  if(!txKeys.length){ toast('No stored transcript to re-parse',true); return; }
-  const latest=txKeys.sort().reverse()[0];
-  _parseAndShowVitals(email,c.name||email,s[latest],latest.replace('transcript_',''));
+  if(curTx && curTxEmail===email){ await _parseAndShowVitals(email,c.name||email,curTx,curTxKey); return; }
+  const txKeys=Object.keys(s).filter(k=>k.startsWith('txPulled_'));
+  if(!txKeys.length){ toast('No transcript on file for this client',true); return; }
+  const latest=txKeys.sort((a,b)=>((s[b]||'')>(s[a]||''))?1:-1)[0];
+  const key=latest.replace('txPulled_','');
+  const html=await _fetchTxHtml(email,key);
+  if(!html){ toast('Could not fetch transcript — try Re-pull first',true); return; }
+  await _parseAndShowVitals(email,c.name||email,html,key);
 }
 
 async function _parseAndShowVitals(email, displayName, txHtml, txKey){
