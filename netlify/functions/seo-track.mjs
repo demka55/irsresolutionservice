@@ -8,6 +8,7 @@ const STORE       = 'seo-tracking'
 const RESULTS_KEY = 'latest-results'
 const HISTORY_KEY = 'history'
 const SITE        = 'irsresolutionservice.com'
+const VALUESERP_KEY = '5F9922B09F88424FB70FE2451F028A4C'
 
 const KEYWORDS = [
   "IRS hasn't replied to appeal 45 days",
@@ -32,8 +33,7 @@ const KEYWORDS = [
 ]
 
 export default async () => {
-  const API_KEY = Netlify.env.get('VALUESERP_API') || ''
-  if (!API_KEY) { console.error('[seo-track] VALUESERP_API not set'); return }
+  const API_KEY = Netlify.env.get('VALUESERP_API') || VALUESERP_KEY
   try {
     await runChecks(API_KEY)
     console.log('[seo-track] Daily check complete')
@@ -74,8 +74,8 @@ async function runChecks(apiKey) {
 async function checkKeyword(keyword, apiKey) {
   const result = { keyword, in_aio: false, site_cited: false, aio_text: null, aio_sources: [], our_pages: [], organic_rank: null, error: null, checkedAt: new Date().toISOString() }
   try {
-    const params = new URLSearchParams({ api_key: apiKey, q: keyword, engine: 'google', google_domain: 'google.com', gl: 'us', hl: 'en', device: 'desktop', include_ai_overview: 'true', num: '10' })
-    const res = await fetch(`https://api.valueserp.com/search?${params}`, { signal: AbortSignal.timeout(8000) })
+    const params = new URLSearchParams({ api_key: apiKey, q: keyword, location: 'Las Vegas, Nevada, United States', gl: 'us', hl: 'en', google_domain: 'google.com', num: '10' })
+    const res = await fetch(`https://api.valueserp.com/search?${params}`, { signal: AbortSignal.timeout(25000) })
     if (!res.ok) { let e = `HTTP ${res.status}`; try { const t = await res.text(); if (t) e += ': ' + t.slice(0,200) } catch {} result.error = e; return result }
     let data
     try { const text = await res.text(); if (!text?.trim()) { result.error = 'Empty response'; return result }; data = JSON.parse(text) } catch (e) { result.error = 'Parse error: ' + e.message; return result }

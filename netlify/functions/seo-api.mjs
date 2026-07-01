@@ -201,13 +201,14 @@ async function checkKeyword(keyword, apiKey) {
       num:          '10',
     })
 
-    const fetchWithTimeout = () => new Promise((resolve, reject) => {
-      const timer = setTimeout(() => reject(new Error('ValueSERP timeout after 7s')), 7000)
-      fetch(`https://api.valueserp.com/search?${params}`)
-        .then(r => { clearTimeout(timer); resolve(r) })
-        .catch(e => { clearTimeout(timer); reject(e) })
-    })
-    const res = await fetchWithTimeout()
+    const controller = new AbortController()
+    const timer = setTimeout(() => controller.abort(), 25000)
+    let res
+    try {
+      res = await fetch(`https://api.valueserp.com/search?${params}`, { signal: controller.signal })
+    } finally {
+      clearTimeout(timer)
+    }
 
     if (!res.ok) {
       let e = `ValueSERP HTTP ${res.status}`
