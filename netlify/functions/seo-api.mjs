@@ -13,25 +13,52 @@ const HISTORY_KEY = 'history'
 const SITE        = 'irsresolutionservice.com'
 
 const KEYWORDS = [
-  "IRS hasn't replied to appeal 45 days",
-  "offer in compromise 2 year rule",
-  "IRS compliance last 6 years",
-  "cp523 installment agreement terminated",
-  "IRS expense table Bentley example",
-  "haven't filed taxes in 5 years what happens",
-  "IRS revenue officers Las Vegas budget cuts",
-  "do nothing IRS collection statute expiring",
-  "tax court petition before appeals strategy",
-  "cp2000 IRS wrong how to dispute",
+  // IRS Installment Agreement / Payment Plan
   "IRS got client on payment plan $440000",
-  "IRS appeal officer 45 days review financials themselves",
+  "IRS expense table Bentley example",
   "IRS expense tables Bentley car payment",
-  "cp523 installment agreement terminated what happens",
-  "do nothing IRS CSED expiring strategy",
+  // Offer in Compromise
+  "offer in compromise 2 year rule",
   "offer in compromise 2 year deemed accepted rule",
-  "IRS compliance last 6 years not 10",
-  "how to prepare for IRS office audit",
   "IRS OIC deemed accepted",
+  "IRS offer in compromise deemed accepted 2 years",
+  // Collection Statute (CSED)
+  "do nothing IRS collection statute expiring",
+  "do nothing IRS CSED expiring strategy",
+  // Audit & Appeals
+  "IRS hasn't replied to appeal 45 days",
+  "tax court petition before appeals strategy",
+  "IRS appeal officer 45 days review financials themselves",
+  // CP523
+  "cp523 installment agreement terminated",
+  "cp523 installment agreement terminated what happens",
+  // Unfiled Taxes / Compliance
+  "haven't filed taxes in 5 years what happens",
+  "IRS compliance last 6 years",
+  "IRS compliance last 6 years not 10",
+  // Budget Cuts
+  "IRS revenue officers Las Vegas budget cuts",
+  // CP2000
+  "cp2000 IRS wrong how to dispute",
+  // Office Audit
+  "how to prepare for IRS office audit",
+  // Wage Garnishment
+  "IRS wage garnishment how to stop",
+  "stop IRS wage garnishment payment plan",
+  "irs wage garnishment",
+  "can the irs garnish your wages",
+  "irs wage garnishment hardship",
+  "how much can the irs garnish from your wages",
+  // IRS Notices
+  "cp14 IRS notice what to do",
+  "cp504 IRS final notice levy",
+  "LT11 IRS notice intent to levy",
+  "cp59 IRS unfiled tax return notice",
+  // Other pages
+  "missed IRS tax deadline what happens",
+  "one big beautiful act tax changes 2025",
+  "IRS tips and overtime tax exempt 2025",
+  "2026 tax brackets income thresholds",
 ]
 
 const H = {
