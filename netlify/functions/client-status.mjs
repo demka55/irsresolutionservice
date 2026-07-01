@@ -160,3 +160,5 @@ export default async (req) => {
 
   return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers });
 };
+
+export const config = { path: '/api/client-status', method: ['GET', 'POST', 'OPTIONS'] };

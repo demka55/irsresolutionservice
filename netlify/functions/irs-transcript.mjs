@@ -263,3 +263,5 @@ export default async (req) => {
     return new Response(JSON.stringify({ error: err.message, debugInfo: err.debugInfo || null }), { status: 500, headers });
   }
 };
+
+export const config = { path: '/api/irs-transcript', method: ['POST', 'OPTIONS'] };
