@@ -255,79 +255,69 @@ async function loadResults() {
   } catch(e) { setStatus('amber', 'Fetch error: ' + e.message); }
 }
 
+// ── Run now: browser drives keyword loop, one fetch per keyword ──────────────
+let runAborted = false;
+
 async function runNow() {
   const btn = document.getElementById('runBtn');
-  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Starting…';
-  setStatus('amber', 'Sending request…');
-  try {
-    const r = await fetch(`/api/seo-track?action=run&password=${encodeURIComponent(apw)}`);
-    let d;
-    try { d = await r.json(); } catch(e) {
-      setStatus('amber', `Server error (${r.status}) — check Netlify function logs`);
-      btn.disabled=false; btn.innerHTML='↻ Run now'; return;
-    }
-    if (!r.ok) {
-      setStatus('amber', 'Error: ' + (d.error || `HTTP ${r.status}`));
-      btn.disabled=false; btn.innerHTML='↻ Run now'; return;
-    }
-    // Started — now poll status
-    setStatus('amber', 'Running in background — checking keywords…');
-    btn.innerHTML = '<span class="spinner"></span> Running…';
-    pollStatus();
-  } catch(e) {
-    setStatus('amber', 'Error: ' + e.message);
-    btn.disabled=false; btn.innerHTML='↻ Run now';
-  }
-}
+  runAborted = false;
+  btn.disabled = true;
 
-let pollTimer = null;
-let lastStatusUpdate = null;
-let lastDoneCount = -1;
-
-async function pollStatus() {
-  clearTimeout(pollTimer);
+  // Fetch keyword list from server
+  let keywords;
   try {
-    const r = await fetch('/api/seo-track?action=status');
+    const r = await fetch('/api/seo-track?action=keywords');
     const d = await r.json();
+    keywords = d.keywords || [];
+  } catch(e) { setStatus('amber', 'Could not fetch keyword list: ' + e.message); btn.disabled=false; btn.innerHTML='↻ Run now'; return; }
 
-    if (d.status === 'running') {
-      const pct = d.total ? Math.round((d.done / d.total) * 100) : 0;
-      const kwLabel = d.current ? ` — "${d.current.substring(0,45)}…"` : '';
-      setStatus('amber', `Checking keywords… ${d.done || 0} of ${d.total || 19} done${kwLabel}`);
-      document.getElementById('runBtn').innerHTML = `<span class="spinner"></span> ${pct}% (${d.done||0}/${d.total||19})`;
+  const results = [];
 
-      // Stale detection: if done count hasn't moved in 45s, assume job died
-      const nowMs = Date.now();
-      if (d.done !== lastDoneCount) {
-        lastDoneCount = d.done;
-        lastStatusUpdate = nowMs;
-      }
-      if (lastStatusUpdate && (nowMs - lastStatusUpdate) > 45000) {
-        setStatus('amber', `Keyword check may have stalled on "${d.current||'?'}". Loading partial results…`);
-        document.getElementById('runBtn').disabled = false;
-        document.getElementById('runBtn').innerHTML = '↻ Run now';
-        await loadResults();
-        return;
-      }
+  for (let i = 0; i < keywords.length; i++) {
+    if (runAborted) break;
+    const kw = keywords[i];
+    const pct = Math.round((i / keywords.length) * 100);
+    btn.innerHTML = `<span class="spinner"></span> ${i+1}/${keywords.length}`;
+    setStatus('amber', `Checking ${i+1} of ${keywords.length} — "${kw.substring(0,50)}…"`);
 
-      pollTimer = setTimeout(pollStatus, 2500);
+    try {
+      const r = await fetch(`/api/seo-track?action=check&password=${encodeURIComponent(apw)}&kw=${encodeURIComponent(kw)}`);
+      const result = await r.json();
+      if (!r.ok) { results.push({ keyword: kw, error: result.error || `HTTP ${r.status}`, our_pages: [], in_aio: false }); }
+      else { results.push(result); }
 
-    } else if (d.status === 'done') {
-      setStatus('green', `Done — ${d.ranked || 0} keywords where we appear · ${d.site_cited || 0} cited in AIO`);
-      document.getElementById('runBtn').disabled = false;
-      document.getElementById('runBtn').innerHTML = '↻ Run now';
-      lastStatusUpdate = null; lastDoneCount = -1;
-      await loadResults();
-
-    } else {
-      document.getElementById('runBtn').disabled = false;
-      document.getElementById('runBtn').innerHTML = '↻ Run now';
-      await loadResults();
+      // Update table live after each keyword
+      allResults = results;
+      renderTable(curFilter);
+      renderKpis({ keywords: results, summary: {
+        total: keywords.length, in_aio: results.filter(r=>r.in_aio).length,
+        site_cited: results.filter(r=>r.site_cited).length,
+        ranked: results.filter(r=>r.our_pages&&r.our_pages.length>0).length
+      }});
+    } catch(e) {
+      results.push({ keyword: kw, error: e.message, our_pages: [], in_aio: false });
     }
-  } catch(e) {
-    pollTimer = setTimeout(pollStatus, 3000);
+
+    // Small pause between calls
+    if (i < keywords.length - 1) await sleep(500);
   }
+
+  // Save final summary
+  try {
+    await fetch(`/api/seo-track?action=finish&password=${encodeURIComponent(apw)}`);
+  } catch(e) {}
+
+  const appeared = results.filter(r => r.our_pages && r.our_pages.length > 0).length;
+  const cited    = results.filter(r => r.site_cited).length;
+  const errors   = results.filter(r => r.error).length;
+  setStatus('green', `Done — we appear in ${appeared} searches · ${cited} cited in AIO${errors ? ` · ${errors} errors` : ''}`);
+  btn.disabled = false;
+  btn.innerHTML = '↻ Run now';
+  allResults = results;
+  renderTable(curFilter);
 }
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 function setStatus(state, text) {
   document.getElementById('statusDot').className = 'dot ' + (state === 'green' ? 'green' : 'amber');

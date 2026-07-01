@@ -1,17 +1,14 @@
 // netlify/functions/seo-api.mjs
-// GET /api/seo-track?action=results           — stored results (public)
-// GET /api/seo-track?action=run&password=xxx  — trigger check (protected, returns immediately)
-// GET /api/seo-track?action=status            — check if run is in progress
-//
-// Uses context.waitUntil() so the function returns 200 immediately
-// while keyword checks run in the background (up to 15 min on free plan).
+// GET /api/seo-track?action=results              — stored results (public)
+// GET /api/seo-track?action=check&kw=KEYWORD&password=xxx — check ONE keyword, store + return result
+// GET /api/seo-track?action=status               — run status blob
+// GET /api/seo-track?action=finish&password=xxx  — write final summary from stored kw: blobs
 
 import { getStore } from '@netlify/blobs'
 
 const STORE       = 'seo-tracking'
 const RESULTS_KEY = 'latest-results'
 const HISTORY_KEY = 'history'
-const STATUS_KEY  = 'run-status'
 const SITE        = 'irsresolutionservice.com'
 
 const KEYWORDS = [
@@ -42,15 +39,26 @@ const H = {
   'Access-Control-Allow-Headers': 'Content-Type',
   'Content-Type': 'application/json',
 }
+const ok  = (d)    => new Response(JSON.stringify(d), { status: 200, headers: H })
+const err = (m, s) => new Response(JSON.stringify({ error: m }), { status: s || 500, headers: H })
+const tryParse = (r) => { try { return r ? JSON.parse(r) : null } catch { return null } }
 
-export default async (req, context) => {
+export default async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 200, headers: H })
 
   const url    = new URL(req.url)
   const action = url.searchParams.get('action') || 'results'
   const pw     = url.searchParams.get('password') || ''
 
-  // ── Public: return stored results ─────────────────────────────────────────
+  const ADMIN_PW = Netlify.env.get('ADMIN_PASSWORD') || ''
+  const API_KEY  = Netlify.env.get('VALUESERP_API')  || ''
+
+  // ── Public: list of keywords ──────────────────────────────────────────────
+  if (action === 'keywords') {
+    return ok({ keywords: KEYWORDS })
+  }
+
+  // ── Public: stored results ────────────────────────────────────────────────
   if (action === 'results') {
     try {
       const store = getStore(STORE)
@@ -58,255 +66,144 @@ export default async (req, context) => {
         store.get(RESULTS_KEY).catch(() => null),
         store.get(HISTORY_KEY).catch(() => null),
       ])
-      return ok({
-        results: raw     ? tryParse(raw)     : null,
-        history: histRaw ? tryParse(histRaw) : [],
-      })
-    } catch (err) {
-      return ok({ results: null, history: [], error: err.message })
+      return ok({ results: tryParse(raw), history: tryParse(histRaw) || [] })
+    } catch (e) {
+      return ok({ results: null, history: [], error: e.message })
     }
   }
 
-  // ── Public: check run status ──────────────────────────────────────────────
+  // ── Public: status ────────────────────────────────────────────────────────
   if (action === 'status') {
     try {
       const store = getStore(STORE)
-      const raw = await store.get(STATUS_KEY).catch(() => null)
-      const status = raw ? tryParse(raw) : { status: 'idle' }
-      return ok(status)
-    } catch (err) {
-      return ok({ status: 'idle', error: err.message })
+      const raw = await store.get('run-status').catch(() => null)
+      return ok(tryParse(raw) || { status: 'idle' })
+    } catch (e) {
+      return ok({ status: 'idle' })
     }
   }
 
-  // ── Protected: trigger run ────────────────────────────────────────────────
-  const ADMIN_PASSWORD = Netlify.env.get('ADMIN_PASSWORD') || ''
-  if (!pw || pw !== ADMIN_PASSWORD) {
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: H })
-  }
+  // ── Auth required from here ───────────────────────────────────────────────
+  if (!pw || pw !== ADMIN_PW) return err('Unauthorized', 401)
+  if (!API_KEY) return err('VALUESERP_API not configured in Netlify env vars', 500)
 
-  const API_KEY = Netlify.env.get('VALUESERP_API') || ''
+  // ── Check ONE keyword — called from browser loop ──────────────────────────
+  if (action === 'check') {
+    const kw = url.searchParams.get('kw') || ''
+    if (!kw) return err('Missing kw param', 400)
 
-  // Mark as running immediately
-  const store = getStore(STORE)
-  await store.set(STATUS_KEY, JSON.stringify({
-    status: 'running',
-    startedAt: new Date().toISOString(),
-    total: KEYWORDS.length,
-    done: 0,
-  }))
+    const result = await checkKeyword(kw, API_KEY)
 
-  // Return 200 right away — background work continues via waitUntil
-  context.waitUntil(runChecks(API_KEY, store))
-
-  return ok({ ok: true, message: `Started — checking ${KEYWORDS.length} keywords in background. Poll action=status or action=results.` })
-}
-
-export const config = {
-  path: '/api/seo-track',
-  method: ['GET', 'OPTIONS'],
-}
-
-// ── Helpers ───────────────────────────────────────────────────────────────────
-const ok = (data) => new Response(JSON.stringify(data), { status: 200, headers: H })
-const tryParse = (raw) => { try { return JSON.parse(raw) } catch { return null } }
-
-// ── Run all keywords one at a time (safest for background) ───────────────────
-async function runChecks(apiKey, store) {
-  const checkedAt = new Date().toISOString()
-  const results   = []
-
-  for (let i = 0; i < KEYWORDS.length; i++) {
-    const keyword = KEYWORDS[i]
-
-    // Update progress
-    await store.set(STATUS_KEY, JSON.stringify({
-      status: 'running',
-      startedAt: checkedAt,
-      updatedAt: new Date().toISOString(),
-      total: KEYWORDS.length,
-      done: i,
-      current: keyword,
-    })).catch(() => {})
-
-    const result = await checkKeyword(keyword, apiKey)
-    results.push(result)
-
-    // Store this keyword immediately so partial results are available
-    const slug = keyword.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 60)
+    // Store individually
+    const store = getStore(STORE)
+    const slug  = kw.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 60)
     await store.set(`kw:${slug}`, JSON.stringify(result)).catch(() => {})
 
-    // Small gap between calls
-    await sleep(800)
+    return ok(result)
   }
 
-  const inAio  = results.filter(r => r.in_aio).length
-  const cited  = results.filter(r => r.site_cited).length
-  const ranked = results.filter(r => r.our_pages && r.our_pages.length > 0).length
+  // ── Finish: assemble final summary from stored kw: blobs ─────────────────
+  if (action === 'finish') {
+    try {
+      const store     = getStore(STORE)
+      const checkedAt = new Date().toISOString()
+      const results   = []
 
-  const data = {
-    checkedAt,
-    summary: { total: results.length, in_aio: inAio, site_cited: cited, ranked },
-    keywords: results,
+      for (const kw of KEYWORDS) {
+        const slug = kw.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 60)
+        const raw  = await store.get(`kw:${slug}`).catch(() => null)
+        const r    = tryParse(raw)
+        if (r) results.push(r)
+        else   results.push({ keyword: kw, error: 'no data', our_pages: [], in_aio: false, site_cited: false })
+      }
+
+      const inAio  = results.filter(r => r.in_aio).length
+      const cited  = results.filter(r => r.site_cited).length
+      const ranked = results.filter(r => r.our_pages && r.our_pages.length > 0).length
+
+      const data = { checkedAt, summary: { total: results.length, in_aio: inAio, site_cited: cited, ranked }, keywords: results }
+      await store.set(RESULTS_KEY, JSON.stringify(data))
+
+      let history = tryParse(await store.get(HISTORY_KEY).catch(() => null)) || []
+      history.unshift({ date: checkedAt.slice(0, 10), in_aio: inAio, site_cited: cited, total: results.length })
+      if (history.length > 30) history = history.slice(0, 30)
+      await store.set(HISTORY_KEY, JSON.stringify(history))
+      await store.set('run-status', JSON.stringify({ status: 'done', checkedAt, ranked, site_cited: cited, in_aio: inAio }))
+
+      return ok({ ok: true, summary: data.summary })
+    } catch (e) {
+      return err(e.message)
+    }
   }
 
-  await store.set(RESULTS_KEY, JSON.stringify(data)).catch(() => {})
-
-  // Append to history
-  let history = []
-  try {
-    const raw = await store.get(HISTORY_KEY)
-    if (raw) history = tryParse(raw) || []
-  } catch {}
-  history.unshift({ date: checkedAt.slice(0, 10), in_aio: inAio, site_cited: cited, total: results.length })
-  if (history.length > 30) history = history.slice(0, 30)
-  await store.set(HISTORY_KEY, JSON.stringify(history)).catch(() => {})
-
-  // Mark done
-  await store.set(STATUS_KEY, JSON.stringify({
-    status: 'done',
-    checkedAt,
-    total: results.length,
-    done: results.length,
-    in_aio: inAio,
-    site_cited: cited,
-    ranked,
-  })).catch(() => {})
+  return err('Unknown action', 400)
 }
 
-const sleep = (ms) => new Promise(r => setTimeout(r, ms))
+export const config = { path: '/api/seo-track', method: ['GET', 'OPTIONS'] }
 
-// ── Check one keyword — scan full SERP response for our domain ────────────────
+// ── Check one keyword ─────────────────────────────────────────────────────────
 async function checkKeyword(keyword, apiKey) {
   const result = {
-    keyword,
-    in_aio:       false,
-    site_cited:   false,
-    aio_text:     null,
-    aio_sources:  [],
-    our_pages:    [],
-    organic_rank: null,
-    error:        null,
-    checkedAt:    new Date().toISOString(),
+    keyword, in_aio: false, site_cited: false,
+    aio_text: null, aio_sources: [], our_pages: [],
+    organic_rank: null, error: null,
+    checkedAt: new Date().toISOString(),
   }
-
   try {
     const params = new URLSearchParams({
-      api_key:      apiKey,
-      q:            keyword,
-      location:     'Las Vegas, Nevada, United States',
-      gl:           'us',
-      hl:           'en',
-      google_domain:'google.com',
-      num:          '10',
+      api_key: apiKey, q: keyword, engine: 'google',
+      google_domain: 'google.com', gl: 'us', hl: 'en',
+      device: 'desktop', include_ai_overview: 'true', num: '10',
     })
-
-    const controller = new AbortController()
-    const timer = setTimeout(() => controller.abort(), 25000)
-    let res
-    try {
-      res = await fetch(`https://api.valueserp.com/search?${params}`, { signal: controller.signal })
-    } finally {
-      clearTimeout(timer)
-    }
+    const res = await fetch(`https://api.valueserp.com/search?${params}`)
 
     if (!res.ok) {
       let e = `ValueSERP HTTP ${res.status}`
-      try {
-        const t = await res.text()
-        if (t) {
-          // Try to parse as JSON for cleaner error message
-          try {
-            const errJson = JSON.parse(t)
-            e += ': ' + (errJson.message || errJson.error || t.slice(0, 200))
-          } catch {
-            e += ': ' + t.slice(0, 200)
-          }
-        }
-      } catch {}
-      console.error(`[seo-api] keyword="${keyword}" error: ${e}`)
-      result.error = e
-      return result
+      try { const t = await res.text(); if (t) { try { e += ': ' + (JSON.parse(t).message || t.slice(0,150)) } catch { e += ': ' + t.slice(0,150) } } } catch {}
+      result.error = e; return result
     }
 
     let data
     try {
       const text = await res.text()
-      if (!text?.trim()) { result.error = 'Empty response from ValueSERP'; return result }
+      if (!text?.trim()) { result.error = 'Empty response'; return result }
       data = JSON.parse(text)
-    } catch (e) {
-      result.error = 'JSON parse error: ' + e.message
-      return result
-    }
+    } catch (e) { result.error = 'Parse error: ' + e.message; return result }
 
-    // ── AI Overview ───────────────────────────────────────────────────────
     const aio = data.ai_overview
     if (aio) {
       result.in_aio = true
-
-      // Extract text
-      const textParts = []
-      if (aio.text_blocks) {
-        for (const b of aio.text_blocks) {
-          if (b.snippet) textParts.push(b.snippet)
-          if (b.list) for (const item of b.list) if (item.snippet) textParts.push('• ' + item.snippet)
-        }
+      const parts = []
+      if (aio.text_blocks) for (const b of aio.text_blocks) {
+        if (b.snippet) parts.push(b.snippet)
+        if (b.list) for (const i of b.list) if (i.snippet) parts.push('• ' + i.snippet)
       }
-      if (!textParts.length && aio.snippet) textParts.push(aio.snippet)
-      result.aio_text = textParts.join('\n\n').slice(0, 3000) || null
+      if (!parts.length && aio.snippet) parts.push(aio.snippet)
+      result.aio_text = parts.join('\n\n').slice(0, 3000) || null
 
-      // All AIO sources
       const srcs = [...(aio.ai_overview_sources||[]), ...(aio.sources||[]), ...(aio.references||[])]
-      result.aio_sources = srcs
-        .map(s => ({ title: s.title || s.name || '', link: s.link || s.url || '' }))
-        .filter(s => s.link)
-        .slice(0, 10)
-
-      // Check if we appear in AIO
-      result.site_cited =
-        result.aio_sources.some(s => s.link.includes(SITE)) ||
-        JSON.stringify(aio).toLowerCase().includes(SITE)
+      result.aio_sources = srcs.map(s => ({ title: s.title||s.name||'', link: s.link||s.url||'' })).filter(s => s.link).slice(0, 10)
+      result.site_cited  = result.aio_sources.some(s => s.link.includes(SITE)) || JSON.stringify(aio).toLowerCase().includes(SITE)
 
       if (result.site_cited) {
-        const ourAio = result.aio_sources.filter(s => s.link.includes(SITE))
-        if (ourAio.length) {
-          ourAio.forEach(p => result.our_pages.push({ where: 'AIO source', link: p.link, title: p.title }))
-        } else {
-          result.our_pages.push({ where: 'AIO mention', link: '', title: 'Domain mentioned in AIO text' })
-        }
+        const ours = result.aio_sources.filter(s => s.link.includes(SITE))
+        ours.length
+          ? ours.forEach(p => result.our_pages.push({ where: 'AIO source', link: p.link, title: p.title }))
+          : result.our_pages.push({ where: 'AIO mention', link: '', title: 'Domain in AIO text' })
       }
     }
 
-    // ── Organic results ───────────────────────────────────────────────────
-    ;(data.organic_results || []).forEach((r, idx) => {
-      if (r.link && r.link.includes(SITE)) {
-        const pos = r.position || (idx + 1)
+    ;(data.organic_results || []).forEach((r, i) => {
+      if (r.link?.includes(SITE)) {
+        const pos = r.position || i + 1
         if (!result.organic_rank || pos < result.organic_rank) result.organic_rank = pos
-        result.our_pages.push({ where: `Organic #${pos}`, link: r.link, title: r.title || '' })
+        result.our_pages.push({ where: `Organic #${pos}`, link: r.link, title: r.title||'' })
       }
     })
 
-    // ── Everything else — top stories, local, knowledge graph ────────────
-    const extras = [
-      ...(data.top_stories || []),
-      ...(data.local_results || []),
-      ...((data.knowledge_graph && data.knowledge_graph.links) || []),
-    ]
-    extras.forEach(item => {
-      const link = item.link || item.url || ''
-      if (link.includes(SITE)) {
-        result.our_pages.push({ where: 'Other result', link, title: item.title || '' })
-      }
-    })
-
-    // ── Final catch-all: scan raw response ────────────────────────────────
-    if (!result.our_pages.length && JSON.stringify(data).toLowerCase().includes(SITE)) {
+    if (!result.our_pages.length && JSON.stringify(data).toLowerCase().includes(SITE))
       result.our_pages.push({ where: 'SERP mention', link: '', title: 'Found in raw response' })
-    }
 
-  } catch (err) {
-    result.error = err.message
-  }
-
+  } catch (e) { result.error = e.message }
   return result
 }
