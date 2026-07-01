@@ -232,23 +232,35 @@ async function loadResults() {
     catch(e) { setStatus('amber', 'Response parse error — function may have crashed. Check Netlify logs.'); return; }
 
     if (d.results && d.results.keywords && d.results.keywords.length) {
-      const errCount = d.results.keywords.filter(k => k.error).length;
-      if (errCount > 5) {
-        document.getElementById('statusText').textContent = 
-          `⚠ ${errCount} errors — ValueSERP may be rate-limiting. Wait 1 min then Run again.`;
-      }
       allResults = d.results.keywords;
       renderKpis(d.results);
       renderFilters();
       renderTable(curFilter);
       renderHistory(d.history || []);
+      
       const dt = new Date(d.results.checkedAt);
+      const dtStr = isNaN(dt) ? '—' : `${dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})} at ${dt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}`;
+      const isPartial = d.results.partial && d.results.keywords.length < 19;
       document.getElementById('lastChecked').textContent =
-        `19 keywords · last checked ${dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})} at ${dt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}`;
+        isPartial 
+          ? `${d.results.keywords.length}/19 keywords checked · last updated ${dtStr} · incomplete run`
+          : `19 keywords · last checked ${dtStr}`;
+
       const appearing = d.results.keywords.filter(k => k.our_pages && k.our_pages.length > 0).length;
-      setStatus('green', `We appear in ${appearing} of ${d.results.summary.total} searches · ${d.results.summary.site_cited} in AI Overview`);
+      const errCount  = d.results.keywords.filter(k => k.error).length;
+
+      if (isPartial) {
+        setStatus('amber', `Partial results: ${d.results.keywords.length}/19 keywords · click "Run now" to complete (will resume where left off)`);
+      } else {
+        setStatus('green', `We appear in ${appearing} searches · ${d.results.summary.site_cited} cited in AI Overview${errCount ? ` · ${errCount} errors` : ''}`);
+      }
+
+      // If all 19 complete but summary wasn't saved (walked away), save it now
+      if (d.results.partial === false && !d.results.checkedAt.startsWith('200')) {
+        fetch(`/api/seo-track?action=finish&password=${encodeURIComponent(apw)}`).catch(() => {});
+      }
     } else {
-      setStatus('amber', 'No data yet — click "Run now" to check all 19 keywords (takes ~30 seconds)');
+      setStatus('amber', 'No data yet — click "Run now" to check all 19 keywords');
       document.getElementById('tblBody').innerHTML = '<div class="empty">No results yet. Click "Run now" above to run the first check.</div>';
       renderFilters();
     }

@@ -64,7 +64,39 @@ export default async (req) => {
         store.get(RESULTS_KEY).catch(() => null),
         store.get(HISTORY_KEY).catch(() => null),
       ])
-      return ok({ results: tryParse(raw), history: tryParse(histRaw) || [] })
+      const stored = tryParse(raw)
+      
+      // Also read all individual kw: blobs to find any newer results
+      const kwResults = []
+      for (const kw of KEYWORDS) {
+        const slug = kw.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 60)
+        const kwRaw = await store.get(`kw:${slug}`).catch(() => null)
+        const kwData = tryParse(kwRaw)
+        if (kwData) kwResults.push(kwData)
+      }
+      
+      // If we have individual results newer than the summary, return them merged
+      let results = stored
+      if (kwResults.length > 0) {
+        const summaryDate = stored?.checkedAt || '2000-01-01'
+        const latestKw = kwResults.reduce((latest, r) => 
+          (r.checkedAt || '') > latest ? (r.checkedAt || '') : latest, '')
+        
+        // Individual blobs are newer — use them (partial or complete run)
+        if (!stored || latestKw > summaryDate || kwResults.length === KEYWORDS.length) {
+          const inAio  = kwResults.filter(r => r.in_aio).length
+          const cited  = kwResults.filter(r => r.site_cited).length
+          const ranked = kwResults.filter(r => r.our_pages && r.our_pages.length > 0).length
+          results = {
+            checkedAt: latestKw,
+            partial: kwResults.length < KEYWORDS.length,
+            summary: { total: kwResults.length, in_aio: inAio, site_cited: cited, ranked },
+            keywords: kwResults,
+          }
+        }
+      }
+      
+      return ok({ results, history: tryParse(histRaw) || [] })
     } catch (e) {
       return ok({ results: null, history: [], error: e.message })
     }
