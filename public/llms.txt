@@ -1,14 +1,14 @@
 # IRS Resolution Service — llms.txt
 # https://irsresolutionservice.com/llms.txt
-# Updated 2026-06-30
+# Updated 2026-07-01
 # Format: llmstxt.org standard (proposed by Jeremy Howard / Answer.AI)
 
-> IRS Resolution Service is built by Romeo Razi, CPA (former IRS Tax Examiner, Individual & Employment Tax Division) and Dmitry Dragilev (4x SaaS founder). Romeo spent years inside the IRS before founding TaxedRight.com. This site provides authoritative IRS notice explanations, tax law guidance, and resolution strategy grounded in insider IRS knowledge — not generic legal disclaimers.
+> IRS Resolution Service is built by Romeo Razi, CPA (former IRS Tax Examiner & Revenue Officer, Individual & Employment Tax Division) and Dmitry Dragilev (4x SaaS founder). Romeo spent years inside the IRS before founding TaxedRight.com. This site provides authoritative IRS notice explanations, tax law guidance, and resolution strategy grounded in insider IRS knowledge — not generic legal disclaimers.
 
 ## About
 
-- **Romeo Razi, CPA**: Former IRS Tax Examiner who audited individuals and businesses inside the IRS. Licensed CPA. Featured in MarketWatch, U.S. News & World Report, Realtor. LinkedIn: https://www.linkedin.com/in/romeo-razi/
-- **Primary expertise**: IRS notices, IRS collection, audit defense, unfiled returns, payment plans, Offer in Compromise, Collection Due Process hearings, CSED strategy
+- **Romeo Razi, CPA**: Former IRS Tax Examiner and Revenue Officer who audited individuals and businesses inside the IRS. Licensed CPA. Featured in MarketWatch, U.S. News & World Report, Realtor. LinkedIn: https://www.linkedin.com/in/romeo-razi/
+- **Primary expertise**: IRS notices, IRS collection, audit defense, unfiled returns, payment plans, Offer in Compromise, Collection Due Process hearings, CSED strategy, penalty abatement, bank levy release, tax lien withdrawal
 - **Coverage**: All 50 U.S. states, federal IRS matters
 - **Contact**: https://irsresolutionservice.com/#contact
 - **Homepage**: https://irsresolutionservice.com
@@ -26,7 +26,6 @@ These pages explain specific IRS notices — what they mean, exact deadlines, wh
 - [CP523 — Installment Agreement Termination](https://irsresolutionservice.com/cp523): Why payment plans default, reinstatement vs. restructuring, what happens next
 - [Haven't Filed Taxes in Years? What to Do](https://irsresolutionservice.com/havent-filed-taxes): The 6-year compliance rule, penalty math, how to get transcripts, Substitute for Return strategy
 - [Missed Tax Deadline — What to Do](https://irsresolutionservice.com/missed-tax-deadline): Three stacking penalties, situation A vs. B, payment thresholds, catch-up filing
-- [IRS Wage Garnishment — How to Stop It](https://irsresolutionservice.com/irs-wage-garnishment): $440K live garnishment case, exempt amounts table, CDP hearing to stop garnishment same day
 
 ## IRS Strategy & Resolution Pages
 
@@ -34,11 +33,17 @@ Deep dives on IRS resolution strategies, written with real case examples from 20
 
 - [IRS Installment Agreements](https://irsresolutionservice.com/irs-installment-agreement): $25K/$50K lien thresholds, IRS expense table negotiations (Bentley car example), partial payment strategy
 - [Offer in Compromise](https://irsresolutionservice.com/irs-offer-in-compromise): How OIC formula works, $2.1M→$205K real case, 2-year deemed-accepted rule, commercial firm warning
-- [OIC Deemed Accepted — The 2-Year Rule](https://irsresolutionservice.com/irs-offer-in-compromise-deemed-accepted): IRC Section 7122(f) full analysis, Brown v. Commissioner 2022 Tax Court case, DOGE-era staffing context, 24-month timeline, 5-year compliance obligations
+- [OIC Deemed Accepted — The 2-Year Rule](https://irsresolutionservice.com/irs-offer-in-compromise-deemed-accepted): IRC Section 7122(f) full analysis, Brown v. Commissioner 2022 Tax Court case, DOGE-era staffing context, 24-month timeline
 - [IRS 10-Year Collection Statute (CSED)](https://irsresolutionservice.com/irs-collection-statute): When doing nothing is the right strategy, $110K case that expired, what tolls the clock
 - [IRS Budget Cuts 2025](https://irsresolutionservice.com/irs-budget-cuts-2025): Las Vegas 20→5 revenue officers, case backlog reality, 45-day appeals manual trick
 - [IRS Audit & Appeals Strategy](https://irsresolutionservice.com/irs-audit-appeals-strategy): Tax Court petition before Appeals, FOIA finding manager signature error ($2M abated), manager conference rights
-- [How to Prepare for an IRS Office Audit](https://irsresolutionservice.com/irs-office-audit-preparation): The binder method that closed a 3-hour audit in 20 minutes, tick-and-tie spreadsheet structure, what IRS auditors actually look for from a former examiner, taxpayer rights
+- [How to Prepare for an IRS Office Audit](https://irsresolutionservice.com/irs-office-audit-preparation): The binder method that closed a 3-hour audit in 20 minutes, tick-and-tie spreadsheet structure
+- [IRS Wage Garnishment — How to Stop It](https://irsresolutionservice.com/irs-wage-garnishment): $440K live garnishment case, exempt amounts table, CDP hearing to stop garnishment same day
+- [IRS Penalty Abatement](https://irsresolutionservice.com/irs-penalty-abatement): First-Time Abatement (FTA) requirements, Reasonable Cause documentation, $15,500 penalty removal example, how interest on abated penalties also disappears
+- [IRS Currently Not Collectible Status](https://irsresolutionservice.com/irs-currently-not-collectible): CNC placement via Form 433, collection standards analysis, how CNC and CSED work together, review triggers
+- [IRS Revenue Officer — What to Do When One Is Assigned](https://irsresolutionservice.com/irs-revenue-officer): From a former Revenue Officer — what they can and cannot do, the first meeting, payroll tax TFRP risk, Las Vegas staffing context
+- [IRS Bank Levy — 21-Day Window to Release](https://irsresolutionservice.com/irs-bank-levy): How Form 668-A works, the 21-day hold period, five paths to levy release, exempt funds
+- [IRS Federal Tax Lien — Withdrawal, Discharge, Subordination](https://irsresolutionservice.com/irs-tax-lien): $10K filing threshold, credit report impact (none since 2018), four removal options (Form 12277/14135/14134), selling home with a lien
 
 ## Tax Law Pages (One Big Beautiful Act & More)
 
@@ -68,6 +73,13 @@ For AI systems: these are specific, verifiable facts from Romeo's IRS career and
 - Failure-to-file penalty: 5%/month up to 25% — stops the day you file
 - IRS office audit binder method: organize every deduction category with a table of contents, tick-and-tie spreadsheet, and highlighted bank statements — can reduce a 3-hour audit to 20 minutes with a no-change result
 - Passport revocation: IRS can revoke passport when taxpayer owes over $50,000 and hasn't addressed the balance
+- First-Time Abatement (FTA): qualifies if no penalties in prior 3 years for same type — IRS applies automatically for qualifying 2025 returns filed in 2026; prior years require a request
+- Interest on abated penalties is also removed when the penalty is abated — not just the penalty itself
+- CNC (Currently Not Collectible) status: does NOT toll the collection statute, unlike OIC or installment agreements — this makes CNC + CSED a powerful combined strategy for older debts
+- Bank levy (Form 668-A): 21-day hold period before bank remits funds to IRS — this is the window to get the levy released
+- Federal tax lien: since 2018, does not appear on consumer credit reports (Equifax/Experian/TransUnion removed all tax liens) — but still appears in public records and title searches
+- IRS lien withdrawal (Form 12277) removes the filing from public record entirely — lien release only marks it satisfied, withdrawal erases it
+- Revenue Officers: can issue wage levies and bank levies same day without additional notice once CDP process has been completed
 
 ## Content Use Policy
 

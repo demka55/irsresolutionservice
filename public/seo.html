@@ -147,7 +147,7 @@ table.kw tr:hover td{background:#faf8f4}
   <div class="topbar">
     <div>
       <h1>AI Overview Tracker</h1>
-      <p id="lastChecked">34 keywords · irsresolutionservice.com · Updated daily 6am UTC</p>
+      <p id="lastChecked">64 keywords · irsresolutionservice.com · Updated daily 6am UTC</p>
     </div>
     <div class="actions">
       <button class="btn" onclick="logout()">Sign out</button>
@@ -240,7 +240,7 @@ async function loadResults() {
       
       const dt = new Date(d.results.checkedAt);
       const dtStr = isNaN(dt) ? '—' : `${dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})} at ${dt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}`;
-      const isPartial = d.results.partial && d.results.keywords.length < 34;
+      const isPartial = d.results.partial && d.results.keywords.length < 64;
       document.getElementById('lastChecked').textContent =
         isPartial 
           ? `${d.results.keywords.length}/19 keywords checked · last updated ${dtStr} · incomplete run`
@@ -260,7 +260,7 @@ async function loadResults() {
         fetch(`/api/seo-track?action=finish&password=${encodeURIComponent(apw)}`).catch(() => {});
       }
     } else {
-      setStatus('amber', 'No data yet — click "Run now" to check all 34 keywords');
+      setStatus('amber', 'No data yet — click "Run now" to check all 64 keywords');
       document.getElementById('tblBody').innerHTML = '<div class="empty">No results yet. Click "Run now" above to run the first check.</div>';
       renderFilters();
     }

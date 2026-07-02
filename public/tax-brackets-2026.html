@@ -45,7 +45,7 @@ a.text-link{color:var(--gold-dim);font-weight:600;text-decoration:none}a.text-li
 .faq-q{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
 .faq-a{font-size:15px;color:var(--ink-soft)}
 .romeo-sig{display:flex;align-items:center;gap:1rem;padding:1rem 0;margin:1.5rem 0;border-top:1px solid var(--cream-dark);border-bottom:1px solid var(--cream-dark)}
-.romeo-sig-avatar{width:48px;height:48px;background:var(--gold-muted);border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:18px;font-weight:700;color:var(--gold-dim);flex-shrink:0}
+.romeo-sig-avatar{width:90px;height:90px;background:var(--gold-muted);border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:18px;font-weight:700;color:var(--gold-dim);flex-shrink:0}
 .romeo-sig-text{font-size:13px;color:var(--ink-muted);line-height:1.5}
 .romeo-sig-name{font-weight:700;font-size:15px;color:var(--ink)}
 .source-tag{display:inline-block;background:var(--cream-warm);border:1px solid var(--cream-dark);border-radius:3px;font-size:11px;font-weight:600;color:var(--ink-muted);padding:2px 8px;letter-spacing:.05em;margin-bottom:.4rem}
@@ -167,7 +167,7 @@ footer a{color:var(--gold);text-decoration:none}
       <div class="nav-item">
         <a href="/cp2000">IRS Guides</a>
         <div class="dropdown">
-          <div class="dropdown-cols">
+          <div class="dropdown-cols" style="grid-template-columns:1fr 1fr 1fr">
             <div class="dropdown-col">
               <div class="dropdown-col-head">IRS Notices Explained</div>
               <a href="/cp2000">CP2000 — Proposed Adjustment</a>
@@ -179,10 +179,25 @@ footer a{color:var(--gold);text-decoration:none}
               <a href="/cp523">CP523 — Payment Plan Terminated</a>
               <a href="/missed-tax-deadline">Missed the Tax Deadline</a>
               <a href="/havent-filed-taxes">Haven't Filed in Years</a>
-              <a href="/irs-wage-garnishment">Wage Garnishment — Stop It</a>
             </div>
             <div class="dropdown-col">
-              <div class="dropdown-col-head">Tax Law &amp; Strategy</div>
+              <div class="dropdown-col-head">IRS Resolution &amp; Collection</div>
+              <a href="/irs-installment-agreement">Payment Plans Explained</a>
+              <a href="/irs-offer-in-compromise">Offer in Compromise</a>
+              <a href="/irs-offer-in-compromise-deemed-accepted">OIC Deemed Accepted Rule</a>
+              <a href="/irs-collection-statute">10-Year Collection Statute</a>
+              <a href="/irs-penalty-abatement">Penalty Abatement</a>
+              <a href="/irs-currently-not-collectible">Currently Not Collectible</a>
+              <a href="/irs-wage-garnishment">Wage Garnishment</a>
+              <a href="/irs-bank-levy">Bank Levy — 21-Day Window</a>
+              <a href="/irs-tax-lien">Federal Tax Lien</a>
+              <a href="/irs-revenue-officer">Revenue Officer Assigned</a>
+              <a href="/irs-audit-appeals-strategy">Audit &amp; Appeals Strategy</a>
+              <a href="/irs-office-audit-preparation">Prepare for Office Audit</a>
+              <a href="/irs-budget-cuts-2025">IRS Budget Cuts 2025</a>
+            </div>
+            <div class="dropdown-col">
+              <div class="dropdown-col-head">Tax Law &amp; Planning</div>
               <a href="/one-big-beautiful-act">One Big Beautiful Act — 9 Changes</a>
               <a href="/irs-tips-overtime-tax">Tax-Free Tips &amp; Overtime</a>
               <a href="/salt-deduction-2025">SALT Deduction Raised to $40K</a>
@@ -191,11 +206,6 @@ footer a{color:var(--gold);text-decoration:none}
               <a href="/qualified-small-business-stock">QSBS Exclusion Changes</a>
               <a href="/year-end-tax-planning">Year-End Business Planning</a>
               <a href="/tax-brackets-2026">2026 Tax Brackets</a>
-              <a href="/irs-installment-agreement">Payment Plans Explained</a>
-              <a href="/irs-offer-in-compromise">Offer in Compromise</a>
-              <a href="/irs-collection-statute">10-Year Collection Statute</a>
-              <a href="/irs-audit-appeals-strategy">Audit &amp; Appeals Strategy</a>
-              <a href="/irs-budget-cuts-2025">IRS Budget Cuts 2025</a>
             </div>
           </div>
         </div>
@@ -272,7 +282,7 @@ footer a{color:var(--gold);text-decoration:none}
     <p>"New 2026 tax brackets. These are the permanent rates now that TCJA is locked in — not going back to the 2017 rates. Your effective rate is what matters for planning, not just your bracket. Most people dramatically overestimate how much they owe because they confuse marginal and effective rates."</p>
   </div>
   <div class="romeo-sig">
-  <div class="romeo-sig-avatar">RR</div>
+  <img src="/romeo-razi.png" alt="Romeo Razi, CPA" style="width:90px;height:90px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--gold);display:block">
   <div><div class="romeo-sig-name">Romeo Razi, CPA</div><div class="romeo-sig-text">Former IRS Auditor · Founder, TaxedRight.com<br><a class="source-tag" href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener">LinkedIn: 2026 Tax Brackets Post</a></div></div>
 </div>
 

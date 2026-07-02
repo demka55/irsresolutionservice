@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRS Currently Not Collectible Status: What It Is and How to Qualify | Former IRS Auditor</title>
+<meta name="description" content="Currently Not Collectible (CNC) status pauses all IRS collection — no levies, no garnishment, no revenue officer contact — when you genuinely cannot pay. Former IRS Auditor Romeo Razi explains exactly how to qualify and what happens next.">
+<link rel="canonical" href="https://irsresolutionservice.com/irs-currently-not-collectible">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c; --gold-light: #e8c97a; --gold-dim: #8a6e2f; --gold-muted: #f5ecd8;
+  --cream: #f5f0e8; --cream-warm: #ede5d5; --cream-dark: #d9cdb8;
+  --ink: #1a1410; --ink-soft: #4a3f32; --ink-muted: #7a6e60; --white: #ffffff;
+  --red: #c0392b; --red-light: #fdf0f0; --green: #1a5c2a; --green-light: #f0fdf4;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 18px; line-height: 1.7; }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--cream-dark); backdrop-filter: blur(12px); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-mark { width: 36px; height: 36px; border: 1.5px solid var(--gold); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--gold); }
+.logo-text { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+.logo-text span { color: var(--gold); }
+.nav { display: flex; align-items: center; gap: 1.75rem; }
+.nav a { font-size: 15px; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.03em; }
+.nav a:hover { color: var(--gold-dim); }
+.nav-cta { background: var(--gold) !important; color: var(--white) !important; padding: 9px 22px; border-radius: 2px; font-weight: 600; }
+.notice-hero { background: var(--white); padding: 120px 2rem 64px; border-bottom: 1px solid var(--cream-dark); }
+.notice-hero-inner { max-width: 840px; margin: 0 auto; }
+.notice-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--gold-muted); color: var(--gold-dim); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; margin-bottom: 1.5rem; }
+.notice-code-display { font-family: var(--serif); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; color: var(--ink); line-height: 1.1; margin-bottom: 0.5rem; }
+.notice-hero h1 { font-family: var(--serif); font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 600; color: var(--ink-soft); line-height: 1.3; margin-bottom: 1.5rem; }
+.direct-answer { background: var(--green-light); border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 2rem; }
+.direct-answer p { font-size: 17px; line-height: 1.65; color: var(--ink-soft); }
+.direct-answer strong { color: var(--green); }
+.notice-body { max-width: 840px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+.section { margin-bottom: 3.5rem; }
+.section h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
+.section h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); margin: 1.5rem 0 0.75rem; }
+.section p { color: var(--ink-soft); margin-bottom: 1rem; }
+.section ul, .section ol { color: var(--ink-soft); padding-left: 1.5rem; margin-bottom: 1rem; }
+.section li { margin-bottom: 0.5rem; }
+.insider { background: var(--gold-muted); border-left: 4px solid var(--gold); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.insider-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.4rem; }
+.insider p { font-size: 16px; color: var(--ink-soft); margin: 0; font-style: italic; }
+.warning-box { background: var(--red-light); border-left: 4px solid var(--red); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.warning-box p { font-size: 16px; color: var(--ink-soft); margin: 0; }
+.cnc-vs-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 15px; }
+.cnc-vs-table th { background: var(--ink); color: var(--white); padding: 10px 14px; text-align: left; font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; }
+.cnc-vs-table td { padding: 10px 14px; border-bottom: 1px solid var(--cream-dark); color: var(--ink-soft); vertical-align: top; }
+.cnc-vs-table td:first-child { font-weight: 600; color: var(--ink); width: 35%; }
+.cnc-vs-table tr:last-child td { border-bottom: none; }
+.cnc-vs-table tr:nth-child(even) td { background: var(--cream); }
+.cta-box { background: var(--ink); color: var(--white); border-radius: 6px; padding: 2.5rem 2rem; text-align: center; margin: 3rem 0; }
+.cta-box h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; }
+.cta-box p { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 1.5rem; }
+.cta-btn { display: inline-block; background: var(--gold); color: var(--ink); text-decoration: none; padding: 14px 32px; border-radius: 2px; font-weight: 700; font-size: 16px; }
+.romeo-bar { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: center; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+.romeo-avatar-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.romeo-avatar { width: 72px; height: 72px; background: var(--gold-muted); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--gold-dim); }
+.romeo-linkedin { font-size: 12px; color: var(--gold-dim); text-decoration: none; font-weight: 600; }
+.romeo-info .romeo-name { font-weight: 700; font-size: 17px; color: var(--ink); }
+.romeo-info .romeo-title { font-size: 14px; color: var(--ink-muted); margin-top: 2px; }
+.romeo-info .romeo-bio { font-size: 15px; color: var(--ink-soft); margin-top: 0.75rem; line-height: 1.6; }
+.faq-item { border-bottom: 1px solid var(--cream-dark); padding: 1.25rem 0; }
+.faq-q { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+.faq-a { font-size: 16px; color: var(--ink-soft); }
+.notice-links { background: var(--cream-warm); border-radius: 6px; padding: 1.5rem; margin: 2rem 0; }
+.notice-links h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); margin-bottom: 0.75rem; }
+.notice-links ul { list-style: none; padding: 0; }
+.notice-links li { margin-bottom: 0.4rem; }
+.notice-links a { color: var(--gold-dim); text-decoration: none; font-size: 15px; }
+.tl { color: var(--gold-dim); text-decoration: underline; text-underline-offset: 2px; }
+footer { background: var(--ink); color: rgba(255,255,255,0.5); text-align: center; padding: 2rem; font-size: 13px; }
+footer a { color: var(--gold); text-decoration: none; }
+@media (max-width: 640px) { .nav { gap: 1rem; } .nav a:not(.nav-cta) { display: none; } }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://irsresolutionservice.com" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <nav class="nav">
+      <a href="/#founders">About</a>
+      <div class="nav-item">
+        <a href="/cp2000">IRS Guides</a>
+        <div class="dropdown">
+          <div class="dropdown-cols" style="grid-template-columns:1fr 1fr 1fr">
+            <div class="dropdown-col">
+              <div class="dropdown-col-head">IRS Notices Explained</div>
+              <a href="/cp2000">CP2000 — Proposed Adjustment</a>
+              <a href="/cp14">CP14 — First Balance Due</a>
+              <a href="/cp504">CP504 — Intent to Levy</a>
+              <a href="/lt11">LT11 — Final Levy Notice</a>
+              <a href="/cp3219a">CP3219A — Notice of Deficiency</a>
+              <a href="/cp59">CP59 — Unfiled Return</a>
+              <a href="/cp523">CP523 — Payment Plan Terminated</a>
+              <a href="/missed-tax-deadline">Missed the Tax Deadline</a>
+              <a href="/havent-filed-taxes">Haven't Filed in Years</a>
+            </div>
+            <div class="dropdown-col">
+              <div class="dropdown-col-head">IRS Resolution &amp; Collection</div>
+              <a href="/irs-installment-agreement">Payment Plans Explained</a>
+              <a href="/irs-offer-in-compromise">Offer in Compromise</a>
+              <a href="/irs-offer-in-compromise-deemed-accepted">OIC Deemed Accepted Rule</a>
+              <a href="/irs-collection-statute">10-Year Collection Statute</a>
+              <a href="/irs-penalty-abatement">Penalty Abatement</a>
+              <a href="/irs-currently-not-collectible">Currently Not Collectible</a>
+              <a href="/irs-wage-garnishment">Wage Garnishment</a>
+              <a href="/irs-bank-levy">Bank Levy — 21-Day Window</a>
+              <a href="/irs-tax-lien">Federal Tax Lien</a>
+              <a href="/irs-revenue-officer">Revenue Officer Assigned</a>
+              <a href="/irs-audit-appeals-strategy">Audit &amp; Appeals Strategy</a>
+              <a href="/irs-office-audit-preparation">Prepare for Office Audit</a>
+              <a href="/irs-budget-cuts-2025">IRS Budget Cuts 2025</a>
+            </div>
+            <div class="dropdown-col">
+              <div class="dropdown-col-head">Tax Law &amp; Planning</div>
+              <a href="/one-big-beautiful-act">One Big Beautiful Act — 9 Changes</a>
+              <a href="/irs-tips-overtime-tax">Tax-Free Tips &amp; Overtime</a>
+              <a href="/salt-deduction-2025">SALT Deduction Raised to $40K</a>
+              <a href="/bonus-depreciation-2025">100% Bonus Depreciation</a>
+              <a href="/rd-expense-deduction">R&amp;D Expense Deduction</a>
+              <a href="/qualified-small-business-stock">QSBS Exclusion Changes</a>
+              <a href="/year-end-tax-planning">Year-End Business Planning</a>
+              <a href="/tax-brackets-2026">2026 Tax Brackets</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/#services">Services</a>
+        <div class="dropdown dropdown-services">
+          <div class="dropdown-col">
+            <div class="dropdown-col-head">What We Handle</div>
+            <a href="/#services">Unfiled Tax Returns</a>
+            <a href="/#services">Back Taxes &amp; Collections</a>
+            <a href="/#services">IRS Audits &amp; Appeals</a>
+            <a href="/#services">Offer in Compromise</a>
+            <a href="/#services">Installment Agreements</a>
+            <a href="/#services">Penalty Abatement</a>
+            <a href="/#services">IRS Notice Response</a>
+            <a href="/#services">Tax Catch-Up Filing</a>
+          </div>
+        </div>
+      </div>
+      <a href="/#tool">Notice Decoder</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#contact" class="nav-cta">Get Help Now</a>
+    </nav>
+  </div>
+</header>
+  </div>
+</header>
+
+<div class="notice-hero">
+  <div class="notice-hero-inner">
+    <div class="notice-eyebrow">IRS Collection Relief</div>
+    <div class="notice-code-display">Currently Not Collectible</div>
+    <h1>When you genuinely cannot pay the IRS — CNC status stops all collection activity without requiring a payment plan or settlement</h1>
+    <div class="direct-answer">
+      <p><strong>The short answer:</strong> Currently Not Collectible (CNC) status is a formal IRS designation that suspends all collection activity — no levies, no wage garnishment, no revenue officer contact — when your income doesn't cover your basic living expenses. It's not forgiveness. The debt remains and interest continues. But collection stops, giving you time to recover without the IRS taking your paycheck or bank account.</p>
+    </div>
+  </div>
+</div>
+
+<div class="notice-body">
+
+  <div class="romeo-bar">
+    <div class="romeo-avatar-wrap">
+      <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Auditor" style="width:90px;height:90px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--gold);display:block">
+      <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener" class="romeo-linkedin">LinkedIn ↗</a>
+    </div>
+    <div class="romeo-info">
+      <div class="romeo-name">Romeo Razi, CPA</div>
+      <div class="romeo-title">Former IRS Tax Examiner — Individual & Employment Tax Division</div>
+      <div class="romeo-bio">CNC is one of the most underused IRS tools. People either don't know it exists, or they think they have to prove they're destitute to qualify. The actual standard is simpler: the IRS can't take money you don't have. If your monthly income doesn't exceed the IRS's own expense allowances for your household, collection must stop.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>What Currently Not Collectible actually means</h2>
+    <p>When the IRS places an account in CNC status, a transaction code 530 is posted to your transcript. This tells the IRS's automated systems and any assigned revenue officer to suspend all active collection on that account. The IRS will still send annual balance notices (CP504-type reminders), but it cannot levy your wages, seize your bank account, or take other enforced collection action while the account remains in CNC.</p>
+    <p>CNC is not a settlement and it is not forgiveness. The balance continues to accrue interest at the federal short-term rate plus 3%. Penalties may continue on unpaid balances. The <a href="/irs-collection-statute" class="tl">10-year collection statute (CSED)</a> continues to run — which is actually an advantage in some strategies, because every year in CNC is a year closer to the debt expiring entirely.</p>
+
+    <div class="insider">
+      <div class="insider-label">Romeo Razi — Former IRS Auditor</div>
+      <p>"CNC and the collection statute work together better than most people realize. If you have $80,000 in IRS debt that was assessed in 2018, the CSED runs through 2028. Three or four years in CNC status is three or four years that debt is moving toward expiration without you paying anything. When I'm looking at a client who is genuinely unable to pay, I always look at the CSED first. Sometimes the math says CNC is the best strategy not just now, but permanently."</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>How the IRS determines if you qualify — the Collection Financial Standards</h2>
+    <p>The IRS evaluates CNC eligibility by comparing your monthly income against your allowable monthly expenses. The expense allowances come from the IRS National Standards and Local Standards — the same expense tables used in <a href="/irs-installment-agreement" class="tl">installment agreement</a> and <a href="/irs-offer-in-compromise" class="tl">Offer in Compromise</a> negotiations.</p>
+
+    <h3>Allowable expenses the IRS recognizes</h3>
+    <ul>
+      <li><strong>Food, clothing, and personal care:</strong> National Standards by household size (set annually by IRS)</li>
+      <li><strong>Housing and utilities:</strong> Local Standards by county — actual expense is allowed up to the county maximum</li>
+      <li><strong>Vehicle ownership and operating costs:</strong> National Standards for ownership plus Local Standards for operating costs</li>
+      <li><strong>Health care:</strong> National Standard plus actual expenses above the standard if documented</li>
+      <li><strong>Other necessary expenses:</strong> Court-ordered payments, minimum credit card payments, term life insurance premiums, childcare required for work</li>
+    </ul>
+
+    <div class="insider">
+      <div class="insider-label">Romeo Razi — Former IRS Auditor</div>
+      <p>"The IRS expense tables are the same ones I use when building installment agreement cases or OIC offers. They're public — the IRS publishes them every year. Before you call the IRS about CNC, look up the standards for your county and household size. Know your numbers before you get on the phone. If your actual expenses match or exceed your income under these tables, you have a strong CNC case regardless of what the debt balance is."</p>
+    </div>
+
+    <h3>What the IRS looks at on Form 433</h3>
+    <p>To request CNC status, you'll typically need to complete either Form 433-A (for individuals) or Form 433-F (a shorter version used by the IRS Automated Collection System). These forms document:</p>
+    <ul>
+      <li>All sources of income (wages, self-employment, Social Security, rental, investment)</li>
+      <li>All bank accounts and their balances</li>
+      <li>All real property and its equity</li>
+      <li>Retirement accounts and other assets</li>
+      <li>Monthly expenses by category</li>
+    </ul>
+    <p>If the analysis shows your income minus allowable expenses leaves nothing to pay the IRS, the account is placed in CNC. If there's a small remaining amount, the IRS may insist on a minimal installment agreement rather than full CNC status.</p>
+  </div>
+
+  <div class="section">
+    <h2>How to request Currently Not Collectible status</h2>
+    <p>CNC can be requested by phone or in writing. The fastest path is to call the IRS Automated Collection System (ACS) at 1-800-829-7650 or the number on your most recent notice, with your completed Form 433-F ready to provide information from.</p>
+    <p>If you have a revenue officer assigned to your case, you'll work directly with them. A revenue officer has more discretion and authority than ACS and can process CNC placement more quickly if the financial picture is clear.</p>
+
+    <h3>What to say when you call</h3>
+    <p>State that you are requesting Currently Not Collectible status due to financial hardship and that you have your financial information available to complete the analysis. Have your income documents (pay stubs, bank statements from the last three months) ready to reference. The IRS representative will walk through the 433-F questions on the call.</p>
+
+    <div class="warning-box">
+      <p><strong>All required tax returns must be filed before the IRS will consider CNC status.</strong> If you have unfiled returns, file them first — even if you can't pay the resulting balance. The IRS will not place a delinquent filer in CNC status.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>What happens after CNC is granted</h2>
+    <p>Once your account is in CNC, the IRS will review your financial situation approximately every two years, or when the IRS receives information indicating your circumstances may have changed. Common triggers for review include:</p>
+    <ul>
+      <li>An increase in your reported income on a subsequently filed tax return</li>
+      <li>A new tax balance added to your account</li>
+      <li>The IRS receiving a third-party report (1099, W-2) showing new income</li>
+    </ul>
+    <p>If a review shows you can now make payments, the IRS may contact you about reinstating collection. If your financial situation has truly improved, the right response may be a payment plan at that point — or, depending on how the CSED has run, the debt may be closer to expiration than it was when CNC was first granted.</p>
+
+    <h3>CNC and the collection statute</h3>
+    <p>Unlike most other IRS resolution options, CNC status does not toll (pause) the 10-year collection statute. Every month in CNC status is a month the CSED continues running. This makes CNC particularly powerful for older debts. If you have a debt assessed in 2017, four years in CNC status puts the CSED at 2027. If the IRS keeps reviewing and re-granting CNC, the entire debt could expire without payment.</p>
+  </div>
+
+  <div class="section">
+    <h2>CNC vs. installment agreement vs. Offer in Compromise — how to decide</h2>
+
+    <table class="cnc-vs-table">
+      <thead>
+        <tr><th>Factor</th><th>CNC Status</th><th>Installment Agreement</th><th>Offer in Compromise</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Stops collection immediately</td><td>Yes</td><td>Yes (once approved)</td><td>Yes (once submitted)</td></tr>
+        <tr><td>Monthly payment required</td><td>No</td><td>Yes</td><td>Yes (lump sum or payments)</td></tr>
+        <tr><td>Debt forgiven</td><td>No</td><td>No</td><td>Partially (if accepted)</td></tr>
+        <tr><td>Tolls the CSED</td><td>No</td><td>No</td><td>Yes — pauses while pending</td></tr>
+        <tr><td>Qualification threshold</td><td>No disposable income</td><td>Any income</td><td>Limited assets + income</td></tr>
+        <tr><td>Tax lien filed</td><td>Sometimes</td><td>Depends on balance</td><td>Sometimes</td></tr>
+        <tr><td>Best when</td><td>Income = expenses, CSED running</td><td>Can pay something monthly</td><td>Debt genuinely exceeds what you can ever pay</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Frequently asked questions about Currently Not Collectible status</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Does CNC status get reported on my credit report?</div>
+      <div class="faq-a">CNC status itself is not reported to credit bureaus. However, if a federal tax lien was already filed before CNC was granted, the lien itself may appear in public records. Since 2018, the major credit bureaus no longer report federal tax liens, so this is less of an issue than it once was.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can the IRS still seize my tax refund if I'm in CNC status?</div>
+      <div class="faq-a">Yes. CNC status suspends enforced collection — levies on wages and bank accounts — but the IRS can still apply future tax refunds to your outstanding balance through the Treasury Offset Program. If you're in CNC and have a refund coming, it will likely be seized.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Will I owe more by the time the statute runs out?</div>
+      <div class="faq-a">Yes — interest continues to accrue during CNC. On a $50,000 balance, you might owe $60,000 or $70,000 when the statute expires. But the entire amount — including the accrued interest — expires when the CSED runs out. The IRS cannot collect a single dollar after that date.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What if I own a home with equity?</div>
+      <div class="faq-a">Home equity is an asset that the IRS considers in the CNC analysis. If you have significant equity, the IRS may determine you have the ability to borrow against it to pay the debt, which could disqualify you for CNC. This requires careful analysis — particularly in markets where home values have increased significantly.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can a business get CNC status?</div>
+      <div class="faq-a">Yes, businesses can be placed in CNC status using Form 433-B. The analysis is similar — IRS compares business income against necessary operating expenses. However, businesses in active operation often have more scrutiny applied because the IRS wants to ensure the business genuinely cannot make payments before suspending collection.</div>
+    </div>
+  </div>
+
+  <div class="notice-links">
+    <h3>Related IRS resolution guides</h3>
+    <ul>
+      <li><a href="/irs-collection-statute">IRS 10-Year Collection Statute — how CNC and the CSED work together</a></li>
+      <li><a href="/irs-installment-agreement">IRS Payment Plans — when you can pay something</a></li>
+      <li><a href="/irs-offer-in-compromise">Offer in Compromise — settling for less than you owe</a></li>
+      <li><a href="/irs-penalty-abatement">Penalty Abatement — removing penalties from your balance</a></li>
+      <li><a href="/irs-wage-garnishment">IRS Wage Garnishment — stopping it before it starts</a></li>
+    </ul>
+  </div>
+
+  <div class="cta-box">
+    <h2>Can't pay the IRS right now? CNC status may be the right move.</h2>
+    <p>Romeo Razi spent years inside the IRS. He knows exactly how the financial analysis works — and how to present your situation to get the strongest outcome.</p>
+    <a href="/#contact" class="cta-btn">Get a Free Consultation</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>IRS Resolution Service LLC · 9673 Camino Capistrano, Las Vegas, NV · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
+  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice.</p>
+</footer>
+</body>
+</html>

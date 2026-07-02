@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRS Bank Levy: How It Works and How to Get Funds Released | Former IRS Auditor</title>
+<meta name="description" content="The IRS froze your bank account. You have 21 days before the money is gone. Former IRS Auditor Romeo Razi explains exactly how a bank levy works, what the 21-day window means, and how to get funds released.">
+<link rel="canonical" href="https://irsresolutionservice.com/irs-bank-levy">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c; --gold-light: #e8c97a; --gold-dim: #8a6e2f; --gold-muted: #f5ecd8;
+  --cream: #f5f0e8; --cream-warm: #ede5d5; --cream-dark: #d9cdb8;
+  --ink: #1a1410; --ink-soft: #4a3f32; --ink-muted: #7a6e60; --white: #ffffff;
+  --red: #c0392b; --red-light: #fdf0f0; --green: #1a5c2a; --green-light: #f0fdf4;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 18px; line-height: 1.7; }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--cream-dark); backdrop-filter: blur(12px); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-mark { width: 36px; height: 36px; border: 1.5px solid var(--gold); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--gold); }
+.logo-text { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+.logo-text span { color: var(--gold); }
+.nav { display: flex; align-items: center; gap: 1.75rem; }
+.nav a { font-size: 15px; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.03em; }
+.nav a:hover { color: var(--gold-dim); }
+.nav-cta { background: var(--gold) !important; color: var(--white) !important; padding: 9px 22px; border-radius: 2px; font-weight: 600; }
+.notice-hero { background: var(--white); padding: 120px 2rem 64px; border-bottom: 1px solid var(--cream-dark); }
+.notice-hero-inner { max-width: 840px; margin: 0 auto; }
+.notice-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--red-light); color: var(--red); border: 1px solid #e8b0b0; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; margin-bottom: 1.5rem; }
+.deadline-badge { display: inline-flex; align-items: center; gap: 10px; background: var(--red-light); border: 1.5px solid #e8b0b0; border-radius: 4px; padding: 12px 20px; font-size: 16px; font-weight: 700; color: var(--red); margin-bottom: 1.5rem; }
+.notice-code-display { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.5rem; }
+.notice-hero h1 { font-family: var(--serif); font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 600; color: var(--ink-soft); line-height: 1.3; margin-bottom: 1.5rem; }
+.direct-answer { background: var(--green-light); border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 2rem; }
+.direct-answer p { font-size: 17px; line-height: 1.65; color: var(--ink-soft); }
+.direct-answer strong { color: var(--green); }
+.notice-body { max-width: 840px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+.section { margin-bottom: 3.5rem; }
+.section h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
+.section h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); margin: 1.5rem 0 0.75rem; }
+.section p { color: var(--ink-soft); margin-bottom: 1rem; }
+.section ul { color: var(--ink-soft); padding-left: 1.5rem; margin-bottom: 1rem; }
+.section li { margin-bottom: 0.5rem; }
+.insider { background: var(--gold-muted); border-left: 4px solid var(--gold); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.insider-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.4rem; }
+.insider p { font-size: 16px; color: var(--ink-soft); margin: 0; font-style: italic; }
+.warning-box { background: var(--red-light); border-left: 4px solid var(--red); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.warning-box p { font-size: 16px; color: var(--ink-soft); margin: 0; }
+.timeline { list-style: none; padding: 0; margin: 1.5rem 0; }
+.timeline li { display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--cream-dark); align-items: flex-start; }
+.timeline li:last-child { border-bottom: none; }
+.tl-day { background: var(--ink); color: var(--white); border-radius: 4px; padding: 4px 10px; font-size: 12px; font-weight: 700; white-space: nowrap; flex-shrink: 0; margin-top: 3px; }
+.tl-day.red { background: var(--red); }
+.tl-content { font-size: 16px; color: var(--ink-soft); }
+.cta-box { background: var(--ink); color: var(--white); border-radius: 6px; padding: 2.5rem 2rem; text-align: center; margin: 3rem 0; }
+.cta-box h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; }
+.cta-box p { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 1.5rem; }
+.cta-btn { display: inline-block; background: var(--gold); color: var(--ink); text-decoration: none; padding: 14px 32px; border-radius: 2px; font-weight: 700; font-size: 16px; }
+.romeo-bar { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: center; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+.romeo-avatar-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.romeo-avatar { width: 72px; height: 72px; background: var(--gold-muted); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--gold-dim); }
+.romeo-linkedin { font-size: 12px; color: var(--gold-dim); text-decoration: none; font-weight: 600; }
+.romeo-info .romeo-name { font-weight: 700; font-size: 17px; color: var(--ink); }
+.romeo-info .romeo-title { font-size: 14px; color: var(--ink-muted); margin-top: 2px; }
+.romeo-info .romeo-bio { font-size: 15px; color: var(--ink-soft); margin-top: 0.75rem; line-height: 1.6; }
+.faq-item { border-bottom: 1px solid var(--cream-dark); padding: 1.25rem 0; }
+.faq-q { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+.faq-a { font-size: 16px; color: var(--ink-soft); }
+.notice-links { background: var(--cream-warm); border-radius: 6px; padding: 1.5rem; margin: 2rem 0; }
+.notice-links h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); margin-bottom: 0.75rem; }
+.notice-links ul { list-style: none; padding: 0; }
+.notice-links li { margin-bottom: 0.4rem; }
+.notice-links a { color: var(--gold-dim); text-decoration: none; font-size: 15px; }
+.tl-link { color: var(--gold-dim); text-decoration: underline; text-underline-offset: 2px; }
+footer { background: var(--ink); color: rgba(255,255,255,0.5); text-align: center; padding: 2rem; font-size: 13px; }
+footer a { color: var(--gold); text-decoration: none; }
+@media (max-width: 640px) { .nav { gap: 1rem; } .nav a:not(.nav-cta) { display: none; } }
+
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://irsresolutionservice.com" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <nav class="nav">
+      <a href="/#founders">About</a>
+      <div class="nav-item">
+        <a href="/cp2000">IRS Guides</a>
+        <div class="dropdown">
+          <div class="dropdown-cols" style="grid-template-columns:1fr 1fr 1fr">
+            <div class="dropdown-col">
+              <div class="dropdown-col-head">IRS Notices Explained</div>
+              <a href="/cp2000">CP2000 — Proposed Adjustment</a>
+              <a href="/cp14">CP14 — First Balance Due</a>
+              <a href="/cp504">CP504 — Intent to Levy</a>
+              <a href="/lt11">LT11 — Final Levy Notice</a>
+              <a href="/cp3219a">CP3219A — Notice of Deficiency</a>
+              <a href="/cp59">CP59 — Unfiled Return</a>
+              <a href="/cp523">CP523 — Payment Plan Terminated</a>
+              <a href="/missed-tax-deadline">Missed the Tax Deadline</a>
+              <a href="/havent-filed-taxes">Haven't Filed in Years</a>
+            </div>
+            <div class="dropdown-col">
+              <div class="dropdown-col-head">IRS Resolution &amp; Collection</div>
+              <a href="/irs-installment-agreement">Payment Plans Explained</a>
+              <a href="/irs-offer-in-compromise">Offer in Compromise</a>
+              <a href="/irs-offer-in-compromise-deemed-accepted">OIC Deemed Accepted Rule</a>
+              <a href="/irs-collection-statute">10-Year Collection Statute</a>
+              <a href="/irs-penalty-abatement">Penalty Abatement</a>
+              <a href="/irs-currently-not-collectible">Currently Not Collectible</a>
+              <a href="/irs-wage-garnishment">Wage Garnishment</a>
+              <a href="/irs-bank-levy">Bank Levy — 21-Day Window</a>
+              <a href="/irs-tax-lien">Federal Tax Lien</a>
+              <a href="/irs-revenue-officer">Revenue Officer Assigned</a>
+              <a href="/irs-audit-appeals-strategy">Audit &amp; Appeals Strategy</a>
+              <a href="/irs-office-audit-preparation">Prepare for Office Audit</a>
+              <a href="/irs-budget-cuts-2025">IRS Budget Cuts 2025</a>
+            </div>
+            <div class="dropdown-col">
+              <div class="dropdown-col-head">Tax Law &amp; Planning</div>
+              <a href="/one-big-beautiful-act">One Big Beautiful Act — 9 Changes</a>
+              <a href="/irs-tips-overtime-tax">Tax-Free Tips &amp; Overtime</a>
+              <a href="/salt-deduction-2025">SALT Deduction Raised to $40K</a>
+              <a href="/bonus-depreciation-2025">100% Bonus Depreciation</a>
+              <a href="/rd-expense-deduction">R&amp;D Expense Deduction</a>
+              <a href="/qualified-small-business-stock">QSBS Exclusion Changes</a>
+              <a href="/year-end-tax-planning">Year-End Business Planning</a>
+              <a href="/tax-brackets-2026">2026 Tax Brackets</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/#services">Services</a>
+        <div class="dropdown dropdown-services">
+          <div class="dropdown-col">
+            <div class="dropdown-col-head">What We Handle</div>
+            <a href="/#services">Unfiled Tax Returns</a>
+            <a href="/#services">Back Taxes &amp; Collections</a>
+            <a href="/#services">IRS Audits &amp; Appeals</a>
+            <a href="/#services">Offer in Compromise</a>
+            <a href="/#services">Installment Agreements</a>
+            <a href="/#services">Penalty Abatement</a>
+            <a href="/#services">IRS Notice Response</a>
+            <a href="/#services">Tax Catch-Up Filing</a>
+          </div>
+        </div>
+      </div>
+      <a href="/#tool">Notice Decoder</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#contact" class="nav-cta">Get Help Now</a>
+    </nav>
+  </div>
+</header>
+  </div>
+</header>
+
+<div class="notice-hero">
+  <div class="notice-hero-inner">
+    <div class="notice-eyebrow">⚠ Active IRS Enforcement</div>
+    <div class="notice-code-display">IRS Bank Levy</div>
+    <div class="deadline-badge">⏰ You have 21 days before your bank releases the funds</div>
+    <h1>The IRS froze your bank account. Here's what happens in the next 21 days — and how to get the funds released.</h1>
+    <div class="direct-answer">
+      <p><strong>Act now:</strong> A bank levy (Form 668-A) freezes the funds in your account on the day the bank receives it. Your bank holds that money for 21 days before sending it to the IRS. That 21-day window is your only opportunity to get the levy released. After day 21, the money is gone. Here's exactly what to do.</p>
+    </div>
+  </div>
+</div>
+
+<div class="notice-body">
+
+  <div class="romeo-bar">
+    <div class="romeo-avatar-wrap">
+      <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Auditor" style="width:90px;height:90px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--gold);display:block">
+      <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener" class="romeo-linkedin">LinkedIn ↗</a>
+    </div>
+    <div class="romeo-info">
+      <div class="romeo-name">Romeo Razi, CPA</div>
+      <div class="romeo-title">Former IRS Tax Examiner — Individual & Employment Tax Division</div>
+      <div class="romeo-bio">Bank levies are jarring precisely because they happen without warning. The notices leading up to them went somewhere — a prior address, unopened mail — but the levy itself arrives at the bank without any additional notice to you. The 21-day window exists specifically to allow you to resolve the situation before the IRS collects. I've gotten levies released. This is what works.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>How a bank levy works — step by step</h2>
+
+    <ul class="timeline">
+      <li><span class="tl-day">Day 0</span><div class="tl-content"><strong>Bank receives Form 668-A.</strong> The IRS sends a Notice of Levy directly to your bank. The bank is legally required to freeze the funds on hand that day — up to the amount of the levy. Money deposited after this date is not affected by this particular levy.</div></li>
+      <li><span class="tl-day">Day 0–21</span><div class="tl-content"><strong>Funds are held.</strong> Your bank holds the frozen amount for 21 calendar days. During this time, the bank cannot release funds to you — but they also cannot send them to the IRS. This is your window.</div></li>
+      <li><span class="tl-day">Day 21</span><div class="tl-content"><strong>Funds transfer to IRS.</strong> If no levy release has been issued by the IRS, the bank sends the frozen funds to the IRS on day 21. Once transferred, the IRS applies them to your balance. Getting money back after this point is significantly harder.</div></li>
+      <li><span class="tl-day red">After Day 21</span><div class="tl-content"><strong>Money is gone.</strong> The IRS can issue new levies on the same account at any time for future deposits. Bank levies are not one-time events — they will keep coming until the underlying balance is resolved.</div></li>
+    </ul>
+
+    <div class="insider">
+      <div class="insider-label">Romeo Razi — Former IRS Auditor</div>
+      <p>"The 21 days feels like a short window. It is. But it's enough time to get a resolution in place if you move immediately. The IRS will release a levy when you enter into an installment agreement, when you pay in full, when you establish hardship/CNC status, or when you file a Collection Due Process appeal. All of those take effort to arrange, but none of them are impossible in 21 days if you start on day one."</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>How to get a bank levy released</h2>
+    <p>There are five paths to getting a levy released, listed roughly in order of how quickly each can be accomplished:</p>
+
+    <h3>1. Pay the full balance</h3>
+    <p>The fastest release. If you can pay the balance in full, call the IRS at 1-800-829-7650 with payment information. The levy release is typically issued the same day or the next business day after payment is confirmed.</p>
+
+    <h3>2. Enter into an installment agreement</h3>
+    <p>The IRS will release a levy once you are in an approved <a href="/irs-installment-agreement" class="tl-link">installment agreement</a>. If you can get an agreement established — or a conditional agreement pending financial review — the levy can be released within the 21-day window. For balances under $50,000 with an online agreement, this can happen in a single call.</p>
+
+    <h3>3. Establish hardship / Currently Not Collectible status</h3>
+    <p>If you genuinely cannot pay anything, providing financial information that qualifies you for <a href="/irs-currently-not-collectible" class="tl-link">Currently Not Collectible status</a> will result in a levy release. This requires completing Form 433-F with documentation of income and expenses. The IRS will release the levy and suspend collection.</p>
+
+    <h3>4. File a Collection Due Process appeal</h3>
+    <p>If you received an LT11 Final Notice of Intent to Levy before the bank levy was issued, you may have had a right to a Collection Due Process (CDP) hearing that wasn't exercised. If the CDP window has passed but was missed, you may still be able to file an Equivalent Hearing request. Filing a CDP or Equivalent Hearing appeal puts a hold on collection while it's pending.</p>
+
+    <h3>5. Demonstrate the levy creates economic hardship</h3>
+    <p>The IRS has the authority to release a levy that is causing "economic hardship" — defined as making it impossible to meet basic living expenses. You'll need to complete a financial statement and demonstrate that the frozen funds are necessary for living expenses. This is harder to get approved quickly but is an option for severe situations.</p>
+
+    <div class="warning-box">
+      <p><strong>Call immediately.</strong> The IRS number for levy releases is 1-800-829-7650 (Automated Collection System). If you have a Revenue Officer assigned, call them directly — they can issue releases faster than ACS. Have your bank's name, account number, and the date you discovered the levy ready before you call.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Bank levy vs. wage levy — key differences</h2>
+    <p>A bank levy (Form 668-A) and a wage levy/garnishment (Form 668-W) are both IRS levies, but they work differently:</p>
+    <ul>
+      <li><strong>Bank levy:</strong> One-time snapshot. Freezes funds on the date the bank receives the form. Future deposits in the same account are not covered by the same levy — but the IRS can issue a new levy at any time.</li>
+      <li><strong>Wage levy:</strong> Continuous. Once Form 668-W is received by your employer, it applies to every paycheck until released. Your employer is required to calculate and withhold a portion of each paycheck — leaving you only the minimal "exempt amount" — until the IRS issues a release.</li>
+    </ul>
+    <p>You may receive both simultaneously. The IRS commonly issues both a bank levy and a wage levy at the same time to maximize collection pressure. See our full guide on <a href="/irs-wage-garnishment" class="tl-link">how IRS wage garnishment works</a> for the wage levy side.</p>
+  </div>
+
+  <div class="section">
+    <h2>Exempt funds — what the IRS cannot take</h2>
+    <p>Not all funds in your bank account are subject to levy. The following are generally exempt:</p>
+    <ul>
+      <li>Certain Social Security benefits (up to 15% can still be levied, but certain disability payments are fully exempt)</li>
+      <li>Workers' compensation payments</li>
+      <li>Child support payments you are receiving</li>
+      <li>Amounts deposited from unemployment compensation</li>
+      <li>Minimum amounts needed for child support under a court order</li>
+    </ul>
+    <p>If you believe exempt funds have been levied, notify the IRS immediately with documentation of the source of the funds. The IRS is required to return exempt funds.</p>
+  </div>
+
+  <div class="section">
+    <h2>Frequently asked questions about IRS bank levies</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Does the IRS notify me before levying my bank account?</div>
+      <div class="faq-a">The IRS is required to send at least one Final Notice of Intent to Levy (typically an LT11 or CP504) before levying. However, this notice goes to your last known address on file with the IRS — which may be an old address. Many taxpayers never see this notice, and the first indication they have of a levy is when their bank calls them. This is why keeping your address current with the IRS is important.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can the IRS levy a joint bank account?</div>
+      <div class="faq-a">Yes. If your name is on the account, the IRS can levy it regardless of whose money is primarily in the account. The other account holder can try to claim the funds are not yours, but this requires a formal claim procedure with the IRS and is difficult to win without clear documentation that the funds belong entirely to the other person.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What if the levy takes more than I owe?</div>
+      <div class="faq-a">The IRS should only levy up to the amount you owe. If an error results in an over-collection, request a refund by filing Form 8546. The IRS is required to return over-collected amounts, though the process can take several months.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can I open a new bank account to protect future deposits?</div>
+      <div class="faq-a">The existing levy only covers funds on hand the day the bank received Form 668-A. Funds deposited after that date — even in the same account — are not covered by that specific levy. However, the IRS can issue new levies at any time. Opening a new account at a different bank may provide temporary protection, but it does not resolve the underlying issue. The IRS will typically continue levying as long as the balance remains unresolved.</div>
+    </div>
+  </div>
+
+  <div class="notice-links">
+    <h3>Related IRS enforcement guides</h3>
+    <ul>
+      <li><a href="/irs-wage-garnishment">IRS Wage Garnishment — the continuous levy on your paycheck</a></li>
+      <li><a href="/lt11">LT11 — the Final Notice required before a bank levy</a></li>
+      <li><a href="/cp504">CP504 — Notice of Intent to Levy</a></li>
+      <li><a href="/irs-installment-agreement">IRS Installment Agreement — the most common levy release method</a></li>
+      <li><a href="/irs-currently-not-collectible">Currently Not Collectible status — when you cannot pay anything</a></li>
+    </ul>
+  </div>
+
+  <div class="cta-box">
+    <h2>Bank account levied? The 21-day clock is running.</h2>
+    <p>Romeo Razi has gotten bank levies released. Call today — every day in the 21-day window matters.</p>
+    <a href="/#contact" class="cta-btn">Get Help Now</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>IRS Resolution Service LLC · 9673 Camino Capistrano, Las Vegas, NV · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
+  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice.</p>
+</footer>
+</body>
+</html>
