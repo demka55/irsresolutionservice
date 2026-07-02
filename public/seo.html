@@ -64,8 +64,31 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height
 .hist-legend span{display:flex;align-items:center;gap:4px;font-size:12px}
 .hdot{width:10px;height:10px;border-radius:2px}
 .hchart{display:flex;align-items:flex-end;gap:3px;height:64px;overflow-x:auto}
-.hcol{display:flex;flex-direction:column;align-items:center;gap:1px;flex-shrink:0}
+.hcol{display:flex;flex-direction:column;align-items:center;gap:1px;flex-shrink:0;position:relative;cursor:pointer}
+.hcol:hover .htip{display:block}
+.htip{display:none;position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--white);border-radius:4px;padding:8px 12px;font-size:12px;white-space:nowrap;z-index:100;min-width:180px;margin-bottom:6px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.htip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink)}
+.htip-date{font-weight:700;color:var(--gold);margin-bottom:6px;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.htip-kw{font-size:11px;color:rgba(255,255,255,.8);padding:2px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.htip-kw:last-child{border-bottom:none}
+.htip-kw.aio{color:#b3d4f0}
+.htip-kw.cited{color:#7ec89e}
+.th-sort{cursor:pointer;user-select:none}
+.th-sort:hover{color:var(--ink)}
+.sort-arrow{font-size:10px;margin-left:3px;opacity:.5}
+.sort-arrow.active{opacity:1;color:var(--gold-dim)}
 .hbar{width:18px;border-radius:2px 2px 0 0;min-height:2px}
+.hcol{display:flex;flex-direction:column;align-items:center;gap:1px;flex-shrink:0;position:relative;cursor:pointer}
+.hcol:hover .htip{display:block}
+.htip{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--white);border-radius:4px;padding:8px 12px;font-size:12px;white-space:nowrap;z-index:100;min-width:200px;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+.htip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink)}
+.htip-date{font-weight:700;color:var(--gold-light);margin-bottom:5px;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.htip-row{font-size:11px;padding:2px 0;display:flex;justify-content:space-between;gap:12px}
+.htip-row.aio{color:#b3d4f0}
+.htip-row.cited{color:#7ec89e}
+.th-sort{cursor:pointer;user-select:none;white-space:nowrap}
+.th-sort:hover{color:var(--ink)}
+.sort-arr{font-size:10px;margin-left:3px;color:var(--gold-dim)}
 .hdate{font-size:9px;color:var(--ink-muted);writing-mode:vertical-lr;transform:rotate(180deg);margin-top:4px}
 
 /* ── Filters ── */
@@ -165,8 +188,8 @@ table.kw tr:hover td{background:#faf8f4}
   <div class="hist" id="histWrap" style="display:none">
     <h3>30-day trend
       <span class="hist-legend">
-        <span><span class="hdot" style="background:#b3d4f0"></span>AIO shown</span>
-        <span><span class="hdot" style="background:var(--green)"></span>We appear</span>
+        <span><span class="hdot" style="background:#b3d4f0"></span>AIO shown <span id="legend-aio" style="font-weight:700;color:var(--ink)"></span></span>
+        <span><span class="hdot" style="background:var(--green)"></span>We appear <span id="legend-cited" style="font-weight:700;color:var(--green)"></span></span>
       </span>
     </h3>
     <div class="hchart" id="hchart"></div>
@@ -196,7 +219,7 @@ table.kw tr:hover td{background:#faf8f4}
 
 <script>
 const PW_KEY = 'seo_pw';
-let apw = '', allResults = [], curFilter = 'all';
+let apw = '', allResults = [], curFilter = 'all', sortCol = null, sortDir = 'asc';
 
 // ── Auth ──────────────────────────────────────────────────────────────────────
 async function doLogin() {
@@ -384,15 +407,47 @@ function renderHistory(hist) {
   document.getElementById('histWrap').style.display = 'block';
   const maxA = Math.max(...hist.map(h=>h.in_aio), 1);
   const maxC = Math.max(...hist.map(h=>h.site_cited), 1);
+
+  // Update legend with latest totals
+  const latest = hist[0] || {};
+  const legAio = document.getElementById('legend-aio');
+  const legCited = document.getElementById('legend-cited');
+  if (legAio) legAio.textContent = latest.in_aio != null ? `(${latest.in_aio})` : '';
+  if (legCited) legCited.textContent = latest.site_cited != null ? `(${latest.site_cited})` : '';
+
   document.getElementById('hchart').innerHTML = [...hist].reverse().map(h => {
     const ah = Math.round((h.in_aio / maxA) * 56);
     const ch = Math.round((h.site_cited / maxC) * 56);
+    const dateLabel = h.date ? h.date.slice(5) : '—';
+
+    // Build tooltip — show which keywords appeared on this day if available
+    const kwsOnDay = (h.keywords || []);
+    const aioKws   = kwsOnDay.filter(k => k.in_aio);
+    const citedKws = kwsOnDay.filter(k => k.site_cited);
+
+    let tipRows = '';
+    if (citedKws.length) {
+      tipRows += citedKws.map(k => `<div class="htip-row cited">✓ ${esc(k.keyword.substring(0,38))}</div>`).join('');
+    }
+    if (aioKws.length && !citedKws.length) {
+      tipRows += aioKws.slice(0,5).map(k => `<div class="htip-row aio">AIO ${esc(k.keyword.substring(0,36))}</div>`).join('');
+    }
+    if (!tipRows) {
+      tipRows = `<div class="htip-row aio">AIO shown: ${h.in_aio}</div><div class="htip-row cited">We appear: ${h.site_cited}</div>`;
+    }
+
     return `<div class="hcol">
-      <div style="display:flex;align-items:flex-end;gap:1px;height:58px">
-        <div class="hbar" style="height:${ah}px;background:#b3d4f0" title="AIO: ${h.in_aio}"></div>
-        <div class="hbar" style="height:${ch}px;background:var(--green)" title="Cited: ${h.site_cited}"></div>
+      <div class="htip">
+        <div class="htip-date">${dateLabel}</div>
+        <div class="htip-row aio">AIO shown: <strong>${h.in_aio}</strong></div>
+        <div class="htip-row cited">We appear: <strong>${h.site_cited}</strong></div>
+        ${tipRows !== `<div class="htip-row aio">AIO shown: ${h.in_aio}</div><div class="htip-row cited">We appear: ${h.site_cited}</div>` ? '<div style="border-top:1px solid rgba(255,255,255,.15);margin:5px 0"></div>' + tipRows : ''}
       </div>
-      <div class="hdate">${esc(h.date ? h.date.slice(5) : '')}</div>
+      <div style="display:flex;align-items:flex-end;gap:1px;height:58px">
+        <div class="hbar" style="height:${ah}px;background:#b3d4f0"></div>
+        <div class="hbar" style="height:${ch}px;background:var(--green)"></div>
+      </div>
+      <div class="hdate">${esc(dateLabel)}</div>
     </div>`;
   }).join('');
 }
@@ -421,6 +476,12 @@ function setF(f, el) {
 }
 
 // ── Table ─────────────────────────────────────────────────────────────────────
+function sortByCol(col) {
+  if (sortCol === col) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+  else { sortCol = col; sortDir = 'desc'; }
+  renderTable(curFilter);
+}
+
 function renderTable(filter) {
   let rows = allResults;
   if (filter === 'we_appear') rows = rows.filter(r => r.our_pages && r.our_pages.length > 0);
@@ -429,6 +490,24 @@ function renderTable(filter) {
   if (filter === 'no_us')     rows = rows.filter(r => !r.our_pages || r.our_pages.length === 0);
   if (filter === 'error')     rows = rows.filter(r => r.error);
 
+  // Sort
+  if (sortCol === 'appear') {
+    rows = [...rows].sort((a, b) => {
+      const av = (a.our_pages||[]).length, bv = (b.our_pages||[]).length;
+      return sortDir === 'desc' ? bv - av : av - bv;
+    });
+  } else if (sortCol === 'organic') {
+    rows = [...rows].sort((a, b) => {
+      const av = a.organic_rank || 999, bv = b.organic_rank || 999;
+      return sortDir === 'asc' ? av - bv : bv - av;
+    });
+  } else if (sortCol === 'aio') {
+    rows = [...rows].sort((a, b) => {
+      const av = a.in_aio ? 1 : 0, bv = b.in_aio ? 1 : 0;
+      return sortDir === 'desc' ? bv - av : av - bv;
+    });
+  }
+
   document.getElementById('tblCount').textContent = `${rows.length} keyword${rows.length !== 1 ? 's' : ''}`;
 
   if (!rows.length) {
@@ -436,39 +515,30 @@ function renderTable(filter) {
     return;
   }
 
+  const arr = (col) => sortCol === col ? `<span class="sort-arr">${sortDir==='desc'?'↓':'↑'}</span>` : '<span class="sort-arr" style="opacity:.25">↕</span>';
+
   const html = `<table class="kw">
     <thead><tr>
       <th style="width:30%">Keyword</th>
       <th style="width:70px">Checked</th>
-      <th style="width:90px">AI Overview</th>
-      <th>Where we appear</th>
-      <th style="width:90px">Organic</th>
+      <th class="th-sort" onclick="sortByCol('aio')" style="width:90px">AI Overview ${arr('aio')}</th>
+      <th class="th-sort" onclick="sortByCol('appear')">Where we appear ${arr('appear')}</th>
+      <th class="th-sort" onclick="sortByCol('organic')" style="width:90px">Organic ${arr('organic')}</th>
     </tr></thead>
     <tbody>${rows.map(r => {
       const dt = r.checkedAt ? r.checkedAt.slice(5, 10) : '—';
-
-      // AIO badge
-      // Row highlight: green if we appear in AIO, amber if AIO exists but not us
-      const rowBg = r.site_cited ? 'background:linear-gradient(90deg,#edf7f0 0%,transparent 100%)' 
+      const rowBg = r.site_cited ? 'background:linear-gradient(90deg,#edf7f0 0%,transparent 100%)'
                   : r.in_aio     ? 'background:linear-gradient(90deg,#fffbeb 0%,transparent 100%)'
                   : '';
       const aioBadge = r.error
         ? `<span class="badge err" title="${esc(r.error)}">Error</span>`
-        : r.in_aio
-          ? `<span class="badge aio">✓ AIO</span>`
-          : `<span class="badge no-aio">No AIO</span>`;
-      
-      // Error detail shown in where-we-appear column
+        : r.in_aio ? `<span class="badge aio">✓ AIO</span>` : `<span class="badge no-aio">No AIO</span>`;
       const errorDetail = r.error
         ? `<span style="font-size:12px;color:var(--red);font-family:monospace">${esc(r.error.substring(0,120))}</span>`
         : null;
-
-      // "View AIO" button if there's content
       const aioBtn = (r.in_aio && (r.aio_text || (r.aio_sources && r.aio_sources.length)))
         ? `<button class="btn-aio" onclick='openAio(this)' data-r='${esc(JSON.stringify(r))}'>View full AIO ↗</button>`
         : '';
-
-      // Where we appear column
       let appearHtml = '';
       if (errorDetail) {
         appearHtml = errorDetail;
@@ -477,24 +547,14 @@ function renderTable(filter) {
           const isAio = p.where.startsWith('AIO');
           const isOrg = p.where.startsWith('Organic');
           const col = isAio ? 'var(--green)' : isOrg ? 'var(--blue)' : 'var(--amber)';
-          const linkPart = p.link
-            ? `<a class="our-page-link" href="${esc(p.link)}" target="_blank" rel="noopener">${esc(slugify(p.link))}</a>`
-            : '';
+          const linkPart = p.link ? `<a class="our-page-link" href="${esc(p.link)}" target="_blank" rel="noopener">${esc(slugify(p.link))}</a>` : '';
           const titlePart = p.title ? `<span class="our-page-title"> — ${esc(p.title.substring(0,50))}</span>` : '';
-          return `<div class="our-page">
-            <span class="our-page-where" style="color:${col}">${esc(p.where)}</span>
-            ${linkPart}${titlePart}
-          </div>`;
+          return `<div class="our-page"><span class="our-page-where" style="color:${col}">${esc(p.where)}</span>${linkPart}${titlePart}</div>`;
         }).join('')}</div>`;
       } else {
         appearHtml = `<span class="not-found">Not found in this search</span>`;
       }
-
-      // Organic badge
-      const orgBadge = r.organic_rank
-        ? `<span class="badge rank">#${r.organic_rank}</span>`
-        : `<span class="badge no-rank">—</span>`;
-
+      const orgBadge = r.organic_rank ? `<span class="badge rank">#${r.organic_rank}</span>` : `<span class="badge no-rank">—</span>`;
       return `<tr style="${rowBg}">
         <td><strong style="font-size:14px">${esc(r.keyword)}</strong></td>
         <td style="color:var(--ink-muted);font-size:12px;white-space:nowrap">${dt}</td>
@@ -506,6 +566,7 @@ function renderTable(filter) {
 
   document.getElementById('tblBody').innerHTML = html;
 }
+
 
 // ── AIO modal ─────────────────────────────────────────────────────────────────
 function openAio(btn) {
