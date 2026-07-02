@@ -81,6 +81,27 @@ footer { background: var(--ink); color: rgba(255,255,255,0.5); text-align: cente
 footer a { color: var(--gold); text-decoration: none; }
 @media (max-width: 640px) { .nav { gap: 1rem; } .nav a:not(.nav-cta) { display: none; } }
 
+
+.nav-item { position: relative; }
+.nav-item > a { display: flex; align-items: center; gap: 4px; }
+.nav-item > a::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid currentColor; opacity: 0.5; margin-top: 1px; flex-shrink: 0; }
+.dropdown { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; box-shadow: 0 12px 32px rgba(26,20,16,0.14); min-width: 580px; z-index: 300; padding: 1.75rem 0 1.25rem; }
+.nav-item { padding-bottom: 12px; margin-bottom: -12px; }
+.nav-item:hover .dropdown, .nav-item:focus-within .dropdown { display: block; }
+.dropdown::before { content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 12px; background: transparent; }
+.dropdown-cols { display: grid; grid-template-columns: 1fr 1fr; }
+.dropdown-col { padding: 0 1.25rem; }
+.dropdown-col:first-child { border-right: 1px solid var(--cream-dark); }
+.dropdown-col-head { font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dim); padding: 0 0 0.625rem; margin-bottom: 0.375rem; border-bottom: 1px solid var(--cream-dark); }
+.dropdown a { display: block; font-size: 15px; color: var(--ink-muted) !important; text-decoration: none; padding: 4px 0; line-height: 1.4; transition: color 0.15s; letter-spacing: 0; }
+.dropdown a:hover { color: var(--gold-dim) !important; }
+.dropdown a::after { display: none !important; }
+.dropdown-services { min-width: 260px; }
+.dropdown-services .dropdown-col { padding: 0 1.25rem; border-right: none; }
+/* Mobile: hide dropdowns on small screens, show all nav links */
+@media (max-width: 900px) { .dropdown { display: none !important; } .nav-item > a::after { display: none; } }
+@media (max-width: 640px) { .nav { gap: 0.875rem; } .nav a:not(.nav-cta) { display: none; } }
+
 </style>
 </head>
 <body>
