@@ -255,7 +255,14 @@ async function loadResults() {
     catch(e) { setStatus('amber', 'Response parse error — function may have crashed. Check Netlify logs.'); return; }
 
     if (d.results && d.results.keywords && d.results.keywords.length) {
-      allResults = d.results.keywords;
+      allResults = d.results.keywords.map(r => ({
+        ...r,
+        our_pages: (r.our_pages || []).map(p => ({
+          where: String(p.where || ''),
+          link: String(p.link || ''),
+          title: String(p.title || '')
+        }))
+      }));
       renderKpis(d.results);
       renderFilters();
       renderTable(curFilter);
@@ -266,14 +273,14 @@ async function loadResults() {
       const isPartial = d.results.partial && d.results.keywords.length < 127;
       document.getElementById('lastChecked').textContent =
         isPartial 
-          ? `${d.results.keywords.length}/19 keywords checked · last updated ${dtStr} · incomplete run`
-          : `19 keywords · last checked ${dtStr}`;
+          ? `${d.results.keywords.length}/127 keywords checked · last updated ${dtStr} · incomplete run`
+          : `127 keywords · last checked ${dtStr}`;
 
       const appearing = d.results.keywords.filter(k => k.our_pages && k.our_pages.length > 0).length;
       const errCount  = d.results.keywords.filter(k => k.error).length;
 
       if (isPartial) {
-        setStatus('amber', `Partial results: ${d.results.keywords.length}/19 keywords · click "Run now" to complete (will resume where left off)`);
+        setStatus('amber', `Partial results: ${d.results.keywords.length}/127 keywords · click "Run now" to complete (will resume where left off)`);
       } else {
         setStatus('green', `We appear in ${appearing} searches · ${d.results.summary.site_cited} cited in AI Overview${errCount ? ` · ${errCount} errors` : ''}`);
       }
@@ -340,7 +347,9 @@ async function runNow() {
         try { result = await r.json(); } catch(e) { result = { error: `HTTP ${r.status}: ${e.message}` }; }
         break;
       }
-      results.push(r.ok ? result : { keyword: kw, error: result?.error || `HTTP ${r.status}`, our_pages: [], in_aio: false, checkedAt: new Date().toISOString() });
+      const okResult = r.ok ? result : { keyword: kw, error: result?.error || `HTTP ${r.status}`, our_pages: [], in_aio: false, checkedAt: new Date().toISOString() };
+      if (okResult.our_pages) okResult.our_pages = okResult.our_pages.map(p => ({ where: String(p.where||''), link: String(p.link||''), title: String(p.title||'') }));
+      results.push(okResult);
     } catch(e) {
       results.push({ keyword: kw, error: e.message, our_pages: [], in_aio: false, checkedAt: new Date().toISOString() });
     }
