@@ -544,12 +544,14 @@ function renderTable(filter) {
         appearHtml = errorDetail;
       } else if (r.our_pages && r.our_pages.length > 0) {
         appearHtml = `<div class="our-pages">${r.our_pages.map(p => {
-          const isAio = p.where.startsWith('AIO');
-          const isOrg = p.where.startsWith('Organic');
+          const whereStr = String(p.where || '');
+          const linkStr = String(p.link || '');
+          const isAio = whereStr.startsWith('AIO');
+          const isOrg = whereStr.startsWith('Organic');
           const col = isAio ? 'var(--green)' : isOrg ? 'var(--blue)' : 'var(--amber)';
-          const linkPart = p.link ? `<a class="our-page-link" href="${esc(p.link)}" target="_blank" rel="noopener">${esc(slugify(p.link))}</a>` : '';
-          const titlePart = p.title ? `<span class="our-page-title"> — ${esc(p.title.substring(0,50))}</span>` : '';
-          return `<div class="our-page"><span class="our-page-where" style="color:${col}">${esc(p.where)}</span>${linkPart}${titlePart}</div>`;
+          const linkPart = linkStr ? `<a class="our-page-link" href="${esc(linkStr)}" target="_blank" rel="noopener">${esc(slugify(linkStr))}</a>` : '';
+          const titlePart = p.title ? `<span class="our-page-title"> — ${esc(String(p.title).substring(0,50))}</span>` : '';
+          return `<div class="our-page"><span class="our-page-where" style="color:${col}">${esc(whereStr)}</span>${linkPart}${titlePart}</div>`;
         }).join('')}</div>`;
       } else {
         appearHtml = `<span class="not-found">Not found in this search</span>`;
@@ -575,9 +577,10 @@ function openAio(btn) {
   document.getElementById('aioKw').textContent = `Keyword: "${r.keyword}" · checked ${r.checkedAt ? new Date(r.checkedAt).toLocaleString() : '—'}`;
 
   const sources = (r.aio_sources || []).map((s, i) => {
-    const isOurs = s.link && s.link.includes('irsresolutionservice.com');
+    const sLink = String(s.link || '');
+    const isOurs = sLink.includes('irsresolutionservice.com');
     let dom = '';
-    try { dom = new URL(s.link).hostname.replace('www.',''); } catch { dom = s.link || ''; }
+    try { dom = new URL(sLink).hostname.replace('www.',''); } catch { dom = sLink; }
     return `<div class="src-row">
       <span class="src-num">${i+1}</span>
       <div>

@@ -319,11 +319,11 @@ async function checkKeyword(keyword, apiKey) {
       result.aio_sources = srcs
         .map(s => ({ title: s.title||s.name||'', link: s.link||s.url||'' }))
         .filter(s => s.link).slice(0, 10)
-      result.site_cited = result.aio_sources.some(s => s.link.includes(SITE)) ||
+      result.site_cited = result.aio_sources.some(s => String(s.link||"").includes(SITE)) ||
                           JSON.stringify(aio).toLowerCase().includes(SITE)
 
       if (result.site_cited) {
-        const ours = result.aio_sources.filter(s => s.link.includes(SITE))
+        const ours = result.aio_sources.filter(s => String(s.link||"").includes(SITE))
         ours.length
           ? ours.forEach(p => result.our_pages.push({ where: 'AIO source', link: p.link, title: p.title }))
           : result.our_pages.push({ where: 'AIO mention', link: '', title: 'Domain mentioned in AIO text' })

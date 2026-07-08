@@ -191,7 +191,7 @@ async function checkKeyword(keyword, apiKey) {
       result.aio_text = textParts.join('\n\n').slice(0, 3000) || null
       const sources = [...(aio.ai_overview_sources||[]), ...(aio.sources||[]), ...(aio.references||[])]
       result.aio_sources = sources.map(s => ({ title: s.title||s.name||'', link: s.link||s.url||'' })).filter(s => s.link).slice(0, 10)
-      result.site_cited = result.aio_sources.some(s => s.link.includes(SITE)) || JSON.stringify(aio).toLowerCase().includes(SITE)
+      result.site_cited = result.aio_sources.some(s => String(s.link||"").includes(SITE)) || JSON.stringify(aio).toLowerCase().includes(SITE)
       if (result.site_cited) {
         const ourAio = result.aio_sources.filter(s => s.link.includes(SITE))
         ourAio.forEach(p => result.our_pages.push({ where: 'AIO source', link: p.link, title: p.title }))
