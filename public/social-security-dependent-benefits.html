@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Security Benefits for Children Under 18 | Dependent Benefit Calculator</title>
+<meta name="description" content="If you're 62+ with a child under 18 at home, they may qualify for up to 50% of your Social Security benefit. Former IRS Auditor Romeo Razi explains the rule most calculators skip — plus a free calculator.">
+<link rel="canonical" href="https://irsresolutionservice.com/social-security-dependent-benefits">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c; --gold-light: #e8c97a; --gold-dim: #8a6e2f; --gold-muted: #f5ecd8;
+  --cream: #f5f0e8; --cream-warm: #ede5d5; --cream-dark: #d9cdb8;
+  --ink: #1a1410; --ink-soft: #4a3f32; --ink-muted: #7a6e60; --white: #ffffff;
+  --red: #c0392b; --red-light: #fdf0f0; --green: #1a5c2a; --green-light: #f0fdf4;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 18px; line-height: 1.7; }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--cream-dark); backdrop-filter: blur(12px); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-mark { width: 36px; height: 36px; border: 1.5px solid var(--gold); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--gold); }
+.logo-text { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+.logo-text span { color: var(--gold); }
+.nav { display: flex; align-items: center; gap: 1.75rem; }
+.nav a { font-size: 15px; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+.nav a:hover { color: var(--gold-dim); }
+.nav-cta { background: var(--gold) !important; color: var(--white) !important; padding: 9px 22px; border-radius: 2px; font-weight: 600; }
+.notice-hero { background: var(--white); padding: 120px 2rem 64px; border-bottom: 1px solid var(--cream-dark); }
+.notice-hero-inner { max-width: 840px; margin: 0 auto; }
+.notice-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--gold-muted); color: var(--gold-dim); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; margin-bottom: 1.5rem; }
+.notice-code-display { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.notice-hero h1 { font-family: var(--serif); font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 600; color: var(--ink-soft); line-height: 1.3; margin-bottom: 1.5rem; }
+.direct-answer { background: var(--green-light); border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 2rem; }
+.direct-answer p { font-size: 17px; line-height: 1.65; color: var(--ink-soft); }
+.direct-answer strong { color: var(--green); }
+.notice-body { max-width: 840px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+.section { margin-bottom: 3.5rem; }
+.section h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
+.section h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); margin: 1.5rem 0 0.75rem; }
+.section p { color: var(--ink-soft); margin-bottom: 1rem; }
+.section ul, .section ol { color: var(--ink-soft); padding-left: 1.5rem; margin-bottom: 1rem; }
+.section li { margin-bottom: 0.5rem; }
+.insider { background: var(--gold-muted); border: 1px solid var(--cream-dark); border-left: 4px solid var(--gold); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.insider-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.4rem; }
+.insider p { font-size: 16px; color: var(--ink-soft); margin: 0; font-style: italic; }
+.warning-box { background: var(--red-light); border: 1px solid #e8b0b0; border-left: 4px solid var(--red); border-radius: 0 6px 6px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.warning-box p { font-size: 16px; color: var(--ink-soft); margin: 0; }
+.penalty-math { background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.5rem; margin: 1.5rem 0; }
+.penalty-math-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 1rem; }
+.penalty-row { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--cream-dark); font-size: 16px; }
+.penalty-row:last-child { border-bottom: none; font-weight: 700; color: var(--green); }
+.penalty-label { color: var(--ink-soft); }
+.penalty-amt { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.penalty-amt.savings { color: var(--green); }
+.cta-box { background: var(--ink); color: var(--white); border-radius: 6px; padding: 2.5rem 2rem; text-align: center; margin: 3rem 0; }
+.cta-box h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; }
+.cta-box p { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 1.5rem; }
+.cta-btn { display: inline-block; background: var(--gold); color: var(--ink); text-decoration: none; padding: 14px 32px; border-radius: 2px; font-weight: 700; font-size: 16px; letter-spacing: 0.04em; }
+.romeo-bar { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: center; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+.romeo-avatar-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.romeo-avatar { width: 72px; height: 72px; background: var(--gold-muted); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--gold-dim); }
+.romeo-linkedin { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--gold-dim); text-decoration: none; font-weight: 600; }
+.romeo-info .romeo-name { font-weight: 700; font-size: 17px; color: var(--ink); }
+.romeo-info .romeo-title { font-size: 14px; color: var(--ink-muted); margin-top: 2px; }
+.romeo-info .romeo-bio { font-size: 15px; color: var(--ink-soft); margin-top: 0.75rem; line-height: 1.6; }
+.faq-item { border-bottom: 1px solid var(--cream-dark); padding: 1.25rem 0; }
+.faq-q { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+.faq-a { font-size: 16px; color: var(--ink-soft); }
+.notice-links { background: var(--cream-warm); border-radius: 6px; padding: 1.5rem; margin: 2rem 0; }
+.notice-links h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); margin-bottom: 0.75rem; }
+.notice-links ul { list-style: none; padding: 0; }
+.notice-links li { margin-bottom: 0.4rem; }
+.notice-links a { color: var(--gold-dim); text-decoration: none; font-size: 15px; }
+.notice-links a:hover { text-decoration: underline; }
+.tl { color: var(--gold-dim); text-decoration: underline; text-underline-offset: 2px; }
+footer { background: var(--ink); color: rgba(255,255,255,0.5); text-align: center; padding: 2rem; font-size: 13px; }
+footer a { color: var(--gold); text-decoration: none; }
+@media (max-width: 640px) { .nav { gap: 1rem; } .nav a:not(.nav-cta) { display: none; } }
+
+.nav-item { position: relative; }
+.nav-item > a { display: flex; align-items: center; gap: 4px; }
+.nav-item > a::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid currentColor; opacity: 0.5; margin-top: 1px; flex-shrink: 0; }
+.dropdown { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; box-shadow: 0 12px 32px rgba(26,20,16,0.14); min-width: 580px; z-index: 300; padding: 1.75rem 0 1.25rem; }
+.nav-item { padding-bottom: 12px; margin-bottom: -12px; }
+.nav-item:hover .dropdown, .nav-item:focus-within .dropdown { display: block; }
+.dropdown::before { content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 12px; background: transparent; }
+.dropdown-cols { display: grid; grid-template-columns: 1fr 1fr; }
+.dropdown-col { padding: 0 1.25rem; }
+.dropdown-col:first-child { border-right: 1px solid var(--cream-dark); }
+.dropdown-col-head { font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dim); padding: 0 0 0.625rem; margin-bottom: 0.375rem; border-bottom: 1px solid var(--cream-dark); }
+.dropdown a { display: block; font-size: 15px; color: var(--ink-muted) !important; text-decoration: none; padding: 4px 0; line-height: 1.4; transition: color 0.15s; letter-spacing: 0; }
+.dropdown a:hover { color: var(--gold-dim) !important; }
+.dropdown a::after { display: none !important; }
+.dropdown-services { min-width: 260px; }
+.dropdown-services .dropdown-col { padding: 0 1.25rem; border-right: none; }
+@media (max-width: 900px) { .dropdown { display: none !important; } .nav-item > a::after { display: none; } }
+@media (max-width: 640px) { .nav { gap: 0.875rem; } .nav a:not(.nav-cta) { display: none; } }
+
+/* ---- calculator, additive to the shared template ---- */
+.calc-box { background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; overflow: hidden; margin: 1.5rem 0; }
+.calc-grid { display: grid; grid-template-columns: 1fr 1fr; }
+@media (max-width: 720px) { .calc-grid { grid-template-columns: 1fr; } }
+.calc-inputs { padding: 1.75rem; border-right: 1px solid var(--cream-dark); }
+@media (max-width: 720px) { .calc-inputs { border-right: none; border-bottom: 1px solid var(--cream-dark); } }
+.calc-outputs { padding: 1.75rem; background: var(--cream-warm); }
+.field-row { margin-bottom: 1.15rem; }
+.field-row label { display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
+.field-row .hint { font-size: 12.5px; color: var(--ink-muted); margin-top: 4px; }
+.field-row input[type=number], .field-row select {
+  width: 100%; padding: 9px 11px; border: 1px solid var(--cream-dark); border-radius: 4px;
+  font-family: var(--sans); font-size: 15px; background: #fff; color: var(--ink);
+}
+.toggle-row { display: flex; gap: 8px; margin-bottom: 1.15rem; }
+.toggle-btn { flex: 1; padding: 9px; text-align: center; border: 1px solid var(--cream-dark); border-radius: 4px; cursor: pointer; font-size: 13.5px; font-weight: 600; color: var(--ink-muted); background: #fff; }
+.toggle-btn.active { background: var(--gold); border-color: var(--gold); color: #fff; }
+.checkbox-row { display: flex; align-items: center; gap: 9px; margin-bottom: 1.15rem; }
+.checkbox-row input { width: 17px; height: 17px; }
+.checkbox-row label { font-size: 13.5px; font-weight: 600; color: var(--ink); margin: 0; }
+.calc-btn { width: 100%; background: var(--ink); color: #fff; border: none; padding: 12px; border-radius: 4px; font-weight: 700; letter-spacing: .03em; cursor: pointer; font-size: 14px; }
+.scenario-table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 14px; }
+.scenario-table th { text-align: left; padding: 8px 6px; font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-muted); border-bottom: 2px solid var(--ink); }
+.scenario-table td { padding: 9px 6px; border-bottom: 1px solid var(--cream-dark); font-variant-numeric: tabular-nums; }
+.scenario-table tr.highlight td { background: var(--gold-muted); font-weight: 700; }
+.scenario-table td.rowlabel { font-weight: 600; color: var(--ink); }
+.calc-callout { margin-top: 1.1rem; padding: 1rem 1.1rem; background: #fff; border-left: 4px solid var(--green); border-radius: 0 6px 6px 0; }
+.calc-callout .amount { font-family: var(--serif); font-size: 1.8rem; color: var(--green); font-weight: 700; }
+.calc-callout .caption { font-size: 13px; color: var(--ink-muted); margin-top: 4px; }
+.calc-disclaimer { margin-top: 1rem; font-size: 12px; color: var(--ink-muted); background: var(--cream-warm); padding: 10px 12px; border-radius: 4px; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Social Security Benefits for Children Under 18: The Dependent Benefit Rule Most Calculators Skip",
+      "description": "If you're 62 or older with a child under 18 at home, they may qualify for up to 50% of your Social Security benefit. Former IRS Auditor Romeo Razi, CPA, explains the rule, the family maximum, and the trade-offs — plus a free calculator.",
+      "url": "https://irsresolutionservice.com/social-security-dependent-benefits",
+      "dateModified": "2026-07-08",
+      "datePublished": "2026-07-08",
+      "author": {
+        "@type": "Person",
+        "@id": "https://irsresolutionservice.com/#romeo-razi",
+        "name": "Romeo Razi",
+        "honorificSuffix": "CPA",
+        "jobTitle": "Former IRS Tax Examiner & Revenue Officer, CPA",
+        "sameAs": "https://www.linkedin.com/in/romeo-razi/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://irsresolutionservice.com/#organization",
+        "name": "IRS Resolution Service",
+        "url": "https://irsresolutionservice.com"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"Can my child get Social Security if I retire at 62?","acceptedAnswer":{"@type":"Answer","text":"Yes. As soon as you start receiving your own retirement or disability benefit, your unmarried child under 18 (or under 19 and a full-time high school student) can receive their own monthly payment on your record, subject to the family maximum."}},
+        {"@type":"Question","name":"How much is the Social Security dependent benefit for a child?","acceptedAnswer":{"@type":"Answer","text":"Up to 50% of your Primary Insurance Amount (PIA) per eligible child — your full retirement-age benefit, not the reduced amount you receive if you claim early. The actual amount paid can be lower if the family maximum caps the total."}},
+        {"@type":"Question","name":"Does claiming Social Security early reduce my child's benefit too?","acceptedAnswer":{"@type":"Answer","text":"No. Your child's benefit is calculated from your full PIA regardless of when you claim. Only your own monthly check is permanently reduced for claiming before full retirement age."}},
+        {"@type":"Question","name":"What is the Social Security family maximum?","acceptedAnswer":{"@type":"Answer","text":"It's the cap on the total monthly amount Social Security will pay your family on one earnings record — generally 150% to 188% of your PIA. If your own benefit plus everyone else's would exceed that cap, dependents' payments are reduced proportionally until the total fits."}},
+        {"@type":"Question","name":"Can my spouse get Social Security benefits for caring for our child?","acceptedAnswer":{"@type":"Answer","text":"Yes — a spouse of any age, even under 62, who is caring for your child under 16 can receive a child-in-care spousal benefit of up to 50% of your PIA, again subject to the family maximum."}},
+        {"@type":"Question","name":"Is it always better to claim Social Security early if I have young children?","acceptedAnswer":{"@type":"Answer","text":"Not always. It depends on how young your children are, how the family maximum affects your specific numbers, whether a spouse's survivor benefit would be reduced, and your other income. Running the actual numbers matters more than defaulting to either always claim early or always delay."}}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://irsresolutionservice.com" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <nav class="nav">
+      <a href="/#founders">About</a>
+      <div class="nav-item">
+        <a href="/cp2000">IRS Guides</a>
+        <div class="dropdown">
+          <div class="dropdown-cols" style="grid-template-columns:1fr 1fr 1fr">
+            <div class="dropdown-col">
+              <div class="dropdown-col-head">IRS Notices Explained</div>
+              <a href="/cp2000">CP2000 — Proposed Adjustment</a>
+              <a href="/cp14">CP14 — First Balance Due</a>
+              <a href="/cp504">CP504 — Intent to Levy</a>
+              <a href="/lt11">LT11 — Final Levy Notice</a>
+              <a href="/cp3219a">CP3219A — Notice of Deficiency</a>
+              <a href="/cp59">CP59 — Unfiled Return</a>
+              <a href="/cp523">CP523 — Payment Plan Terminated</a>
+              <a href="/missed-tax-deadline">Missed the Tax Deadline</a>
+              <a href="/havent-filed-taxes">Haven't Filed in Years</a>
+            </div>
+            <div class="dropdown-col">
+              <div class="dropdown-col-head">IRS Resolution &amp; Collection</div>
+              <a href="/irs-installment-agreement">Payment Plans Explained</a>
+              <a href="/irs-offer-in-compromise">Offer in Compromise</a>
+              <a href="/irs-offer-in-compromise-deemed-accepted">OIC Deemed Accepted Rule</a>
+              <a href="/irs-collection-statute">10-Year Collection Statute</a>
+              <a href="/irs-penalty-abatement">Penalty Abatement</a>
+              <a href="/irs-currently-not-collectible">Currently Not Collectible</a>
+              <a href="/irs-wage-garnishment">Wage Garnishment</a>
+              <a href="/irs-bank-levy">Bank Levy — 21-Day Window</a>
+              <a href="/irs-tax-lien">Federal Tax Lien</a>
+              <a href="/irs-revenue-officer">Revenue Officer Assigned</a>
+              <a href="/irs-audit-appeals-strategy">Audit &amp; Appeals Strategy</a>
+              <a href="/irs-office-audit-preparation">Prepare for Office Audit</a>
+              <a href="/irs-budget-cuts-2025">IRS Budget Cuts 2025</a>
+            </div>
+            <div class="dropdown-col">
+              <div class="dropdown-col-head">Tax Law &amp; Planning</div>
+              <a href="/one-big-beautiful-act">One Big Beautiful Act — 9 Changes</a>
+              <a href="/irs-tips-overtime-tax">Tax-Free Tips &amp; Overtime</a>
+              <a href="/salt-deduction-2025">SALT Deduction Raised to $40K</a>
+              <a href="/bonus-depreciation-2025">100% Bonus Depreciation</a>
+              <a href="/rd-expense-deduction">R&amp;D Expense Deduction</a>
+              <a href="/qualified-small-business-stock">QSBS Exclusion Changes</a>
+              <a href="/year-end-tax-planning">Year-End Business Planning</a>
+              <a href="/tax-brackets-2026">2026 Tax Brackets</a>
+              <a href="/social-security-dependent-benefits">Social Security Dependent Benefits</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/#services">Services</a>
+        <div class="dropdown dropdown-services">
+          <div class="dropdown-col">
+            <div class="dropdown-col-head">What We Handle</div>
+            <a href="/#services">Unfiled Tax Returns</a>
+            <a href="/#services">Back Taxes &amp; Collections</a>
+            <a href="/#services">IRS Audits &amp; Appeals</a>
+            <a href="/#services">Offer in Compromise</a>
+            <a href="/#services">Installment Agreements</a>
+            <a href="/#services">Penalty Abatement</a>
+            <a href="/#services">IRS Notice Response</a>
+            <a href="/#services">Tax Catch-Up Filing</a>
+          </div>
+        </div>
+      </div>
+      <a href="/#tool">Notice Decoder</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#contact" class="nav-cta">Get Help Now</a>
+    </nav>
+  </div>
+</header>
+
+<div class="notice-hero">
+  <div class="notice-hero-inner">
+    <div class="notice-eyebrow">Social Security Planning</div>
+    <div class="notice-code-display">Dependent Benefits</div>
+    <h1>If you're 62+ with a child under 18 at home, Social Security may owe your family a lot more than most calculators show</h1>
+    <div class="direct-answer">
+      <p><strong>The short answer:</strong> When you start receiving Social Security retirement (or disability) benefits, your unmarried child under 18 living with you can receive their own monthly payment — up to 50% of your full benefit — and a spouse of any age caring for that child may qualify too. Most online Social Security calculators don't model this at all. Whether it makes sense to claim earlier to capture it depends on your family maximum, how much it permanently reduces your own benefit, and your spouse's future survivor benefit — which is what the calculator below works out.</p>
+    </div>
+  </div>
+</div>
+
+<div class="notice-body">
+
+  <div class="romeo-bar">
+    <div class="romeo-avatar-wrap">
+      <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Auditor" style="width:90px;height:90px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--gold);display:block">
+      <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener" class="romeo-linkedin">LinkedIn ↗</a>
+    </div>
+    <div class="romeo-info">
+      <div class="romeo-name">Romeo Razi, CPA</div>
+      <div class="romeo-title">Former IRS Tax Examiner & Revenue Officer, CPA</div>
+      <div class="romeo-bio">I'm not a Social Security caseworker — I'm a CPA who spent years inside the IRS, and I see the tax side of retirement decisions every week. Social Security claiming age, dependent benefits, and your tax return are more connected than people expect: how much of your benefit is taxable, whether a child's payments affect your bracket, and how a claiming decision interacts with other income all come up in the same conversation. This page covers the Social Security rule itself; if you want the tax picture behind it, that's where I come in.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Social Security pays your children — not just you</h2>
+    <p>When you start receiving retirement or disability benefits, unmarried children under 18 living with you can receive their own monthly payment on your earnings record. It's a separate benefit, paid in addition to yours — and it's the piece almost every consumer-facing Social Security calculator leaves out entirely.</p>
+
+    <div class="penalty-math">
+      <div class="penalty-math-title">What Qualifies, At A Glance</div>
+      <div class="penalty-row"><span class="penalty-label">Child's benefit (per eligible child)</span><span class="penalty-amt">Up to 50% of your PIA</span></div>
+      <div class="penalty-row"><span class="penalty-label">Age cutoff</span><span class="penalty-amt">18 (19 if full-time student through 12th grade)</span></div>
+      <div class="penalty-row"><span class="penalty-label">Disabled child exception</span><span class="penalty-amt">No age limit, if disability began before 22</span></div>
+      <div class="penalty-row"><span class="penalty-label">Spousal "child-in-care" benefit</span><span class="penalty-amt">Up to 50% of your PIA, any spouse age</span></div>
+      <div class="penalty-row"><span class="penalty-label">Family maximum</span><span class="penalty-amt savings">~150%–188% of your PIA, total</span></div>
+    </div>
+
+    <h3>Two benefits, one earnings record</h3>
+    <p>Most people only think about their own retirement benefit. There are actually two more tied to a young child in the house:</p>
+    <ul>
+      <li><strong>Child's benefit</strong> — your unmarried child under 18 (biological, adopted, step, or in some cases a dependent grandchild) can receive up to 50% of your PIA per month, for as long as they're under 18, or 19 if still in high school.</li>
+      <li><strong>Spousal child-in-care benefit</strong> — a spouse caring for that child can also receive up to 50% of your PIA, at any age, until the child turns 16. They don't need to wait until 62 or file on their own record.</li>
+      <li><strong>It doesn't shrink your own check.</strong> Children's benefits are paid on top of your retirement benefit, not carved out of it. What limits the total is the family maximum, not your own payment amount.</li>
+      <li><strong>The child's benefit is based on your full PIA</strong> — even if you claim early and your own benefit is permanently reduced, your child's payment is still calculated from your unreduced full retirement age benefit.</li>
+    </ul>
+
+    <div class="insider">
+      <div class="insider-label">Romeo Razi — Former IRS Tax Examiner</div>
+      <p>"Where this actually lands on my desk is taxes. A family suddenly receiving several thousand extra dollars a month in dependent benefits needs to know how much of that is taxable, and how it interacts with other retirement income. I've seen people focus entirely on the claiming decision and get surprised by the 1099 the following January."</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Try the calculator: what could your family actually receive?</h2>
+    <p>This uses the same bend-point and family-maximum formulas Social Security applies — not a substitute for your actual Social Security Statement, but enough to see whether the trade-off is worth a closer look.</p>
+
+    <div class="calc-box">
+      <div class="calc-grid">
+        <div class="calc-inputs">
+
+          <div class="toggle-row">
+            <div class="toggle-btn active" id="tabPIA" onclick="setMode('pia')">I know my PIA</div>
+            <div class="toggle-btn" id="tabEarn" onclick="setMode('earn')">Estimate from earnings</div>
+          </div>
+
+          <div id="modePIA" class="field-row">
+            <label for="piaInput">Your monthly PIA</label>
+            <input type="number" id="piaInput" value="1800" min="0" step="10">
+            <div class="hint">Your Primary Insurance Amount — the benefit at full retirement age, shown on your statement at ssa.gov/myaccount.</div>
+          </div>
+
+          <div id="modeEarn" class="field-row" style="display:none;">
+            <label for="earnInput">Your average monthly earnings (career average, today's dollars)</label>
+            <input type="number" id="earnInput" value="5000" min="0" step="50">
+            <div class="hint">Rough estimate only — uses the 2026 bend-point formula (90% / 32% / 15%) without full 35-year wage indexing. Your real PIA may differ.</div>
+          </div>
+
+          <div class="field-row">
+            <label for="ageInput">Your current age</label>
+            <input type="number" id="ageInput" value="65" min="60" max="70">
+          </div>
+
+          <div class="field-row">
+            <label for="fraSelect">Your full retirement age (FRA)</label>
+            <select id="fraSelect">
+              <option value="66.0">66 (born 1943–1954)</option>
+              <option value="66.5" selected>66 and 6 months (born 1957)</option>
+              <option value="67.0">67 (born 1960 or later)</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label for="numKids">Number of children under 18 at home</label>
+            <input type="number" id="numKids" value="1" min="0" max="6">
+          </div>
+
+          <div class="field-row">
+            <label for="youngestAge">Age of your youngest child</label>
+            <input type="number" id="youngestAge" value="12" min="0" max="18">
+            <div class="hint">Used to estimate how many years of dependent benefits are on the table.</div>
+          </div>
+
+          <div class="checkbox-row">
+            <input type="checkbox" id="spouseCare">
+            <label for="spouseCare">I have a spouse under 62 who is the child's primary caregiver</label>
+          </div>
+
+          <button class="calc-btn" onclick="calculate()">Update My Numbers</button>
+        </div>
+
+        <div class="calc-outputs">
+          <table class="scenario-table">
+            <thead>
+              <tr><th>Monthly total</th><th>Claim now (<span id="ageLabelNow"></span>)</th><th>Wait for FRA</th><th>Delay to 70</th></tr>
+            </thead>
+            <tbody id="scenarioBody"></tbody>
+          </table>
+
+          <div class="calc-callout">
+            <div class="amount" id="deltaAmount">$0</div>
+            <div class="caption" id="deltaCaption">Estimated extra family income from claiming now instead of waiting for FRA, over the years until your youngest child turns 18.</div>
+          </div>
+
+          <div class="calc-disclaimer">
+            This tool provides a simplified estimate for educational purposes — it is not a benefit calculation from the Social Security Administration and is not financial, tax, or legal advice. Actual amounts depend on your full earnings history and current SSA rules. Verify your PIA and family maximum at <a href="https://www.ssa.gov/myaccount" class="tl">ssa.gov/myaccount</a> before making a claiming decision.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Why claiming early isn't automatically the right call</h2>
+    <p>The reason so few calculators mention dependent benefits isn't a conspiracy — it's that once you add them, the "right" claiming age stops being a simple answer. Before filing early to capture years of child benefits, weigh it against what claiming early permanently costs:</p>
+
+    <div class="warning-box">
+      <p><strong>Your own benefit is reduced for life.</strong> Claiming at 62 instead of a full retirement age of 67 can cut your retirement benefit by roughly 30%, permanently — even though your children's benefits stay based on your full PIA.</p>
+    </div>
+
+    <ul>
+      <li><strong>Survivor benefits may be affected.</strong> A lower benefit today can mean a lower survivor benefit for your spouse later, since survivor benefits are generally based on what you were actually receiving.</li>
+      <li><strong>The family maximum caps the upside.</strong> With more than one or two dependents, additional children often add less than the full 50% each once the cap is reached — run the actual numbers rather than assuming benefits stack freely.</li>
+      <li><strong>Taxes and reporting.</strong> Children's benefits can be taxable in some cases, and a parent acting as representative payee has to account for how the money is used.</li>
+      <li><strong>The window is narrow.</strong> Dependent benefits matter most when a qualifying child is young enough that delaying would mean missing most of it — for a newborn versus a 17-year-old, the math points in very different directions.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Frequently asked questions about Social Security dependent benefits</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Can my child get Social Security if I retire at 62?</div>
+      <div class="faq-a">Yes. As soon as you start receiving your own retirement or disability benefit, your unmarried child under 18 (or under 19 and a full-time high school student) can receive their own monthly payment on your record, subject to the family maximum.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How much is the Social Security dependent benefit for a child?</div>
+      <div class="faq-a">Up to 50% of your Primary Insurance Amount (PIA) per eligible child — your full retirement-age benefit, not the reduced amount you receive if you claim early. The actual amount paid can be lower if the family maximum caps the total.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Does claiming early reduce my child's benefit too?</div>
+      <div class="faq-a">No. Your child's benefit is calculated from your full PIA regardless of when you claim. Only your own monthly check is permanently reduced for claiming before full retirement age.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What is the Social Security family maximum?</div>
+      <div class="faq-a">It's the cap on the total monthly amount Social Security will pay your family on one earnings record — generally 150% to 188% of your PIA. If your own benefit plus everyone else's would exceed that cap, dependents' payments are reduced proportionally until the total fits.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can my spouse get benefits for caring for our child?</div>
+      <div class="faq-a">Yes — a spouse of any age, even under 62, who is caring for your child under 16 can receive a child-in-care spousal benefit of up to 50% of your PIA, again subject to the family maximum.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Is it always better to claim early if I have young children?</div>
+      <div class="faq-a">Not always. It depends on how young your children are, how the family maximum affects your specific numbers, whether a spouse's survivor benefit would be affected, and your other income. It's worth running the actual numbers — which is what the calculator above is for — rather than assuming either "always claim early" or "always delay" is right.</div>
+    </div>
+  </div>
+
+  <div class="notice-links">
+    <h3>Related guides</h3>
+    <ul>
+      <li><a href="/year-end-tax-planning">Year-End Tax Planning — how retirement income timing affects your return</a></li>
+      <li><a href="/tax-brackets-2026">2026 Tax Brackets — where Social Security income lands</a></li>
+      <li><a href="/one-big-beautiful-act">One Big Beautiful Act — 9 Changes affecting retirees</a></li>
+    </ul>
+  </div>
+
+  <div class="cta-box">
+    <h2>Social Security timing changes your tax picture. Talk to someone who works both sides.</h2>
+    <p>Romeo Razi, CPA, spent years inside the IRS before founding this practice. If a claiming decision affects your taxes — or you're catching up on returns while sorting out retirement timing — he can help you see the whole picture, not just one piece of it.</p>
+    <a href="/#contact" class="cta-btn">Get a Free Consultation</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>IRS Resolution Service LLC · 9673 Camino Capistrano, Las Vegas, NV · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
+  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal, tax, or financial advice. Social Security rules and figures change; verify current details at ssa.gov.</p>
+</footer>
+
+<script>
+const BEND1 = 1286, BEND2 = 7749;
+const FMAX1 = 1643, FMAX2 = 2371, FMAX3 = 3093;
+
+function piaFromAIME(aime){
+  let pia = 0;
+  if (aime <= BEND1){ pia = aime * 0.90; }
+  else if (aime <= BEND2){ pia = BEND1*0.90 + (aime-BEND1)*0.32; }
+  else { pia = BEND1*0.90 + (BEND2-BEND1)*0.32 + (aime-BEND2)*0.15; }
+  return Math.round(pia*10)/10;
+}
+
+function familyMax(pia){
+  let fm = 0;
+  if (pia <= FMAX1){ fm = pia*1.5; }
+  else if (pia <= FMAX2){ fm = FMAX1*1.5 + (pia-FMAX1)*2.72; }
+  else if (pia <= FMAX3){ fm = FMAX1*1.5 + (FMAX2-FMAX1)*2.72 + (pia-FMAX2)*1.34; }
+  else { fm = FMAX1*1.5 + (FMAX2-FMAX1)*2.72 + (FMAX3-FMAX2)*1.34 + (pia-FMAX3)*1.75; }
+  return fm;
+}
+
+function workerFactor(claimAge, fra){
+  const monthsDiff = Math.round((claimAge - fra) * 12);
+  if (monthsDiff >= 0){
+    const cappedMonths = Math.min(monthsDiff, Math.round((70-fra)*12));
+    return 1 + cappedMonths * (0.667/100);
+  } else {
+    const monthsEarly = -monthsDiff;
+    const first36 = Math.min(monthsEarly, 36);
+    const rest = Math.max(monthsEarly-36, 0);
+    const reduction = first36*(5/9/100) + rest*(5/12/100);
+    return 1 - reduction;
+  }
+}
+
+function computeScenario(pia, claimAge, fra, numKids, spouseCares){
+  const workerAmt = pia * workerFactor(claimAge, fra);
+  const fm = familyMax(pia);
+  const availableForAux = Math.max(fm - pia, 0);
+
+  let unreducedAux = numKids * 0.5 * pia;
+  if (spouseCares) unreducedAux += 0.5 * pia;
+
+  let auxPaid = unreducedAux;
+  if (unreducedAux > availableForAux){ auxPaid = availableForAux; }
+
+  const total = workerAmt + auxPaid;
+  return {workerAmt, auxPaid, total, fm};
+}
+
+function setMode(mode){
+  document.getElementById('modePIA').style.display = mode==='pia' ? 'block':'none';
+  document.getElementById('modeEarn').style.display = mode==='earn' ? 'block':'none';
+  document.getElementById('tabPIA').classList.toggle('active', mode==='pia');
+  document.getElementById('tabEarn').classList.toggle('active', mode==='earn');
+  calculate();
+}
+
+function fmtMoney(n){ return '$' + Math.round(n).toLocaleString(); }
+
+function calculate(){
+  const mode = document.getElementById('tabEarn').classList.contains('active') ? 'earn' : 'pia';
+  let pia;
+  if (mode === 'pia'){
+    pia = parseFloat(document.getElementById('piaInput').value) || 0;
+  } else {
+    const earn = parseFloat(document.getElementById('earnInput').value) || 0;
+    pia = piaFromAIME(earn);
+  }
+
+  const age = parseFloat(document.getElementById('ageInput').value) || 62;
+  const fra = parseFloat(document.getElementById('fraSelect').value) || 67;
+  const numKids = parseInt(document.getElementById('numKids').value) || 0;
+  const youngestAge = parseFloat(document.getElementById('youngestAge').value) || 0;
+  const spouseCares = document.getElementById('spouseCare').checked;
+
+  document.getElementById('ageLabelNow').textContent = 'age ' + age;
+
+  const now = computeScenario(pia, Math.max(age,62), fra, numKids, spouseCares);
+  const atFRA = computeScenario(pia, fra, fra, numKids, spouseCares);
+  const at70 = computeScenario(pia, 70, fra, numKids, spouseCares);
+
+  const rows = [
+    {label:'Your benefit', vals:[now.workerAmt, atFRA.workerAmt, at70.workerAmt]},
+    {label:'Dependent benefits', vals:[now.auxPaid, atFRA.auxPaid, at70.auxPaid]},
+    {label:'Monthly family total', vals:[now.total, atFRA.total, at70.total], highlight:true},
+  ];
+
+  let html = '';
+  rows.forEach(r=>{
+    html += `<tr class="${r.highlight?'highlight':''}"><td class="rowlabel">${r.label}</td><td>${fmtMoney(r.vals[0])}</td><td>${fmtMoney(r.vals[1])}</td><td>${fmtMoney(r.vals[2])}</td></tr>`;
+  });
+  document.getElementById('scenarioBody').innerHTML = html;
+
+  const yearsWindow = Math.max(18 - youngestAge, 0);
+  const monthsWindow = yearsWindow * 12;
+  const monthsToFRA = Math.max((fra - age) * 12, 0);
+
+  const cumNow = now.total * monthsWindow;
+  const monthsAfterFRAinWindow = Math.max(monthsWindow - monthsToFRA, 0);
+  const cumWait = atFRA.total * monthsAfterFRAinWindow;
+  const delta = cumNow - cumWait;
+
+  document.getElementById('deltaAmount').textContent = (delta>=0? '+':'') + fmtMoney(delta);
+  document.getElementById('deltaCaption').textContent =
+    `Estimated difference in total family income between claiming now and waiting for FRA, over the ${yearsWindow.toFixed(1)} years until your youngest child turns 18 (simplified — assumes your family situation stays the same).`;
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.calc-inputs input, .calc-inputs select').forEach(el=>{
+    el.addEventListener('input', calculate);
+    el.addEventListener('change', calculate);
+  });
+  calculate();
+});
+</script>
+
+</body>
+</html>
