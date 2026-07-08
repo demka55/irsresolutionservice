@@ -299,7 +299,7 @@ async function loadResults() {
 
 // ── Run now: browser drives keyword loop, one fetch per keyword ──────────────
 let runAborted = false;
-const SESSION_KEY = 'seo_run_results';
+const SESSION_KEY = 'seo_run_results_v2';  // v2 = null-safe our_pages
 
 async function runNow() {
   const btn = document.getElementById('runBtn');
@@ -317,6 +317,15 @@ async function runNow() {
   // Resume: load any already-completed results from sessionStorage
   let savedResults = [];
   try { savedResults = JSON.parse(sessionStorage.getItem(SESSION_KEY) || '[]'); } catch {}
+  // Sanitize our_pages on restore — old cached data may have non-string link/where
+  savedResults = savedResults.map(r => ({
+    ...r,
+    our_pages: (r.our_pages || []).map(p => ({
+      where: String(p.where || ''),
+      link: String(p.link || ''),
+      title: String(p.title || '')
+    }))
+  }));
   const doneKeywords = new Set(savedResults.map(r => r.keyword));
   const results = [...savedResults];
   if (savedResults.length > 0) {
