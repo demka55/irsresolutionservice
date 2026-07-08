@@ -193,7 +193,7 @@ async function checkKeyword(keyword, apiKey) {
       result.aio_sources = sources.map(s => ({ title: s.title||s.name||'', link: s.link||s.url||'' })).filter(s => s.link).slice(0, 10)
       result.site_cited = result.aio_sources.some(s => String(s.link||"").includes(SITE)) || JSON.stringify(aio).toLowerCase().includes(SITE)
       if (result.site_cited) {
-        const ourAio = result.aio_sources.filter(s => s.link.includes(SITE))
+        const ourAio = result.aio_sources.filter(s => String(s.link||"").includes(SITE))
         ourAio.forEach(p => result.our_pages.push({ where: 'AIO source', link: p.link, title: p.title }))
         if (!ourAio.length) result.our_pages.push({ where: 'AIO text mention', link: '', title: '' })
       }
@@ -218,7 +218,7 @@ async function checkKeyword(keyword, apiKey) {
   "kiddie tax social security benefits",
   "social security child benefit application",
 ]).forEach((r, idx) => {
-      if (r.link?.includes(SITE)) {
+      if (r.link && String(r.link).includes(SITE)) {
         const pos = r.position || (idx + 1)
         if (!result.organic_rank || pos < result.organic_rank) result.organic_rank = pos
         result.our_pages.push({ where: `Organic #${pos}`, link: r.link, title: r.title||'' })

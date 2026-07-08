@@ -332,7 +332,7 @@ async function checkKeyword(keyword, apiKey) {
 
     // ── Organic results ───────────────────────────────────────────────────
     ;(data.organic_results || []).forEach((r, i) => {
-      if (r.link?.includes(SITE)) {
+      if (r.link && String(r.link).includes(SITE)) {
         const pos = r.position || i + 1
         if (!result.organic_rank || pos < result.organic_rank) result.organic_rank = pos
         result.our_pages.push({ where: `Organic #${pos}`, link: r.link, title: r.title || '' })
@@ -366,7 +366,7 @@ async function checkKeyword(keyword, apiKey) {
 ]
     extras.forEach(item => {
       const link = item.link || item.url || ''
-      if (link.includes(SITE)) result.our_pages.push({ where: 'Other result', link, title: item.title || '' })
+      if (String(link||"").includes(SITE)) result.our_pages.push({ where: 'Other result', link: String(link||""), title: item.title || '' })
     })
 
     // ── Final catch-all ───────────────────────────────────────────────────
