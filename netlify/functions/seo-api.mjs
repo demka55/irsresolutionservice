@@ -344,7 +344,26 @@ async function checkKeyword(keyword, apiKey) {
       ...(data.top_stories || []),
       ...(data.local_results || []),
       ...((data.knowledge_graph?.links) || []),
-    ]
+    
+  "social security benefits for children under 18",
+  "social security dependent benefit calculator",
+  "can my child get social security if I retire at 62",
+  "social security child in care benefits",
+  "social security family maximum calculator",
+  "should I claim social security early with young children",
+  "social security spousal benefit child in care",
+  "how much social security does a child get from a parent",
+  "social security dependent benefit family maximum",
+  "claiming social security early for kids benefits",
+  "social security benefits for children",
+  "how much social security will my child get",
+  "social security claiming strategy",
+  "are social security dependent benefits taxable",
+  "social security 1099 child benefit",
+  "social security family maximum 2026",
+  "kiddie tax social security benefits",
+  "social security child benefit application",
+]
     extras.forEach(item => {
       const link = item.link || item.url || ''
       if (link.includes(SITE)) result.our_pages.push({ where: 'Other result', link, title: item.title || '' })

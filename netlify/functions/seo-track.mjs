@@ -198,7 +198,26 @@ async function checkKeyword(keyword, apiKey) {
         if (!ourAio.length) result.our_pages.push({ where: 'AIO text mention', link: '', title: '' })
       }
     }
-    ;(data.organic_results||[]).forEach((r, idx) => {
+    ;(data.organic_results||[
+  "social security benefits for children under 18",
+  "social security dependent benefit calculator",
+  "can my child get social security if I retire at 62",
+  "social security child in care benefits",
+  "social security family maximum calculator",
+  "should I claim social security early with young children",
+  "social security spousal benefit child in care",
+  "how much social security does a child get from a parent",
+  "social security dependent benefit family maximum",
+  "claiming social security early for kids benefits",
+  "social security benefits for children",
+  "how much social security will my child get",
+  "social security claiming strategy",
+  "are social security dependent benefits taxable",
+  "social security 1099 child benefit",
+  "social security family maximum 2026",
+  "kiddie tax social security benefits",
+  "social security child benefit application",
+]).forEach((r, idx) => {
       if (r.link?.includes(SITE)) {
         const pos = r.position || (idx + 1)
         if (!result.organic_rank || pos < result.organic_rank) result.organic_rank = pos
