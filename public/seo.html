@@ -170,7 +170,7 @@ table.kw tr:hover td{background:#faf8f4}
   <div class="topbar">
     <div>
       <h1>AI Overview Tracker</h1>
-      <p id="lastChecked">127 keywords · irsresolutionservice.com · Updated daily 6am UTC</p>
+      <p id="lastChecked">152 keywords · irsresolutionservice.com · Updated daily 6am UTC</p>
     </div>
     <div class="actions">
       <button class="btn" onclick="logout()">Sign out</button>
@@ -273,14 +273,14 @@ async function loadResults() {
       const isPartial = d.results.partial && d.results.keywords.length < 127;
       document.getElementById('lastChecked').textContent =
         isPartial 
-          ? `${d.results.keywords.length}/127 keywords checked · last updated ${dtStr} · incomplete run`
-          : `127 keywords · last checked ${dtStr}`;
+          ? `${d.results.keywords.length}/152 keywords checked · last updated ${dtStr} · incomplete run`
+          : `152 keywords · last checked ${dtStr}`;
 
       const appearing = d.results.keywords.filter(k => k.our_pages && k.our_pages.length > 0).length;
       const errCount  = d.results.keywords.filter(k => k.error).length;
 
       if (isPartial) {
-        setStatus('amber', `Partial results: ${d.results.keywords.length}/127 keywords · click "Run now" to complete (will resume where left off)`);
+        setStatus('amber', `Partial results: ${d.results.keywords.length}/152 keywords · click "Run now" to complete (will resume where left off)`);
       } else {
         setStatus('green', `We appear in ${appearing} searches · ${d.results.summary.site_cited} cited in AI Overview${errCount ? ` · ${errCount} errors` : ''}`);
       }
@@ -290,7 +290,7 @@ async function loadResults() {
         fetch(`/api/seo-track?action=finish&password=${encodeURIComponent(apw)}`).catch(() => {});
       }
     } else {
-      setStatus('amber', 'No data yet — click "Run now" to check all 127 keywords');
+      setStatus('amber', 'No data yet — click "Run now" to check all 152 keywords');
       document.getElementById('tblBody').innerHTML = '<div class="empty">No results yet. Click "Run now" above to run the first check.</div>';
       renderFilters();
     }
