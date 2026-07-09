@@ -136,6 +136,25 @@ const KEYWORDS = [
   "federal tax lien",
   "irs tax lien on property",
   "how to get irs lien removed",
+  // NEW: Automatic Penalty Relief (AEP) — IR-2026-83
+  "IRS automatic penalty relief",
+  "automatic exemption from penalty",
+  "IRS AEP program",
+  "AEP vs first time abatement",
+  "IRS replacing first time penalty abatement",
+  "first time penalty abatement going away",
+  "IRS first time abate phased out 2026",
+  "IR-2026-83",
+  "when does IRS AEP start",
+  "IRS automatic penalty relief eligibility",
+  "does AEP cover estimated tax penalty",
+  "IRS AEP eligible forms",
+  "AEP 12 consecutive quarters quarterly returns",
+  "IRS penalty notice 2025 return AEP transition",
+  "do I still need to request first time abatement",
+  "IRS automatic penalty abatement 2027",
+  "AEP failure to file failure to pay failure to deposit",
+  "IRS penalty relief without requesting",
 ]
 
 const H = {
