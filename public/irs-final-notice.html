@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Got an IRS Final Notice? What Happens Next — and Your 30-Day Window | Former IRS Auditor</title>
+<meta name="description" content="CP504, LT11, or a wage levy warning? A former IRS auditor explains exactly what the IRS does next, the 30-day window that protects you, and how to stop enforcement. Free case review.">
+<link rel="canonical" href="https://irsresolutionservice.com/irs-final-notice">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c; --gold-light: #e8c97a; --gold-dim: #8a6e2f; --gold-muted: #f5ecd8;
+  --cream: #f5f0e8; --cream-warm: #ede5d5; --cream-dark: #d9cdb8;
+  --ink: #1a1410; --ink-soft: #4a3f32; --ink-muted: #7a6e60; --white: #ffffff;
+  --red: #c0392b; --red-light: #fdf0f0; --green: #1a5c2a; --green-light: #f0fdf4;
+  --amber: #b8860b;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 18px; line-height: 1.7; }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--cream-dark); backdrop-filter: blur(12px); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-mark { width: 36px; height: 36px; border: 1.5px solid var(--gold); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--gold); }
+.logo-text { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+.logo-text span { color: var(--gold); }
+.nav { display: flex; align-items: center; gap: 1.75rem; }
+.nav a { font-size: 15px; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+.nav a:hover { color: var(--gold-dim); }
+.nav-cta { background: var(--gold) !important; color: var(--white) !important; padding: 9px 22px; border-radius: 2px; font-weight: 600; }
+.nav-item { position: relative; padding-bottom: 12px; margin-bottom: -12px; }
+.nav-item > a { display: flex; align-items: center; gap: 4px; }
+.nav-item > a::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid currentColor; opacity: 0.5; margin-top: 1px; flex-shrink: 0; }
+.dropdown { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; box-shadow: 0 12px 32px rgba(26,20,16,0.14); min-width: 580px; z-index: 300; padding: 1.75rem 0 1.25rem; }
+.nav-item:hover .dropdown, .nav-item:focus-within .dropdown { display: block; }
+.dropdown::before { content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 12px; background: transparent; }
+.dropdown-cols { display: grid; grid-template-columns: 1fr 1fr; }
+.dropdown-col { padding: 0 1.25rem; }
+.dropdown-col:first-child { border-right: 1px solid var(--cream-dark); }
+.dropdown-col-head { font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dim); padding: 0 0 0.625rem; margin-bottom: 0.375rem; border-bottom: 1px solid var(--cream-dark); }
+.dropdown a { display: block; font-size: 15px; color: var(--ink-muted) !important; text-decoration: none; padding: 4px 0; line-height: 1.4; transition: color 0.15s; letter-spacing: 0; }
+.dropdown a:hover { color: var(--gold-dim) !important; }
+.dropdown a::after { display: none !important; }
+.dropdown-services { min-width: 260px; }
+.dropdown-services .dropdown-col { padding: 0 1.25rem; border-right: none; }
+@media (max-width: 900px) { .dropdown { display: none !important; } .nav-item > a::after { display: none; } }
+@media (max-width: 640px) { .nav { gap: 0.875rem; } .nav a:not(.nav-cta) { display: none; } }
+
+/* MISSED-DEADLINE HERO */
+.md-hero{background:var(--ink);padding:120px 2rem 64px;border-bottom:3px solid var(--red)}
+.md-hero-inner{max-width:840px;margin:0 auto}
+.md-eyebrow{display:inline-block;background:var(--red);color:#fff;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px 14px;border-radius:2px;margin-bottom:1.25rem}
+.md-hero h1{font-family:var(--serif);font-size:clamp(1.75rem,4.5vw,3rem);font-weight:700;color:#fff;line-height:1.2;margin-bottom:1.25rem}
+.md-answer{background:rgba(255,255,255,.07);border-left:4px solid var(--gold);border-radius:0 6px 6px 0;padding:1.1rem 1.4rem;margin-bottom:2rem}
+.md-answer p{font-size:17px;color:rgba(255,255,255,.88);margin:0;line-height:1.65}
+.md-answer strong{color:#fff}
+.md-deadline{display:inline-flex;align-items:center;gap:10px;background:rgba(201,168,76,.2);border:1.5px solid rgba(201,168,76,.5);border-radius:4px;padding:10px 18px;font-size:15px;font-weight:700;color:var(--gold-light)}
+
+.body-wrap{max-width:840px;margin:0 auto;padding:3.5rem 2rem 6rem}
+h2.sh{font-family:var(--serif);font-size:1.75rem;font-weight:700;color:var(--ink);margin:2.5rem 0 .875rem;padding-bottom:.6rem;border-bottom:1px solid var(--cream-dark)}
+h3.sub{font-family:var(--serif);font-size:1.2rem;font-weight:600;color:var(--ink);margin:1.5rem 0 .6rem}
+p{color:var(--ink-soft);margin-bottom:1rem}
+ul,ol{color:var(--ink-soft);padding-left:1.5rem;margin-bottom:1rem}li{margin-bottom:.4rem}
+a.tl{color:var(--gold-dim);font-weight:600;text-decoration:none}
+a.tl:hover{text-decoration:underline}
+
+.exempt-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:15px}
+.exempt-table th{background:var(--ink);color:#fff;padding:.7rem 1rem;text-align:left;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.exempt-table td{padding:.7rem 1rem;border-bottom:1px solid var(--cream-dark);color:var(--ink-soft);vertical-align:top}
+.exempt-table tr:last-child td{border-bottom:none}
+.exempt-table tr:hover td{background:var(--cream-warm)}
+.badge-yes{display:inline-block;background:var(--green-light);color:var(--green);font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px}
+.badge-no{display:inline-block;background:var(--red-light);color:var(--red);font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px}
+.badge-maybe{display:inline-block;background:var(--gold-muted);color:var(--gold-dim);font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px}
+
+.callout{padding:1.1rem 1.4rem;border-radius:0 6px 6px 0;margin:1.25rem 0}
+.callout-gold{background:var(--gold-muted);border-left:4px solid var(--gold)}
+.callout-red{background:var(--red-light);border-left:4px solid var(--red)}
+.callout-green{background:var(--green-light);border-left:4px solid var(--green)}
+.callout .label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem}
+.callout .label.gold{color:var(--gold-dim)}
+.callout .label.red{color:var(--red)}
+.callout .label.green{color:var(--green)}
+.callout p{font-size:15px;color:var(--ink-soft);margin:0;font-style:italic}
+.step-list{list-style:none;padding:0;counter-reset:s}
+.step-list li{counter-increment:s;display:flex;gap:.875rem;align-items:flex-start;margin-bottom:1.1rem}
+.step-list li::before{content:counter(s);background:var(--gold);color:#fff;min-width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;margin-top:3px;flex-shrink:0}
+.step-list li span{color:var(--ink-soft)}
+.faq-item{border-bottom:1px solid var(--cream-dark);padding:1.1rem 0}
+.faq-q{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+.faq-a{font-size:15px;color:var(--ink-soft)}
+.cta-box{background:var(--ink);color:#fff;border-radius:6px;padding:2.5rem 2rem;text-align:center;margin:3rem 0}
+.cta-box h2{font-family:var(--serif);font-size:1.8rem;font-weight:700;color:#fff;margin-bottom:.75rem}
+.cta-box p{color:rgba(255,255,255,.7);font-size:16px;margin-bottom:1.5rem}
+
+/* HERO CTA BUTTON */
+.md-hero-cta{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--ink);text-decoration:none;padding:14px 28px;border-radius:2px;font-weight:700;font-size:16px;letter-spacing:.02em;margin-top:1.5rem}
+.md-hero-cta:hover{background:var(--gold-light)}
+.md-hero-sub{font-size:13px;color:rgba(255,255,255,.5);margin-top:.6rem}
+
+/* QUALIFIER FORM */
+.kw-form-section{background:var(--white);border:1.5px solid var(--gold);border-radius:8px;padding:2rem 2rem 1.75rem;margin:2rem 0 2.5rem;position:relative}
+.kw-form-section::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:8px 8px 0 0}
+.kw-form-head{margin-bottom:1.5rem}
+.kw-form-head .tag{display:inline-block;background:var(--gold-muted);color:var(--gold-dim);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:2px;margin-bottom:.75rem}
+.kw-form-head h2{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--ink);margin-bottom:.5rem;border:none;padding:0}
+.kw-form-head p{font-size:15px;color:var(--ink-soft);margin:0}
+.kw-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.kw-field{margin-bottom:1rem}
+.kw-field label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dim);display:block;margin-bottom:5px}
+.kw-field input, .kw-field select, .kw-field textarea{width:100%;padding:11px 14px;border:1.5px solid var(--cream-dark);border-radius:3px;font-family:var(--sans);font-size:14px;color:var(--ink);outline:none;background:var(--white)}
+.kw-field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a6e2f' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.kw-field textarea{min-height:90px;resize:vertical;line-height:1.6}
+.kw-field-full{grid-column:1/-1}
+.kw-submit-btn{width:100%;background:var(--ink);color:#fff;border:none;padding:16px;border-radius:2px;font-family:var(--sans);font-size:16px;font-weight:700;cursor:pointer;letter-spacing:.03em;transition:background .2s}
+.kw-submit-btn:hover{background:#000}
+.kw-submit-btn:disabled{opacity:.6;cursor:not-allowed}
+.kw-form-note{font-size:12px;color:var(--ink-muted);text-align:center;margin-top:.75rem}
+.kw-form-status{display:none;padding:12px 16px;border-radius:3px;font-size:14px;margin-bottom:1rem}
+.kw-trust-row{display:flex;flex-wrap:wrap;gap:1.25rem;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--cream-dark)}
+.kw-trust-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}
+@media(max-width:640px){.kw-form-grid{grid-template-columns:1fr}.kw-trust-row{flex-direction:column;gap:.6rem}}
+.cta-btn{display:inline-block;background:var(--gold);color:var(--ink);text-decoration:none;padding:14px 32px;border-radius:2px;font-weight:700;font-size:16px;letter-spacing:.04em}
+.romeo-bar{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0}
+.romeo-avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.romeo-linkedin{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--gold-dim);text-decoration:none;font-weight:600}
+.romeo-info .romeo-name{font-weight:700;font-size:17px;color:var(--ink)}
+.romeo-info .romeo-title{font-size:14px;color:var(--ink-muted);margin-top:2px;line-height:1.5}
+.romeo-info .romeo-bio{font-size:15px;color:var(--ink-soft);margin-top:.75rem;line-height:1.6}
+.notice-links{background:var(--cream-warm);border-radius:6px;padding:1.5rem;margin:2rem 0}
+.notice-links h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:1rem}
+.notice-links ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.5rem}
+.notice-links li a{display:inline-block;background:var(--white);border:1px solid var(--cream-dark);border-radius:3px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--gold-dim);text-decoration:none;transition:border-color .2s}
+.notice-links li a:hover{border-color:var(--gold);color:var(--gold)}
+footer{background:var(--ink);color:rgba(255,255,255,.5);text-align:center;padding:2rem;font-size:13px}
+footer a{color:var(--gold);text-decoration:none}
+@media(max-width:640px){
+  .romeo-bar{grid-template-columns:1fr}
+  .romeo-avatar-wrap{flex-direction:row}
+  .exempt-table{font-size:13px}
+}
+</style>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://irsresolutionservice.com/irs-final-notice",
+  "name": "Got an IRS Final Notice? What Happens Next — and Your 30-Day Window",
+  "abstract": "A CP504 or LT11 (Letter 1058) is not the end — it is a sequence with exact rules. The LT11 starts a 30-day window to request a Collection Due Process hearing (Form 12153), which stops all levy action immediately. What each notice actually authorizes, what happens if you do nothing, and how to respond, explained by a former IRS auditor.",
+  "author": {
+    "@type": "Person",
+    "@id": "https://irsresolutionservice.com/#romeo-razi",
+    "name": "Romeo Razi",
+    "honorificSuffix": "CPA",
+    "jobTitle": "Former IRS Tax Examiner, CPA",
+    "sameAs": "https://www.linkedin.com/in/romeo-razi/"
+  }
+}</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://irsresolutionservice.com" class="logo">
+      <div class="logo-mark">IRS</div>
+      <span class="logo-text">Resolution <span>Service</span></span>
+    </a>
+    <nav class="nav">
+      <a href="/#founders">About</a>
+      <div class="nav-item">
+        <a href="/cp2000">IRS Guides</a>
+        <div class="dropdown">
+          <div class="dropdown-cols" style="grid-template-columns:1fr 1fr 1fr">
+            <div class="dropdown-col">
+              <div class="dropdown-col-head">IRS Notices Explained</div>
+              <a href="/cp2000">CP2000 — Proposed Adjustment</a>
+              <a href="/cp14">CP14 — First Balance Due</a>
+              <a href="/cp504">CP504 — Intent to Levy</a>
+              <a href="/lt11">LT11 — Final Levy Notice</a>
+              <a href="/cp3219a">CP3219A — Notice of Deficiency</a>
+              <a href="/cp59">CP59 — Unfiled Return</a>
+              <a href="/cp523">CP523 — Payment Plan Terminated</a>
+              <a href="/missed-tax-deadline">Missed the Tax Deadline</a>
+              <a href="/havent-filed-taxes">Haven't Filed in Years</a>
+            </div>
+            <div class="dropdown-col">
+              <div class="dropdown-col-head">IRS Resolution &amp; Collection</div>
+              <a href="/irs-installment-agreement">Payment Plans Explained</a>
+              <a href="/irs-offer-in-compromise">Offer in Compromise</a>
+              <a href="/irs-offer-in-compromise-deemed-accepted">OIC Deemed Accepted Rule</a>
+              <a href="/irs-collection-statute">10-Year Collection Statute</a>
+              <a href="/irs-penalty-abatement">Penalty Abatement</a>
+              <a href="/irs-automatic-penalty-relief">NEW: Automatic Penalty Relief (AEP)</a>
+              <a href="/irs-covid-penalty-refund-kwong">NEW: Kwong COVID Penalty Refunds</a>
+              <a href="/missed-july-10-kwong-deadline">Missed the July 10 Kwong Deadline?</a>
+              <a href="/irs-currently-not-collectible">Currently Not Collectible</a>
+              <a href="/irs-wage-garnishment">Wage Garnishment</a>
+              <a href="/irs-bank-levy">Bank Levy — 21-Day Window</a>
+              <a href="/irs-tax-lien">Federal Tax Lien</a>
+              <a href="/irs-revenue-officer">Revenue Officer Assigned</a>
+              <a href="/irs-audit-appeals-strategy">Audit &amp; Appeals Strategy</a>
+            </div>
+            <div class="dropdown-col">
+              <div class="dropdown-col-head">Tax Law &amp; Planning</div>
+              <a href="/one-big-beautiful-act">One Big Beautiful Act — 9 Changes</a>
+              <a href="/irs-tips-overtime-tax">Tax-Free Tips &amp; Overtime</a>
+              <a href="/salt-deduction-2025">SALT Deduction Raised to $40K</a>
+              <a href="/bonus-depreciation-2025">100% Bonus Depreciation</a>
+              <a href="/rd-expense-deduction">R&amp;D Expense Deduction</a>
+              <a href="/qualified-small-business-stock">QSBS Exclusion Changes</a>
+              <a href="/year-end-tax-planning">Year-End Business Planning</a>
+              <a href="/tax-brackets-2026">2026 Tax Brackets</a>
+              <a href="/social-security-dependent-benefits">Social Security Dependent Benefits</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/#services">Services</a>
+        <div class="dropdown dropdown-services">
+          <div class="dropdown-col">
+            <div class="dropdown-col-head">What We Handle</div>
+            <a href="/#services">Unfiled Tax Returns</a>
+            <a href="/#services">Back Taxes &amp; Collections</a>
+            <a href="/#services">IRS Audits &amp; Appeals</a>
+            <a href="/#services">Offer in Compromise</a>
+            <a href="/#services">Installment Agreements</a>
+            <a href="/#services">Penalty Abatement</a>
+            <a href="/#services">IRS Notice Response</a>
+            <a href="/#services">Tax Catch-Up Filing</a>
+          </div>
+        </div>
+      </div>
+      <a href="/#tool">Notice Decoder</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#contact" class="nav-cta">Get Help Now</a>
+    </nav>
+  </div>
+</header><!-- DARK HERO -->
+<section class="md-hero">
+  <div class="md-hero-inner">
+    <div class="md-eyebrow">&#9888; CP504 &middot; LT11 &middot; Final Notice &middot; Levy Warning</div>
+    <h1>Got a scary letter from the IRS?<br>Here's exactly what happens next —<br>and the window you have to stop it.</h1>
+    <div class="md-answer">
+      <p><strong>The short answer:</strong> These notices follow a strict legal sequence — and at almost every step, you have more power than the letter makes it sound. A <strong>CP504</strong> is <em>not</em> the notice that lets the IRS take your paycheck or bank account. An <strong>LT11 (or Letter 1058)</strong> is — but it also starts a <strong>30-day window</strong> where one form (Form 12153) stops <em>all</em> levy action immediately and puts your case in front of an independent appeals officer. The people who get hurt are the ones who freeze. The rules protect the ones who act.</p>
+    </div>
+    <div class="md-deadline">&#9200; The LT11 clock is 30 days from the notice date — not the day you opened it. Check your letter's date now.</div>
+    <div>
+      <a href="#check-form" class="md-hero-cta">Get My Notice Reviewed — Free &rarr;</a>
+      <div class="md-hero-sub">Takes 2 minutes. A former IRS auditor tells you what your notice actually means and what to do first.</div>
+    </div>
+  </div>
+</section>
+
+<div class="body-wrap">
+
+<!-- ON-PAGE QUALIFIER FORM -->
+<div class="kw-form-section" id="check-form">
+  <div class="kw-form-head">
+    <span class="tag">Free — 2 Minutes — No Obligation</span>
+    <h2>Tell us what you received. We'll tell you where you actually stand.</h2>
+    <p>Romeo Razi spent years inside the IRS before switching sides. He personally reviews every submission and responds directly with an honest read: what the notice means, what deadline you're on, and whether you even need to hire anyone — including us.</p>
+  </div>
+
+  <div id="kw-form-wrap">
+    <div class="kw-form-grid">
+      <div class="kw-field"><label>First Name *</label><input id="kw-first" type="text" placeholder="Jane"></div>
+      <div class="kw-field"><label>Last Name *</label><input id="kw-last" type="text" placeholder="Smith"></div>
+    </div>
+    <div class="kw-form-grid">
+      <div class="kw-field"><label>Phone Number *</label><input id="kw-phone" type="tel" placeholder="(000) 000-0000"></div>
+      <div class="kw-field"><label>Email *</label><input id="kw-email" type="email" placeholder="jane@example.com"></div>
+    </div>
+
+    <div class="kw-form-grid">
+      <div class="kw-field">
+        <label>What did you receive? *</label>
+        <select id="kw-notice">
+          <option value="">Select one</option>
+          <option value="CP504 - Intent to Levy">CP504 — "Notice of Intent to Levy"</option>
+          <option value="LT11 / Letter 1058 - Final Notice">LT11 or Letter 1058 — "Final Notice"</option>
+          <option value="CP14/CP501/CP503 - Balance due">CP14 / CP501 / CP503 — balance due letter</option>
+          <option value="CP523 - Payment plan default">CP523 — payment plan default/termination</option>
+          <option value="Wage garnishment already started">My wages are already being garnished</option>
+          <option value="Bank levy">My bank account was levied</option>
+          <option value="Revenue Officer contacted me">A Revenue Officer contacted me</option>
+          <option value="Other / not sure">Something else / not sure</option>
+        </select>
+      </div>
+      <div class="kw-field">
+        <label>What's the date on the notice? *</label>
+        <select id="kw-when">
+          <option value="">Select one</option>
+          <option value="Within the last week">Within the last week</option>
+          <option value="1-3 weeks ago">1–3 weeks ago</option>
+          <option value="3-6 weeks ago">3–6 weeks ago</option>
+          <option value="Over 6 weeks ago">Over 6 weeks ago</option>
+          <option value="Not sure">Not sure</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="kw-form-grid">
+      <div class="kw-field">
+        <label>Roughly how much does the IRS say you owe? *</label>
+        <select id="kw-amount">
+          <option value="">Select one</option>
+          <option value="Under $10,000">Under $10,000</option>
+          <option value="$10,000-$25,000">$10,000 – $25,000</option>
+          <option value="$25,000-$50,000">$25,000 – $50,000</option>
+          <option value="$50,000-$100,000">$50,000 – $100,000</option>
+          <option value="Over $100,000">Over $100,000</option>
+          <option value="Not sure">Not sure</option>
+        </select>
+      </div>
+      <div class="kw-field">
+        <label>Are all your tax returns filed? *</label>
+        <select id="kw-filed">
+          <option value="">Select one</option>
+          <option value="Yes - all filed">Yes, everything is filed</option>
+          <option value="No - missing 1-2 years">No — missing 1–2 years</option>
+          <option value="No - missing 3+ years">No — missing 3 or more years</option>
+          <option value="Not sure">Not sure</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="kw-field kw-field-full">
+      <label>Anything else Romeo should know? (optional)</label>
+      <textarea id="kw-details" placeholder="Example: This is for my business payroll taxes, or the IRS filed a return for me for 2021, or I can't afford to pay anything right now."></textarea>
+    </div>
+
+    <div id="kw-form-status" class="kw-form-status"></div>
+    <button onclick="submitNoticeForm()" id="kw-submit-btn" class="kw-submit-btn">Get My Free Notice Review &rarr;</button>
+    <p class="kw-form-note">Romeo personally reviews every submission and responds directly — usually within one business day. Urgent levy situations are prioritized.</p>
+
+    <div class="kw-trust-row">
+      <div class="kw-trust-item">&#128274; Your info is never sold or shared</div>
+      <div class="kw-trust-item">&#128100; Reviewed by a former IRS auditor</div>
+      <div class="kw-trust-item">&#10003; We'll tell you if you don't need us</div>
+    </div>
+  </div>
+</div>
+
+<h2 class="sh">What each notice actually means — from someone who worked there</h2>
+<table class="exempt-table">
+  <thead>
+    <tr><th>Notice</th><th>What It Actually Authorizes</th><th>Your Move</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>CP14 / CP501 / CP503</strong></td><td>Nothing yet — these are balance-due letters. No levy power. But penalties and interest are stacking.</td><td>Verify the amount against your transcript before paying; set up resolution while your leverage is best.</td></tr>
+    <tr><td><strong>CP504</strong></td><td>Lets the IRS take your <em>state tax refund</em> and certain federal payments. It does <strong>not</strong> authorize wage or bank levies — despite how it reads.</td><td>Don't panic — but don't wait for the next letter. Getting a resolution in place now is dramatically easier than after LT11.</td></tr>
+    <tr><td><strong>LT11 / Letter 1058</strong></td><td>The real one. After 30 days, the IRS can levy wages, bank accounts, and most property.</td><td>File Form 12153 (Collection Due Process request) within 30 days of the notice date. It stops ALL levy action immediately and preserves your Tax Court rights.</td></tr>
+    <tr><td><strong>CP523</strong></td><td>Your payment plan is about to be terminated — full balance becomes due, enforcement can resume.</td><td>Act within ~30 days. First defaults are often reinstated. Do not stop making payments.</td></tr>
+    <tr><td><strong>Wage levy already active</strong></td><td>Your employer must comply — but a big portion of each check is exempt, and levies can be released.</td><td>Hardship status, an installment agreement, or procedural errors can release a levy — sometimes within days.</td></tr>
+  </tbody>
+</table>
+
+<div class="callout callout-gold">
+  <div class="label gold">Romeo Razi, CPA &mdash; Former IRS Auditor</div>
+  <p>"The notices are written to scare you into calling the IRS unprepared — I watched it work from the inside for years. The sequence has exact rules, and the rules mostly favor the taxpayer who responds on time. Nearly every disaster case I've seen wasn't caused by the debt. It was caused by the silence."</p>
+</div>
+
+<h2 class="sh">What happens after you submit the form</h2>
+<ol class="step-list">
+  <li><span><strong>Romeo reviews your answers personally</strong> — usually within one business day; active levy situations get bumped to the front.</span></li>
+  <li><span><strong>You get an honest first read:</strong> what your notice actually means, which deadline you're on, and what your realistic options are — installment agreement, Currently Not Collectible, penalty abatement, Offer in Compromise, or a CDP hearing.</span></li>
+  <li><span><strong>If your case is simple enough to handle yourself, we tell you that</strong> — with the exact steps. If it needs professional help, you'll get a flat-fee quote before anything starts. No retainers-first, no scare tactics, no "pennies on the dollar" promises.</span></li>
+</ol>
+
+<h2 class="sh">Common questions</h2>
+
+<div class="faq-item">
+  <div class="faq-q">The IRS says I owe more than I can ever pay. Is it even worth responding?</div>
+  <div class="faq-a">Especially then. The IRS has formal programs for exactly this — Currently Not Collectible status, partial-pay installment agreements, Offer in Compromise — and a 10-year collection statute after which debt expires. Every one of those paths works better when you engage before enforcement starts. Silence is the only strategy that always loses.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">I haven't filed for several years. Will asking for help get me in more trouble?</div>
+  <div class="faq-a">No — the exposure already exists; the IRS's document-matching systems know about your W-2s and 1099s whether you file or not. The IRS's own compliance standard is generally the last 6 years of returns, not everything. Getting compliant is the prerequisite for every relief program, and voluntary compliance is treated dramatically better than getting caught.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">Can't I just call the IRS myself?</div>
+  <div class="faq-a">You can, and for simple situations (balances under $10K, all returns filed) we'll often tell you exactly that — it's free and the online payment plan takes 15 minutes. The cases where representation earns its fee: levies in motion, unfiled years, balances over $50K (passport risk), business/payroll tax, defaulted agreements, and anything where what you say to the IRS can be used in their collection analysis.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">Is the free review actually free?</div>
+  <div class="faq-a">Yes. You get a genuine assessment of your notice and options with no charge and no obligation. We quote a flat fee only if there's real work worth doing — and we take a limited number of resolution cases, so we have no incentive to sign cases that shouldn't be cases.</div>
+</div>
+
+<div class="romeo-bar">
+  <div class="romeo-avatar-wrap">
+    <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Auditor" style="width:90px;height:90px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--gold);display:block">
+    <a href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener" class="romeo-linkedin">&#128101; LinkedIn</a>
+  </div>
+  <div class="romeo-info">
+    <div class="romeo-name">Romeo Razi, CPA</div>
+    <div class="romeo-title">Former IRS Tax Examiner (Individual &amp; Employment Tax Division) &middot; CPA &middot; 15+ years in private practice</div>
+    <div class="romeo-bio">Romeo spent years auditing businesses inside the IRS before switching sides. He's helped clients resolve IRS debts ranging from a few thousand dollars to $440,000. Featured in MarketWatch, U.S. News &amp; World Report, and Realtor.</div>
+  </div>
+</div>
+
+<div class="cta-box">
+  <h2>The worst move is the one most people make: waiting.</h2>
+  <p>Two minutes now gets you an honest read on your notice from someone who used to sit on the other side of the desk — including "you can handle this yourself" if that's the truth.</p>
+  <a href="#check-form" class="cta-btn">Get My Free Notice Review &rarr;</a>
+</div>
+
+</div>
+<footer>
+  <p>IRS Resolution Service LLC · 9673 Camino Capistrano, Las Vegas, NV · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
+  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. IRS Resolution Service is not affiliated with the Internal Revenue Service. This page is informational only and does not constitute legal or tax advice; outcomes depend on individual circumstances and are not guaranteed.</p>
+</footer>
+<script>
+function getUrlParam(name) {
+  try { return new URLSearchParams(window.location.search).get(name) || ''; } catch(e) { return ''; }
+}
+
+async function submitNoticeForm() {
+  const first   = document.getElementById('kw-first').value.trim();
+  const last    = document.getElementById('kw-last').value.trim();
+  const phone   = document.getElementById('kw-phone').value.trim();
+  const email   = document.getElementById('kw-email').value.trim();
+  const notice  = document.getElementById('kw-notice').value;
+  const when    = document.getElementById('kw-when').value;
+  const amount  = document.getElementById('kw-amount').value;
+  const filed   = document.getElementById('kw-filed').value;
+  const details = document.getElementById('kw-details').value.trim();
+
+  if (!first || !last || !phone || !email || !notice || !when || !amount || !filed) {
+    showKwFormStatus('Please fill in all required fields.', false);
+    return;
+  }
+
+  const btn = document.getElementById('kw-submit-btn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+
+  const utmSource = getUrlParam('utm_source') || 'direct';
+  const utmCampaign = getUrlParam('utm_campaign') || 'irs-final-notice';
+
+  const issue = `[IRS NOTICE — FREE REVIEW REQUEST]
+Notice received: ${notice}
+Notice date: ${when}
+Amount IRS claims: ${amount}
+All returns filed: ${filed}
+Additional details: ${details || '(none provided)'}
+Source: ${utmSource} / ${utmCampaign}`;
+
+  try {
+    const res = await fetch('/.netlify/functions/contact-form', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        formType: 'irs',
+        name: first + ' ' + last,
+        phone, email,
+        address: 'Not provided (notice-review form)',
+        referral: `Notice landing page (${utmSource})`,
+        issue
+      })
+    });
+    if (!res.ok) throw new Error('Submission failed');
+    document.getElementById('kw-form-wrap').innerHTML = `
+      <div style="text-align:center;padding:2rem 0">
+        <div style="font-size:44px;margin-bottom:1rem">&#9989;</div>
+        <h3 style="font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--ink);margin-bottom:.5rem">Got it — thank you.</h3>
+        <p style="font-size:15px;color:var(--ink-soft);max-width:460px;margin:0 auto">Romeo will personally review your notice details and get back to you directly, usually within one business day. If your wages or bank account are actively being levied, your case is prioritized.</p>
+      </div>`;
+  } catch(e) {
+    showKwFormStatus('Something went wrong. Please email romeo@taxedright.com directly.', false);
+    btn.disabled = false; btn.textContent = 'Get My Free Notice Review →';
+  }
+}
+
+function showKwFormStatus(msg, success) {
+  const el = document.getElementById('kw-form-status');
+  el.textContent = msg;
+  el.style.display = 'block';
+  el.style.background = success ? 'var(--green-light)' : 'var(--red-light)';
+  el.style.border = success ? '1px solid #b8d9c3' : '1px solid #e8b0b0';
+  el.style.color  = success ? 'var(--green)' : 'var(--red)';
+}
+</script>
+</body>
+</html>
