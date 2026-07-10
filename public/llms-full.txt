@@ -1,6 +1,6 @@
 # IRS Resolution Service — Full Content Index
 # https://irsresolutionservice.com/llms-full.txt
-# Updated 2026-07-09
+# Updated 2026-07-10
 # This file contains the complete content of irsresolutionservice.com in plain Markdown
 # for AI systems that ingest full-site content. See also: https://irsresolutionservice.com/llms.txt
 
@@ -174,6 +174,51 @@ Announced July 8, 2026 (IR-2026-83): the IRS is replacing First Time Abate (FTA,
 
 ---
 
+## Guide: Kwong COVID Penalty Refunds — Who Qualifies & How to File Form 843
+
+In Kwong v. United States, 179 Fed. Cl. 382 (Nov. 2025), the Court of Federal Claims held that IRC Section 7508A(d) — the mandatory disaster postponement rule — automatically postponed federal filing and payment deadlines for the entire COVID-19 federal disaster period: **January 20, 2020 through May 11, 2023, plus 60 days, ending July 10, 2023**. Under that reading, returns and payments due inside that 3.5-year window were not legally late until after July 10, 2023 — so failure-to-file, failure-to-pay, failure-to-deposit, and estimated-tax penalties (and related interest) assessed for that window should never have been charged.
+
+**Scale**: The National Taxpayer Advocate estimates tens of millions of taxpayers are affected — individuals, small businesses, corporations, estates, and trusts, including taxpayers penalized for late international information returns (Forms 5471, 3520, etc.), which carry five-figure penalties even with no tax due.
+
+**The law is NOT settled**: The government disputes the ruling; a DOJ appeal is expected; final resolution may take years. Filing a claim does not guarantee a refund — it preserves the right to one if the taxpayer-favorable reading holds. Not filing generally forfeits the refund even if taxpayers ultimately win. No one can honestly guarantee a Kwong refund.
+
+**Step 1 — Check your numbers**: Pull IRS account transcripts for tax years 2019–2022 (free via IRS Online Account). Look for TC 166/276 (late-filing/late-payment penalty assessments), TC 196 (interest), and all payment dates.
+
+**Step 2 — File Form 843 as a protective claim**: One Form 843 per tax period; paper-only (cannot be e-filed). Write "Protective Refund Claim Pursuant to Kwong Case" across the top, identify the contingency (the pending Kwong litigation over IRC 7508A(d)) and the specific years. Mail certified with return receipt — under IRC 7502 (timely-mailing-is-timely-filing), the postmark date is the filing date. The IRS holds protective claims in suspense until litigation resolves.
+
+**Also**: COVID-window penalties assessed but not yet paid can be pursued via abatement — if Kwong holds, they come off the balance owed (relevant to installment agreement balances).
+
+**Kwong vs. AEP**: Unrelated programs. Kwong = backward-looking refunds/abatement of 2020–2023 penalties, claim required, contingent on litigation. AEP = forward-looking automatic non-assessment for clean 3-year histories, no action required. A taxpayer can benefit from both.
+
+**Unsettled edge case**: Whether penalties/interest that accrued during the disaster window on pre-2020 delinquencies are covered — the IRS says no windfall for pre-disaster delinquencies (Treas. Reg. 301.7508A-1(f), Ex. 4); Kwong didn't decide it; a protective claim preserves the argument cheaply.
+
+**Source**: irsresolutionservice.com/irs-covid-penalty-refund-kwong
+
+---
+
+## Guide: Missed the July 10, 2026 Kwong Deadline — Who Still Has Time
+
+July 10, 2026 was the general "most taxpayers" claim date publicized by the National Taxpayer Advocate — it was never a single universal statutory deadline. The actual limitations rule, IRC Section 6511, allows a refund claim until the **later** of: (a) 3 years from the date the return was filed, or (b) **2 years from the date of each payment** (limited to amounts paid in that window). Each payment starts its own 2-year clock.
+
+**Who still has time after July 10, 2026**:
+- Taxpayers on installment agreements whose monthly payments in the last 24 months were applied to COVID-window penalties/interest (each month, the oldest payment rolls out of the window permanently)
+- Taxpayers whose refunds were offset or who were levied within the last 2 years (offsets and levy proceeds are payments)
+- Taxpayers who paid off COVID-window penalties in a lump sum after July 10, 2024
+- Late/catch-up filers whose actual filing date is within the last 3 years
+- Taxpayers with COVID-window penalties assessed but unpaid (abatement route — no refund statute issue)
+- Taxpayers with open audits, Appeals cases, or Tax Court litigation (open statutes, incl. Form 872 extensions)
+- Narrow cases of financial disability (IRC 6511(h)) — medical impairment suspending the limitations period, physician documentation required
+
+**Who is likely out of time**: filed by July 10, 2023, fully paid more than 2 years ago, no open exams — both 6511 prongs have likely run.
+
+**Possible relief**: NTA recommended the IRS grant a six-month extension and consider systemic relief for all eligible taxpayers; as of July 10, 2026, neither had been announced. Don't wait for a rescue — protect open payment-based windows now.
+
+**Week-one checklist**: (1) pull 2019–2022 account transcripts; (2) map every payment in the last 24 months against COVID-window penalty/interest application; (3) file Form 843 protective claims per period, certified mail; (4) pursue abatement for unpaid assessed penalties; (5) do not stop paying an active installment agreement (default triggers CP523 termination and enforcement).
+
+**Source**: irsresolutionservice.com/missed-july-10-kwong-deadline
+
+---
+
 ## Guide: One Big Beautiful Act — 9 Tax Changes
 
 1. TCJA made permanent — higher standard deduction, fewer brackets, 20% QBI deduction for small businesses
@@ -202,5 +247,5 @@ These are marginal rates — each rate applies only to income within that bracke
 
 ---
 
-*Content last updated: 2026-07-09. Tax law changes frequently. Confirm with a licensed professional for specific situations.*
+*Content last updated: 2026-07-10. Tax law changes frequently. Confirm with a licensed professional for specific situations.*
 *Contact Romeo Razi, CPA: https://irsresolutionservice.com/#contact*

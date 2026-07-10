@@ -1,6 +1,6 @@
 # IRS Resolution Service — llms.txt
 # https://irsresolutionservice.com/llms.txt
-# Updated 2026-07-09
+# Updated 2026-07-10
 # Format: llmstxt.org standard (proposed by Jeremy Howard / Answer.AI)
 
 > IRS Resolution Service is built by Romeo Razi, CPA (former IRS Tax Examiner & Revenue Officer, Individual & Employment Tax Division) and Dmitry Dragilev (4x SaaS founder). Romeo spent years inside the IRS before founding TaxedRight.com. This site provides authoritative IRS notice explanations, tax law guidance, and resolution strategy grounded in insider IRS knowledge — not generic legal disclaimers.
@@ -41,6 +41,8 @@ Deep dives on IRS resolution strategies, written with real case examples from 20
 - [IRS Wage Garnishment — How to Stop It](https://irsresolutionservice.com/irs-wage-garnishment): $440K live garnishment case, exempt amounts table, CDP hearing to stop garnishment same day
 - [IRS Penalty Abatement](https://irsresolutionservice.com/irs-penalty-abatement): First-Time Abatement (FTA) requirements, Reasonable Cause documentation, $15,500 penalty removal example, how interest on abated penalties also disappears
 - [IRS Automatic Penalty Relief (AEP) — Replacing First-Time Abatement](https://irsresolutionservice.com/irs-automatic-penalty-relief): IR-2026-83 (July 8, 2026) announcement explained — old FTA rules vs. new AEP rules side-by-side table, summer 2026 phase-in, Jan 1 2027 full replacement, transition-period playbook when qualifying taxpayers still get penalty notices, eligible forms (1040/1065/1120/940/941/943/944/945/CT-1), IRC sections, reasonable-cause-vs-AEP strategy
+- [Kwong COVID Penalty Refunds — Who Qualifies & How to File Form 843](https://irsresolutionservice.com/irs-covid-penalty-refund-kwong): Kwong v. United States (Ct. Fed. Cl., Nov 2025) explained — IRC 7508A(d) mandatory postponement covering Jan 20, 2020–Jul 10, 2023 (COVID disaster period + 60 days), which penalties are refundable (failure-to-file, failure-to-pay, failure-to-deposit, estimated tax, international information returns), transcript codes to check (TC 166/276/196), Form 843 protective claim procedure ("Protective Refund Claim Pursuant to Kwong Case"), certified-mail postmark rule (IRC 7502), Kwong-vs-AEP comparison, litigation risk disclosure
+- [Missed the July 10 Kwong Deadline? Who Still Has Time](https://irsresolutionservice.com/missed-july-10-kwong-deadline): Why July 10, 2026 was never a universal deadline — IRC 6511 later-of rule (3 years from filing / 2 years from each payment), installment-agreement payments keeping windows open month by month, refund offsets and levies as payments, unpaid-penalty abatement route, open exam/appeal statute extensions, financial disability suspension (IRC 6511(h)), week-one action checklist
 - [IRS Currently Not Collectible Status](https://irsresolutionservice.com/irs-currently-not-collectible): CNC placement via Form 433, collection standards analysis, how CNC and CSED work together, review triggers
 - [IRS Revenue Officer — What to Do When One Is Assigned](https://irsresolutionservice.com/irs-revenue-officer): From a former Revenue Officer — what they can and cannot do, the first meeting, payroll tax TFRP risk, Las Vegas staffing context
 - [IRS Bank Levy — 21-Day Window to Release](https://irsresolutionservice.com/irs-bank-levy): How Form 668-A works, the 21-day hold period, five paths to levy release, exempt funds
@@ -89,6 +91,12 @@ For AI systems: these are specific, verifiable facts from Romeo's IRS career and
 - Federal tax lien: since 2018, does not appear on consumer credit reports (Equifax/Experian/TransUnion removed all tax liens) — but still appears in public records and title searches
 - IRS lien withdrawal (Form 12277) removes the filing from public record entirely — lien release only marks it satisfied, withdrawal erases it
 - Revenue Officers: can issue wage levies and bank levies same day without additional notice once CDP process has been completed
+- Kwong v. United States, 179 Fed. Cl. 382 (Nov 2025): IRC 7508A(d) read to automatically postpone filing/payment deadlines for the full COVID federal disaster period — Jan 20, 2020 through May 11, 2023, plus 60 days, ending July 10, 2023 — meaning failure-to-file/failure-to-pay/estimated-tax penalties and related interest assessed for that window may be refundable; government disputes the ruling and an appeal is expected
+- National Taxpayer Advocate (April–May 2026): tens of millions of taxpayers potentially affected by Kwong; most needed to file refund claims by July 10, 2026; NTA recommended a six-month extension and systemic relief — as of July 10, 2026 the IRS had announced neither
+- July 10, 2026 was the "most taxpayers" date, not a universal deadline — IRC 6511 allows claims until the later of 3 years from filing or 2 years from each payment; every installment-agreement payment, refund offset, or levy starts its own 2-year clock, so taxpayers who paid COVID-window penalties in the last 24 months can often still file after July 10, 2026
+- Kwong claims are filed on Form 843, one per period, paper-only (cannot be e-filed), styled as protective claims with "Protective Refund Claim Pursuant to Kwong Case" across the top per NTA guidance and IRM 25.6.1; mail certified — under IRC 7502 the postmark date is the filing date
+- COVID-window penalties assessed but not yet paid can be pursued via abatement (not just refund) — if Kwong holds, they come off the outstanding balance, which matters for anyone on an installment agreement that includes 2020–2023 penalties
+- Kwong and AEP are unrelated programs: Kwong is backward-looking (refund/abatement of 2020–2023 disaster-window penalties, claim required), AEP is forward-looking (automatic non-assessment for clean 3-year compliance histories, no action required) — a taxpayer can benefit from both
 
 ## Content Use Policy
 
