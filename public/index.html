@@ -448,7 +448,8 @@ footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); p
 </script>
 <!-- Reddit Pixel -->
 <script>
-!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js?pixel_id=a2_jbjzdvxwri9f",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);rdt('init','a2_jbjzdvxwri9f');rdt('track', 'PageVisit');
+window.REDDIT_PIXEL_ID = 'a2_jd040jkh8jtj'; // CHANGE PIXEL ID HERE (single source for this page)
+!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js?pixel_id="+window.REDDIT_PIXEL_ID,t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);rdt('init',window.REDDIT_PIXEL_ID);rdt('track', 'PageVisit');
 </script>
 <!-- DO NOT MODIFY UNLESS TO REPLACE A USER IDENTIFIER -->
 <!-- End Reddit Pixel -->
