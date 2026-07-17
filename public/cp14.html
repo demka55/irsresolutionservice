@@ -111,6 +111,33 @@ footer a { color: var(--gold); text-decoration: none; }
 @media (max-width: 900px) { .dropdown { display: none !important; } .nav-item > a::after { display: none; } }
 @media (max-width: 640px) { .nav { gap: 0.875rem; } .nav a:not(.nav-cta) { display: none; } }
 
+
+/* HERO CTA */
+.hero-cta{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--ink);text-decoration:none;padding:14px 28px;border-radius:2px;font-weight:700;font-size:16px;letter-spacing:.02em;margin-top:1.5rem}
+.hero-cta:hover{background:var(--gold-light,#e8c97a)}
+.hero-cta-sub{font-size:13px;color:var(--ink-muted);margin-top:.6rem}
+/* QUALIFIER FORM */
+.kw-form-section{background:var(--white);border:1.5px solid var(--gold);border-radius:8px;padding:2rem 2rem 1.75rem;margin:0 0 2.5rem;position:relative;scroll-margin-top:90px}
+.kw-form-section::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),#e8c97a);border-radius:8px 8px 0 0}
+.kw-form-head{margin-bottom:1.5rem}
+.kw-form-head .tag{display:inline-block;background:#f5ecd8;color:var(--gold-dim,#8a6e2f);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:2px;margin-bottom:.75rem}
+.kw-form-head h2{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--ink);margin:0 0 .5rem;border:none;padding:0}
+.kw-form-head p{font-size:15px;color:var(--ink-soft);margin:0}
+.kw-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0}
+.kw-field{margin-bottom:1rem}
+.kw-field label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dim,#8a6e2f);display:block;margin-bottom:5px}
+.kw-field input, .kw-field select, .kw-field textarea{width:100%;padding:11px 14px;border:1.5px solid var(--cream-dark);border-radius:3px;font-family:var(--sans);font-size:14px;color:var(--ink);outline:none;background:var(--white)}
+.kw-field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a6e2f' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.kw-field textarea{min-height:90px;resize:vertical;line-height:1.6}
+.kw-field-full{grid-column:1/-1}
+.kw-submit-btn{width:100%;background:var(--ink);color:#fff;border:none;padding:16px;border-radius:2px;font-family:var(--sans);font-size:16px;font-weight:700;cursor:pointer;letter-spacing:.03em;transition:background .2s}
+.kw-submit-btn:hover{background:#000}
+.kw-submit-btn:disabled{opacity:.6;cursor:not-allowed}
+.kw-form-note{font-size:12px;color:var(--ink-muted);text-align:center;margin-top:.75rem}
+.kw-form-status{display:none;padding:12px 16px;border-radius:3px;font-size:14px;margin-bottom:1rem}
+.kw-trust-row{display:flex;flex-wrap:wrap;gap:1.25rem;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--cream-dark)}
+.kw-trust-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-muted)}
+@media(max-width:640px){.kw-form-grid{grid-template-columns:1fr}.kw-trust-row{flex-direction:column;gap:.6rem}}
 </style>
 
 <script type="application/ld+json">
@@ -126,7 +153,7 @@ footer a { color: var(--gold); text-decoration: none; }
     "@id": "https://irsresolutionservice.com/#romeo-razi",
     "name": "Romeo Razi",
     "honorificSuffix": "CPA",
-    "jobTitle": "Former IRS Tax Examiner, CPA",
+    "jobTitle": "Former IRS Auditor, CPA",
     "sameAs": "https://www.linkedin.com/in/romeo-razi/"
   },
   "publisher": {
@@ -152,6 +179,11 @@ footer a { color: var(--gold); text-decoration: none; }
       ]
     }
 </script>
+<!-- Reddit Pixel -->
+<script>
+!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js?pixel_id=a2_jbjzdvxwri9f",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);rdt('init','a2_jbjzdvxwri9f');rdt('track', 'PageVisit');
+</script>
+<!-- End Reddit Pixel -->
 </head>
 <body>
 <header class="site-header">
@@ -238,8 +270,8 @@ footer a { color: var(--gold); text-decoration: none; }
   <div class="notice-hero-inner">
     <div class="notice-eyebrow">⚠ IRS Notice Explained</div>
     <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 1.5rem;font-size:14px;color:#7a6e60">
-      <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Tax Examiner" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid #c9a84c">
-      <span>By <a href="/#founders" style="color:#8a6e2f;font-weight:600;text-decoration:none">Romeo Razi, CPA</a> &mdash; Former IRS Tax Examiner</span>
+      <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Auditor" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid #c9a84c">
+      <span>By <a href="/#founders" style="color:#8a6e2f;font-weight:600;text-decoration:none">Romeo Razi, CPA</a> &mdash; Former IRS Auditor</span>
       <span>&middot;</span><span>Updated July 14, 2026</span>
       <span>&middot;</span><span>Fact-checked against IRS primary sources</span>
     </div>
@@ -251,9 +283,80 @@ footer a { color: var(--gold); text-decoration: none; }
     <h1>You received a CP14 — is this really what you owe, and what happens if you can't pay?</h1>
     <div class="direct-answer"><p><strong>The short answer:</strong> A CP14 is the IRS's opening notice that your account shows a balance due. It is not a final demand, not a levy, and not a lien. You have 21 days to respond — and you have more options than you think, including payment plans, penalty abatement, and disputing the amount if you believe it's wrong.</p></div>
     <div class="deadline-badge">⏱ Response deadline: 21 days from the date printed on your notice (not the date you received it)</div>
+    <div>
+      <a href="#free-review" class="hero-cta">Get My Free CP14 Review &rarr;</a>
+      <div class="hero-cta-sub">Takes 2 minutes. If you can safely handle this yourself, Romeo will tell you that for free.</div>
+    </div>
   </div>
 </section>
 <div class="notice-body">
+
+<!-- ON-PAGE QUALIFIER FORM -->
+<div class="kw-form-section" id="free-review">
+  <div class="kw-form-head">
+    <span class="tag">Free CP14 Review — 2 Minutes</span>
+    <h2>Before you pay — make sure the number is right and pick the smartest way to handle it</h2>
+    <p>Most CP14s can be handled without hiring anyone, and Romeo will tell you exactly that if it's true for you. Where he earns his fee: balances you can't pay, penalties that can come off, and numbers that don't match your return.</p>
+  </div>
+  <div id="kw-form-wrap">
+    <div class="kw-form-grid">
+      <div class="kw-field"><label>First Name *</label><input id="kw-first" type="text" placeholder="Jane"></div>
+      <div class="kw-field"><label>Last Name *</label><input id="kw-last" type="text" placeholder="Smith"></div>
+    </div>
+    <div class="kw-form-grid">
+      <div class="kw-field"><label>Phone Number *</label><input id="kw-phone" type="tel" placeholder="(000) 000-0000"></div>
+      <div class="kw-field"><label>Email *</label><input id="kw-email" type="email" placeholder="jane@example.com"></div>
+    </div>
+    <div class="kw-form-grid">
+      <div class="kw-field">
+        <label>What amount is on the notice *</label>
+        <select id="kw-q1">
+          <option value="">Select one</option>
+          <option value="Under $2,000">Under $2,000</option>
+          <option value="$2,000 - $10,000">$2,000 - $10,000</option>
+          <option value="$10,000 - $30,000">$10,000 - $30,000</option>
+          <option value="Over $30,000">Over $30,000</option>
+          <option value="Not sure">Not sure</option>
+        </select>
+      </div>
+      <div class="kw-field">
+        <label>Can you pay it *</label>
+        <select id="kw-q2">
+          <option value="">Select one</option>
+          <option value="Yes, in full">Yes, in full</option>
+          <option value="Over time, in payments">Over time, in payments</option>
+          <option value="I cannot pay this">I cannot pay this</option>
+          <option value="I disagree with the amount">I disagree with the amount</option>
+        </select>
+      </div>
+    </div>
+    <div class="kw-form-grid">
+      <div class="kw-field">
+        <label>Is this your first IRS notice *</label>
+        <select id="kw-q3">
+          <option value="">Select one</option>
+          <option value="Yes, first one ever">Yes, first one ever</option>
+          <option value="First for this tax year">First for this tax year</option>
+          <option value="No, I have received others">No, I have received others</option>
+          <option value="Not sure">Not sure</option>
+        </select>
+      </div>
+    </div>
+    <div class="kw-field kw-field-full">
+      <label>Anything else Romeo should know? (optional)</label>
+      <textarea id="kw-details" placeholder="Example: The notice says $6,400 but my return showed $4,100..."></textarea>
+    </div>
+    <div id="kw-form-status" class="kw-form-status"></div>
+    <button onclick="submitNoticeForm()" id="kw-submit-btn" class="kw-submit-btn">Get My Free CP14 Review &rarr;</button>
+    <p class="kw-form-note">Romeo personally reviews every submission and responds directly &mdash; usually within one business day.</p>
+    <div class="kw-trust-row">
+      <div class="kw-trust-item">&#128274; Your info is never sold or shared</div>
+      <div class="kw-trust-item">&#128100; Reviewed personally by a former IRS auditor</div>
+      <div class="kw-trust-item">&#10003; No obligation, no pressure &mdash; honest answers include "you don't need us"</div>
+    </div>
+  </div>
+</div>
+
 
   <div class="section">
     <h2>What a CP14 actually is</h2>
@@ -316,7 +419,7 @@ footer a { color: var(--gold); text-decoration: none; }
   
 <div style="margin:3rem 0;padding:1.6rem 1.8rem;background:rgba(201,168,76,0.07);border:1px solid #d9cdb8;border-left:4px solid #c9a84c;border-radius:0 6px 6px 0">
   <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.55rem;font-weight:700;color:#1a1410;margin:0 0 0.75rem;border:none;padding:0">Sources, and how this guide was researched</h2>
-  <p style="font-size:15px;color:#4a3f32;line-height:1.7;margin:0 0 0.75rem">This guide was written by Romeo Razi, CPA &mdash; a former IRS Tax Examiner in the Individual &amp; Employment Tax Division who handled these situations from the government's side before representing taxpayers in 15+ years of private practice (10,000+ returns). The deadlines and penalty mechanics come from the IRS primary sources below:</p>
+  <p style="font-size:15px;color:#4a3f32;line-height:1.7;margin:0 0 0.75rem">This guide was written by Romeo Razi, CPA &mdash; a former IRS auditor &mdash; official IRS title: Tax Examiner, Individual &amp; Employment Tax Division &mdash; who handled these situations from the government's side before representing taxpayers in 15+ years of private practice (10,000+ returns). The deadlines and penalty mechanics come from the IRS primary sources below:</p>
   <ul style="font-size:15px;color:#4a3f32;line-height:1.7;padding-left:1.25rem;margin:0 0 0.75rem">
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/individuals/understanding-your-cp14-notice" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Understanding your CP14 notice</a> &mdash; the IRS's official CP14 page</li>
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/payments/failure-to-pay-penalty" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Failure to Pay penalty</a> &mdash; the 0.5%/month penalty accruing on a CP14 balance</li>
@@ -347,7 +450,7 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
   <div class="romeo-info">
     <div class="romeo-name">Romeo Razi, CPA</div>
-    <div class="romeo-title">Former IRS Tax Examiner (Individual &amp; Employment Tax Division) &middot; CPA &middot; Featured in MarketWatch, U.S. News &amp; World Report, Realtor</div>
+    <div class="romeo-title">Former IRS Auditor (official IRS title: Tax Examiner, Individual &amp; Employment Tax Division) &middot; CPA &middot; Featured in MarketWatch, U.S. News &amp; World Report, Realtor</div>
     <div class="romeo-bio">Romeo conducted face-to-face audits at the IRS across sole proprietors to mid-sized businesses, worked on worker reclassification audits with the Department of Labor, and prepared disputed returns for Tax Court and Appeals. He founded <a href="https://taxedright.com" target="_blank" rel="noopener" style="color:var(--gold-dim)">Taxed Right LLC</a> in 2015 to put that insider knowledge to work for taxpayers.</div>
   </div>
 </div>
@@ -410,12 +513,69 @@ footer a { color: var(--gold); text-decoration: none; }
 <div class="cta-box">
   <h2>Received a CP14? Don't pay until you know what you're actually looking at.</h2>
   <p>Romeo spent years inside the IRS and knows the full range of options — penalty abatement, payment plans, and when to push back on the number itself. The first step is making sure the amount is even right.</p>
-  <a href="/#contact" class="cta-btn">Get a Free Case Review →</a>
+  <a href="#free-review" class="cta-btn">Get a Free Case Review →</a>
 </div>
 </div>
 <footer>
   <p>IRS Resolution Service LLC · 9673 Camino Capistrano, Las Vegas, NV · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
-  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice.</p>
+  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice. IRS Resolution Service is a private tax firm and is <strong>not affiliated with, endorsed by, or connected to the Internal Revenue Service</strong> or any government agency.</p>
 </footer>
+<script>
+function getUrlParam(name) {
+  try { return new URLSearchParams(window.location.search).get(name) || ''; } catch(e) { return ''; }
+}
+async function submitNoticeForm() {
+  const first = document.getElementById('kw-first').value.trim();
+  const last  = document.getElementById('kw-last').value.trim();
+  const phone = document.getElementById('kw-phone').value.trim();
+  const email = document.getElementById('kw-email').value.trim();
+  const q1 = document.getElementById('kw-q1').value;
+  const q2 = document.getElementById('kw-q2').value;
+  const q3 = document.getElementById('kw-q3').value;
+  const details = document.getElementById('kw-details').value.trim();
+  if (!first || !last || !phone || !email || !q1 || !q2 || !q3) {
+    showKwFormStatus('Please fill in all required fields.', false);
+    return;
+  }
+  const btn = document.getElementById('kw-submit-btn');
+  btn.disabled = true; btn.textContent = 'Sending\u2026';
+  const utmSource = getUrlParam('utm_source') || 'direct';
+  const utmCampaign = getUrlParam('utm_campaign') || 'cp14';
+  const issue = `[CP14 REVIEW REQUEST]\nAmount on notice: ${q1}\nAbility to pay: ${q2}\nFirst notice?: ${q3}\nAdditional details: ${details || '(none provided)'}\nSource: ${utmSource} / ${utmCampaign}`;
+  try {
+    const res = await fetch('/.netlify/functions/contact-form', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        formType: 'irs',
+        name: first + ' ' + last,
+        phone, email,
+        address: 'Not provided (cp14 notice-page form)',
+        referral: `cp14 page (${utmSource} / ${utmCampaign})`,
+        issue
+      })
+    });
+    if (!res.ok) throw new Error('Submission failed');
+    if (window.rdt) { rdt('track', 'Lead'); }
+    document.getElementById('kw-form-wrap').innerHTML = `
+      <div style="text-align:center;padding:2rem 0">
+        <div style="font-size:44px;margin-bottom:1rem">&#9989;</div>
+        <h3 style="font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--ink);margin-bottom:.5rem">Got it &mdash; thank you.</h3>
+        <p style="font-size:15px;color:var(--ink-soft);max-width:460px;margin:0 auto">Romeo will personally review your answers and get back to you directly, usually within one business day, with an honest read on your situation &mdash; including whether you can safely handle it yourself.</p>
+      </div>`;
+  } catch(e) {
+    showKwFormStatus('Something went wrong. Please email romeo@taxedright.com directly.', false);
+    btn.disabled = false; btn.innerHTML = 'Get My Free CP14 Review &rarr;';
+  }
+}
+function showKwFormStatus(msg, success) {
+  const el = document.getElementById('kw-form-status');
+  el.textContent = msg;
+  el.style.display = 'block';
+  el.style.background = success ? '#f0fdf4' : '#fdf0f0';
+  el.style.border = success ? '1px solid #b8d9c3' : '1px solid #e8b0b0';
+  el.style.color  = success ? '#1a5c2a' : '#c0392b';
+}
+</script>
 </body>
 </html>
