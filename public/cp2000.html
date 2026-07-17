@@ -225,6 +225,13 @@ footer a { color: var(--gold); text-decoration: none; }
 !function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js?pixel_id=a2_jbjzdvxwri9f",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);rdt('init','a2_jbjzdvxwri9f');rdt('track', 'PageVisit');
 </script>
 <!-- End Reddit Pixel -->
+<script>
+try {
+  var _cid = new URLSearchParams(location.search).get('rdt_cid');
+  if (_cid) sessionStorage.setItem('rdt_cid', _cid);
+} catch(e) {}
+</script>
+
 </head>
 <body>
 <header class="site-header">
@@ -585,6 +592,8 @@ async function submitNoticeForm() {
   }
   const btn = document.getElementById('kw-submit-btn');
   btn.disabled = true; btn.textContent = 'Sending\u2026';
+  const conversionId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : 'cv-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+  const rdtCid = (function(){ try { return sessionStorage.getItem('rdt_cid') || ''; } catch(e){ return ''; } })();
   const utmSource = getUrlParam('utm_source') || 'direct';
   const utmCampaign = getUrlParam('utm_campaign') || 'cp2000';
   const issue = `[CP2000 REVIEW REQUEST]\nProposed amount: ${q1}\nIncome flagged: ${q2}\nNotice date: ${q3}\nAdditional details: ${details || '(none provided)'}\nSource: ${utmSource} / ${utmCampaign}`;
@@ -597,12 +606,15 @@ async function submitNoticeForm() {
         name: first + ' ' + last,
         phone, email,
         address: 'Not provided (cp2000 notice-page form)',
+        conversionId: conversionId,
+        redditClickId: rdtCid,
+        pageUrl: location.href.split('?')[0],
         referral: `cp2000 page (${utmSource} / ${utmCampaign})`,
         issue
       })
     });
     if (!res.ok) throw new Error('Submission failed');
-    if (window.rdt) { rdt('track', 'Lead'); }
+    if (window.rdt) { rdt('track', 'Lead', { conversionId: conversionId }); }
     document.getElementById('kw-form-wrap').innerHTML = `
       <div style="text-align:center;padding:2rem 0">
         <div style="font-size:44px;margin-bottom:1rem">&#9989;</div>
