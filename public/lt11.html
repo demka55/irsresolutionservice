@@ -62,6 +62,13 @@ body { font-family: var(--sans); background: var(--cream); color: var(--ink); fo
 .romeo-avatar { width: 56px; height: 56px; background: var(--gold-muted); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--gold-dim); flex-shrink: 0; }
 .romeo-name { font-weight: 700; font-size: 16px; color: var(--ink); }
 .romeo-title { font-size: 13px; color: var(--ink-muted); }
+.toc { background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem 1.5rem; margin: 1.5rem 0 2rem; }
+.toc-title { font-family: var(--serif); font-size: 1rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.75rem; }
+.toc ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1.5rem; }
+.toc li { margin: 0; }
+.toc a { display: block; font-size: 15px; color: var(--ink-soft); text-decoration: none; padding: 4px 0; border-bottom: 1px dotted transparent; transition: color 0.15s, border-color 0.15s; }
+.toc a:hover { color: var(--gold-dim); border-bottom-color: var(--gold); }
+@media (max-width: 640px) { .toc ul { grid-template-columns: 1fr; } }
 .faq-item { border-bottom: 1px solid var(--cream-dark); padding: 1.25rem 0; }
 .faq-q { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
 .faq-a { font-size: 16px; color: var(--ink-soft); }
@@ -147,7 +154,7 @@ footer a { color: var(--gold); text-decoration: none; }
   "headline": "IRS LT11 Notice: Final Notice Before Levy \u2014 Your 30-Day Window",
   "description": "LT11 is the final notice before the IRS can seize wages, bank accounts, and property. Former IRS Auditor Romeo Razi explains the 30-day CDP hearing window.",
   "url": "https://irsresolutionservice.com/lt11",
-  "dateModified": "2026-07-14",
+  "dateModified": "2026-07-23",
   "author": {
     "@type": "Person",
     "@id": "https://irsresolutionservice.com/#romeo-razi",
@@ -306,7 +313,7 @@ try {
     <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 1.5rem;font-size:14px;color:#7a6e60">
       <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Auditor" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid #c9a84c">
       <span>By <a href="/#founders" style="color:#8a6e2f;font-weight:600;text-decoration:none">Romeo Razi, CPA</a> &mdash; Former IRS Auditor</span>
-      <span>&middot;</span><span>Updated July 14, 2026</span>
+      <span>&middot;</span><span>Updated July 23, 2026</span>
       <span>&middot;</span><span><a href="https://www.irs.gov/individuals/understanding-your-lt11-notice-or-letter-1058" target="_blank" rel="noopener" style="color:#7a6e60;text-decoration:underline;text-underline-offset:3px">Fact-checked against IRS primary sources</a></span>
     </div>
     <div class="notice-code-display">LT11</div>
@@ -314,6 +321,19 @@ try {
     <div class="direct-answer"><p><strong>The short answer:</strong> LT11 (also called Letter 1058) is the Final Notice of Intent to Levy. It gives you exactly 30 days to request a Collection Due Process (CDP) hearing — after which the IRS has full authority to <a href="/irs-wage-garnishment">garnish wages</a>, freeze bank accounts, and seize assets without further warning. This is the most important deadline in IRS collections. Missing it forfeits critical rights.</p>
       <p style="margin:.7rem 0 0;font-size:13px;color:var(--ink-muted)">Don&rsquo;t take our word for it &mdash; cross-check everything on this page against the <a href="https://www.irs.gov/individuals/understanding-your-lt11-notice-or-letter-1058" target="_blank" rel="noopener" style="color:var(--gold-dim,#8a6e2f);font-weight:600">IRS&rsquo;s official LT11 page &rarr;</a></p></div>
     <div class="deadline-badge">⏱ ⚠ CRITICAL: 30-day deadline from the notice date — not the date you received it. This is a statutory, non-negotiable window.</div>
+    <nav class="toc" aria-label="Table of contents">
+  <div class="toc-title">On this page</div>
+  <ul>
+    <li><a href="#sec-different">Why LT11 is different</a></li>
+    <li><a href="#sec-rulings">Recent rulings on this deadline (2025)</a></li>
+    <li><a href="#sec-cdp">What a CDP hearing actually does</a></li>
+    <li><a href="#sec-howto">How to file, step by step</a></li>
+    <li><a href="#sec-atcdp">What happens at the hearing</a></li>
+    <li><a href="#sec-missed">If you miss the 30-day deadline</a></li>
+    <li><a href="#sec-form12153">How to fill out Form 12153</a></li>
+    <li><a href="#sec-faq">FAQ</a></li>
+  </ul>
+</nav>
     <div>
       <a href="#free-review" class="hero-cta">Check My LT11 Deadline &mdash; Free &rarr;</a>
       <div class="hero-cta-sub">Takes 2 minutes. Filing the hearing request on time pauses collection &mdash; Romeo tells you honestly if your window is still open.</div>
@@ -391,7 +411,7 @@ try {
 </div>
 
 
-  <div class="section">
+  <div class="section" id="sec-different">
     <h2>Why LT11 is different from every notice that came before it</h2>
     <p>Every notice before LT11 — the CP14, CP501, CP503, CP504 — was the IRS asking you to pay and warning you of consequences. LT11 is different. It is the IRS fulfilling its legal obligation to notify you of imminent enforcement and inform you of your rights before that enforcement begins.</p>
     <p>The reason this matters: by law, the IRS cannot levy wages, bank accounts, or most other assets until they've issued this Final Notice and you've had the opportunity to request a Collection Due Process hearing. Once the 30-day window closes without a timely CDP request, that legal protection disappears entirely.</p>
@@ -400,7 +420,28 @@ try {
       <p>"The LT11 is the notice I tell people to treat differently than everything else. The earlier notices gave you time to figure things out. This one has a hard statutory deadline. If you miss the 30-day window for a CDP hearing, you lose your right to appeal the levy itself to the IRS's Independent Office of Appeals — and more importantly, you lose the ability to take the IRS to Tax Court over the collection action. That's a real and permanent loss of options."</p>
     </div>
   </div>
-  <div class="section">
+  <div class="section" id="sec-rulings">
+    <h2>Recent rulings on the exact deadline this notice triggers (2025–2026)</h2>
+    <p>Nearly every LT11 page repeats the same line: the 30-day CDP deadline is strict, so file on time. What almost none explain is that this specific deadline has been through the Supreme Court and back down to the Tax Court in the last few years — and the most recent chapter, decided in 2025, is a cautionary tale worth knowing before you assume you have any flexibility.</p>
+
+    <h3>Boechler v. Commissioner — the case that created "equitable tolling" for this exact deadline</h3>
+    <p>In 2022, a unanimous Supreme Court held in <em>Boechler, P.C. v. Commissioner</em>, 596 U.S. 199 (2022), that the 30-day deadline in IRC § 6330(d)(1) — the same statute that governs the CDP hearing right an LT11 triggers — is not jurisdictional, and can in rare cases be equitably tolled (extended) rather than being an absolute bar. The Court sent the case back to the Tax Court to decide whether the firm actually qualified for that tolling on its specific facts.</p>
+
+    <h3>What happened on remand in 2025 — the taxpayer who won the principle still lost the case</h3>
+    <p>In June 2025, the Tax Court held the trial on remand. The sole witness was the firm's own attorney, who testified she had miscalculated the deadline while managing a heavy caseload. The court found that missed the mark on both required elements — diligence in pursuing the appeal, and truly extraordinary circumstances beyond her control — and ruled against the firm that had won the underlying Supreme Court case. Being busy, or making a scheduling mistake, was not enough.</p>
+    <div class="insider">
+      <div class="insider-label">Why this matters if you're close to your LT11 deadline</div>
+      <p>This is the single most important practical lesson in current CDP litigation: equitable tolling is real, but the bar is very high, and the taxpayer who established the legal right to it at the Supreme Court still couldn't clear that bar two years later. Don't file late and assume a good excuse will save you — a busy schedule, an oversight, or "I meant to get to it" will almost certainly not qualify, based on how the courts are actually applying this in 2025.</p>
+    </div>
+
+    <h3>Commissioner v. Zuch (2025) — a second reason not to let your case run past the levy itself</h3>
+    <p>Separately, the Supreme Court held in <em>Commissioner v. Zuch</em>, 605 U.S. 422 (2025), that the Tax Court loses jurisdiction over a CDP case once the IRS is no longer pursuing the levy that triggered it — for example, if the IRS satisfies the balance through refund offsets while your case is pending. That means even a properly and timely filed CDP request can be mooted out from under you before a judge rules on the underlying dispute, if the balance disappears in the meantime.</p>
+    <div class="warning-box">
+      <p>&#9888; The combined lesson from both 2025 developments: file your Form 12153 immediately and correctly — don't count on tolling if you're late, and if you're genuinely disputing the amount you owe (not just your ability to pay), consider a protective refund claim alongside the CDP request so the IRS can't moot your case by quietly offsetting it away.</p>
+    </div>
+  </div>
+
+  <div class="section" id="sec-cdp">
     <h2>What the Collection Due Process (CDP) hearing actually does</h2>
     <p>Filing a timely CDP request (using Form 12153) does several things simultaneously:</p>
     <ul>
@@ -414,7 +455,7 @@ try {
       <p>⚠ One thing the CDP request does not do: it does not eliminate the debt and it does not guarantee a favorable outcome. What it does is buy time, put you in front of a neutral decision-maker, and preserve every legal option you have. That is worth a great deal — which is why not filing the request is almost always the wrong choice.</p>
     </div>
   </div>
-  <div class="section">
+  <div class="section" id="sec-howto">
     <h2>How to file a CDP hearing request — step by step</h2>
     <ol class="step-list">
       <li><span><strong>Act immediately.</strong> The 30-day clock starts on the notice date, not the date you received the letter. Mail takes days. If you're reading this close to the deadline, file today.</span></li>
@@ -423,7 +464,7 @@ try {
       <li><span><strong>Follow up.</strong> The IRS is required to acknowledge receipt of your CDP request and assign a case to the Independent Office of Appeals. This can take several months. While it's pending, collection is legally stayed.</span></li>
     </ol>
   </div>
-  <div class="section">
+  <div class="section" id="sec-atcdp">
     <h2>What happens at the CDP hearing</h2>
     <p>A CDP hearing is a conference with an IRS Appeals Officer — it's not a courtroom proceeding. It typically happens by phone or by correspondence (rarely in person). You present your proposed resolution, the appeals officer evaluates your financial situation and the IRS's procedures, and a determination is issued.</p>
     <p>The Appeals Officer can accept your proposed installment agreement, refer your Offer in Compromise for formal review, grant CNC status, or uphold the levy. If they uphold the levy and you disagree, you can petition Tax Court within 30 days of their determination.</p>
@@ -432,12 +473,12 @@ try {
       <p>"The CDP hearing is genuinely useful — Appeals Officers have more flexibility than collection agents and they're specifically tasked with finding a resolution. The key is going in with a real proposal backed by documentation. 'I can't pay' isn't a proposal. 'Here's my income, here's my expenses, here are my assets, and here's what a realistic installment plan looks like' — that's a proposal they can work with."</p>
     </div>
   </div>
-  <div class="section">
+  <div class="section" id="sec-missed">
     <h2>What if you miss the 30-day deadline?</h2>
     <p>If you miss the CDP deadline, you're not completely out of options — but you lose the most powerful ones. You can request an Equivalent Hearing within one year of the LT11 date. This provides a similar conference with Appeals, but critically, it does not stop levy action while pending, and you cannot petition Tax Court if the determination goes against you.</p>
     <p>You can still pursue an installment agreement, OIC, or CNC status directly through the collection division. But you've lost the automatic stay on levy and the judicial review pathway.</p>
   </div>
-  <div class="section">
+  <div class="section" id="sec-form12153">
     <h2>Exactly how to fill out Form 12153 — the CDP hearing request</h2>
 
 <p>Form 12153 (Request for a Collection Due Process or Equivalent Hearing) is a one-page form but the way you complete it determines what you can argue at the hearing. Filling it out incorrectly — or leaving the reason blank — severely limits your CDP rights.</p>
@@ -486,10 +527,13 @@ try {
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/individuals/understanding-your-lt11-notice-or-letter-1058" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Understanding your LT11 notice</a> &mdash; the official Final Notice of Intent to Levy page</li>
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/forms-pubs/about-form-12153" target="_blank" rel="noopener" style="color:#8a6e2f">Form 12153 — Request for a CDP Hearing</a> &mdash; the 30-day Collection Due Process hearing right</li>
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/businesses/small-businesses-self-employed/what-is-a-levy" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: What is a levy?</a> &mdash; levy authority and release standards</li>
+    <li style="margin-bottom:6px"><a href="https://en.wikipedia.org/wiki/Boechler_v._Commissioner" target="_blank" rel="noopener" style="color:#8a6e2f">Boechler, P.C. v. Commissioner, 596 U.S. 199 (2022)</a> &mdash; established equitable tolling for the 30-day CDP deadline</li>
+    <li style="margin-bottom:6px"><a href="https://www.thetaxadviser.com/issues/2025/oct/equitable-tolling-does-not-apply-to-excuse-late-filing-of-petition/" target="_blank" rel="noopener" style="color:#8a6e2f">The Tax Adviser: Equitable tolling denied on remand (2025)</a> &mdash; the Tax Court's June 2025 ruling against Boechler on the facts</li>
+    <li style="margin-bottom:6px"><a href="https://en.wikipedia.org/wiki/Commissioner_v._Zuch" target="_blank" rel="noopener" style="color:#8a6e2f">Commissioner v. Zuch, 605 U.S. 422 (2025)</a> &mdash; Supreme Court decision narrowing Tax Court jurisdiction once a levy is no longer being pursued</li>
   </ul>
   <p style="font-size:14px;color:#7a6e60;line-height:1.65;margin:0">Every figure and deadline above was checked against these primary sources at the time of the last update &mdash; not against secondary coverage. Tax rules change; confirm current guidance at the linked source (or <a href="/#contact" style="color:#8a6e2f">ask us directly</a>) before acting.</p>
 </div>
-<h2>Frequently asked questions about LT11</h2>
+<h2 id="sec-faq">Frequently asked questions about LT11</h2>
     <div class="faq-item">
       <div class="faq-q">I have an existing installment agreement — why did I get an LT11?</div>
       <div class="faq-a">Your installment agreement likely defaulted — a missed payment, a new tax year balance that wasn't included, or unfiled returns. The LT11 will still be issued. You should contact the IRS immediately about reinstating the agreement; an active IA stops levy action.</div>
