@@ -62,6 +62,13 @@ body { font-family: var(--sans); background: var(--cream); color: var(--ink); fo
 .romeo-avatar { width: 56px; height: 56px; background: var(--gold-muted); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--gold-dim); flex-shrink: 0; }
 .romeo-name { font-weight: 700; font-size: 16px; color: var(--ink); }
 .romeo-title { font-size: 13px; color: var(--ink-muted); }
+.toc { background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem 1.5rem; margin: 1.5rem 0 2rem; }
+.toc-title { font-family: var(--serif); font-size: 1rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.75rem; }
+.toc ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1.5rem; }
+.toc li { margin: 0; }
+.toc a { display: block; font-size: 15px; color: var(--ink-soft); text-decoration: none; padding: 4px 0; border-bottom: 1px dotted transparent; transition: color 0.15s, border-color 0.15s; }
+.toc a:hover { color: var(--gold-dim); border-bottom-color: var(--gold); }
+@media (max-width: 640px) { .toc ul { grid-template-columns: 1fr; } }
 .faq-item { border-bottom: 1px solid var(--cream-dark); padding: 1.25rem 0; }
 .faq-q { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
 .faq-a { font-size: 16px; color: var(--ink-soft); }
@@ -147,7 +154,7 @@ footer a { color: var(--gold); text-decoration: none; }
   "headline": "IRS CP504 Notice: What It Really Means | Former IRS Auditor",
   "description": "A CP504 is serious but it is NOT the last notice before the IRS can levy wages or bank accounts. Former IRS Auditor Romeo Razi explains what CP504 actually authorizes.",
   "url": "https://irsresolutionservice.com/cp504",
-  "dateModified": "2026-07-14",
+  "dateModified": "2026-07-23",
   "author": {
     "@type": "Person",
     "@id": "https://irsresolutionservice.com/#romeo-razi",
@@ -298,7 +305,7 @@ try {
     <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 1.5rem;font-size:14px;color:#7a6e60">
       <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Auditor" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid #c9a84c">
       <span>By <a href="/#founders" style="color:#8a6e2f;font-weight:600;text-decoration:none">Romeo Razi, CPA</a> &mdash; Former IRS Auditor</span>
-      <span>&middot;</span><span>Updated July 14, 2026</span>
+      <span>&middot;</span><span>Updated July 23, 2026</span>
       <span>&middot;</span><span><a href="https://www.irs.gov/individuals/understanding-your-cp504-notice" target="_blank" rel="noopener" style="color:#7a6e60;text-decoration:underline;text-underline-offset:3px">Fact-checked against IRS primary sources</a></span>
     </div>
     <div class="notice-code-display">CP504</div>
@@ -306,6 +313,18 @@ try {
     <div class="direct-answer"><p><strong>The short answer:</strong> A CP504 is a serious escalation notice — it means the IRS intends to levy your state tax refund and may begin other collection actions. But it is <em>not</em> the final notice before they can take your wages or bank account. You still have a critical notice coming (LT11) and important rights to exercise before enforcement reaches that stage.</p>
       <p style="margin:.7rem 0 0;font-size:13px;color:var(--ink-muted)">Don&rsquo;t take our word for it &mdash; cross-check everything on this page against the <a href="https://www.irs.gov/individuals/understanding-your-cp504-notice" target="_blank" rel="noopener" style="color:var(--gold-dim,#8a6e2f);font-weight:600">IRS&rsquo;s official CP504 page &rarr;</a></p></div>
     <div class="deadline-badge">⏱ Response deadline: 30 days — act immediately, this notice means escalation is imminent</div>
+    <nav class="toc" aria-label="Table of contents">
+  <div class="toc-title">On this page</div>
+  <ul>
+    <li><a href="#sec-authorizes">What a CP504 actually authorizes</a></li>
+    <li><a href="#sec-rulings">Recent court rulings (2025–2026)</a></li>
+    <li><a href="#sec-sequence">The collection sequence that led here</a></li>
+    <li><a href="#sec-whattodo">What to do the moment you receive it</a></li>
+    <li><a href="#sec-resolution">Resolution options</a></li>
+    <li><a href="#sec-fplp">The Federal Payment Levy Program</a></li>
+    <li><a href="#sec-faq">FAQ</a></li>
+  </ul>
+</nav>
     <div>
       <a href="#free-review" class="hero-cta">See My CP504 Options &mdash; Free &rarr;</a>
       <div class="hero-cta-sub">Takes 2 minutes. Romeo tells you honestly which resolution options fit your numbers &mdash; before the final notice closes doors.</div>
@@ -381,7 +400,7 @@ try {
 </div>
 
 
-  <div class="section">
+  <div class="section" id="sec-authorizes">
     <h2>What a CP504 actually authorizes — and what it doesn't</h2>
     <p>The CP504 is one of the most misunderstood notices the IRS sends. Most taxpayers who receive it believe they're one step from having their <a href="/irs-wage-garnishment">wages garnished</a> or their bank account frozen. That's not accurate — and understanding the distinction matters enormously for how you respond.</p>
     <p>What a CP504 does authorize: the IRS can immediately levy your <strong>state tax refund</strong> to offset your federal debt. They can also begin levying certain federal payments through the Federal Payment Levy Program (FPLP) — Social Security benefits, federal contractor payments, and similar federal sources.</p>
@@ -391,7 +410,31 @@ try {
       <p>"The CP504 scares people into thinking it's over. It's not. It's the IRS applying real pressure, but there's still a critical step between here and them touching your paycheck or bank account. That step — the LT11 — comes with rights that can stop enforcement entirely if you use them correctly."</p>
     </div>
   </div>
-  <div class="section">
+
+  <div class="section" id="sec-rulings">
+    <h2>Recent court rulings that change how a CP504/LT11 case can be fought (2025–2026)</h2>
+    <p>Most CP504 pages online repeat the same three FAQs. What almost none of them cover is that the U.S. Supreme Court just narrowed taxpayers' rights in exactly the proceeding CP504 leads to — the Collection Due Process (CDP) hearing. If you're relying on a CDP hearing as your safety net after an LT11, you need to understand this ruling before you get there.</p>
+
+    <h3>Commissioner v. Zuch (2025) — the Supreme Court just narrowed CDP hearing rights</h3>
+    <p>On June 12, 2025, the Supreme Court decided <em>Commissioner v. Zuch</em>, 605 U.S. 422 (2025) — a 7–2 decision written by Justice Barrett — holding that the Tax Court lacks jurisdiction to resolve disputes between a taxpayer and the IRS once the IRS is no longer pursuing the levy that triggered the case.</p>
+    <p>The facts matter for anyone at the CP504/LT11 stage: Jennifer Zuch requested a CDP hearing to contest a levy, arguing the IRS had misapplied her payments and that she didn't actually owe the balance. While her case was pending in Tax Court, the IRS simply applied her refunds from later years to the disputed 2010 liability until the balance hit zero — then moved to dismiss the case as moot, since there was no levy left to stop. The Supreme Court agreed with the IRS. Writing for the majority, Justice Barrett explained that a taxpayer cannot use a CDP appeal to resolve tax disputes that no longer have any connection to an ongoing levy — and that a challenge to the underlying tax liability is only a factor the Tax Court weighs while deciding whether the levy itself may proceed, not an independent claim that survives once the levy is off the table.</p>
+
+    <div class="insider">
+      <div class="insider-label">Why this matters at the CP504/LT11 stage</div>
+      <p>The lesson isn't "CDP hearings are worthless" — it's that <strong>the IRS can moot your case by satisfying the balance through offsets while your CDP appeal is still pending</strong>, cutting off your review before a judge ever rules on whether the underlying tax was correct. Tax practitioners are already changing how they respond to this: file protective refund claims when you're disputing the underlying liability in a CDP case, so you aren't time-barred if the IRS offsets your refunds and moots the Tax Court proceeding. If your CP504 balance is one you actually dispute (not just can't pay), get that protective claim filed before you're relying on the CDP hearing alone — <em>Zuch</em> shows the IRS can end that hearing out from under you.</p>
+    </div>
+    <p>Lower courts are already applying this: in December 2025, the Tax Court dismissed a combined lien/levy CDP case after the Commissioner cited <em>Zuch</em> directly, because the Appeals hearing had concluded with an Offer in Compromise the taxpayer had proposed, and once the Commissioner disclaimed further levy action there was nothing left for the Tax Court to decide.</p>
+
+    <h3>Passport certification tied to the same collection track (IRC § 7345)</h3>
+    <p>If your balance is large enough, the CP504/LT11 track can intersect with a separate enforcement lever: passport certification under the FAST Act. The D.C. Circuit affirmed in early 2025 that the IRS's certification of a taxpayer's debt as "seriously delinquent" was not erroneous where every statutory element under IRC § 7345(b)(1) was satisfied — and confirmed that neither the Tax Court nor the appellate court reviews the underlying tax computation in that proceeding, only whether the certification elements were met. A March 2026 federal district court decision reached a similar procedural result, rejecting a taxpayer's attempt to challenge a passport revocation inside an active government collection lawsuit, since IRC § 7345(e)(1) requires that challenge to be brought as its own civil action, not raised as a defense elsewhere.</p>
+    <p>For 2026, the seriously delinquent tax debt threshold is more than $66,000 including tax, penalties, and interest, and certification requires that the IRS has already filed a Notice of Federal Tax Lien with appeal rights exhausted, or issued a levy — meaning a CP504 alone doesn't trigger it, but the enforcement track it starts can lead there if the case escalates and the balance is above threshold.</p>
+
+    <div class="warning-box">
+      <p>⚠ These two lines of cases point to the same practical takeaway: once the IRS's collection machinery is in motion (CP504 → LT11 → CDP hearing, or lien/levy → passport certification), the courts are consistently siding with the IRS on procedure and jurisdiction, not on your underlying liability. The leverage is earlier — getting ahead of the CP504 before the LT11 issues, and challenging the liability itself (not just the collection mechanics) while there's still something a court can rule on.</p>
+    </div>
+  </div>
+
+  <div class="section" id="sec-sequence">
     <h2>The collection sequence that led to your CP504</h2>
     <p>The CP504 doesn't arrive out of nowhere. By this point, the IRS has typically sent:</p>
     <ul>
@@ -402,7 +445,7 @@ try {
     </ul>
     <p>After CP504, if you still don't respond, the IRS sends the LT11 or Letter 1058 — the Final Notice of Intent to Levy. That's when the 30-day clock for your Collection Due Process (CDP) hearing rights begins. Missing that deadline is where people lose the most important options.</p>
   </div>
-  <div class="section">
+  <div class="section" id="sec-whattodo">
     <h2>What to do the moment you receive a CP504</h2>
     <ol class="step-list">
       <li><span><strong>Do not ignore it.</strong> Every day you wait narrows your options. The LT11 may already be in process.</span></li>
@@ -414,7 +457,7 @@ try {
       <p>⚠ If you're receiving Social Security retirement or disability benefits, act immediately. The Federal Payment Levy Program can begin taking 15% of your Social Security payments as soon as the CP504 is issued, without a separate warning.</p>
     </div>
   </div>
-  <div class="section">
+  <div class="section" id="sec-resolution">
     <h2>Resolution options at the CP504 stage</h2>
     <h3>Installment Agreement</h3>
     <p>If you can pay over time, getting an installment agreement in place stops active levy action. You must be current on all required tax return filings to qualify. Balances up to $50,000 can often be handled through the IRS's online payment agreement tool.</p>
@@ -425,7 +468,7 @@ try {
     <h3>Penalty Abatement</h3>
     <p>Even at the CP504 stage, penalty abatement is worth pursuing. First Time Abatement can eliminate failure-to-pay and failure-to-file penalties for taxpayers with a clean prior history. Reasonable cause abatement is available if you can document why you couldn't comply (illness, natural disaster, erroneous advice, etc.).</p>
   </div>
-  <div class="section">
+  <div class="section" id="sec-fplp">
     <h2>What the IRS can actually take with a CP504 — the Federal Payment Levy Program</h2>
 
 <p>The CP504 triggers access to the <strong>Federal Payment Levy Program (FPLP)</strong> — the automated system the IRS uses to levy certain federal payments without needing a revenue officer. This is separate from the traditional levy process and operates automatically once your account qualifies.</p>
@@ -466,10 +509,17 @@ try {
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/individuals/understanding-your-cp504-notice" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Understanding your CP504 notice</a> &mdash; the IRS's official CP504 page</li>
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/businesses/small-businesses-self-employed/what-is-a-levy" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: What is a levy?</a> &mdash; the levy authority and the required final-notice sequence</li>
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/forms-pubs/about-form-12153" target="_blank" rel="noopener" style="color:#8a6e2f">Form 12153 — Request for a CDP Hearing</a> &mdash; the hearing right that attaches at the LT11/Letter 1058 stage</li>
+    <li style="margin-bottom:6px"><a href="https://en.wikipedia.org/wiki/Commissioner_v._Zuch" target="_blank" rel="noopener" style="color:#8a6e2f">Commissioner v. Zuch, 605 U.S. 422 (2025)</a> &mdash; Supreme Court decision narrowing Tax Court jurisdiction in CDP levy disputes, decided June 12, 2025</li>
+    <li style="margin-bottom:6px"><a href="https://www.americanbar.org/groups/taxation/resources/tax-times/2025-spring/supreme-courts-ruling-zuch-v-commissioner/" target="_blank" rel="noopener" style="color:#8a6e2f">American Bar Association: analysis of Zuch v. Commissioner</a> &mdash; practitioner breakdown of the ruling's practical impact</li>
+    <li style="margin-bottom:6px"><a href="https://www.lippes.com/insights/supreme-court-undermines-taxpayers-due-process-rights-2877" target="_blank" rel="noopener" style="color:#8a6e2f">Lippes Mathias: "Supreme Court Undermines Taxpayers' Due Process Rights"</a> &mdash; practitioner guidance on protective refund claims post-Zuch</li>
+    <li style="margin-bottom:6px"><a href="https://www.taxnotes.com/research/federal/court-documents/court-opinions-and-orders/tax-court-cites-supreme-courts-zuch-dismissal-cdp-case/7tc3l" target="_blank" rel="noopener" style="color:#8a6e2f">Tax Notes: Tax Court cites Zuch in December 2025 CDP dismissal</a> &mdash; first major lower-court application of the ruling</li>
+    <li style="margin-bottom:6px"><a href="https://www.thetaxadviser.com/issues/2025/mar/certification-of-seriously-delinquent-tax-debt-not-erroneous/" target="_blank" rel="noopener" style="color:#8a6e2f">The Tax Adviser: D.C. Circuit on IRC §7345 passport certification</a> &mdash; Adams v. Commissioner appellate decision, March 2025</li>
+    <li style="margin-bottom:6px"><a href="https://www.currentfederaltaxdevelopments.com/blog/2026/3/4/passport-revocation-and-tax-delinquency-a-review-of-united-states-v-richard-h-hatch-jr" target="_blank" rel="noopener" style="color:#8a6e2f">Current Federal Tax Developments: United States v. Hatch (D.R.I. Mar. 2026)</a> &mdash; passport revocation procedural ruling</li>
+    <li style="margin-bottom:6px"><a href="https://www.irs.gov/businesses/small-businesses-self-employed/revocation-or-denial-of-passport-in-case-of-certain-unpaid-taxes" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Revocation or Denial of Passport (IRC § 7345)</a> &mdash; official page with the current inflation-adjusted threshold</li>
   </ul>
   <p style="font-size:14px;color:#7a6e60;line-height:1.65;margin:0">Every figure and deadline above was checked against these primary sources at the time of the last update &mdash; not against secondary coverage. Tax rules change; confirm current guidance at the linked source (or <a href="/#contact" style="color:#8a6e2f">ask us directly</a>) before acting.</p>
 </div>
-<h2>Frequently asked questions about CP504</h2>
+<h2 id="sec-faq">Frequently asked questions about CP504</h2>
     <div class="faq-item">
       <div class="faq-q">Can the IRS take my paycheck because of a CP504?</div>
       <div class="faq-a">Not yet. <a href="/irs-wage-garnishment">Wage garnishment</a> requires the IRS to first issue an LT11 or Letter 1058 (Final Notice of Intent to Levy) and give you 30 days. That notice triggers your right to a Collection Due Process hearing, which temporarily stops the levy while your case is reviewed. The CP504 alone does not give the IRS authority to touch your wages from a private employer.</div>

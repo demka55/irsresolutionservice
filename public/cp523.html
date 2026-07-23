@@ -62,6 +62,13 @@ body { font-family: var(--sans); background: var(--cream); color: var(--ink); fo
 .romeo-avatar { width: 56px; height: 56px; background: var(--gold-muted); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--gold-dim); flex-shrink: 0; }
 .romeo-name { font-weight: 700; font-size: 16px; color: var(--ink); }
 .romeo-title { font-size: 13px; color: var(--ink-muted); }
+.toc { background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem 1.5rem; margin: 1.5rem 0 2rem; }
+.toc-title { font-family: var(--serif); font-size: 1rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.75rem; }
+.toc ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1.5rem; }
+.toc li { margin: 0; }
+.toc a { display: block; font-size: 15px; color: var(--ink-soft); text-decoration: none; padding: 4px 0; border-bottom: 1px dotted transparent; transition: color 0.15s, border-color 0.15s; }
+.toc a:hover { color: var(--gold-dim); border-bottom-color: var(--gold); }
+@media (max-width: 640px) { .toc ul { grid-template-columns: 1fr; } }
 .faq-item { border-bottom: 1px solid var(--cream-dark); padding: 1.25rem 0; }
 .faq-q { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
 .faq-a { font-size: 16px; color: var(--ink-soft); }
@@ -147,7 +154,7 @@ footer a { color: var(--gold); text-decoration: none; }
   "headline": "IRS CP523: Payment Plan Termination Notice \u2014 What to Do",
   "description": "A CP523 means your installment agreement is about to be terminated. Former IRS Auditor Romeo Razi explains how to reinstate it before your full balance becomes due.",
   "url": "https://irsresolutionservice.com/cp523",
-  "dateModified": "2026-07-14",
+  "dateModified": "2026-07-23",
   "author": {
     "@type": "Person",
     "@id": "https://irsresolutionservice.com/#romeo-razi",
@@ -306,7 +313,7 @@ try {
     <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 1.5rem;font-size:14px;color:#7a6e60">
       <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Auditor" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid #c9a84c">
       <span>By <a href="/#founders" style="color:#8a6e2f;font-weight:600;text-decoration:none">Romeo Razi, CPA</a> &mdash; Former IRS Auditor</span>
-      <span>&middot;</span><span>Updated July 14, 2026</span>
+      <span>&middot;</span><span>Updated July 23, 2026</span>
       <span>&middot;</span><span><a href="https://www.irs.gov/individuals/understanding-your-cp523-notice" target="_blank" rel="noopener" style="color:#7a6e60;text-decoration:underline;text-underline-offset:3px">Fact-checked against IRS primary sources</a></span>
     </div>
     <div style="background:rgba(201,168,76,0.1);border:1px solid #d9cdb8;border-left:4px solid #c9a84c;border-radius:0 6px 6px 0;padding:1.1rem 1.4rem;margin:0 0 1.5rem">
@@ -318,6 +325,17 @@ try {
     <div class="direct-answer"><p><strong>The short answer:</strong> A CP523 means you've defaulted on your installment agreement — typically by missing a payment, having a new tax balance added that wasn't included, or failing to file a required return. You have approximately 30 days before the IRS terminates the agreement and your full remaining balance becomes immediately due, at which point enforcement action (wages, bank accounts) can resume.</p>
       <p style="margin:.7rem 0 0;font-size:13px;color:var(--ink-muted)">Don&rsquo;t take our word for it &mdash; cross-check everything on this page against the <a href="https://www.irs.gov/individuals/understanding-your-cp523-notice" target="_blank" rel="noopener" style="color:var(--gold-dim,#8a6e2f);font-weight:600">IRS&rsquo;s official CP523 page &rarr;</a></p></div>
     <div class="deadline-badge">⏱ Act within 30 days — once terminated, your full balance is due immediately and levy action can begin</div>
+    <nav class="toc" aria-label="Table of contents">
+  <div class="toc-title">On this page</div>
+  <ul>
+    <li><a href="#sec-cause">What caused your default</a></li>
+    <li><a href="#sec-rulings">CP523 as evidence in court (2025 case)</a></li>
+    <li><a href="#sec-terminated">What happens when terminated</a></li>
+    <li><a href="#sec-respond">How to respond to a CP523</a></li>
+    <li><a href="#sec-reinstate">Reinstate, restructure, or replace</a></li>
+    <li><a href="#sec-faq">FAQ</a></li>
+  </ul>
+</nav>
     <div>
       <a href="#free-review" class="hero-cta">See My CP523 Options &mdash; Free &rarr;</a>
       <div class="hero-cta-sub">Takes 2 minutes. Romeo tells you honestly whether to reinstate, restructure, or replace the plan with something better.</div>
@@ -393,7 +411,19 @@ try {
 </div>
 
 
-  <div class="section">
+  <div class="section" id="sec-rulings">
+    <h2>A 2025 federal case shows how CP523 notice itself becomes evidence in court</h2>
+    <p>Most CP523 guides describe the notice only from the taxpayer's side — what to do when you get one. What they miss is that the CP523 also matters from the government's side: it's the document the IRS and Department of Justice have to prove they sent before they can enforce a lien in federal court, and that fight is happening in real cases right now.</p>
+    <h3>United States v. [taxpayers], D. Minn. (2025) — the CP523 as required proof of notice</h3>
+    <p>In a July 2025 federal district court lawsuit in Minnesota, the government sued to reduce unpaid tax assessments to judgment and force the sale of a taxpayer's real property to satisfy federal tax liens. The taxpayers moved to dismiss, and part of their argument turned on whether the government had properly alleged that the IRS sent the required CP523 notice of intent to terminate the installment agreement before proceeding. In a November 2025 order, the court found that the government's specific allegation — that CP523 letters were sent to the taxpayers' home address by certified mail on a stated date — was sufficient to survive the motion to dismiss.</p>
+    <div class="insider">
+      <div class="insider-label">Why this matters for you</div>
+      <p>This cuts both ways for taxpayers. On one hand, it confirms that certified-mail delivery of a CP523 is treated by courts as adequate notice — so "I never got it" is a harder argument to win than people assume once the government can show a mailing date and address. On the other hand, it also confirms that the CP523's proper issuance is a real, litigated element the government has to establish — meaning if your agreement was terminated and you were never actually sent a CP523 (or it went to a wrong address), that's a legitimate, evidence-based defense worth raising before a lien enforcement suit ever gets that far.</p>
+    </div>
+    <p>The practical lesson: keep your address current with the IRS, and if you're ever served with a lien-foreclosure lawsuit after an installment agreement default, whether and how the CP523 was actually sent is one of the first things worth checking.</p>
+  </div>
+
+  <div class="section" id="sec-cause">
     <h2>What caused your installment agreement to default</h2>
     <p>The most common reasons a CP523 is issued:</p>
     <ul>
@@ -407,12 +437,12 @@ try {
       <p>"The CP523 surprises people because they thought they were handling it. The issue is usually not the missed payment itself — it's that a new tax year came due and they didn't realize it became part of the agreement requirements. The IRS expects you to stay current on everything, not just the old balance. Once people understand what triggered the default, fixing it is usually straightforward."</p>
     </div>
   </div>
-  <div class="section">
+  <div class="section" id="sec-terminated">
     <h2>What happens when an installment agreement is terminated</h2>
     <p>When the IRS terminates your agreement, your full remaining balance — including accrued penalties and interest — becomes immediately due. More importantly, the agreement was serving as a "stay" on active collection. Once terminated, the IRS's ability to levy wages and bank accounts is restored.</p>
     <p>The IRS won't typically levy immediately upon termination — they'll usually issue updated collection notices. But the protection that an active installment agreement provided is gone, and the escalation sequence to LT11 (Final Notice of Intent to Levy) can proceed.</p>
   </div>
-  <div class="section">
+  <div class="section" id="sec-respond">
     <h2>How to respond to a CP523</h2>
     <ol class="step-list">
       <li><span><strong>Identify what caused the default.</strong> Check your IRS Online Account (irs.gov/account) to see your payment history and any new balances. This tells you whether the default was a missed payment, a new tax liability, or an unfiled return.</span></li>
@@ -425,7 +455,7 @@ try {
       <p>⚠ Do not ignore the CP523. The most common mistake is assuming the existing agreement is still in force because autopay hasn't been cancelled. Once the termination is finalized, you're in the same position as someone who never had an agreement — the IRS can levy without additional notice (other than the LT11 they'd issue to restart the formal collection sequence).</p>
     </div>
   </div>
-  <div class="section">
+  <div class="section" id="sec-reinstate">
     <h2>Reinstating vs. restructuring vs. replacing your agreement</h2>
     <h3>Reinstatement</h3>
     <p>If this is your first default and you catch up the missed payment(s) quickly, you can often call the IRS and request reinstatement. The IRS frequently grants this as a one-time courtesy, particularly for agreements that had been in good standing. You may need to provide updated financial information.</p>
@@ -441,10 +471,11 @@ try {
   <ul style="font-size:15px;color:#4a3f32;line-height:1.7;padding-left:1.25rem;margin:0 0 0.75rem">
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/individuals/understanding-your-cp523-notice" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Understanding your CP523 notice</a> &mdash; the official installment-agreement default notice page</li>
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/payments/payment-plans-installment-agreements" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Payment plans and installment agreements</a> &mdash; reinstatement and restructuring options</li>
+    <li style="margin-bottom:6px"><a href="https://www.govinfo.gov/content/pkg/USCOURTS-mnd-0_25-cv-00895/pdf/USCOURTS-mnd-0_25-cv-00895-0.pdf" target="_blank" rel="noopener" style="color:#8a6e2f">United States v. [Defendants], No. 0:25-cv-00895 (D. Minn. Nov. 14, 2025)</a> &mdash; order on CP523 notice sufficiency in a lien-foreclosure suit</li>
   </ul>
   <p style="font-size:14px;color:#7a6e60;line-height:1.65;margin:0">Every figure and deadline above was checked against these primary sources at the time of the last update &mdash; not against secondary coverage. Tax rules change; confirm current guidance at the linked source (or <a href="/#contact" style="color:#8a6e2f">ask us directly</a>) before acting.</p>
 </div>
-<div class="section">
+<div class="section" id="sec-faq">
     <h2>Frequently asked questions about CP523</h2>
     <div class="faq-item">
       <div class="faq-q">I just missed one payment — is my agreement definitely terminated?</div>

@@ -62,6 +62,13 @@ body { font-family: var(--sans); background: var(--cream); color: var(--ink); fo
 .romeo-avatar { width: 56px; height: 56px; background: var(--gold-muted); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--gold-dim); flex-shrink: 0; }
 .romeo-name { font-weight: 700; font-size: 16px; color: var(--ink); }
 .romeo-title { font-size: 13px; color: var(--ink-muted); }
+.toc { background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem 1.5rem; margin: 1.5rem 0 2rem; }
+.toc-title { font-family: var(--serif); font-size: 1rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.75rem; }
+.toc ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1.5rem; }
+.toc li { margin: 0; }
+.toc a { display: block; font-size: 15px; color: var(--ink-soft); text-decoration: none; padding: 4px 0; border-bottom: 1px dotted transparent; transition: color 0.15s, border-color 0.15s; }
+.toc a:hover { color: var(--gold-dim); border-bottom-color: var(--gold); }
+@media (max-width: 640px) { .toc ul { grid-template-columns: 1fr; } }
 .faq-item { border-bottom: 1px solid var(--cream-dark); padding: 1.25rem 0; }
 .faq-q { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
 .faq-a { font-size: 16px; color: var(--ink-soft); }
@@ -146,7 +153,7 @@ footer a { color: var(--gold); text-decoration: none; }
   "headline": "IRS CP2000 Notice: What It Means and How to Respond | Former IRS Auditor Explains",
   "description": "A CP2000 is not a bill and not an audit. Former IRS Auditor Romeo Razi explains what the IRS is actually doing, your 30-day deadline, and how to dispute if they're wrong.",
   "url": "https://irsresolutionservice.com/cp2000",
-  "dateModified": "2026-07-14",
+  "dateModified": "2026-07-23",
   "author": {
     "@type": "Person",
     "@id": "https://irsresolutionservice.com/#romeo-razi",
@@ -321,7 +328,7 @@ try {
     <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 1.5rem;font-size:14px;color:#7a6e60">
       <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Auditor" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid #c9a84c">
       <span>By <a href="/#founders" style="color:#8a6e2f;font-weight:600;text-decoration:none">Romeo Razi, CPA</a> &mdash; Former IRS Auditor</span>
-      <span>&middot;</span><span>Updated July 14, 2026</span>
+      <span>&middot;</span><span>Updated July 23, 2026</span>
       <span>&middot;</span><span><a href="https://www.irs.gov/individuals/understanding-your-cp2000-series-notice" target="_blank" rel="noopener" style="color:#7a6e60;text-decoration:underline;text-underline-offset:3px">Fact-checked against IRS primary sources</a></span>
     </div>
     <div class="notice-code-display">CP2000</div>
@@ -333,6 +340,19 @@ try {
     <div class="deadline-badge">
       ⏱ Response deadline: approximately 30 days from the date printed on your notice — not the day you received it
     </div>
+    <nav class="toc" aria-label="Table of contents">
+  <div class="toc-title">On this page</div>
+  <ul>
+    <li><a href="#sec-what-is">What the IRS is doing with a CP2000</a></li>
+    <li><a href="#sec-rulings">The penalty fight: IRC § 6751(b)</a></li>
+    <li><a href="#sec-different">How CP2000 differs from an audit or bill</a></li>
+    <li><a href="#sec-triggers">Income that commonly triggers CP2000</a></li>
+    <li><a href="#sec-howto">How to respond, step by step</a></li>
+    <li><a href="#sec-after">What happens after you respond</a></li>
+    <li><a href="#sec-auditor">What a former IRS auditor does differently</a></li>
+    <li><a href="#sec-faq">FAQ</a></li>
+  </ul>
+</nav>
     <div>
       <a href="#free-review" class="hero-cta">Get My Free CP2000 Review &rarr;</a>
       <div class="hero-cta-sub">Takes 2 minutes. Romeo tells you honestly whether the IRS's math is right &mdash; and whether you even need help.</div>
@@ -409,7 +429,8 @@ try {
   </div>
 </div>
 
-<div class="section">
+
+<div class="section" id="sec-what-is">
     <h2>What the IRS is actually doing with a CP2000</h2>
     <p>Every year, the IRS runs a matching program called the Automated Underreporter (AUR) system. It compares what you reported on your tax return against every W-2, 1099, 1098, and K-1 that your employer, bank, broker, or any other third party reported under your Social Security number.</p>
     <p>When those numbers don't match — even slightly — the AUR system automatically generates a CP2000. No human reviewed your case. No auditor decided you were suspicious. A computer flagged a discrepancy and mailed a letter. The IRS sends roughly 3 million CP2000 notices every year, which tells you something about how automated and imperfect this process is.</p>
@@ -420,7 +441,23 @@ try {
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" id="sec-rulings">
+    <h2>The penalty fight most CP2000 guides skip: supervisory approval under IRC § 6751(b)</h2>
+    <p>Most CP2000 notices propose a 20% accuracy-related penalty on top of the tax. Almost no competitor page explains that this penalty has its own, separate legal requirement — and a body of 2025–2026 litigation testing it.</p>
+    <h3>Why the 20% penalty can sometimes be knocked out on procedure alone</h3>
+    <p>IRC § 6751(b)(1) requires the IRS employee's immediate supervisor to personally approve, in writing, the initial determination of most penalties before they're assessed. Congress added this rule specifically so penalties couldn't be used as a bargaining chip. Treasury finalized regulations on this requirement effective December 23, 2024, setting three IRS-favorable rules for exactly when that approval must happen relative to the Tax Court process.</p>
+    <p>On April 27, 2026, the Supreme Court denied review in a case where a couple challenged roughly $345,000 in accuracy-related penalties over the IRS's supervisory-approval process — leaving the lower court's ruling in place and, for now, closing off Supreme Court review of the open circuit disagreements on this issue.</p>
+    <div class="warning-box">
+      <p>⚠ The catch for CP2000 specifically: IRC § 6751(b)(2) exempts penalties "automatically calculated through electronic means" from the supervisory-approval requirement — and the accuracy-related penalty on a computer-generated CP2000 is frequently just that. The IRS itself has told the Taxpayer Advocate Service that its Automated Underreporter program calculates this penalty electronically. That means the supervisory-approval argument that works well in audit-driven cases often does <em>not</em> apply to a bare CP2000 penalty — a distinction most CP2000 pages never mention, and one worth confirming with a professional before you build a defense around it.</p>
+    </div>
+    <p>Separately, Congress is actively working this issue: the Fair and Accountable IRS Reviews (FAIR) Act, which would require supervisory approval before the very first written communication proposing a penalty (closing a timing gap the IRS currently uses), passed the House on December 1, 2025, and is pending in the Senate Finance Committee.</p>
+    <div class="insider">
+      <div class="insider-label">Romeo Razi — Former IRS Auditor</div>
+      <p>"People assume every penalty on a notice can be knocked out for lack of paperwork. Sometimes yes, sometimes no — it depends on whether a person or a computer made the call. Worth checking, but don't assume."</p>
+    </div>
+  </div>
+
+  <div class="section" id="sec-different">
     <h2>Three things that make CP2000 different from an audit or a bill</h2>
 
     <h3>1. It is not an audit</h3>
@@ -433,7 +470,7 @@ try {
     <p>The most common reasons the proposed amount is incorrect: you reported the income correctly but on a different line, you have a cost basis the IRS's third-party data doesn't account for, the income was reported to the IRS under your SSN but actually belongs to someone else, or there was a genuine error on the third-party form (a broker's 1099, a client's 1099-NEC). Before you pay anything, compare the proposed adjustment line-by-line against your actual return and the underlying documents.</p>
   </div>
 
-  <div class="section">
+  <div class="section" id="sec-triggers">
     <h2>What income types most commonly trigger a CP2000</h2>
     <ul>
       <li><strong>1099-B brokerage transactions</strong> — the IRS sees your gross proceeds but not your cost basis. If you sold stock and reported the gain correctly on Schedule D, the AUR may still flag it because the gross sale price doesn't match your return.</li>
@@ -445,7 +482,7 @@ try {
     </ul>
   </div>
 
-  <div class="section">
+  <div class="section" id="sec-howto">
     <h2>How to respond to a CP2000 — step by step</h2>
     <ol class="step-list">
       <li><span><strong>Find your actual deadline.</strong> The date printed on the notice (upper right) is day one of your clock, not the day the letter arrived. Mail can take 7–10 days. If you're close to the deadline, call the number on the notice immediately to request an extension — the IRS routinely grants 30–60 extra days if you ask proactively.</span></li>
@@ -461,14 +498,14 @@ try {
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" id="sec-after">
     <h2>What happens after you respond</h2>
     <p>If you agree with the full amount: the IRS assesses the additional tax and sends a bill. You can pay in full, set up an installment agreement, or, if the amount is genuinely more than you can pay, explore an Offer in Compromise.</p>
     <p>If you disagree and the IRS accepts your documentation: the case closes, the proposed adjustment is withdrawn, and you owe nothing additional. You'll receive a CP2000 series letter confirming the resolution.</p>
     <p>If you disagree and the IRS doesn't accept your documentation: they'll send a Letter 3219 (Statutory Notice of Deficiency). At that point you have 90 days to petition the Tax Court — this is a hard, statutory deadline. Missing it means the IRS proceeds to assess the tax as proposed.</p>
   </div>
 
-  <div class="section">
+  <div class="section" id="sec-auditor">
     <h2>What a former IRS auditor does differently on a CP2000</h2>
     <p>Most generic responses to a CP2000 are either too short (just "I disagree") or too long and emotional. What actually moves the IRS: a concise, well-organized letter that maps each disputed item to a specific line on the notice, provides one or two clear pieces of documentary evidence per item, and presents a correct calculation of what the tax would be if their adjustment were corrected. Auditors are busy. A response that makes it easy for them to say "this person is right" gets resolved faster than one that requires investigation.</p>
 
@@ -486,10 +523,14 @@ try {
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/individuals/understanding-your-cp2000-series-notice" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Understanding your CP2000 series notice</a> &mdash; the IRS's official CP2000 page, including response options</li>
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/taxtopics/tc652" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Topic 652 — Notice of underreported income</a> &mdash; how the Automated Underreporter matching works</li>
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/individuals/get-transcript" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Get your tax records and transcripts</a> &mdash; pulling the wage & income transcript to check the IRS's math</li>
+    <li style="margin-bottom:6px"><a href="https://www.federalregister.gov/documents/2023/04/11/2023-07232/rules-for-supervisory-approval-of-penalties" target="_blank" rel="noopener" style="color:#8a6e2f">Federal Register: Final Rules for Supervisory Approval of Penalties (IRC § 6751(b))</a> &mdash; effective for penalties assessed on or after Dec. 23, 2024</li>
+    <li style="margin-bottom:6px"><a href="https://www.taxpayeradvocate.irs.gov/news/directory-entry/2020-mli-03-accuracy-related" target="_blank" rel="noopener" style="color:#8a6e2f">Taxpayer Advocate Service: MLI on IRC § 6662 accuracy-related penalties</a> &mdash; confirms AUR penalties are electronically calculated and exempt from supervisory approval</li>
+    <li style="margin-bottom:6px"><a href="https://unclekam.com/tax-strategy-blog/irs-appeal-process-2026-guide-for-tax-professionals/" target="_blank" rel="noopener" style="color:#8a6e2f">Supreme Court cert denial, Battat (April 27, 2026)</a> &mdash; practitioner summary of the Section 6751(b) cert denial</li>
+    <li style="margin-bottom:6px"><a href="https://iqbalbusinesslaw.com/irs-civil-tax-penalty-defense-section-6751b-maryland-pennsylvania/" target="_blank" rel="noopener" style="color:#8a6e2f">FAIR Act (H.R. 5346) status</a> &mdash; passed House Dec. 1, 2025; pending Senate Finance Committee</li>
   </ul>
   <p style="font-size:14px;color:#7a6e60;line-height:1.65;margin:0">Every figure and deadline above was checked against these primary sources at the time of the last update &mdash; not against secondary coverage. Tax rules change; confirm current guidance at the linked source (or <a href="/#contact" style="color:#8a6e2f">ask us directly</a>) before acting.</p>
 </div>
-<div class="section">
+<div class="section" id="sec-faq">
     <h2>Frequently asked questions about CP2000</h2>
 
     <div class="faq-item">

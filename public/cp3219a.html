@@ -62,6 +62,13 @@ body { font-family: var(--sans); background: var(--cream); color: var(--ink); fo
 .romeo-avatar { width: 56px; height: 56px; background: var(--gold-muted); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--gold-dim); flex-shrink: 0; }
 .romeo-name { font-weight: 700; font-size: 16px; color: var(--ink); }
 .romeo-title { font-size: 13px; color: var(--ink-muted); }
+.toc { background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem 1.5rem; margin: 1.5rem 0 2rem; }
+.toc-title { font-family: var(--serif); font-size: 1rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.75rem; }
+.toc ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1.5rem; }
+.toc li { margin: 0; }
+.toc a { display: block; font-size: 15px; color: var(--ink-soft); text-decoration: none; padding: 4px 0; border-bottom: 1px dotted transparent; transition: color 0.15s, border-color 0.15s; }
+.toc a:hover { color: var(--gold-dim); border-bottom-color: var(--gold); }
+@media (max-width: 640px) { .toc ul { grid-template-columns: 1fr; } }
 .faq-item { border-bottom: 1px solid var(--cream-dark); padding: 1.25rem 0; }
 .faq-q { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
 .faq-a { font-size: 16px; color: var(--ink-soft); }
@@ -120,7 +127,7 @@ footer a { color: var(--gold); text-decoration: none; }
   "headline": "IRS CP3219A: Statutory Notice of Deficiency \u2014 90-Day Deadline",
   "description": "A CP3219A gives you exactly 90 days to petition Tax Court. Former IRS Auditor Romeo Razi explains your three paths and what happens if you miss the deadline.",
   "url": "https://irsresolutionservice.com/cp3219a",
-  "dateModified": "2026-07-14",
+  "dateModified": "2026-07-23",
   "author": {
     "@type": "Person",
     "@id": "https://irsresolutionservice.com/#romeo-razi",
@@ -256,7 +263,7 @@ footer a { color: var(--gold); text-decoration: none; }
     <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 1.5rem;font-size:14px;color:#7a6e60">
       <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Tax Examiner" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid #c9a84c">
       <span>By <a href="/#founders" style="color:#8a6e2f;font-weight:600;text-decoration:none">Romeo Razi, CPA</a> &mdash; Former IRS Tax Examiner</span>
-      <span>&middot;</span><span>Updated July 14, 2026</span>
+      <span>&middot;</span><span>Updated July 23, 2026</span>
       <span>&middot;</span><span>Fact-checked against IRS primary sources</span>
     </div>
     <div class="notice-code-display">CP3219A</div>
@@ -267,7 +274,19 @@ footer a { color: var(--gold); text-decoration: none; }
 </section>
 <div class="notice-body">
 
-  <div class="section">
+<nav class="toc" aria-label="Table of contents">
+  <div class="toc-title">On this page</div>
+  <ul>
+    <li><a href="#sec-different">What makes CP3219A different</a></li>
+    <li><a href="#sec-rulings">The 90-day deadline circuit split</a></li>
+    <li><a href="#sec-causes">What typically leads to a CP3219A</a></li>
+    <li><a href="#sec-paths">Your three paths</a></li>
+    <li><a href="#sec-wrong">When the proposed amount is wrong</a></li>
+    <li><a href="#sec-faq">FAQ</a></li>
+  </ul>
+</nav>
+
+  <div class="section" id="sec-different">
     <h2>What makes the CP3219A different from other IRS notices</h2>
     <p>Most IRS notices propose something and ask you to respond to the IRS. The CP3219A is different: it formally notifies you that the IRS intends to assess additional tax, and it opens a specific legal pathway — a petition to the U.S. Tax Court — that is the only way to dispute the proposed assessment before paying it.</p>
     <p>This is sometimes called the "90-day letter" because the window to petition Tax Court is 90 days from the notice date (150 days if your address of record is outside the U.S.). That deadline is statutory and absolute — no extensions are available.</p>
@@ -276,7 +295,23 @@ footer a { color: var(--gold); text-decoration: none; }
       <p>"The CP3219A is the notice that separates the people who kept their options open from the people who didn't. Once those 90 days pass without a Tax Court petition, the IRS assesses the tax — full stop. You can still fight it afterward, but you're doing it from a position of owing the money rather than contesting it before assessment. That's a fundamentally different and harder situation."</p>
     </div>
   </div>
-  <div class="section">
+  <div class="section" id="sec-rulings">
+    <h2>The circuit split most CP3219A pages don't mention: is the 90-day deadline absolute?</h2>
+    <p>Every CP3219A page — including the one above this section — correctly tells you the 90-day deadline is a hard, non-negotiable statutory deadline. That has been the settled, safe assumption for decades. But the law on this point is actively unsettled right now, and knowing where things stand can matter if you or your preparer miss the deadline by a few days.</p>
+    <h3>Boechler opened the door; the circuits are split on how far it goes</h3>
+    <p>In 2022, the Supreme Court held in <em>Boechler, P.C. v. Commissioner</em> that a similar 30-day deadline (for Collection Due Process cases) was not jurisdictional and could be "equitably tolled" — extended in appropriate circumstances. That immediately raised the question of whether the CP3219A's 90-day deficiency deadline is the same kind of rule. The full Tax Court considered this in <em>Hallmark Research Collective</em> (2022) and reaffirmed its longstanding position that the 90-day deadline is jurisdictional and cannot be tolled.</p>
+    <p>Since then, the Second, Third, and Sixth Circuit Courts of Appeals have disagreed with the Tax Court and held that the 90-day deficiency-petition deadline is a non-jurisdictional claim-processing rule — meaning it can, in the right circumstances, be equitably tolled. The Seventh and Ninth Circuits, along with the Tax Court itself, have rejected that position and continue to treat the deadline as an absolute jurisdictional bar.</p>
+    <div class="insider">
+      <div class="insider-label">Why this matters practically</div>
+      <p>The Tax Court follows the precedent of the circuit your case would be appealed to. So whether a late-filed petition has any chance at all currently depends on where you live and which circuit hears your appeal — a detail that changes the honest answer to "can I still file if I'm a few days late" depending on your address. This is not a reason to relax about the deadline; it's a reason to still file immediately even if you think you're late, since in three circuits that filing may still be considered.</p>
+    </div>
+    <p>Congress is also watching this: a 2025 legislative proposal reported in tax practitioner literature would amend IRC § 7451(b) to expressly grant the Tax Court jurisdiction to toll the 90-day deficiency deadline whenever the facts warrant it — which would resolve the circuit split by statute rather than leaving it to further litigation.</p>
+    <div class="warning-box">
+      <p>&#9888; None of this changes our advice above: treat the 90-day deadline as absolute and file well before it. The circuit split is a last-resort argument for petitions that are already late, not a reason to cut it close on purpose.</p>
+    </div>
+  </div>
+
+  <div class="section" id="sec-causes">
     <h2>What typically leads to a CP3219A</h2>
     <p>The most common paths to a CP3219A:</p>
     <ul>
@@ -285,7 +320,7 @@ footer a { color: var(--gold); text-decoration: none; }
       <li><strong>Missing return with IRS-prepared substitute.</strong> If you didn't file and the IRS prepared a Substitute for Return (SFR) under IRC §6020(b), they may issue a CP3219A based on their SFR calculation — which notoriously ignores deductions and credits you're entitled to.</li>
     </ul>
   </div>
-  <div class="section">
+  <div class="section" id="sec-paths">
     <h2>Your three paths when you receive a CP3219A</h2>
     <h3>1. Petition the U.S. Tax Court</h3>
     <p>Filing a Tax Court petition stops the IRS from assessing the proposed tax until the case is resolved. The Tax Court has a Small Tax Case (S case) procedure for disputes of $50,000 or less per tax year — it's designed to be accessible to taxpayers without attorneys, with simplified procedures and a lower filing fee ($60). Larger disputes go through regular Tax Court procedures.</p>
@@ -298,7 +333,7 @@ footer a { color: var(--gold); text-decoration: none; }
       <p>⚠ The 90-day window cannot be extended under any circumstances. The only exception is if the notice was mailed to an address outside the U.S., in which case you have 150 days. Do not call the IRS asking for more time on a CP3219A — they cannot give it to you. Only the Tax Court can.</p>
     </div>
   </div>
-  <div class="section">
+  <div class="section" id="sec-wrong">
     <h2>When the proposed amount on a CP3219A is wrong</h2>
     <p>A significant percentage of CP3219As contain errors — particularly those originating from CP2000 disputes or Substitute for Return situations. The IRS's Substitute for Return uses gross income data from third-party forms and applies standard deductions, but it doesn't reflect your actual deductions, credits, business expenses, basis in assets, or retirement contributions.</p>
     <p>If you filed late returns for the year in question after receiving the CP3219A, those returns can sometimes affect the assessment — but the Tax Court petition is still often the right protective step while that's being sorted out.</p>
@@ -315,10 +350,13 @@ footer a { color: var(--gold); text-decoration: none; }
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/individuals/understanding-your-cp3219a-notice" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Understanding your CP3219A notice</a> &mdash; the official Statutory Notice of Deficiency page</li>
     <li style="margin-bottom:6px"><a href="https://www.ustaxcourt.gov" target="_blank" rel="noopener" style="color:#8a6e2f">U.S. Tax Court</a> &mdash; where and how to petition within the 90-day window</li>
     <li style="margin-bottom:6px"><a href="https://www.law.cornell.edu/uscode/text/26/6213" target="_blank" rel="noopener" style="color:#8a6e2f">IRC &sect; 6213</a> &mdash; the statute behind the 90-day (150-day abroad) deadline</li>
+    <li style="margin-bottom:6px"><a href="https://www.lw.com/admin/upload/SiteAttachments/Third-Circuit-Tax-Court-Filing-Deadline-for-Deficiency-Petitions-Not-Jurisdictional.pdf" target="_blank" rel="noopener" style="color:#8a6e2f">Latham & Watkins: Culp v. Commissioner analysis (3rd Cir.)</a> &mdash; the deficiency-deadline jurisdictional split</li>
+    <li style="margin-bottom:6px"><a href="https://www.taxslaw.com/2025/09/responding-timely-to-a-90-day-letter-is-it-jurisdictional/" target="_blank" rel="noopener" style="color:#8a6e2f">TaxSlaw: "Responding Timely to a 90-Day Letter — Is It Jurisdictional?"</a> &mdash; September 2025 update on the circuit split</li>
+    <li style="margin-bottom:6px"><a href="https://www.taxslaw.com/2025/09/may-be-helpful-will-congress-extend-the-statutory-period-for-filing-a-petition-with-the-u-s-tax-court/" target="_blank" rel="noopener" style="color:#8a6e2f">TaxSlaw: Congressional proposal to codify equitable tolling</a> &mdash; pending legislative fix to IRC &sect; 7451(b)</li>
   </ul>
   <p style="font-size:14px;color:#7a6e60;line-height:1.65;margin:0">Every figure and deadline above was checked against these primary sources at the time of the last update &mdash; not against secondary coverage. Tax rules change; confirm current guidance at the linked source (or <a href="/#contact" style="color:#8a6e2f">ask us directly</a>) before acting.</p>
 </div>
-<div class="section">
+<div class="section" id="sec-faq">
     <h2>Frequently asked questions about CP3219A</h2>
     <div class="faq-item">
       <div class="faq-q">Do I need an attorney to file a Tax Court petition?</div>

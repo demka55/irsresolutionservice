@@ -62,6 +62,13 @@ body { font-family: var(--sans); background: var(--cream); color: var(--ink); fo
 .romeo-avatar { width: 56px; height: 56px; background: var(--gold-muted); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--gold-dim); flex-shrink: 0; }
 .romeo-name { font-weight: 700; font-size: 16px; color: var(--ink); }
 .romeo-title { font-size: 13px; color: var(--ink-muted); }
+.toc { background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem 1.5rem; margin: 1.5rem 0 2rem; }
+.toc-title { font-family: var(--serif); font-size: 1rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.75rem; }
+.toc ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1.5rem; }
+.toc li { margin: 0; }
+.toc a { display: block; font-size: 15px; color: var(--ink-soft); text-decoration: none; padding: 4px 0; border-bottom: 1px dotted transparent; transition: color 0.15s, border-color 0.15s; }
+.toc a:hover { color: var(--gold-dim); border-bottom-color: var(--gold); }
+@media (max-width: 640px) { .toc ul { grid-template-columns: 1fr; } }
 .faq-item { border-bottom: 1px solid var(--cream-dark); padding: 1.25rem 0; }
 .faq-q { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
 .faq-a { font-size: 16px; color: var(--ink-soft); }
@@ -147,7 +154,7 @@ footer a { color: var(--gold); text-decoration: none; }
   "headline": "IRS CP59 Notice: Unfiled Return \u2014 What Happens Next",
   "description": "A CP59 means the IRS has no record of your return. Former IRS Auditor Romeo Razi explains the failure-to-file penalty, the 6-year compliance rule, and what to do.",
   "url": "https://irsresolutionservice.com/cp59",
-  "dateModified": "2026-07-14",
+  "dateModified": "2026-07-23",
   "author": {
     "@type": "Person",
     "@id": "https://irsresolutionservice.com/#romeo-razi",
@@ -306,7 +313,7 @@ try {
     <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 1.5rem;font-size:14px;color:#7a6e60">
       <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Auditor" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid #c9a84c">
       <span>By <a href="/#founders" style="color:#8a6e2f;font-weight:600;text-decoration:none">Romeo Razi, CPA</a> &mdash; Former IRS Auditor</span>
-      <span>&middot;</span><span>Updated July 14, 2026</span>
+      <span>&middot;</span><span>Updated July 23, 2026</span>
       <span>&middot;</span><span><a href="https://www.irs.gov/individuals/understanding-your-cp59-notice" target="_blank" rel="noopener" style="color:#7a6e60;text-decoration:underline;text-underline-offset:3px">Fact-checked against IRS primary sources</a></span>
     </div>
     <div style="background:rgba(201,168,76,0.1);border:1px solid #d9cdb8;border-left:4px solid #c9a84c;border-radius:0 6px 6px 0;padding:1.1rem 1.4rem;margin:0 0 1.5rem">
@@ -318,6 +325,17 @@ try {
     <div class="direct-answer"><p><strong>The short answer:</strong> A CP59 is the IRS notifying you they have no record of your tax return for a specific year. If you genuinely didn't file, you need to file as soon as possible — the penalties for not filing are significantly worse than penalties for not paying. If you did file, you need to provide proof the return was received.</p>
       <p style="margin:.7rem 0 0;font-size:13px;color:var(--ink-muted)">Don&rsquo;t take our word for it &mdash; cross-check everything on this page against the <a href="https://www.irs.gov/individuals/understanding-your-cp59-notice" target="_blank" rel="noopener" style="color:var(--gold-dim,#8a6e2f);font-weight:600">IRS&rsquo;s official CP59 page &rarr;</a></p></div>
     <div class="deadline-badge">⏱ Respond promptly — the IRS can prepare a Substitute for Return on your behalf that ignores your deductions and results in a much higher tax bill</div>
+    <nav class="toc" aria-label="Table of contents">
+  <div class="toc-title">On this page</div>
+  <ul>
+    <li><a href="#sec-rulings">Why unfiled years never run out</a></li>
+    <li><a href="#sec-what">What CP59 means and what triggers it</a></li>
+    <li><a href="#sec-penalties">Failure-to-file vs. failure-to-pay penalties</a></li>
+    <li><a href="#sec-didfile">If you did file</a></li>
+    <li><a href="#sec-didntfile">If you genuinely didn't file</a></li>
+    <li><a href="#sec-faq">FAQ</a></li>
+  </ul>
+</nav>
     <div>
       <a href="#free-review" class="hero-cta">Get My Free Filing Plan &rarr;</a>
       <div class="hero-cta-sub">Takes 2 minutes. No judgment &mdash; just an honest map of which years to file and how, from someone who's seen far worse.</div>
@@ -392,7 +410,24 @@ try {
 </div>
 
 
-  <div class="section">
+  <div class="section" id="sec-rulings">
+    <h2>The legal detail almost no CP59 page explains: unfiled years never run out</h2>
+    <p>Every CP59 page tells you to file. Almost none explain the specific legal mechanism that makes ignoring a CP59 so much worse than ignoring most other notices — and why the IRS's 2024–2025 enforcement push makes this the wrong year to test it.</p>
+    <h3>The assessment statute never starts running on an unfiled year</h3>
+    <p>For a filed return, IRC § 6501 generally gives the IRS three years from the filing date to assess additional tax — after that, the year is closed. But that three-year assessment statute of limitations (ASED) simply does not begin for a year you never filed. Legally, there is no time limit on how far back the IRS can reach to assess tax for an unfiled year; a CP59 for a return from a decade ago is entirely possible and entirely within the IRS's authority.</p>
+    <p>Once you file — even a return that's years late — the three-year assessment clock finally starts running on that year. This is the single biggest legal reason that filing late is almost always better than continuing not to file, independent of whether you can currently pay anything.</p>
+    <div class="insider">
+      <div class="insider-label">Romeo Razi — Former IRS Auditor</div>
+      <p>"People think silence protects them. It's the opposite — silence is the one thing that keeps the door open indefinitely. The day you file is the day the clock the IRS is actually bound by starts ticking."</p>
+    </div>
+    <h3>The IRS's current non-filer enforcement push (2024–2026)</h3>
+    <p>This isn't a theoretical risk right now. The IRS has publicly stated it is actively working a large backlog of high-income non-filer cases — including tens of thousands of cases involving taxpayers with incomes between $400,000 and $1 million, and thousands more above $1 million — tied to an estimated $100 billion in income reported by third parties to taxpayers who never filed a return for the year in question since 2017. CP59 and its follow-up notices (CP515, CP516, CP518) are the front door to that enforcement effort, and the IRS has been sending them at a higher volume than in prior years.</p>
+    <div class="warning-box">
+      <p>⚠ Under IRC § 6020(b), the IRS has independent legal authority to prepare a Substitute for Return on your behalf using only the income data it has — without your deductions, credits, dependents, or business expenses. Because there's no deadline forcing the IRS's hand on an unfiled year, the case can sit and accrue penalties and interest for years before an SFR is prepared, only to then arrive with a much larger balance than the return you could have filed yourself.</p>
+    </div>
+  </div>
+
+  <div class="section" id="sec-what">
     <h2>What CP59 means and what triggers it</h2>
     <p>The IRS's filing compliance division runs a program called the Automated Substitute for Return (ASFR) process. When third-party income documents (W-2s, 1099s) show income reported under your Social Security number for a given tax year, but no tax return was filed, the system generates a CP59 notice asking you to file or explain why filing wasn't required.</p>
     <p>The CP59 is typically the first notice — it may be followed by CP515, CP516, and ultimately a Notice of Deficiency (CP3219A) if the IRS prepares their own return on your behalf. Their substitute return will use gross income figures from third-party documents and apply only the standard deduction and one personal exemption — ignoring every deduction, credit, and expense you actually had.</p>
@@ -401,7 +436,7 @@ try {
       <p>"Unfiled returns are one of the things I saw escalate fastest inside the IRS. People assume 'if I don't file, they can't tax me.' That's backwards. If you don't file, the IRS can file for you — and they will use the worst possible assumptions. I've seen people owe triple what they actually owed because a Substitute for Return missed their business expenses. Filing late is almost always the right move, even years late."</p>
     </div>
   </div>
-  <div class="section">
+  <div class="section" id="sec-penalties">
     <h2>The penalties for not filing vs. not paying</h2>
     <p>This distinction matters enormously. People often conflate "I can't afford to pay, so I won't file" — but the penalties work in opposite directions:</p>
     <ul>
@@ -411,7 +446,7 @@ try {
     <p>If both apply, they overlap — but the failure-to-file penalty is 10 times larger per month. If you can't pay but file your return on time (or as soon as possible), you eliminate the larger of the two penalties entirely and are left only with the smaller failure-to-pay penalty plus interest.</p>
     <p>Additionally: the failure-to-file penalty clock stops when you file. The failure-to-pay penalty continues until the balance is paid. Filing now, even years late, cuts off the 5%/month penalty from the date you file.</p>
   </div>
-  <div class="section">
+  <div class="section" id="sec-didfile">
     <h2>If you did file — here's what to do</h2>
     <p>CP59 notices sometimes go out even when a return was filed, due to IRS processing delays, mailing errors, or address mismatches. If you filed:</p>
     <ul>
@@ -420,7 +455,7 @@ try {
       <li>If you filed electronically, you can also log into your IRS Online Account to view account transcripts and confirm the return was received.</li>
     </ul>
   </div>
-  <div class="section">
+  <div class="section" id="sec-didntfile">
     <h2>If you genuinely didn't file — the case for acting quickly</h2>
     <p>The most important thing to understand: the IRS's ability to assess tax based on a Substitute for Return doesn't expire in the same way the normal 3-year statute of limitations works. If you never filed, the clock on the IRS's right to assess never started running. You could receive a notice for a return from 10 years ago.</p>
     <p>Conversely: once you file, the clock starts. The IRS generally has three years from your filing date to audit the return. If they've already prepared a Substitute for Return and issued a deficiency notice, getting your actual return on file can override theirs — but you need to act before the Tax Court petition deadline passes.</p>
@@ -439,10 +474,12 @@ try {
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/individuals/understanding-your-cp59-notice" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Understanding your CP59 notice</a> &mdash; the official unfiled-return notice page</li>
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/payments/failure-to-file-penalty" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Failure to File penalty</a> &mdash; the 5%/month penalty that stops the day you file</li>
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/businesses/small-businesses-self-employed/filing-past-due-tax-returns" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Filing past due tax returns</a> &mdash; catch-up filing and Substitute for Return consequences</li>
+    <li style="margin-bottom:6px"><a href="https://www.law.cornell.edu/uscode/text/26/6501" target="_blank" rel="noopener" style="color:#8a6e2f">IRC &sect; 6501</a> &mdash; the assessment statute of limitations, and why it never starts on an unfiled year</li>
+    <li style="margin-bottom:6px"><a href="https://www.law.cornell.edu/uscode/text/26/6020" target="_blank" rel="noopener" style="color:#8a6e2f">IRC &sect; 6020(b)</a> &mdash; the IRS's authority to prepare a Substitute for Return</li>
   </ul>
   <p style="font-size:14px;color:#7a6e60;line-height:1.65;margin:0">Every figure and deadline above was checked against these primary sources at the time of the last update &mdash; not against secondary coverage. Tax rules change; confirm current guidance at the linked source (or <a href="/#contact" style="color:#8a6e2f">ask us directly</a>) before acting.</p>
 </div>
-<div class="section">
+<div class="section" id="sec-faq">
     <h2>Frequently asked questions about CP59</h2>
     <div class="faq-item">
       <div class="faq-q">What if I wasn't required to file that year?</div>
