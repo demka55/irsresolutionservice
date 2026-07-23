@@ -154,14 +154,10 @@ footer a { color: var(--gold); text-decoration: none; }
   "headline": "IRS LT11 Notice: Final Notice Before Levy \u2014 Your 30-Day Window",
   "description": "LT11 is the final notice before the IRS can seize wages, bank accounts, and property. Former IRS Auditor Romeo Razi explains the 30-day CDP hearing window.",
   "url": "https://irsresolutionservice.com/lt11",
+  "datePublished": "2026-06-15",
   "dateModified": "2026-07-23",
   "author": {
-    "@type": "Person",
-    "@id": "https://irsresolutionservice.com/#romeo-razi",
-    "name": "Romeo Razi",
-    "honorificSuffix": "CPA",
-    "jobTitle": "Former IRS Auditor, CPA",
-    "sameAs": "https://www.linkedin.com/in/romeo-razi/"
+    "@id": "https://irsresolutionservice.com/#romeo-razi"
   },
   "publisher": {
     "@id": "https://irsresolutionservice.com/#organization"
@@ -169,6 +165,51 @@ footer a { color: var(--gold); text-decoration: none; }
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": "https://irsresolutionservice.com/lt11"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://irsresolutionservice.com/#romeo-razi",
+  "name": "Romeo Razi",
+  "honorificSuffix": "CPA",
+  "jobTitle": "Certified Public Accountant",
+  "description": "Romeo Razi, CPA spent 8+ years at the IRS as a Tax Examiner in the Individual & Employment Tax Division, conducting face-to-face audits and working collection and appeals cases from inside the agency, before founding Taxed Right and IRS Resolution Service to represent taxpayers in 15+ years of private practice across 10,000+ returns.",
+  "alumniOf": { "@type": "Organization", "name": "Internal Revenue Service" },
+  "hasCredential": { "@type": "EducationalOccupationalCredential", "credentialCategory": "CPA (Certified Public Accountant)" },
+  "worksFor": [
+    { "@id": "https://irsresolutionservice.com/#organization" },
+    { "@type": "Organization", "name": "Taxed Right Inc", "url": "https://taxedright.com" }
+  ],
+  "url": "https://taxedright.com",
+  "image": "https://irsresolutionservice.com/romeo-razi.png",
+  "sameAs": [
+    "https://www.linkedin.com/in/romeo-razi/",
+    "https://x.com/RomeoRazi",
+    "https://www.youtube.com/@taxedright"
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://irsresolutionservice.com/#organization",
+  "name": "IRS Resolution Service LLC",
+  "legalName": "IRS Resolution Service LLC",
+  "url": "https://irsresolutionservice.com",
+  "founder": { "@id": "https://irsresolutionservice.com/#romeo-razi" },
+  "member": { "@id": "https://irsresolutionservice.com/#romeo-razi" },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "9673 Camino Capistrano Lane",
+    "addressLocality": "Las Vegas",
+    "addressRegion": "NV",
+    "postalCode": "89147",
+    "addressCountry": "US"
   }
 }
 </script>
@@ -318,13 +359,14 @@ try {
     </div>
     <div class="notice-code-display">LT11</div>
     <h1>You received an LT11 — you have 30 days before the IRS can legally seize your assets. Here's what that means.</h1>
-    <div class="direct-answer"><p><strong>The short answer:</strong> LT11 (also called Letter 1058) is the Final Notice of Intent to Levy. It gives you exactly 30 days to request a Collection Due Process (CDP) hearing — after which the IRS has full authority to <a href="/irs-wage-garnishment">garnish wages</a>, freeze bank accounts, and seize assets without further warning. This is the most important deadline in IRS collections. Missing it forfeits critical rights.</p>
+    <div class="direct-answer"><p><strong>The short answer:</strong> LT11 (also called Letter 1058) is the Final Notice of Intent to Levy. It gives you exactly 30 days to request a Collection Due Process (CDP) hearing — after which the IRS has full authority to <a href="/irs-wage-garnishment">garnish wages</a>, freeze bank accounts, and seize assets without further warning. This is the most important deadline in IRS collections. Missing it forfeits critical rights. <strong>Important:</strong> the 30-day clock runs from when the IRS mailed it to your last known address on file — not from when you actually opened it, and not necessarily your current address if you've moved without updating the IRS.</p>
       <p style="margin:.7rem 0 0;font-size:13px;color:var(--ink-muted)">Don&rsquo;t take our word for it &mdash; cross-check everything on this page against the <a href="https://www.irs.gov/individuals/understanding-your-lt11-notice-or-letter-1058" target="_blank" rel="noopener" style="color:var(--gold-dim,#8a6e2f);font-weight:600">IRS&rsquo;s official LT11 page &rarr;</a></p></div>
     <div class="deadline-badge">⏱ ⚠ CRITICAL: 30-day deadline from the notice date — not the date you received it. This is a statutory, non-negotiable window.</div>
     <nav class="toc" aria-label="Table of contents">
   <div class="toc-title">On this page</div>
   <ul>
     <li><a href="#sec-different">Why LT11 is different</a></li>
+    <li><a href="#sec-gaps">Where other guides fall short</a></li>
     <li><a href="#sec-rulings">Recent rulings on this deadline (2025)</a></li>
     <li><a href="#sec-cdp">What a CDP hearing actually does</a></li>
     <li><a href="#sec-howto">How to file, step by step</a></li>
@@ -413,13 +455,29 @@ try {
 
   <div class="section" id="sec-different">
     <h2>Why LT11 is different from every notice that came before it</h2>
-    <p>Every notice before LT11 — the CP14, CP501, CP503, CP504 — was the IRS asking you to pay and warning you of consequences. LT11 is different. It is the IRS fulfilling its legal obligation to notify you of imminent enforcement and inform you of your rights before that enforcement begins.</p>
+    <p>Every notice before LT11 — the CP14, CP501, CP503, CP504, and sometimes CP504B — was the IRS asking you to pay and warning you of consequences. LT11 is different. It is the IRS fulfilling its legal obligation under <strong>IRC § 6331(d)</strong> to notify you of imminent enforcement, and under <strong>IRC § 6330</strong> to inform you of your right to a hearing before that enforcement begins. Functionally, LT11 and Letter 1058 are the same notice — LT11 is generated by the IRS's Automated Collection System (ACS) and tends to be a shorter version of the same content; Letter 1058 is typically issued by a Revenue Officer on a manually assigned case. Both carry identical 30-day rights.</p>
     <p>The reason this matters: by law, the IRS cannot levy wages, bank accounts, or most other assets until they've issued this Final Notice and you've had the opportunity to request a Collection Due Process hearing. Once the 30-day window closes without a timely CDP request, that legal protection disappears entirely.</p>
+    <div class="warning-box">
+      <p>⚠ A detail almost no LT11 page emphasizes clearly: the 30-day clock is measured from when the IRS mailed the notice to your <strong>last known address</strong> on file with them — not from when you actually saw it. If you've moved and never filed Form 8822 (Change of Address) or otherwise updated the IRS, a valid LT11 can be running its 30-day clock right now at an old address, and the deadline still counts against you.</p>
+    </div>
+    <p>If your balance is large enough, an unresolved LT11 track can also intersect with passport certification under the FAST Act (IRC § 7345) — the 2026 "seriously delinquent" threshold is over $66,000 in combined tax, penalties, and interest, a figure several LT11 explainers currently understate as roughly $62,000.</p>
     <div class="insider">
       <div class="insider-label">Romeo Razi — Former IRS Auditor</div>
       <p>"The LT11 is the notice I tell people to treat differently than everything else. The earlier notices gave you time to figure things out. This one has a hard statutory deadline. If you miss the 30-day window for a CDP hearing, you lose your right to appeal the levy itself to the IRS's Independent Office of Appeals — and more importantly, you lose the ability to take the IRS to Tax Court over the collection action. That's a real and permanent loss of options."</p>
     </div>
   </div>
+
+  <div class="section" id="sec-gaps">
+    <h2>Where other LT11 guides fall short — and how we keep this one current</h2>
+    <p>Before trusting any LT11 guide — including this one — it's worth checking when it was actually last updated and against what. A few honest observations about what's currently ranking for "LT11" and "Letter 1058":</p>
+    <ul>
+      <li><strong>Some of the most-cited guides are years out of date.</strong> One widely-linked H&R Block explainer carries a 2020 publish date — predating both Boechler (2022) and Commissioner v. Zuch (2025), the two Supreme Court cases most relevant to the CDP rights this notice triggers.</li>
+      <li><strong>The passport threshold error repeats here too.</strong> Just like several CP504 pages, more than one LT11 explainer currently cites the seriously-delinquent-debt threshold as roughly $62,000 — the correct, current 2026 figure is over $66,000.</li>
+      <li><strong>The "last known address" rule is rarely stated clearly.</strong> Most guides describe the 30-day deadline without noting that it runs from your address of record, not your actual mailbox — a meaningful risk for anyone who's moved recently.</li>
+      <li><strong>No case law is cited anywhere</strong> in the current LT11 SERP — the Boechler remand and Zuch mootness rulings above don't appear in any competing explainer we found, despite both directly concerning the CDP hearing this exact notice creates.</li>
+    </ul>
+  </div>
+
   <div class="section" id="sec-rulings">
     <h2>Recent rulings on the exact deadline this notice triggers (2025–2026)</h2>
     <p>Nearly every LT11 page repeats the same line: the 30-day CDP deadline is strict, so file on time. What almost none explain is that this specific deadline has been through the Supreme Court and back down to the Tax Court in the last few years — and the most recent chapter, decided in 2025, is a cautionary tale worth knowing before you assume you have any flexibility.</p>
@@ -527,6 +585,8 @@ try {
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/individuals/understanding-your-lt11-notice-or-letter-1058" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Understanding your LT11 notice</a> &mdash; the official Final Notice of Intent to Levy page</li>
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/forms-pubs/about-form-12153" target="_blank" rel="noopener" style="color:#8a6e2f">Form 12153 — Request for a CDP Hearing</a> &mdash; the 30-day Collection Due Process hearing right</li>
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/businesses/small-businesses-self-employed/what-is-a-levy" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: What is a levy?</a> &mdash; levy authority and release standards</li>
+    <li style="margin-bottom:6px"><a href="https://www.irs.gov/forms-pubs/about-form-8822" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Form 8822, Change of Address</a> &mdash; keeping your address of record current so notices reach you</li>
+    <li style="margin-bottom:6px"><a href="https://www.irs.gov/businesses/small-businesses-self-employed/revocation-or-denial-of-passport-in-case-of-certain-unpaid-taxes" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Revocation or Denial of Passport (IRC § 7345)</a> &mdash; current seriously-delinquent-debt threshold</li>
     <li style="margin-bottom:6px"><a href="https://en.wikipedia.org/wiki/Boechler_v._Commissioner" target="_blank" rel="noopener" style="color:#8a6e2f">Boechler, P.C. v. Commissioner, 596 U.S. 199 (2022)</a> &mdash; established equitable tolling for the 30-day CDP deadline</li>
     <li style="margin-bottom:6px"><a href="https://www.thetaxadviser.com/issues/2025/oct/equitable-tolling-does-not-apply-to-excuse-late-filing-of-petition/" target="_blank" rel="noopener" style="color:#8a6e2f">The Tax Adviser: Equitable tolling denied on remand (2025)</a> &mdash; the Tax Court's June 2025 ruling against Boechler on the facts</li>
     <li style="margin-bottom:6px"><a href="https://en.wikipedia.org/wiki/Commissioner_v._Zuch" target="_blank" rel="noopener" style="color:#8a6e2f">Commissioner v. Zuch, 605 U.S. 422 (2025)</a> &mdash; Supreme Court decision narrowing Tax Court jurisdiction once a levy is no longer being pursued</li>
@@ -594,7 +654,7 @@ try {
 </div>
 </div>
 <footer>
-  <p>IRS Resolution Service LLC · 9673 Camino Capistrano, Las Vegas, NV · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
+  <p>IRS Resolution Service LLC · 9673 Camino Capistrano Lane, Las Vegas, NV 89147 · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
   <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice. IRS Resolution Service is a private tax firm and is <strong>not affiliated with, endorsed by, or connected to the Internal Revenue Service</strong> or any government agency.</p>
 </footer>
 <script>

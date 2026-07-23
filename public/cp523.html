@@ -154,14 +154,10 @@ footer a { color: var(--gold); text-decoration: none; }
   "headline": "IRS CP523: Payment Plan Termination Notice \u2014 What to Do",
   "description": "A CP523 means your installment agreement is about to be terminated. Former IRS Auditor Romeo Razi explains how to reinstate it before your full balance becomes due.",
   "url": "https://irsresolutionservice.com/cp523",
+  "datePublished": "2026-06-11",
   "dateModified": "2026-07-23",
   "author": {
-    "@type": "Person",
-    "@id": "https://irsresolutionservice.com/#romeo-razi",
-    "name": "Romeo Razi",
-    "honorificSuffix": "CPA",
-    "jobTitle": "Former IRS Auditor, CPA",
-    "sameAs": "https://www.linkedin.com/in/romeo-razi/"
+    "@id": "https://irsresolutionservice.com/#romeo-razi"
   },
   "publisher": {
     "@id": "https://irsresolutionservice.com/#organization"
@@ -169,6 +165,51 @@ footer a { color: var(--gold); text-decoration: none; }
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": "https://irsresolutionservice.com/cp523"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://irsresolutionservice.com/#romeo-razi",
+  "name": "Romeo Razi",
+  "honorificSuffix": "CPA",
+  "jobTitle": "Certified Public Accountant",
+  "description": "Romeo Razi, CPA spent 8+ years at the IRS as a Tax Examiner in the Individual & Employment Tax Division, conducting face-to-face audits and working collection and appeals cases from inside the agency, before founding Taxed Right and IRS Resolution Service to represent taxpayers in 15+ years of private practice across 10,000+ returns.",
+  "alumniOf": { "@type": "Organization", "name": "Internal Revenue Service" },
+  "hasCredential": { "@type": "EducationalOccupationalCredential", "credentialCategory": "CPA (Certified Public Accountant)" },
+  "worksFor": [
+    { "@id": "https://irsresolutionservice.com/#organization" },
+    { "@type": "Organization", "name": "Taxed Right Inc", "url": "https://taxedright.com" }
+  ],
+  "url": "https://taxedright.com",
+  "image": "https://irsresolutionservice.com/romeo-razi.png",
+  "sameAs": [
+    "https://www.linkedin.com/in/romeo-razi/",
+    "https://x.com/RomeoRazi",
+    "https://www.youtube.com/@taxedright"
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://irsresolutionservice.com/#organization",
+  "name": "IRS Resolution Service LLC",
+  "legalName": "IRS Resolution Service LLC",
+  "url": "https://irsresolutionservice.com",
+  "founder": { "@id": "https://irsresolutionservice.com/#romeo-razi" },
+  "member": { "@id": "https://irsresolutionservice.com/#romeo-razi" },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "9673 Camino Capistrano Lane",
+    "addressLocality": "Las Vegas",
+    "addressRegion": "NV",
+    "postalCode": "89147",
+    "addressCountry": "US"
   }
 }
 </script>
@@ -207,6 +248,22 @@ footer a { color: var(--gold); text-decoration: none; }
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Your financial situation may have changed enough to warrant a lower monthly payment (based on updated income/expense documentation), Currently Not Collectible status if you're genuinely unable to pay anything, or an Offer in Compromise if your financial outlook has changed significantly. A CP523 is sometimes the appropriate point to re-evaluate what resolution fits your actual situation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "My notice says CP523H, not CP523 — is that different?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CP523H is a variant sent specifically for defaulted installment agreements covering the Affordable Care Act's Shared Responsibility Payment (SRP) balance, rather than income tax. The default mechanics and 30-day response window are the same as a standard CP523 — only the underlying balance type differs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I lost my notice — what number do I call?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Always try the number printed on your specific notice first, since it routes you to the unit handling your case. If you no longer have the notice, the IRS's general individual taxpayer line is 800-829-1040."
       }
     }
   ]
@@ -322,7 +379,7 @@ try {
     </div>
     <div class="notice-code-display">CP523</div>
     <h1>You received a CP523 — the IRS is terminating your payment plan. Here's what happens next and how to stop it.</h1>
-    <div class="direct-answer"><p><strong>The short answer:</strong> A CP523 means you've defaulted on your installment agreement — typically by missing a payment, having a new tax balance added that wasn't included, or failing to file a required return. You have approximately 30 days before the IRS terminates the agreement and your full remaining balance becomes immediately due, at which point enforcement action (wages, bank accounts) can resume.</p>
+    <div class="direct-answer"><p><strong>The short answer:</strong> A CP523 means you've defaulted on your installment agreement — typically by missing a payment, having a new tax balance added that wasn't included, failing to file a required return, missing an estimated tax payment, or not submitting updated financial information the IRS requested. You have approximately 30 days before the IRS terminates the agreement and your full remaining balance becomes immediately due, at which point enforcement action (wages, bank accounts) can resume. Reinstating a defaulted agreement typically costs $89 ($43 if you qualify as low-income).</p>
       <p style="margin:.7rem 0 0;font-size:13px;color:var(--ink-muted)">Don&rsquo;t take our word for it &mdash; cross-check everything on this page against the <a href="https://www.irs.gov/individuals/understanding-your-cp523-notice" target="_blank" rel="noopener" style="color:var(--gold-dim,#8a6e2f);font-weight:600">IRS&rsquo;s official CP523 page &rarr;</a></p></div>
     <div class="deadline-badge">⏱ Act within 30 days — once terminated, your full balance is due immediately and levy action can begin</div>
     <nav class="toc" aria-label="Table of contents">
@@ -333,6 +390,7 @@ try {
     <li><a href="#sec-terminated">What happens when terminated</a></li>
     <li><a href="#sec-respond">How to respond to a CP523</a></li>
     <li><a href="#sec-reinstate">Reinstate, restructure, or replace</a></li>
+    <li><a href="#sec-gaps">Where other guides fall short</a></li>
     <li><a href="#sec-faq">FAQ</a></li>
   </ul>
 </nav>
@@ -414,7 +472,7 @@ try {
   <div class="section" id="sec-rulings">
     <h2>A 2025 federal case shows how CP523 notice itself becomes evidence in court</h2>
     <p>Most CP523 guides describe the notice only from the taxpayer's side — what to do when you get one. What they miss is that the CP523 also matters from the government's side: it's the document the IRS and Department of Justice have to prove they sent before they can enforce a lien in federal court, and that fight is happening in real cases right now.</p>
-    <h3>United States v. [taxpayers], D. Minn. (2025) — the CP523 as required proof of notice</h3>
+    <h3>A 2025 federal tax lien case in Minnesota — the CP523 as required proof of notice</h3>
     <p>In a July 2025 federal district court lawsuit in Minnesota, the government sued to reduce unpaid tax assessments to judgment and force the sale of a taxpayer's real property to satisfy federal tax liens. The taxpayers moved to dismiss, and part of their argument turned on whether the government had properly alleged that the IRS sent the required CP523 notice of intent to terminate the installment agreement before proceeding. In a November 2025 order, the court found that the government's specific allegation — that CP523 letters were sent to the taxpayers' home address by certified mail on a stated date — was sufficient to survive the motion to dismiss.</p>
     <div class="insider">
       <div class="insider-label">Why this matters for you</div>
@@ -430,6 +488,8 @@ try {
       <li><strong>Missed payment</strong> — even one missed automatic debit or check payment can trigger a default notice</li>
       <li><strong>New tax liability not included in the agreement</strong> — if you filed a return for a newer tax year and it has a balance due, that new balance often defaults the existing agreement unless it was restructured</li>
       <li><strong>Unfiled return</strong> — installment agreements require you to stay current on all required filings; an unfiled return can trigger default even if you haven't missed a payment</li>
+      <li><strong>Missed estimated tax payments</strong> — if you're self-employed or otherwise required to make quarterly estimated payments, falling behind on those can default an existing agreement even if your installment payments themselves are current</li>
+      <li><strong>Failing to submit updated financial information when requested</strong> — the IRS periodically asks for a new Form 433-F or similar financial statement on larger agreements; not responding to that request is itself a default trigger, separate from missing a payment</li>
       <li><strong>Levy or offset by the IRS</strong> — if the IRS applied your refund to the balance (expected and allowed) but this counted as a payment irregularity in their system</li>
     </ul>
     <div class="insider">
@@ -459,10 +519,22 @@ try {
     <h2>Reinstating vs. restructuring vs. replacing your agreement</h2>
     <h3>Reinstatement</h3>
     <p>If this is your first default and you catch up the missed payment(s) quickly, you can often call the IRS and request reinstatement. The IRS frequently grants this as a one-time courtesy, particularly for agreements that had been in good standing. You may need to provide updated financial information.</p>
+    <p>Reinstating or restructuring a defaulted agreement carries a <strong>$89 user fee</strong> under 26 CFR § 300.1 — reduced to <strong>$43 if you qualify as a low-income taxpayer</strong> (generally, adjusted gross income at or below 250% of the federal poverty guidelines). This fee is rarely stated precisely elsewhere; budget for it when you call to reinstate.</p>
     <h3>Restructuring</h3>
     <p>If a new tax balance pushed you into default, restructuring the agreement to include the new balance is the most common path. Your monthly payment will likely increase to cover the new balance within the remaining statute period, but the structure of the agreement remains.</p>
     <h3>New agreement</h3>
     <p>If the original agreement is terminated before you can act, you apply for a new installment agreement from scratch. Depending on your total balance, this can be done online (under $50,000) or requires a Form 9465 with financial information.</p>
+  </div>
+
+  <div class="section" id="sec-gaps">
+    <h2>Where other CP523 guides fall short — and how we keep this one current</h2>
+    <p>Before trusting any CP523 guide — including this one — it's worth checking when it was actually last updated and against what. A few honest observations about what's currently ranking for "CP523":</p>
+    <ul>
+      <li><strong>The reinstatement fee is almost never stated as a number.</strong> Guides say "you may incur a reinstatement fee" without giving the figure — it's $89, or $43 for low-income taxpayers, under 26 CFR § 300.1.</li>
+      <li><strong>Not all four default triggers are consistently covered.</strong> Missed payments and new tax balances are universally mentioned; missed estimated tax payments and a failure to submit updated financial information when the IRS requests it are covered far less often.</li>
+      <li><strong>No case law or actual litigation is cited anywhere</strong> in current CP523 guides — the November 2025 federal case above, where CP523 notice sufficiency was directly litigated, doesn't appear in any competing explainer we found.</li>
+      <li><strong>Authorship is often generic or anonymous.</strong> Several ranking CP523 pages carry no named, credentialed author at all.</li>
+    </ul>
   </div>
   
 <div style="margin:3rem 0;padding:1.6rem 1.8rem;background:rgba(201,168,76,0.07);border:1px solid #d9cdb8;border-left:4px solid #c9a84c;border-radius:0 6px 6px 0">
@@ -471,7 +543,8 @@ try {
   <ul style="font-size:15px;color:#4a3f32;line-height:1.7;padding-left:1.25rem;margin:0 0 0.75rem">
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/individuals/understanding-your-cp523-notice" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Understanding your CP523 notice</a> &mdash; the official installment-agreement default notice page</li>
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/payments/payment-plans-installment-agreements" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Payment plans and installment agreements</a> &mdash; reinstatement and restructuring options</li>
-    <li style="margin-bottom:6px"><a href="https://www.govinfo.gov/content/pkg/USCOURTS-mnd-0_25-cv-00895/pdf/USCOURTS-mnd-0_25-cv-00895-0.pdf" target="_blank" rel="noopener" style="color:#8a6e2f">United States v. [Defendants], No. 0:25-cv-00895 (D. Minn. Nov. 14, 2025)</a> &mdash; order on CP523 notice sufficiency in a lien-foreclosure suit</li>
+    <li style="margin-bottom:6px"><a href="https://www.ecfr.gov/current/title-26/chapter-I/subchapter-F/part-300" target="_blank" rel="noopener" style="color:#8a6e2f">26 CFR Part 300</a> &mdash; the regulation setting the $89/$43 reinstatement user fee</li>
+    <li style="margin-bottom:6px"><a href="https://www.govinfo.gov/content/pkg/USCOURTS-mnd-0_25-cv-00895/pdf/USCOURTS-mnd-0_25-cv-00895-0.pdf" target="_blank" rel="noopener" style="color:#8a6e2f">U.S. District Court, District of Minnesota, No. 0:25-cv-00895 (Nov. 14, 2025)</a> &mdash; order on CP523 notice sufficiency in a federal tax lien-foreclosure suit over real property in Stillwater, MN</li>
   </ul>
   <p style="font-size:14px;color:#7a6e60;line-height:1.65;margin:0">Every figure and deadline above was checked against these primary sources at the time of the last update &mdash; not against secondary coverage. Tax rules change; confirm current guidance at the linked source (or <a href="/#contact" style="color:#8a6e2f">ask us directly</a>) before acting.</p>
 </div>
@@ -492,6 +565,14 @@ try {
     <div class="faq-item">
       <div class="faq-q">What if I genuinely can no longer afford my payment plan?</div>
       <div class="faq-a">Your financial situation may have changed enough to warrant a lower monthly payment (based on updated income/expense documentation), Currently Not Collectible status if you're genuinely unable to pay anything, or an Offer in Compromise if your financial outlook has changed significantly. A CP523 is sometimes the appropriate point to re-evaluate what resolution fits your actual situation.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">My notice says CP523H, not CP523 — is that different?</div>
+      <div class="faq-a">CP523H is a variant sent specifically for defaulted installment agreements covering the Affordable Care Act's Shared Responsibility Payment (SRP) balance, rather than income tax. The default mechanics and 30-day response window are the same as a standard CP523 — only the underlying balance type differs.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">I lost my notice — what number do I call?</div>
+      <div class="faq-a">Always try the number printed on your specific notice first, since it routes you to the unit handling your case. If you no longer have the notice, the IRS's general individual taxpayer line is 800-829-1040.</div>
     </div>
   </div>
   
@@ -537,7 +618,7 @@ try {
 </div>
 </div>
 <footer>
-  <p>IRS Resolution Service LLC · 9673 Camino Capistrano, Las Vegas, NV · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
+  <p>IRS Resolution Service LLC · 9673 Camino Capistrano Lane, Las Vegas, NV 89147 · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
   <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice. IRS Resolution Service is a private tax firm and is <strong>not affiliated with, endorsed by, or connected to the Internal Revenue Service</strong> or any government agency.</p>
 </footer>
 <script>
