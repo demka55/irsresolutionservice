@@ -170,7 +170,7 @@ table.kw tr:hover td{background:#faf8f4}
   <div class="topbar">
     <div>
       <h1>AI Overview Tracker</h1>
-      <p id="lastChecked">177 keywords · irsresolutionservice.com · Updated daily 6am UTC</p>
+      <p id="lastChecked">Loading keyword count… · irsresolutionservice.com · Updated daily 6am UTC</p>
     </div>
     <div class="actions">
       <button class="btn" onclick="logout()">Sign out</button>
@@ -270,27 +270,28 @@ async function loadResults() {
       
       const dt = new Date(d.results.checkedAt);
       const dtStr = isNaN(dt) ? '—' : `${dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})} at ${dt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}`;
-      const isPartial = d.results.partial && d.results.keywords.length < 127;
+      const totalKw = d.results.summary?.total || d.results.keywords.length;
+      const isPartial = d.results.partial && d.results.keywords.length < totalKw;
       document.getElementById('lastChecked').textContent =
         isPartial 
-          ? `${d.results.keywords.length}/177 keywords checked · last updated ${dtStr} · incomplete run`
-          : `177 keywords · last checked ${dtStr}`;
+          ? `${d.results.keywords.length}/${totalKw} keywords checked · last updated ${dtStr} · incomplete run`
+          : `${totalKw} keywords · last checked ${dtStr}`;
 
       const appearing = d.results.keywords.filter(k => k.our_pages && k.our_pages.length > 0).length;
       const errCount  = d.results.keywords.filter(k => k.error).length;
 
       if (isPartial) {
-        setStatus('amber', `Partial results: ${d.results.keywords.length}/177 keywords · click "Run now" to complete (will resume where left off)`);
+        setStatus('amber', `Partial results: ${d.results.keywords.length}/${totalKw} keywords · click "Run now" to complete (will resume where left off)`);
       } else {
         setStatus('green', `We appear in ${appearing} searches · ${d.results.summary.site_cited} cited in AI Overview${errCount ? ` · ${errCount} errors` : ''}`);
       }
 
-      // If all 19 complete but summary wasn't saved (walked away), save it now
+      // If the full run completed but summary wasn't saved (walked away), save it now
       if (d.results.partial === false && !d.results.checkedAt.startsWith('200')) {
         fetch(`/api/seo-track?action=finish&password=${encodeURIComponent(apw)}`).catch(() => {});
       }
     } else {
-      setStatus('amber', 'No data yet — click "Run now" to check all 177 keywords');
+      setStatus('amber', 'No data yet — click "Run now" to check all keywords');
       document.getElementById('tblBody').innerHTML = '<div class="empty">No results yet. Click "Run now" above to run the first check.</div>';
       renderFilters();
     }
