@@ -325,6 +325,103 @@ const KEYWORDS = [
   "final notice of intent to levy 30 days",
   "lt11 last known address",
   "form 12153 cdp hearing",
+  // NEW BATCH: approved "People also search for" style long-tail (CP2000, CP504, CP14, CP523, CP59)
+  // -- CP2000 (real PAA/related-search terms) --
+  // -- CP2000 (2x expansion, same style) --
+  "cp2000 notice sample",
+  "cp2000 timeline",
+  "cp2000 phone number",
+  "cp2000 extension request",
+  "cp2000 already paid",
+  "cp2000 how long to respond",
+  "cp2000 reddit",
+  "cp2000 crypto",
+  "cp2000 1099 mismatch",
+  "cp2000 disagree",
+  "cp2000 interest calculation",
+  "cp2000 vs audit letter",
+  "cp2000 second notice",
+  "cp2000 what happens if ignored",
+  "cp2000 tax attorney",
+  "cp2000 amended return",
+
+  // -- CP504 (real PAA/related-search terms) --
+  "what comes after cp504 reddit",
+  "cp504 vs lt11",
+  "cp504 1400",
+  // -- CP504 (2x expansion, same style) --
+  "cp504 tax attorney",
+  "cp504 wage garnishment",
+  "cp504 bank levy",
+  "cp504 30 days",
+  "cp504 already paid",
+  "cp504 dispute",
+  "cp504 how serious",
+  "cp504 timeline",
+  "cp504 social security",
+  "cp504 sample letter",
+  "cp504 what to do",
+  "cp504 ignore",
+  "cp504 phone call",
+  "cp504 espanol",
+  "cp504 state refund",
+
+  // -- CP14 (real PAA/related-search terms) --
+  // -- CP14 (2x expansion, same style) --
+  "cp14 balance due",
+  "cp14 already paid reddit",
+  "cp14 payment plan",
+  "cp14 dispute",
+  "cp14 interest",
+  "cp14 60 days",
+  "cp14 sample",
+  "cp14 espanol",
+  "cp14 large balance",
+  "cp14 scam",
+  "cp14 fake",
+  "cp14 how to respond",
+  "cp14 first time abatement",
+  "cp14 online account",
+  "cp14 mailed late",
+  "cp14 100000",
+
+  // -- CP523 (real PAA/related-search terms) --
+  // -- CP523 (2x expansion, same style) --
+  "cp523 reinstate",
+  "cp523 installment agreement default",
+  "cp523 30 days",
+  "cp523 appeal",
+  "cp523 sample",
+  "cp523 already paid",
+  "cp523 how to fix",
+  "cp523 payment plan restructure",
+  "cp523 offer in compromise",
+  "cp523 currently not collectible",
+  "cp523 espanol",
+  "cp523 letter sample",
+  "cp523 bank levy",
+  "cp523 wage garnishment",
+  "cp523 fee",
+
+  // -- CP59 (real PAA/related-search terms) --
+  // -- CP59 (2x expansion, same style) --
+  "cp59 already filed",
+  "cp59 8 weeks",
+  "cp59 form 15103",
+  "cp59 substitute for return",
+  "cp59 how to respond",
+  "cp59 sample",
+  "cp59 already paid",
+  "cp59 espanol",
+  "cp59 non filer",
+  "cp59 expat",
+  "cp59sn",
+  "cp59 penalty",
+  "cp59 ignore",
+  "cp59 old return",
+  "cp59 tax preparer",
+  "cp59 phone",
+
 ]
 
 const H = {
