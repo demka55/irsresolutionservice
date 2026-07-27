@@ -381,6 +381,7 @@ footer a{color:var(--gold);text-decoration:none}
   <div class="wrap">
     <div class="bracket-hero-copy">
       <div style="display:inline-block;background:var(--amber-bg);color:var(--amber);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:2px;margin-bottom:1rem">Projected — Not Yet Official</div>
+      <div id="releaseCountdown" style="display:inline-block;background:var(--gold-muted);color:var(--gold-dim);font-size:11px;font-weight:700;letter-spacing:.08em;padding:5px 12px;border-radius:2px;margin:0 0 1rem 8px"></div>
       <h1>2027 Federal Tax Brackets: Projected, With the Math Shown</h1>
       <p><strong>The short answer:</strong> the IRS has not released official tax-year-2027 brackets. They're expected around October 2026. Below is a full, methodology-transparent projection — built from the confirmed 2026 brackets and current Chained CPI-U data through June 2026 — plus a breakdown of exactly how the IRS calculates these numbers, its release track record, and the real probability of an on-time release given recent IRS staffing disruption.</p>
       <p style="margin-top:1rem;font-size:14px;color:var(--ink-muted)">Written by <a class="text-link" href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener">Romeo Razi, CPA</a>, former IRS Tax Examiner — cross-checked against IRS Revenue Procedures, BLS data, and Treasury Inspector General reporting (full sources at the bottom)</p>
@@ -469,6 +470,22 @@ footer a{color:var(--gold);text-decoration:none}
       </div>
       <p style="font-size:13px;color:var(--ink-muted);margin-top:.75rem">2027 figures are our own projection (3.4% Chained CPI-U adjustment applied to confirmed 2026 thresholds), not official IRS numbers. This calculator is for illustration only and does not account for credits, phase-outs, or the standard deduction — it assumes the income entered is already your <em>taxable</em> income after deductions. Not tax advice.</p>
     </div>
+
+    <h3 class="sub" style="margin-top:1.75rem">Don't want to type in a number? Here are common income levels, calculated for you</h3>
+    <div class="bracket-table-wrap">
+      <table class="bracket-table">
+        <tr><th>Taxable Income</th><th>Filing Status</th><th>2026 Tax (Confirmed)</th><th>2027 Tax (Projected)</th><th>Difference</th></tr>
+        <tr><td>$50,000</td><td>Single</td><td>$5,752 (11.5%)</td><td>$5,744 (11.5%)</td><td>-$8</td></tr>
+        <tr><td>$100,000</td><td>Single</td><td>$16,712 (16.7%)</td><td>$16,534 (16.5%)</td><td>-$178</td></tr>
+        <tr><td>$250,000</td><td>Single</td><td>$56,456 (22.6%)</td><td>$55,656 (22.3%)</td><td>-$800</td></tr>
+        <tr><td>$500,000</td><td>Single</td><td>$143,769 (28.8%)</td><td>$142,708 (28.5%)</td><td>-$1,062</td></tr>
+        <tr><td>$80,000</td><td>Married Filing Jointly</td><td>$9,104 (11.4%)</td><td>$9,087 (11.4%)</td><td>-$17</td></tr>
+        <tr><td>$150,000</td><td>Married Filing Jointly</td><td>$22,424 (14.9%)</td><td>$22,062 (14.7%)</td><td>-$362</td></tr>
+        <tr><td>$300,000</td><td>Married Filing Jointly</td><td>$57,196 (19.1%)</td><td>$56,690 (18.9%)</td><td>-$506</td></tr>
+        <tr><td>$600,000</td><td>Married Filing Jointly</td><td>$147,538 (24.6%)</td><td>$145,414 (24.2%)</td><td>-$2,124</td></tr>
+      </table>
+    </div>
+    <p style="font-size:13px;color:var(--ink-muted)">Percentages shown are effective tax rate (total tax ÷ income), not marginal rate. Same methodology and same caveats as the calculator above.</p>
   </div>
 
 <nav class="toc" aria-label="Table of contents">
@@ -696,6 +713,11 @@ footer a{color:var(--gold);text-decoration:none}
     </table>
   </div>
   <p style="font-size:14px">We chose a flat single-rate projection rather than a range specifically so every number in this guide is independently reproducible — you can check our math against the confirmed 2026 figures yourself. We did not smooth, average, or otherwise adjust the 3.4% figure; it's the actual most-recent published Chained CPI-U 12-month change as of this writing. If the real August 2026 data comes in materially different, we will update this page and note the revision date below.</p>
+
+  <div class="callout callout-amber">
+    <div class="label amber">A limitation worth being upfront about</div>
+    <p>A flat percentage applied to every bracket is a reasonable baseline, but it isn't always how the real numbers move. Comparing the confirmed 2025 and 2026 brackets directly: the 10% and 22% thresholds for single filers each rose about <strong>4.0%</strong>, while the top 37% threshold rose only about <strong>2.3%</strong> — a real, verifiable gap, not a rounding artifact. That's because 2026 wasn't a pure inflation-indexing year; the One Big Beautiful Bill Act made substantive statutory changes to the bracket structure itself, on top of routine CPI indexing. If Congress passes comparable legislation before October 2026, our flat-percentage 2027 projection could be off in the same uneven way — likely understating lower-bracket movement and overstating upper-bracket movement, based on this precedent. No such legislation is currently pending, which is why we're using a flat adjustment rather than guessing at a distribution — but it's a real source of uncertainty beyond the CPI number itself, and no other 2027 projection we found even acknowledges this distinction exists.</p>
+  </div>
   <div class="callout callout-red">
     <div class="label red">Important</div>
     <p>Every number under "Projected 2027" above is an estimate, not an official IRS figure. Do not use these numbers for actual tax filing, withholding elections, or estimated payment calculations. Use the confirmed <a href="/tax-brackets-2026" style="color:var(--red);text-decoration:underline">2026 brackets</a> for any return you're filing right now.</p>
@@ -811,6 +833,21 @@ function showTab(id,btn){
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
 }
+
+(function(){
+  var target = new Date('2026-10-09T00:00:00');
+  var now = new Date();
+  var el = document.getElementById('releaseCountdown');
+  if (!el) return;
+  var diffDays = Math.ceil((target - now) / (1000*60*60*24));
+  if (diffDays > 0){
+        el.textContent = diffDays + ' day' + (diffDays === 1 ? '' : 's') + ' until expected release (based on the most recent release date)';
+  } else if (diffDays >= -45) {
+    el.textContent = 'Expected release window is open — check IRS.gov for the latest';
+  } else {
+    el.style.display = 'none';
+  }
+})();
 
 var BRACKETS_2026 = {
   single: [[0,.10],[12400,.12],[50400,.22],[105700,.24],[201775,.32],[256225,.35],[640600,.37]],
