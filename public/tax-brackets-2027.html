@@ -81,7 +81,7 @@ footer a{color:var(--gold);text-decoration:none}
 @media(max-width:640px){.nav{gap:1rem}.nav a:not(.nav-cta){display:none}.card-grid{grid-template-columns:1fr}}
 
 .bracket-hero{background:var(--white);padding:120px 2rem 48px;border-bottom:1px solid var(--cream-dark)}
-.bracket-hero .wrap{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.bracket-hero .wrap{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;max-width:1200px}
 .bracket-hero-copy h1{font-family:var(--serif);font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:1rem}
 .bracket-hero-copy p{font-size:16px;color:var(--ink-soft);margin-bottom:0}
 .bracket-table-wrap{overflow-x:auto}
@@ -413,47 +413,15 @@ footer a{color:var(--gold);text-decoration:none}
     <div class="bracket-hero-copy">
       <div style="display:inline-block;background:var(--amber-bg);color:var(--amber);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:2px;margin-bottom:1rem">True 2027 Figures Below Are Projected</div>
       <div id="releaseCountdown" style="display:inline-block;background:var(--gold-muted);color:var(--gold-dim);font-size:11px;font-weight:700;letter-spacing:.08em;padding:5px 12px;border-radius:2px;margin:0 0 1rem 8px"></div>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 1rem;font-size:14px;color:#7a6e60">
+        <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Tax Examiner" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid #c9a84c">
+        <span>By <a href="/#founders" style="color:#8a6e2f;font-weight:600;text-decoration:none">Romeo Razi, CPA</a> &mdash; Former IRS Tax Examiner</span>
+        <span>&middot;</span><span>Updated July 30, 2026</span>
+        <span>&middot;</span><span>Fact-checked against IRS primary sources</span>
+      </div>
       <h1>2027 Tax Brackets: The Confirmed 2026 Rates You'll File Under, Plus a Real Projection for True 2027 Income</h1>
 
-      <div style="background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem 1.5rem;margin:0 0 1.5rem">
-        <div style="font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:.08em;color:var(--gold-dim);margin-bottom:.85rem">📋 Recent 2026 developments — what actually changed</div>
-        <div style="overflow-x:auto">
-          <table style="width:100%;border-collapse:collapse;font-size:14px">
-            <thead>
-              <tr style="background:var(--cream-warm)">
-                <th style="text-align:left;padding:8px 10px;border:1px solid var(--cream-dark)">Development</th>
-                <th style="text-align:left;padding:8px 10px;border:1px solid var(--cream-dark)">Date</th>
-                <th style="text-align:left;padding:8px 10px;border:1px solid var(--cream-dark)">What it means for you</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="padding:8px 10px;border:1px solid var(--cream-dark);font-weight:600">Rev. Proc. 2025-32 confirmed the 2026 brackets</td>
-                <td style="padding:8px 10px;border:1px solid var(--cream-dark)">Oct 9, 2025</td>
-                <td style="padding:8px 10px;border:1px solid var(--cream-dark)">These are the official numbers for the return you'll file in spring 2027 — see the full table just below. This is the same Revenue Procedure process that will set the true 2027 figures around October 2026.</td>
-              </tr>
-              <tr>
-                <td style="padding:8px 10px;border:1px solid var(--cream-dark);font-weight:600">One Big Beautiful Bill Act signed into law</td>
-                <td style="padding:8px 10px;border:1px solid var(--cream-dark)">July 4, 2025</td>
-                <td style="padding:8px 10px;border:1px solid var(--cream-dark)">Made the current 10–37% bracket structure permanent — the "will brackets revert to pre-2018 rates" question that older articles still raise is settled and no longer a live risk.</td>
-              </tr>
-              <tr>
-                <td style="padding:8px 10px;border:1px solid var(--cream-dark);font-weight:600">Opportunity Zone "OZ 2.0" and new scholarship credit take effect</td>
-                <td style="padding:8px 10px;border:1px solid var(--cream-dark)">Jan 1, 2027</td>
-                <td style="padding:8px 10px;border:1px solid var(--cream-dark)">Not a bracket change, but the single biggest actual rule change tied to 2027 specifically — <a href="#sec-rulechanges" style="color:var(--gold-dim)">full detail below</a>.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p style="font-size:13px;color:var(--ink-muted);margin:.75rem 0 0">Worth knowing: no 2026 court ruling directly controls bracket figures — they're set by a fixed statutory inflation formula, not litigation. The genuinely relevant legal activity this year has been about IRS collection procedure, not bracket math.</p>
-      </div>
-
       <p><strong>The short answer:</strong> if you're asking what applies to the return you'll file in spring 2027, that's the <strong>confirmed 2026 brackets</strong> — already official, <a class="text-link" href="#sec-confusion">shown in full just below</a>. If you mean the literal tax-year-2027 numbers covering income you earn during 2027, the IRS hasn't released those yet — expected around October 2026. This page covers both: the confirmed table you actually need right now, and a full, methodology-transparent projection for true 2027 — built from the confirmed 2026 brackets and current Chained CPI-U data through June 2026, plus exactly how the IRS calculates these numbers, its release track record, and the real probability of an on-time release.</p>
-      <div class="callout callout-gold" style="margin-top:1.1rem">
-        <div class="label gold">Biggest actual rule change for 2027</div>
-        <p>It isn't a bracket number — it's Opportunity Zones. On January 1, 2027, the program resets entirely under OBBBA: a rolling 5-year gain deferral replaces the old fixed December 31, 2026 recognition deadline, and a new 30% basis step-up applies to rural investments. The same day, a brand-new $1,700 federal scholarship tax credit also goes live for the first time. Neither has anything to do with inflation math. <a href="#sec-rulechanges" style="font-style:normal;color:var(--gold-dim);font-weight:600">See everything changing for 2027 →</a></p>
-      </div>
-      <p style="margin-top:1rem;font-size:14px;color:var(--ink-muted)">Written by <a class="text-link" href="https://www.linkedin.com/in/romeo-razi/" target="_blank" rel="noopener">Romeo Razi, CPA</a>, former IRS Tax Examiner — cross-checked against IRS Revenue Procedures, BLS data, and Treasury Inspector General reporting (full sources at the bottom)</p>
     </div>
     <div>
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem">
@@ -492,7 +460,49 @@ footer a{color:var(--gold);text-decoration:none}
     </div>
   </div>
 </div>
+
+<div class="wrap" style="max-width:1200px;padding-top:2rem">
+  <div style="background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem 1.5rem;margin:0 0 1.5rem">
+    <div style="font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:.08em;color:var(--gold-dim);margin-bottom:.85rem">📋 Recent 2026 developments — what actually changed</div>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:14px">
+        <thead>
+          <tr style="background:var(--cream-warm)">
+            <th style="text-align:left;padding:8px 10px;border:1px solid var(--cream-dark)">Development</th>
+            <th style="text-align:left;padding:8px 10px;border:1px solid var(--cream-dark)">Date</th>
+            <th style="text-align:left;padding:8px 10px;border:1px solid var(--cream-dark)">What it means for you</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:8px 10px;border:1px solid var(--cream-dark);font-weight:600">Rev. Proc. 2025-32 confirmed the 2026 brackets</td>
+            <td style="padding:8px 10px;border:1px solid var(--cream-dark);white-space:nowrap">Oct 9, 2025</td>
+            <td style="padding:8px 10px;border:1px solid var(--cream-dark)">These are the official numbers for the return you'll file in spring 2027 — see the full table above. This is the same Revenue Procedure process that will set the true 2027 figures around October 2026.</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 10px;border:1px solid var(--cream-dark);font-weight:600">One Big Beautiful Bill Act signed into law</td>
+            <td style="padding:8px 10px;border:1px solid var(--cream-dark);white-space:nowrap">July 4, 2025</td>
+            <td style="padding:8px 10px;border:1px solid var(--cream-dark)">Made the current 10–37% bracket structure permanent — the "will brackets revert to pre-2018 rates" question that older articles still raise is settled and no longer a live risk.</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 10px;border:1px solid var(--cream-dark);font-weight:600">Opportunity Zone "OZ 2.0" and new scholarship credit take effect</td>
+            <td style="padding:8px 10px;border:1px solid var(--cream-dark);white-space:nowrap">Jan 1, 2027</td>
+            <td style="padding:8px 10px;border:1px solid var(--cream-dark)">Not a bracket change, but the single biggest actual rule change tied to 2027 specifically — <a href="#sec-rulechanges" style="color:var(--gold-dim)">full detail below</a>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:13px;color:var(--ink-muted);margin:.75rem 0 0">Worth knowing: no 2026 court ruling directly controls bracket figures — they're set by a fixed statutory inflation formula, not litigation. The genuinely relevant legal activity this year has been about IRS collection procedure, not bracket math.</p>
+  </div>
+
+  <div class="callout callout-gold">
+    <div class="label gold">Biggest actual rule change for 2027</div>
+    <p>It isn't a bracket number — it's Opportunity Zones. On January 1, 2027, the program resets entirely under OBBBA: a rolling 5-year gain deferral replaces the old fixed December 31, 2026 recognition deadline, and a new 30% basis step-up applies to rural investments. The same day, a brand-new $1,700 federal scholarship tax credit also goes live for the first time. Neither has anything to do with inflation math. <a href="#sec-rulechanges" style="font-style:normal;color:var(--gold-dim);font-weight:600">See everything changing for 2027 →</a></p>
+  </div>
+</div>
+
 <div class="nav-links-bar"><a href="/tax-brackets-2026">2026 Tax Brackets (Confirmed)</a><span>·</span><a href="/one-big-beautiful-act">One Big Beautiful Act</a><span>·</span><a href="/irs-tips-overtime-tax">Tax-Free Tips</a><span>·</span><a href="/salt-deduction-2025">SALT $40K</a><span>·</span><a href="/year-end-tax-planning">Year-End Planning</a></div>
+
 
 <div class="body-wrap" style="padding-bottom:0">
   <div id="sec-calculator" style="background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;padding:1.75rem 2rem;margin:0 0 2.5rem">
