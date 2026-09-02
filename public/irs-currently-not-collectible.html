@@ -13,18 +13,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<title>IRS Currently Not Collectible Status | CNC Guide</title>
-<meta name="description" content="CNC status stops all IRS collection — no levies, no garnishment — when you can't pay. Former IRS Auditor explains how to qualify via Form 433.">
+<title>IRS Currently Not Collectible (Non-Collectible) Status | CNC Guide</title>
+<meta name="description" content="CNC — also called 'non-collectible' status — stops all IRS collection when you can't pay: no levies, no garnishment. Former IRS Auditor explains how to qualify via Form 433.">
 <link rel="canonical" href="https://irsresolutionservice.com/irs-currently-not-collectible">
 <meta property="og:type" content="article">
-<meta property="og:title" content="IRS Currently Not Collectible Status | CNC Guide">
-<meta property="og:description" content="CNC status stops all IRS collection — no levies, no garnishment — when you can't pay. Former IRS Auditor explains how to qualify via Form 433.">
+<meta property="og:title" content="IRS Currently Not Collectible (Non-Collectible) Status | CNC Guide">
+<meta property="og:description" content="CNC — also called 'non-collectible' status — stops all IRS collection when you can't pay: no levies, no garnishment. Former IRS Auditor explains how to qualify via Form 433.">
 <meta property="og:url" content="https://irsresolutionservice.com/irs-currently-not-collectible">
 <meta property="og:site_name" content="IRS Resolution Service">
 <meta property="og:image" content="https://irsresolutionservice.com/romeo-razi.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="IRS Currently Not Collectible Status | CNC Guide">
-<meta name="twitter:description" content="CNC status stops all IRS collection — no levies, no garnishment — when you can't pay. Former IRS Auditor explains how to qualify via Form 433.">
+<meta name="twitter:title" content="IRS Currently Not Collectible (Non-Collectible) Status | CNC Guide">
+<meta name="twitter:description" content="CNC — also called 'non-collectible' status — stops all IRS collection when you can't pay: no levies, no garnishment. Former IRS Auditor explains how to qualify via Form 433.">
 <meta name="twitter:image" content="https://irsresolutionservice.com/romeo-razi.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -59,6 +59,13 @@ body { font-family: var(--sans); background: var(--cream); color: var(--ink); fo
 .direct-answer p { font-size: 17px; line-height: 1.65; color: var(--ink-soft); }
 .direct-answer strong { color: var(--green); }
 .notice-body { max-width: 840px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+.toc-box { background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.5rem 1.75rem; margin: 0 0 2.5rem; }
+.toc-box h3 { font-family: var(--serif); font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: 0.85rem; }
+.toc-box ol { list-style: decimal; padding-left: 1.25rem; margin: 0; columns: 1; }
+.toc-box li { margin-bottom: 0.55rem; font-size: 15px; line-height: 1.4; }
+.toc-box a { color: var(--gold-dim); text-decoration: none; font-weight: 600; }
+.toc-box a:hover { color: var(--gold); text-decoration: underline; }
+@media (min-width: 640px) { .toc-box ol { columns: 2; column-gap: 2.5rem; } }
 .section { margin-bottom: 3.5rem; }
 .section h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
 .section h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); margin: 1.5rem 0 0.75rem; }
@@ -76,6 +83,22 @@ body { font-family: var(--sans); background: var(--cream); color: var(--ink); fo
 .cnc-vs-table td:first-child { font-weight: 600; color: var(--ink); width: 35%; }
 .cnc-vs-table tr:last-child td { border-bottom: none; }
 .cnc-vs-table tr:nth-child(even) td { background: var(--cream); }
+.stops-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1.5rem 0; }
+@media (min-width: 640px) { .stops-grid { grid-template-columns: 1fr 1fr; } }
+.stops-card { border-radius: 6px; padding: 1.25rem 1.5rem; border: 1px solid var(--cream-dark); }
+.stops-card.yes { background: var(--green-light); border-color: #b8dfc0; }
+.stops-card.no { background: var(--red-light); border-color: #e8b0b0; }
+.stops-card-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+.stops-card.yes .stops-card-title { color: var(--green); }
+.stops-card.no .stops-card-title { color: var(--red); }
+.stops-card ul { list-style: none; padding: 0; margin: 0; }
+.stops-card li { padding: 4px 0 4px 22px; position: relative; font-size: 14.5px; color: var(--ink-soft); line-height: 1.5; }
+.stops-card.yes li::before { content: "✓"; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+.stops-card.no li::before { content: "✕"; position: absolute; left: 0; color: var(--red); font-weight: 700; }
+.example-box { background: var(--gold-muted); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+.example-box-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.6rem; }
+.example-box p { margin: 0 0 0.6rem; font-size: 15px; color: var(--ink-soft); line-height: 1.65; }
+.example-box p:last-child { margin-bottom: 0; }
 .cta-box { background: var(--ink); color: var(--white); border-radius: 6px; padding: 2.5rem 2rem; text-align: center; margin: 3rem 0; }
 .cta-box h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; }
 .cta-box p { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 1.5rem; }
@@ -128,10 +151,11 @@ footer a { color: var(--gold); text-decoration: none; }
     {
       "@type": "Article",
       "headline": "IRS Currently Not Collectible Status: How to Qualify | Former IRS Auditor",
-      "description": "Currently Not Collectible (CNC) status pauses all IRS collection when you genuinely cannot pay. Former IRS Auditor Romeo Razi explains how to qualify and what happens next.",
+      "description": "Currently Not Collectible (CNC) status \u2014 sometimes called 'non-collectible' status \u2014 pauses all IRS collection when you genuinely cannot pay. Former IRS Auditor Romeo Razi explains how to qualify and what happens next.",
       "url": "https://irsresolutionservice.com/irs-currently-not-collectible",
-      "dateModified": "2026-07-30",
+      "dateModified": "2026-09-02",
       "datePublished": "2026-07-01",
+      "keywords": "currently not collectible irs, irs non collectible status, CNC status, currently not collectible status, Form 433-F, Form 433-A, IRS hardship status",
       "author": { "@id": "https://irsresolutionservice.com/#romeo-razi" },
       "publisher": {
         "@type": "Organization",
@@ -179,10 +203,13 @@ footer a { color: var(--gold); text-decoration: none; }
     {"@type":"Question","name":"Can the IRS still seize my tax refund if I'm in CNC status?","acceptedAnswer":{"@type":"Answer","text":"Yes. CNC suspends enforced collection but the IRS can still apply future tax refunds to your outstanding balance through the Treasury Offset Program."}},
     {"@type":"Question","name":"Will I owe more by the time the statute runs out?","acceptedAnswer":{"@type":"Answer","text":"Yes — interest continues during CNC. But the entire amount including accrued interest expires when the 10-year collection statute runs out. The IRS cannot collect a single dollar after that date."}},
     {"@type":"Question","name":"Can a business get CNC status?","acceptedAnswer":{"@type":"Answer","text":"Yes, using Form 433-B. The analysis compares business income against necessary operating expenses, similar to the individual analysis."}},
-    {"@type":"Question","name":"How long does currently not collectible status last?","acceptedAnswer":{"@type":"Answer","text":"There's no fixed expiration. CNC isn't permanent — the IRS periodically reviews accounts, often by checking income on your future tax filings, and can reactivate collection if your financial situation improves. Higher-income cases tend to get reviewed sooner, sometimes annually; clear hardship cases may go years between reviews. It can also effectively last until the 10-year collection statute expires, since CNC status doesn't pause that clock."}},
+    {"@type":"Question","name":"What if I own a home with equity?","acceptedAnswer":{"@type":"Answer","text":"Home equity is an asset the IRS considers in the CNC analysis. If you have significant equity, the IRS may determine you have the ability to borrow against it to pay the debt, which could disqualify you for CNC. This requires careful analysis, particularly in markets where home values have increased significantly."}},
+    {"@type":"Question","name":"How long does currently not collectible status last?","acceptedAnswer":{"@type":"Answer","text":"There's no fixed expiration. CNC isn't permanent — the IRS periodically reviews accounts, often by checking income on your future tax filings, and can reactivate collection if your financial situation improves. Higher-income cases tend to get reviewed sooner, sometimes annually; clear hardship cases may go years between reviews. Tax resolution practitioners commonly report clients staying in CNC for one to three years on average, though the IRS doesn't publish an official figure and individual cases vary widely. It can also effectively last until the 10-year collection statute expires, since CNC status doesn't pause that clock."}},
     {"@type":"Question","name":"Can the IRS still file a lien while I'm in CNC status?","acceptedAnswer":{"@type":"Answer","text":"Yes. CNC status stops active collection enforcement (levies, wage garnishment, revenue officer contact), but the decision to file a Notice of Federal Tax Lien is separate from CNC and can still happen, particularly on larger balances."}},
     {"@type":"Question","name":"Does CNC status protect me from passport denial or revocation?","acceptedAnswer":{"@type":"Answer","text":"Yes, as long as it's active. Being in CNC status is a statutory exclusion from IRS certification as having \"seriously delinquent tax debt\" under IRC \u00a7 7345, the same way an active installment agreement is. This matters once your combined balance exceeds the inflation-adjusted threshold ($66,000 for 2026) and a lien or levy is already on file. If CNC status is later reversed and your balance still exceeds the threshold, that protection goes away."}},
-    {"@type":"Question","name":"How do I request currently not collectible status from the IRS?","acceptedAnswer":{"@type":"Answer","text":"Call the number on your most recent IRS notice, or 800-829-1040 if you don't have one, and be ready to complete Form 433-F (or Form 433-A for more complex cases) showing your income, expenses, and assets. You generally need to be current on filing all required returns first. An assigned revenue officer may request the form directly if your case has progressed that far."}}
+    {"@type":"Question","name":"How do I request currently not collectible status from the IRS?","acceptedAnswer":{"@type":"Answer","text":"Call the number on your most recent IRS notice, or 800-829-1040 if you don't have one, and be ready to complete Form 433-F (or Form 433-A for more complex cases) showing your income, expenses, and assets. You generally need to be current on filing all required returns first. An assigned revenue officer may request the form directly if your case has progressed that far."}},
+    {"@type":"Question","name":"Is CNC status only for financial hardship, or are there other reasons an account becomes not collectible?","acceptedAnswer":{"@type":"Answer","text":"Hardship — income too low relative to allowable expenses — is by far the most common reason, and it's what this guide focuses on. But the IRS can also mark an account not collectible for reasons that have nothing to do with an individual's ability to pay: a business that has gone defunct with no assets to pursue, a taxpayer the IRS cannot locate, or a case where the cost of continued collection would exceed what could realistically be recovered. Those non-hardship situations follow different internal procedures than the hardship-based CNC process described here, and generally aren't something you request the same way an individual requests hardship CNC."}},
+    {"@type":"Question","name":"Is \"currently not collectible\" used in IRS scam calls?","acceptedAnswer":{"@type":"Answer","text":"Yes. The IRS's 2026 \"Dirty Dozen\" scam list flagged AI-generated robocalls, including one intercepted call that told the recipient they qualified for \"currently not collectible\" status with limited \"relief slots\" filling up fast \u2014 both fabricated. The IRS contacts taxpayers by mail first, never leaves urgent prerecorded voicemail threats, and never demands immediate payment by phone. If you get a call like this, hang up and verify your actual account status by calling the IRS directly using a number from IRS.gov."}}
       ]
     }
   ]
@@ -196,6 +223,21 @@ footer a { color: var(--gold); text-decoration: none; }
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://irsresolutionservice.com/" },
     { "@type": "ListItem", "position": 2, "name": "IRS Resolution & Collection", "item": "https://irsresolutionservice.com/#services" },
     { "@type": "ListItem", "position": 3, "name": "Currently Not Collectible", "item": "https://irsresolutionservice.com/irs-currently-not-collectible" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to request IRS Currently Not Collectible status",
+  "description": "Step-by-step process for requesting CNC (non-collectible) status from the IRS when you cannot pay your tax debt and cover basic living expenses.",
+  "step": [
+    {"@type": "HowToStep", "position": 1, "name": "File all required returns first", "text": "The IRS will not place a delinquent filer in CNC status. File any missing returns before requesting CNC, even if you can't pay the resulting balance."},
+    {"@type": "HowToStep", "position": 2, "name": "Gather your financial documentation", "text": "Have income documents (pay stubs, bank statements from the last three months) ready, along with information on assets, bank accounts, and monthly expenses."},
+    {"@type": "HowToStep", "position": 3, "name": "Complete Form 433-F (or Form 433-A)", "text": "Form 433-F is the shorter version used by the IRS Automated Collection System; Form 433-A is used for more complex cases or when a revenue officer is assigned."},
+    {"@type": "HowToStep", "position": 4, "name": "Call the IRS or your assigned revenue officer", "text": "Call the IRS Automated Collection System at 1-800-829-7650, or the number on your most recent notice. If a revenue officer is already assigned to your case, work directly with them instead."},
+    {"@type": "HowToStep", "position": 5, "name": "State your request and complete the financial analysis", "text": "Tell the representative you are requesting Currently Not Collectible status due to financial hardship. They will walk through the 433-F questions on the call to compare your income against allowable expenses."}
   ]
 }
 </script>
@@ -286,11 +328,11 @@ footer a { color: var(--gold); text-decoration: none; }
 
 <div class="notice-hero">
   <div class="notice-hero-inner">
-    <div class="notice-eyebrow">IRS Collection Relief</div>
+    <div class="notice-eyebrow">IRS Collection Relief — a.k.a. "Non-Collectible" Status</div>
     <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 1.5rem;font-size:14px;color:#7a6e60">
       <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Tax Examiner" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid #c9a84c">
       <span>By <a href="/#founders" style="color:#8a6e2f;font-weight:600;text-decoration:none">Romeo Razi, CPA</a> &mdash; Former IRS Tax Examiner</span>
-      <span>&middot;</span><span>Updated July 30, 2026</span>
+      <span>&middot;</span><span>Updated September 2, 2026</span>
       <span>&middot;</span><span>Fact-checked against IRS primary sources</span>
     </div>
     <div class="notice-code-display">Currently Not Collectible</div>
@@ -298,7 +340,7 @@ footer a { color: var(--gold); text-decoration: none; }
     <h1>When you genuinely cannot pay the IRS — CNC status stops all collection activity without requiring a payment plan or settlement</h1>
 
     <div class="direct-answer">
-      <p><strong>The short answer:</strong> Currently Not Collectible (CNC) status is a formal IRS designation that suspends all collection activity — no levies, no wage garnishment, no revenue officer contact — when your income doesn't cover your basic living expenses. It's not forgiveness. The debt remains and interest continues. But collection stops, giving you time to recover without the IRS taking your paycheck or bank account.</p>
+      <p><strong>The short answer:</strong> Currently Not Collectible (CNC) status — sometimes searched as "non-collectible" status — is a formal IRS designation that suspends all collection activity — no levies, no wage garnishment, no revenue officer contact — when your income doesn't cover your basic living expenses. It's not forgiveness. The debt remains and interest continues. But collection stops, giving you time to recover without the IRS taking your paycheck or bank account.</p>
     </div>
 
     <div style="background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem 1.5rem;margin:0 0 1.5rem">
@@ -349,12 +391,67 @@ footer a { color: var(--gold); text-decoration: none; }
     </div>
   </div>
 
-  <div class="section">
+  <div class="toc-box">
+    <h3>On this page</h3>
+    <ol>
+      <li><a href="#scam-alert">Scam alert: fake CNC calls</a></li>
+      <li><a href="#what-cnc-means">What CNC actually means</a></li>
+      <li><a href="#qualifying">How the IRS determines you qualify</a></li>
+      <li><a href="#how-to-request">How to request CNC status</a></li>
+      <li><a href="#after-cnc">What happens after CNC is granted</a></li>
+      <li><a href="#cnc-vs-alternatives">CNC vs. installment agreement vs. OIC</a></li>
+      <li><a href="#sources">Sources</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ol>
+  </div>
+
+  <div class="section" id="scam-alert">
+    <h2>Scam alert: fraudsters are using the term "currently not collectible" to sound legitimate</h2>
+    <p>In April 2026, the IRS included AI-generated robocalls in its annual "Dirty Dozen" list of tax scams. One intercepted call — surfaced by the spam-blocking company Nomorobo and reported on ABC News' <em>Good Morning America</em> — told the recipient they were eligible for "currently not collectible" status and warned that "relief slots are limited, and they're filling up fast."</p>
+    <p>Both details are fabricated. There's no such thing as a limited number of CNC "slots" — it's a financial eligibility determination, not a race against a deadline — and the IRS doesn't initiate contact this way in the first place. IRS spokesperson Yviand Hernandez told GMA that scammers are increasingly using real IRS terminology, program names, deductions, and credits specifically because it makes the call sound credible.</p>
+    <h3>How to tell a real IRS contact from a scam</h3>
+    <ul>
+      <li>The IRS contacts you <strong>by mail first</strong> — not with an unsolicited phone call about a status you never applied for.</li>
+      <li>The IRS will not leave <strong>urgent, threatening prerecorded voicemail messages</strong>.</li>
+      <li>The IRS will not call to <strong>demand immediate payment</strong> or threaten arrest.</li>
+      <li>There's no such thing as limited-time "relief slots" for CNC, an Offer in Compromise, or any other program — urgency pressure is itself a red flag.</li>
+    </ul>
+    <div class="warning-box">
+      <p><strong>If you get a call like this:</strong> hang up. Don't provide financial information, don't call back a number the caller gave you, and don't act on any deadline they created. If you want to check your actual account status, call the IRS directly using a number from IRS.gov or a notice you've previously received by mail — not anything provided during the suspicious call.</p>
+    </div>
+  </div>
+
+  <div class="section" id="what-cnc-means">
     <h2>What Currently Not Collectible actually means</h2>
-    <p>When the IRS places an account in CNC status, a transaction code 530 is posted to your transcript. This tells the IRS's automated systems and any assigned revenue officer to suspend all active collection on that account. The IRS will still send annual balance notices (CP504-type reminders), but it cannot levy your wages, seize your bank account, or take other enforced collection action while the account remains in CNC.</p>
-    <p>CNC is not a settlement and it is not forgiveness. The balance continues to accrue interest at the federal short-term rate plus 3%. Penalties may continue on unpaid balances. The <a href="/irs-collection-statute" class="tl">10-year collection statute (CSED)</a> continues to run — which is actually an advantage in some strategies, because every year in CNC is a year closer to the debt expiring entirely.</p>
-    <p>Two things CNC does <em>not</em> stop, and one requirement most guides skip: the IRS can still file a <a href="/irs-tax-lien" class="tl">Notice of Federal Tax Lien</a> against your property while you're in CNC status — collection enforcement pauses, but the lien filing decision is separate. The IRS can also still take future tax refunds through the Treasury Offset Program. And to get approved in the first place, you generally need to be current on filing all required tax returns — CNC pauses collection on what you owe, it doesn't excuse you from getting compliant on what you haven't filed.</p>
-    <p>One genuine upside almost nobody mentions: being in CNC status is itself one of the statutory exclusions from IRS passport certification. If your balance is large enough to risk passport denial or revocation — the 2026 threshold is $66,000 in combined tax, penalties, and interest, with a lien or levy already on file — an active CNC status keeps you out of "seriously delinquent" certification the same way a current installment agreement would. You'll also start receiving an annual <strong>CP71A</strong> reminder notice confirming your balance and CNC status — that notice alone isn't a sign anything has changed; it's simply the yearly bill the law requires the IRS to send.</p>
+    <p>When the IRS places an account in CNC status, a transaction code 530 is posted to your transcript — the internal signal telling IRS systems and any assigned revenue officer to suspend active collection. CNC is <strong>not a settlement and not forgiveness</strong>: the balance stays, and interest keeps accruing at the federal short-term rate plus 3%.</p>
+
+    <div class="stops-grid">
+      <div class="stops-card yes">
+        <div class="stops-card-title">CNC stops</div>
+        <ul>
+          <li>Wage garnishment</li>
+          <li>Bank account levies</li>
+          <li>Revenue officer contact / enforced collection</li>
+        </ul>
+      </div>
+      <div class="stops-card no">
+        <div class="stops-card-title">CNC does not stop</div>
+        <ul>
+          <li>Interest and most penalties accruing</li>
+          <li>The IRS filing a <a href="/irs-tax-lien" class="tl">Notice of Federal Tax Lien</a></li>
+          <li>Future refunds being seized (Treasury Offset Program)</li>
+          <li>The 10-year collection statute (CSED) from running</li>
+          <li>Annual balance-reminder notices (CP504-type, then CP71A)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>A worked example</h3>
+    <div class="example-box">
+      <div class="example-box-label">Example: $50,000 balance, placed in CNC in 2024</div>
+      <p>Maria owes $50,000 from a 2020 tax year that was assessed and filed on time. She loses her job, falls behind, and gets a CP504 notice threatening levy. She calls the IRS, completes Form 433-F, and her monthly income no longer covers her IRS-allowable expenses. Her account goes into CNC.</p>
+      <p><strong>What actually happens next:</strong> no levy hits her paycheck or bank account. Once a year, she gets a CP71A letter restating the balance — which keeps climbing with interest, toward roughly $60,000–$70,000 over several years — but no calls, no revenue officer, no garnishment. The CSED clock, running from the 2020 assessment, keeps moving toward its expiration regardless.</p>
+    </div>
 
     <div class="insider">
       <div class="insider-label">Romeo Razi — Former IRS Auditor</div>
@@ -376,10 +473,18 @@ footer a { color: var(--gold); text-decoration: none; }
       </svg>
       <p style="font-size:12px;color:var(--ink-muted);text-align:center;margin:.75rem 0 0">Every year in CNC status is a year the 10-year clock keeps running toward this line — with nothing paid.</p>
     </div>
+
+    <div class="warning-box">
+      <p><strong>This only works if the debt was actually assessed.</strong> The 10-year clock starts on the date of assessment — generally when the IRS processes a filed return or completes an audit. If you have years you never filed, there's no assessment yet, so there's no CSED running and nothing to "wait out." Worse, the IRS can pursue an unfiled year indefinitely. If any of your CNC-eligible years are unfiled, filing them isn't just a CNC eligibility requirement — it's what starts the clock this whole strategy depends on.</p>
+    </div>
+
+    <h3>The passport protection most guides miss</h3>
+    <p>Being in CNC status is itself one of the statutory exclusions from IRS passport certification. If your balance is large enough to risk passport denial or revocation — the 2026 threshold is <strong>$66,000</strong> in combined tax, penalties, and interest, with a lien or levy already on file — an active CNC status keeps you out of "seriously delinquent" certification, the same way a current installment agreement would.</p>
   </div>
 
-  <div class="section">
+  <div class="section" id="qualifying">
     <h2>How the IRS determines if you qualify — the Collection Financial Standards</h2>
+    <p style="font-size:14px;color:var(--ink-muted)">There's no fixed income limit or dollar threshold for CNC — a $200,000 earner with a large family and a high-cost county can qualify just as a minimum-wage worker can, and neither is automatic. What matters is <em>disposable income</em>: your income minus the IRS's allowable expense standards for your situation. If that number is zero or negative, you have a case.</p>
     <p>The IRS evaluates CNC eligibility by comparing your monthly income against your allowable monthly expenses. The expense allowances come from the IRS National Standards and Local Standards — the same expense tables used in <a href="/irs-installment-agreement" class="tl">installment agreement</a> and <a href="/irs-offer-in-compromise" class="tl">Offer in Compromise</a> negotiations.</p>
 
     <h3>Allowable expenses the IRS recognizes</h3>
@@ -405,10 +510,11 @@ footer a { color: var(--gold); text-decoration: none; }
       <li>Retirement accounts and other assets</li>
       <li>Monthly expenses by category</li>
     </ul>
+    <p style="font-size:14px;color:var(--ink-muted)">Direct downloads: <a href="https://www.irs.gov/pub/irs-pdf/f433f.pdf" target="_blank" rel="noopener" style="color:var(--gold-dim)">Form 433-F (PDF)</a> and <a href="https://www.irs.gov/pub/irs-pdf/f433a.pdf" target="_blank" rel="noopener" style="color:var(--gold-dim)">Form 433-A (PDF)</a>, both from IRS.gov. Which one you'll need generally depends on whether ACS or an assigned revenue officer is handling your case, not which one you'd prefer to fill out.</p>
     <p>If the analysis shows your income minus allowable expenses leaves nothing to pay the IRS, the account is placed in CNC. If there's a small remaining amount, the IRS may insist on a minimal installment agreement rather than full CNC status.</p>
   </div>
 
-  <div class="section">
+  <div class="section" id="how-to-request">
     <h2>How to request Currently Not Collectible status</h2>
     <p>CNC can be requested by phone or in writing. The fastest path is to call the IRS Automated Collection System (ACS) at 1-800-829-7650 or the number on your most recent notice, with your completed Form 433-F ready to provide information from.</p>
     <p>If you have a revenue officer assigned to your case, you'll work directly with them. A revenue officer has more discretion and authority than ACS and can process CNC placement more quickly if the financial picture is clear.</p>
@@ -421,7 +527,7 @@ footer a { color: var(--gold); text-decoration: none; }
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" id="after-cnc">
     <h2>What happens after CNC is granted</h2>
     <p>Once your account is in CNC, the IRS will review your financial situation approximately every two years, or when the IRS receives information indicating your circumstances may have changed. Common triggers for review include:</p>
     <ul>
@@ -438,7 +544,7 @@ footer a { color: var(--gold); text-decoration: none; }
     <p>There's no fixed expiration date on CNC status itself, but it isn't a one-time approval that lasts forever either. The IRS periodically reviews accounts in CNC status — commonly checking income through your future tax filings — and can reactivate collection if your financial situation improves. Higher-income cases tend to get reviewed sooner (sometimes annually); lower-income, clearly hardship cases may go years between reviews. This is exactly why the CSED strategy above matters: every year the IRS doesn't review or doesn't reactivate your case is a year closer to the debt simply expiring.</p>
   </div>
 
-  <div class="section">
+  <div class="section" id="cnc-vs-alternatives">
     <h2>CNC vs. installment agreement vs. Offer in Compromise — how to decide</h2>
 
     <table class="cnc-vs-table">
@@ -458,7 +564,7 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 
   
-<div style="margin:3rem 0;padding:1.6rem 1.8rem;background:rgba(201,168,76,0.07);border:1px solid #d9cdb8;border-left:4px solid #c9a84c;border-radius:0 6px 6px 0">
+<div id="sources" style="margin:3rem 0;padding:1.6rem 1.8rem;background:rgba(201,168,76,0.07);border:1px solid #d9cdb8;border-left:4px solid #c9a84c;border-radius:0 6px 6px 0">
   <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.55rem;font-weight:700;color:#1a1410;margin:0 0 0.75rem;border:none;padding:0">Sources, and how this guide was researched</h2>
   <p style="font-size:15px;color:#4a3f32;line-height:1.7;margin:0 0 0.75rem">This guide was written by Romeo Razi, CPA &mdash; a former IRS Tax Examiner in the Individual &amp; Employment Tax Division who handled these situations from the government's side before representing taxpayers in 15+ years of private practice (10,000+ returns). The rules and figures come from the primary sources below:</p>
   <ul style="font-size:15px;color:#4a3f32;line-height:1.7;padding-left:1.25rem;margin:0 0 0.75rem">
@@ -469,10 +575,12 @@ footer a { color: var(--gold); text-decoration: none; }
     <li style="margin-bottom:6px"><a href="https://www.irs.gov/irm/part5/irm_05-016-001r" target="_blank" rel="noopener" style="color:#8a6e2f">IRM 5.16.1 — Currently Not Collectible</a> &mdash; the internal procedures IRS employees follow when placing and reviewing CNC accounts</li>
     <li style="margin-bottom:6px"><a href="https://storage.courtlistener.com/pdf/2026/06/24/frederick_whigham.pdf" target="_blank" rel="noopener" style="color:#8a6e2f">Whigham v. Commissioner, T.C. Memo. 2026-55 (June 24, 2026)</a> &mdash; hardship must be documented, not just claimed</li>
     <li style="margin-bottom:6px"><a href="https://www.currentfederaltaxdevelopments.com/blog/2026/6/23/analysis-of-collection-due-process-and-reasonable-collection-potential-in-tooke-v-commissioner" target="_blank" rel="noopener" style="color:#8a6e2f">Tooke v. Commissioner, T.C. Memo. 2026-54 (June 23, 2026)</a> &mdash; the importance of engaging with proposed collection alternatives during a CDP hearing</li>
+    <li style="margin-bottom:6px"><a href="https://www.irs.gov/newsroom/dirty-dozen-tax-scams-for-2026-irs-reminds-taxpayers-to-watch-out-for-dangerous-threats" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Dirty Dozen tax scams for 2026</a> &mdash; the official release flagging AI-generated robocalls, including one impersonating a CNC status offer</li>
+    <li style="margin-bottom:6px"><a href="https://www.goodmorningamerica.com/video/130261572" target="_blank" rel="noopener" style="color:#8a6e2f">ABC News / Good Morning America (April 8, 2026)</a> &mdash; reporting on the intercepted AI-generated "currently not collectible" scam call, with comment from IRS spokesperson Yviand Hernandez</li>
   </ul>
   <p style="font-size:14px;color:#7a6e60;line-height:1.65;margin:0">Every figure and deadline above was checked against these primary sources at the time of the last update &mdash; not against secondary coverage. Tax rules change; confirm current guidance at the linked source (or <a href="/#contact" style="color:#8a6e2f">ask us directly</a>) before acting.</p>
 </div>
-<div class="section">
+<div class="section" id="faq">
     <h2>Frequently asked questions about Currently Not Collectible status</h2>
 
     <div class="faq-item">
@@ -502,7 +610,7 @@ footer a { color: var(--gold); text-decoration: none; }
 
     <div class="faq-item">
       <div class="faq-q">How long does currently not collectible status last?</div>
-      <div class="faq-a">There's no fixed expiration. CNC isn't permanent — the IRS periodically reviews accounts, often by checking income on your future tax filings, and can reactivate collection if your financial situation improves. Higher-income cases tend to get reviewed sooner, sometimes annually; clear hardship cases may go years between reviews. It can also effectively last until the 10-year collection statute expires, since CNC status doesn't pause that clock.</div>
+      <div class="faq-a">There's no fixed expiration. CNC isn't permanent — the IRS periodically reviews accounts, often by checking income on your future tax filings, and can reactivate collection if your financial situation improves. Higher-income cases tend to get reviewed sooner, sometimes annually; clear hardship cases may go years between reviews. Tax resolution practitioners commonly report clients staying in CNC for one to three years on average, though the IRS doesn't publish an official figure and individual cases vary widely. It can also effectively last until the 10-year collection statute expires, since CNC status doesn't pause that clock.</div>
     </div>
 
     <div class="faq-item">
@@ -518,6 +626,16 @@ footer a { color: var(--gold); text-decoration: none; }
     <div class="faq-item">
       <div class="faq-q">How do I request currently not collectible status from the IRS?</div>
       <div class="faq-a">Call the number on your most recent IRS notice, or 800-829-1040 if you don't have one, and be ready to complete Form 433-F (or Form 433-A for more complex cases) showing your income, expenses, and assets. You generally need to be current on filing all required returns first. An assigned revenue officer may request the form directly if your case has progressed that far.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Is CNC status only for financial hardship, or are there other reasons an account becomes not collectible?</div>
+      <div class="faq-a">Hardship — income too low relative to allowable expenses — is by far the most common reason, and it's what this guide focuses on. But the IRS can also mark an account not collectible for reasons that have nothing to do with an individual's ability to pay: a business that has gone defunct with no assets to pursue, a taxpayer the IRS cannot locate, or a case where the cost of continued collection would exceed what could realistically be recovered. Those non-hardship situations follow different internal procedures than the hardship-based CNC process described here, and generally aren't something you request the same way an individual requests hardship CNC.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Is "currently not collectible" used in IRS scam calls?</div>
+      <div class="faq-a">Yes. The IRS's 2026 "Dirty Dozen" scam list flagged AI-generated robocalls, including one intercepted call that told the recipient they qualified for "currently not collectible" status with limited "relief slots" filling up fast — both fabricated. The IRS contacts taxpayers by mail first, never leaves urgent prerecorded voicemail threats, and never demands immediate payment by phone. If you get a call like this, hang up and verify your actual account status by calling the IRS directly using a number from IRS.gov.</div>
     </div>
   </div>
 
