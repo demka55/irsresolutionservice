@@ -26,6 +26,7 @@
 <title>IRS Resolution, Back Taxes & Catch-Up Services | Romeo Razi, CPA — Former IRS Auditor</title>
 <meta name="description" content="We spent years inside the IRS. Now we're on your side. Romeo Razi, CPA and former IRS Auditor helps with unfiled returns, back taxes, audits, Offer in Compromise, penalty abatement, and IRS notices.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<script>!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");oaiq("init",{pixelId:"H4um9gtUZ7KfrCXj5yMQAE",debug:true});</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -1384,6 +1385,18 @@ function switchContactTab(tab) {
   document.getElementById('tab-irs').style.color          = isGeneral ? 'var(--ink-muted)' : 'white';
 }
 
+// ── CONVERSION TRACKING (OpenAI Ads pixel + server-side event) ─────────────
+function trackLeadCreated() {
+  if (window.oaiq) {
+    oaiq("measure", "lead_created", { type: "customer_action" });
+  }
+  fetch('/.netlify/functions/track-lead', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ source_url: window.location.href }),
+  }).catch(() => { /* non-blocking: never surface this to the user */ });
+}
+
 // ── FORM SUBMISSIONS ───────────────────────────────────────────────────────
 async function submitGeneralForm() {
   const first   = document.getElementById('gf-first').value.trim();
@@ -1417,6 +1430,7 @@ async function submitGeneralForm() {
       })
     });
     if (!res.ok) throw new Error('Submission failed');
+    trackLeadCreated();
     document.getElementById('general-form-wrap').innerHTML = `
       <div style="text-align:center;padding:3rem 0">
         <div style="font-size:48px;margin-bottom:1rem">✅</div>
@@ -1457,6 +1471,7 @@ async function submitIrsForm() {
       })
     });
     if (!res.ok) throw new Error('Submission failed');
+    trackLeadCreated();
     document.getElementById('irs-form-wrap').innerHTML = `
       <div style="text-align:center;padding:3rem 0">
         <div style="font-size:48px;margin-bottom:1rem">✅</div>
