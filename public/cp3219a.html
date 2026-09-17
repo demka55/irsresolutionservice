@@ -16,6 +16,7 @@
 <title>Statutory Notice of Deficiency (CP3219A & CP3219N): 90-Day Deadline</title>
 <meta name="description" content="A statutory notice of deficiency — CP3219A or CP3219N — gives you 90 days to petition Tax Court before assessment. A former IRS auditor explains both.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<script>!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");oaiq("init",{pixelId:"H4um9gtUZ7KfrCXj5yMQAE",debug:true});</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -85,6 +86,22 @@ footer { background: var(--ink); color: rgba(255,255,255,0.5); text-align: cente
 footer a { color: var(--gold); text-decoration: none; }
 @media (max-width: 640px) { .nav { gap: 1rem; } .nav a:not(.nav-cta) { display: none; } }
 
+.quick-cta { background: var(--white); border: 1px solid var(--cream-dark); border-top: 4px solid var(--gold); border-radius: 6px; padding: 2rem 2rem 1.75rem; margin: 2rem 0 0.5rem; box-shadow: 0 20px 44px -22px rgba(26,20,16,0.18); scroll-margin-top: 84px; }
+.quick-cta h2 { font-family: var(--serif); font-size: 1.6rem; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem; line-height: 1.25; }
+.quick-cta > p.quick-cta-lede { font-size: 15px; color: var(--ink-muted); margin-bottom: 1.5rem; }
+.qf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.quick-cta input, .quick-cta textarea { width: 100%; padding: 12px 14px; border: 1.5px solid var(--cream-dark); border-radius: 3px; font-family: var(--sans); font-size: 15px; color: var(--ink); outline: none; margin-bottom: 0.85rem; transition: border-color 0.2s; }
+.quick-cta input:focus, .quick-cta textarea:focus { border-color: var(--gold); }
+.quick-cta textarea { min-height: 90px; resize: vertical; line-height: 1.5; }
+.quick-cta-btn { width: 100%; background: var(--gold); color: var(--ink); border: none; padding: 15px; border-radius: 2px; font-family: var(--sans); font-weight: 700; font-size: 16px; letter-spacing: 0.03em; cursor: pointer; transition: background 0.2s; }
+.quick-cta-btn:hover { background: var(--gold-light); }
+.quick-cta-btn:disabled { opacity: 0.6; cursor: wait; }
+.quick-cta-note { font-size: 12px; color: var(--ink-muted); text-align: center; margin-top: 0.75rem; }
+#qf-status { margin-top: 0.75rem; font-size: 14px; line-height: 1.5; display: none; padding: 10px 14px; border-radius: 3px; }
+#qf-status.success { display: block; background: var(--green-light); color: var(--green); border: 1px solid #b7d9be; }
+#qf-status.error { display: block; background: var(--red-light); color: #8b1a1a; border: 1px solid #e8b0b0; }
+@media (max-width: 640px) { .qf-row { grid-template-columns: 1fr; } .quick-cta { padding: 1.5rem; } }
+
 .romeo-bar{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.25rem 1.5rem;margin:2rem 0}
 .romeo-avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
 .romeo-avatar{width:72px;height:72px;background:var(--gold-muted);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px;font-weight:700;color:var(--gold-dim);overflow:hidden}
@@ -138,7 +155,7 @@ footer a { color: var(--gold); text-decoration: none; }
   "keywords": "CP3219A, CP3219N, statutory notice of deficiency, notice of deficiency, 90-day letter, Tax Court petition",
   "url": "https://irsresolutionservice.com/cp3219a",
   "datePublished": "2026-06-10",
-  "dateModified": "2026-07-28",
+  "dateModified": "2026-09-17",
   "author": {
     "@id": "https://irsresolutionservice.com/#romeo-razi"
   },
@@ -364,7 +381,7 @@ footer a { color: var(--gold); text-decoration: none; }
       </div>
       <a href="/#tool">Notice Decoder</a>
       <a href="/#faq">FAQ</a>
-      <a href="/#contact" class="nav-cta">Get Help Now</a>
+      <a href="#quick-contact" class="nav-cta">Get Help Now</a>
     </nav>
   </div>
 </header>
@@ -374,7 +391,7 @@ footer a { color: var(--gold); text-decoration: none; }
     <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 1.5rem;font-size:14px;color:#7a6e60">
       <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Tax Examiner" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid #c9a84c">
       <span>By <a href="/#founders" style="color:#8a6e2f;font-weight:600;text-decoration:none">Romeo Razi, CPA</a> &mdash; Former IRS Tax Examiner</span>
-      <span>&middot;</span><span>Updated July 28, 2026</span>
+      <span>&middot;</span><span>Updated September 17, 2026</span>
       <span>&middot;</span><span>Fact-checked against IRS primary sources</span>
     </div>
     <p style="font-size:13px;color:#7a6e60;margin:0 0 1.25rem;line-height:1.6;max-width:640px">Romeo has been quoted on tax matters by <a href="https://money.usnews.com/money/personal-finance/taxes/articles/irs-pledges-more-audits-of-wealthy" target="_blank" rel="noopener" style="color:#8a6e2f;text-decoration:underline;text-underline-offset:2px">U.S. News</a>, <a href="https://www.kiplinger.com/taxes/the-cpa-shortage-problem" target="_blank" rel="noopener" style="color:#8a6e2f;text-decoration:underline;text-underline-offset:2px">Kiplinger</a>, <a href="https://www.nbcphiladelphia.com/news/business/money-report/betting-on-the-super-bowl-you-gotta-pay-the-piper-on-your-winnings-says-cpa/3772204/" target="_blank" rel="noopener" style="color:#8a6e2f;text-decoration:underline;text-underline-offset:2px">NBC/CNBC</a> (twice), and <a href="https://www.realtor.com/advice/finance/senior-property-tax-exemptions-101-how-you-can-save-big/" target="_blank" rel="noopener" style="color:#8a6e2f;text-decoration:underline;text-underline-offset:2px">Realtor.com</a>, and writes for <a href="https://accountants.intuit.com/taxprocenter/author/romeorazitax/" target="_blank" rel="noopener" style="color:#8a6e2f;text-decoration:underline;text-underline-offset:2px">Intuit's Tax Pro Center</a>. <a href="#author-bio" style="color:#8a6e2f;font-weight:600;text-decoration:none">More about Romeo &rarr;</a></p>
@@ -383,6 +400,22 @@ footer a { color: var(--gold); text-decoration: none; }
     <h1>You received a statutory notice of deficiency — IRS Notice CP3219A or CP3219N — the IRS's formal notice that it intends to assess additional tax. You have 90 days to stop it.</h1>
     <div class="direct-answer"><p><strong>The short answer:</strong> A statutory notice of deficiency — also called a 90-day letter, an SNOD, or your "ticket to Tax Court" — is the notice the IRS is legally required to send under IRC &sect; 6212 before it can assess additional income, estate, gift, or certain excise tax. For individuals, it arrives as one of two numbers: <strong>CP3219A</strong> if you filed a return but a proposed adjustment went unresolved, or <strong>CP3219N</strong> if you didn't file a return at all (the paper mail version of either is sometimes labeled Letter 531). Whichever one you have, it gives you exactly 90 days from the notice date (150 days if you're outside the U.S.) to petition the United States Tax Court under IRC &sect; 6213. Miss that window, and the IRS assesses the tax — with no further opportunity to contest it in Tax Court before paying.</p></div>
     <div class="deadline-badge">⏱ ⚠ 90-day deadline to petition Tax Court — 150 days if you're outside the U.S. This is a hard statutory deadline. Missing it means the IRS proceeds.</div>
+
+    <div class="quick-cta" id="quick-contact">
+      <h2>Get a free case review before the deadline passes</h2>
+      <p class="quick-cta-lede">Tell Romeo about your notice — he'll review it personally and get back to you. No obligation.</p>
+      <form id="quick-form">
+        <div class="qf-row">
+          <input type="text" id="qf-name" name="name" placeholder="Full Name" required>
+          <input type="tel" id="qf-phone" name="phone" placeholder="Phone Number" required>
+        </div>
+        <input type="email" id="qf-email" name="email" placeholder="Email" required>
+        <textarea id="qf-details" name="details" placeholder="Which notice did you get (CP3219A or CP3219N), and what's the proposed amount?" required></textarea>
+        <button type="submit" class="quick-cta-btn" id="qf-btn">Get My Free Case Review →</button>
+        <div id="qf-status"></div>
+      </form>
+      <p class="quick-cta-note">Romeo will review your situation and contact you shortly.</p>
+    </div>
   </div>
 </section>
 <div class="notice-body">
@@ -671,12 +704,77 @@ footer a { color: var(--gold); text-decoration: none; }
 <div class="cta-box">
   <h2>Received a CP3219A? The 90-day deadline is absolute.</h2>
   <p>Romeo knows how to evaluate whether to petition Tax Court, what the proposed amount is actually based on, and whether the IRS's calculation is correct. Don't let this deadline pass without understanding your options.</p>
-  <a href="/#contact" class="cta-btn">Get a Free Case Review →</a>
+  <a href="#quick-contact" class="cta-btn">Get a Free Case Review →</a>
 </div>
 </div>
 <footer>
   <p>IRS Resolution Service LLC · 9673 Camino Capistrano Lane, Las Vegas, NV 89147 · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></p>
   <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. This page is for informational purposes only and does not constitute legal or tax advice.</p>
 </footer>
+<script>
+(function() {
+  const form = document.getElementById('quick-form');
+  const btn = document.getElementById('qf-btn');
+  const statusEl = document.getElementById('qf-status');
+
+  function trackLeadCreated() {
+    if (window.oaiq) {
+      oaiq("measure", "lead_created", { type: "customer_action" });
+    }
+    fetch('/.netlify/functions/track-lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ source_url: window.location.href }),
+    }).catch(() => { /* non-blocking */ });
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    statusEl.className = '';
+    statusEl.textContent = '';
+
+    const name = document.getElementById('qf-name').value.trim();
+    const phone = document.getElementById('qf-phone').value.trim();
+    const email = document.getElementById('qf-email').value.trim();
+    const details = document.getElementById('qf-details').value.trim();
+
+    if (!name || !phone || !email || !details) {
+      statusEl.className = 'error';
+      statusEl.textContent = 'Please fill in all fields.';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    try {
+      const res = await fetch('/.netlify/functions/contact-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formType: 'irs',
+          name,
+          phone,
+          email,
+          address: '',
+          referral: 'Paid ad — CP3219A landing page',
+          issue: details,
+        })
+      });
+      if (!res.ok) throw new Error('Submission failed');
+      trackLeadCreated();
+      form.reset();
+      btn.textContent = 'Message Sent ✓';
+      statusEl.className = 'success';
+      statusEl.textContent = 'Thanks — your message was sent. Romeo will review your situation and be in touch shortly.';
+    } catch (err) {
+      statusEl.className = 'error';
+      statusEl.textContent = 'Something went wrong. Please email romeo@taxedright.com or call 702.829.1400 directly.';
+      btn.disabled = false;
+      btn.textContent = 'Get My Free Case Review →';
+    }
+  });
+})();
+</script>
 </body>
 </html>
