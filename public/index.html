@@ -405,6 +405,57 @@ footer { background:var(--cream-warm); border-top:1px solid var(--cream-dark); p
 @media (max-width: 900px) { .dropdown { display: none !important; } .nav-item > a::after { display: none; } }
 @media (max-width: 640px) { .nav { gap: 0.875rem; } .nav a:not(.nav-cta) { display: none; } }
 
+
+/* GOOGLE REVIEWS */
+.g-logo { width:22px; height:22px; flex-shrink:0; }
+.g-stars { color:#FBBC04; letter-spacing:2px; font-size:16px; line-height:1; }
+.g-badge { display:inline-flex; align-items:center; gap:10px; flex-wrap:wrap; background:var(--white); border:1px solid var(--cream-dark); border-radius:999px; padding:10px 18px 10px 14px; text-decoration:none; color:var(--ink); box-shadow:0 8px 20px -10px rgba(26,20,16,0.18); transition:transform .2s, box-shadow .2s, border-color .2s; }
+.g-badge:hover { transform:translateY(-1px); border-color:var(--gold); box-shadow:0 12px 26px -10px rgba(26,20,16,0.25); }
+.g-badge-n { font-weight:600; font-size:17px; }
+.g-badge-l { font-size:14px; color:var(--ink-soft); text-decoration:underline; text-underline-offset:3px; text-decoration-color:var(--cream-dark); }
+.g-badge-arrow { color:var(--gold-dim); font-weight:600; }
+.g-section { background:var(--white); padding:6rem 2rem; border-top:1px solid var(--cream-dark); border-bottom:1px solid var(--cream-dark); }
+.g-inner { max-width:1100px; margin:0 auto; }
+.g-header { text-align:center; margin-bottom:2.5rem; }
+.g-header h2 { font-family:var(--serif); font-size:clamp(2rem,3.6vw,3rem); font-weight:600; color:var(--ink); line-height:1.15; margin-bottom:0.6rem; }
+.g-header p { color:var(--ink-soft); font-size:1.05rem; max-width:620px; margin:0 auto; }
+.g-summary { display:flex; align-items:center; gap:1.25rem; max-width:680px; margin:0 auto 3rem; background:var(--cream); border:1px solid var(--cream-dark); border-top:4px solid var(--gold); border-radius:6px; padding:1.25rem 1.5rem; text-decoration:none; color:var(--ink); transition:border-color .2s, box-shadow .2s; }
+.g-summary:hover { border-color:var(--gold); box-shadow:0 16px 32px -18px rgba(26,20,16,0.3); }
+.g-summary .g-logo { width:44px; height:44px; }
+.g-sum-body { flex:1; min-width:0; }
+.g-sum-top { display:flex; align-items:center; gap:10px; }
+.g-sum-n { font-family:var(--serif); font-size:2.4rem; font-weight:700; line-height:1; }
+.g-summary .g-stars { font-size:22px; }
+.g-sum-l { font-size:14px; color:var(--ink-muted); margin-top:4px; }
+.g-sum-cta { background:var(--gold); color:var(--white); padding:11px 20px; border-radius:2px; font-size:15px; font-weight:600; letter-spacing:0.03em; white-space:nowrap; transition:background .2s; }
+.g-summary:hover .g-sum-cta { background:var(--gold-dim); }
+.g-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; align-items:start; margin-bottom:1.25rem; }
+@media (max-width:900px) { .g-grid { grid-template-columns:1fr 1fr; } }
+@media (max-width:600px) { .g-grid { grid-template-columns:1fr; } }
+.g-review { display:block; background:var(--white); border:1px solid var(--cream-dark); border-radius:6px; padding:1.4rem 1.5rem; text-decoration:none; color:var(--ink); transition:transform .2s, border-color .2s, box-shadow .2s; }
+.g-review:hover { transform:translateY(-2px); border-color:var(--gold); box-shadow:0 16px 30px -18px rgba(26,20,16,0.3); }
+.g-review-head { display:flex; align-items:center; gap:12px; margin-bottom:0.8rem; }
+.g-av { width:44px; height:44px; border-radius:50%; object-fit:cover; flex-shrink:0; }
+.g-av-i { display:flex; align-items:center; justify-content:center; color:#fff; font-weight:500; font-size:18px; }
+.g-who { flex:1; min-width:0; }
+.g-name { font-weight:600; font-size:15px; line-height:1.3; }
+.g-meta { font-size:13px; color:var(--ink-muted); }
+.g-review .g-logo { width:20px; height:20px; }
+.g-text { font-size:15.5px; line-height:1.7; color:var(--ink-soft); margin:0.6rem 0 0.9rem; }
+.g-more { font-size:13px; font-weight:600; color:var(--gold-dim); letter-spacing:0.02em; }
+.g-footer { text-align:center; margin-top:1.5rem; }
+.g-btn { display:inline-flex; align-items:center; gap:10px; border:1.5px solid var(--ink); color:var(--ink); padding:13px 26px; border-radius:2px; text-decoration:none; font-weight:600; font-size:15px; letter-spacing:0.03em; transition:all .2s; background:var(--white); }
+.g-btn:hover { background:var(--ink); color:var(--white); }
+@media (max-width:640px) {
+  .g-badge { flex-wrap:nowrap; gap:7px; padding:8px 14px 8px 12px; }
+  .g-badge .g-stars { font-size:13px; letter-spacing:1px; }
+  .g-badge-l { font-size:13px; white-space:nowrap; }
+  .g-badge-n { font-size:15px; }
+  .g-section { padding:4.5rem 1.25rem; }
+  .g-summary { flex-wrap:wrap; padding:1.1rem; gap:0.9rem; }
+  .g-sum-cta { width:100%; text-align:center; }
+  .g-sum-n { font-size:2rem; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -475,6 +526,7 @@ window.REDDIT_PIXEL_ID = 'a2_jd040jkh8jtj'; // CHANGE PIXEL ID HERE (single sour
     </a>
             <nav class="nav">
       <a href="#founders">About</a>
+      <a href="#reviews">Reviews</a>
       <div class="nav-item">
         <a href="/cp2000">IRS Guides</a>
         <div class="dropdown">
@@ -561,6 +613,7 @@ window.REDDIT_PIXEL_ID = 'a2_jd040jkh8jtj'; // CHANGE PIXEL ID HERE (single sour
       <span class="hero-badge-dot"></span>
       <span>Former IRS Auditor — Now Fighting for Taxpayers</span>
     </div>
+    <div style="margin:-0.5rem 0 1.75rem"><a class="g-badge" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener"><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg><span class="g-badge-n">5.0</span><span class="g-stars" aria-label="5 out of 5 stars">★★★★★</span><span class="g-badge-l">8 Google reviews</span><span class="g-badge-arrow">→</span></a></div>
     <h1>We spent years<br>inside the IRS.<br><em>Now we're on<br>your side.</em></h1>
     <p class="hero-sub">Romeo Razi served as an IRS Auditor — auditing businesses, reviewing returns, and learning exactly how the agency operates. Today he uses that insider knowledge to help individuals and businesses with unfiled returns, back taxes, audits, Offer in Compromise, penalty abatement, and IRS notices.</p>
     <div class="hero-actions">
@@ -631,6 +684,25 @@ window.REDDIT_PIXEL_ID = 'a2_jd040jkh8jtj'; // CHANGE PIXEL ID HERE (single sour
     </div>
   </div>
 </div>
+
+
+<section class="g-section" id="reviews">
+  <div class="g-inner">
+    <div class="g-header"><span class="section-eyebrow">Reviews from clients on Google</span><h2>What clients say about Romeo</h2><p>Real, unedited reviews from our Google Business Profile. Click any review to read it on Google.</p></div>
+    <a class="g-summary " href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener"><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg><div class="g-sum-body"><div class="g-sum-top"><span class="g-sum-n">5.0</span><span class="g-stars" aria-label="5 out of 5 stars">★★★★★</span></div><div class="g-sum-l">8 reviews on our Google Business Profile</div></div><span class="g-sum-cta">See all on Google →</span></a>
+    <div class="g-grid">
+      <a class="g-review" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener"><div class="g-review-head"><img class="g-av" src="/review-julie-barton.png" alt="Julie Barton" width="44" height="44" loading="lazy"><div class="g-who"><div class="g-name">Julie Barton</div><div class="g-meta">2 weeks ago</div></div><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg></div><span class="g-stars" aria-label="5 out of 5 stars">★★★★★</span><p class="g-text">I reached out to Romeo about an IRS penalty on my small business retirement plan, and he got back to me quickly. He took the time to review my documents, walked me through my options on a phone call, and gave clear, practical advice on next…</p><span class="g-more">Read full review on Google →</span></a>
+      <a class="g-review" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener"><div class="g-review-head"><span class="g-av g-av-i" style="background:#5e35b1">A</span><div class="g-who"><div class="g-name">Antonio Mastromauro</div><div class="g-meta">a month ago</div></div><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg></div><span class="g-stars" aria-label="5 out of 5 stars">★★★★★</span><p class="g-text">Had an IRS question and matter I was dealing with and Romeo solved the issue for me in a letter of minutes. He was clear, knowledgeable, and incredibly attentive to my issues. Highly recommend.</p><span class="g-more">View on Google →</span></a>
+      <a class="g-review" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener"><div class="g-review-head"><img class="g-av" src="/review-alison-golensky.png" alt="Alison Golensky" width="44" height="44" loading="lazy"><div class="g-who"><div class="g-name">Alison Golensky</div><div class="g-meta">Edited a year ago</div></div><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg></div><span class="g-stars" aria-label="5 out of 5 stars">★★★★★</span><p class="g-text">Mr. Razi helped me through several years of complicated income tax returns. He is the most personable accountant I&#x27;ve ever worked with, in addition to being responsive and extremely knowledgeable about a variety of tax situations. He made my tax filing process as painless as possible -- I highly recommend him to others.</p><span class="g-more">View on Google →</span></a>
+      <a class="g-review" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener"><div class="g-review-head"><span class="g-av g-av-i" style="background:#00897b">C</span><div class="g-who"><div class="g-name">Carly Gardner</div><div class="g-meta">Local Guide · 6 years ago</div></div><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg></div><span class="g-stars" aria-label="5 out of 5 stars">★★★★★</span><p class="g-text">Romeo is AWESOME. For our 2018 we waited too long to use Romeo and did TurboTax it was beyond frustrating and a total mistake. We had a $16k (way way way more then our tax liability) solar panel credit and STILL ended up paying $2k, which I…</p><span class="g-more">Read full review on Google →</span></a>
+      <a class="g-review" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener"><div class="g-review-head"><img class="g-av" src="/review-vicki-baadsgaard.png" alt="Vicki Baadsgaard" width="44" height="44" loading="lazy"><div class="g-who"><div class="g-name">Vicki Baadsgaard</div><div class="g-meta">7 years ago</div></div><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg></div><span class="g-stars" aria-label="5 out of 5 stars">★★★★★</span><p class="g-text">Romeo Razi, CPA, recently helped me with a tax audit with the IRS. Romeo formerly worked for the IRS. His advice was spot on. I finished the normally 2-hour tax audit in 30 minutes with no-change in my return. I highly recommend his services with anything to do with tax returns or tax audits. Marinus Baadsgaard</p><span class="g-more">View on Google →</span></a>
+      <a class="g-review" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener"><div class="g-review-head"><span class="g-av g-av-i" style="background:#c2185b">A</span><div class="g-who"><div class="g-name">Aurora Herskowitz</div><div class="g-meta">8 years ago</div></div><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg></div><span class="g-stars" aria-label="5 out of 5 stars">★★★★★</span><p class="g-text">Taxed Right is highly professional and incredibly knowledgeable regarding all things tax related. I was referred to Romeo with Taxed Right from a highly respected business professional in our community. I had a very unique and complicated…</p><span class="g-more">Read full review on Google →</span></a>
+      <a class="g-review" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener"><div class="g-review-head"><span class="g-av g-av-i" style="background:#ef6c00">S</span><div class="g-who"><div class="g-name">Sunrise Coffee Square</div><div class="g-meta">8 years ago</div></div><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg></div><span class="g-stars" aria-label="5 out of 5 stars">★★★★★</span><p class="g-text">Taxed right is the best accounting concierge service. They have helped our two business save money by catching mistakes on our taxes that our prior accountants made and amending our taxes. The biggest draw is the immense amount of knowledge…</p><span class="g-more">Read full review on Google →</span></a>
+      <a class="g-review" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener"><div class="g-review-head"><span class="g-av g-av-i" style="background:#1e88e5">I</span><div class="g-who"><div class="g-name">Iris Dumuk</div><div class="g-meta">8 years ago</div></div><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg></div><span class="g-stars" aria-label="5 out of 5 stars">★★★★★</span><p class="g-text">Romeo prepared my 2018 tax returns and got me a refund when I thought I would end up owing.</p><span class="g-more">View on Google →</span></a>
+    </div>
+    <div class="g-footer"><a class="g-btn" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener"><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Read all reviews on Google</a></div>
+  </div>
+</section>
 
 <section class="founders-section" id="founders">
   <div class="founders-inner">
@@ -928,31 +1000,6 @@ window.REDDIT_PIXEL_ID = 'a2_jd040jkh8jtj'; // CHANGE PIXEL ID HERE (single sour
   </div>
 </section>
 
-<section class="testimonials-section">
-  <div class="testimonials-inner">
-    <div class="testimonials-header">
-      <span class="section-eyebrow">Client results</span>
-      <h2>What people say about Romeo's work</h2>
-    </div>
-    <div class="testimonials-grid">
-      <div class="t-card">
-        <div class="t-q">"</div>
-        <p class="t-text">Romeo helped me with a tax audit with the IRS. He worked for the IRS and his advice was spot on. I finished a normally 2-hour audit in 30 minutes with no charge to my return. I highly recommend him.</p>
-        <div class="t-author"><div class="t-avatar">MB</div><div><div class="t-name">Marinus Baadsgaard</div><div class="t-role">Business Owner</div></div></div>
-      </div>
-      <div class="t-card">
-        <div class="t-q">"</div>
-        <p class="t-text">Romeo is a pleasure to do business with. His business acumen and approachability is beyond reproach. He will go above and beyond to find an answer to all your questions. I could not recommend him more.</p>
-        <div class="t-author"><div class="t-avatar">PT</div><div><div class="t-name">Piotr Tomasik</div><div class="t-role">Co-Founder, Influential · CEO, On Guard Data</div></div></div>
-      </div>
-      <div class="t-card">
-        <div class="t-q">"</div>
-        <p class="t-text">The transcript verification found two errors in my CP2000 before I paid anything. Saved me over $3,000. The response letter it drafted was better than what I'd expected from a $500 enrolled agent consultation.</p>
-        <div class="t-author"><div class="t-avatar">SK</div><div><div class="t-name">Sarah K.</div><div class="t-role">Freelance Designer, Chicago</div></div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section id="community" style="background:var(--ink);padding:7rem 2rem;overflow:hidden;position:relative">
   <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)"></div>
