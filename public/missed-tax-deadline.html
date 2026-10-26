@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<title>Missed IRS Tax Deadline? Do This First</title>
-<meta name="description" content="Missing the tax deadline triggers three stacking penalties. Former IRS Auditor explains what to file, when, and how to minimize the damage immediately.">
+<title>Missed the Tax Deadline (April 15 or Oct 15)? Penalties &amp; What to Do Now</title>
+<meta name="description" content="Missed the April 15 or October 15, 2026 tax deadline? Former IRS examiner explains the 5%/month penalty, the $525 minimum after 60 days, 7% interest, and how to stop it.">
 <link rel="canonical" href="https://irsresolutionservice.com/missed-tax-deadline">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -21,7 +21,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:
 .wrap{max-width:840px;margin:0 auto;padding:0 2rem}
 .body-wrap{max-width:840px;margin:0 auto;padding:3rem 2rem 6rem}
 h2.section-head{font-family:var(--serif);font-size:1.75rem;font-weight:700;color:var(--ink);margin:2.5rem 0 .875rem;padding-bottom:.6rem;border-bottom:1px solid var(--cream-dark)}
-h3.sub{font-family:var(--serif);font-size:1.2rem;font-weight:600;color:var(--ink);margin:1.5rem 0 .6rem}
+h3.sub{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--ink);margin:1.5rem 0 .6rem}
 p{color:var(--ink-soft);margin-bottom:1rem}
 ul,ol{color:var(--ink-soft);padding-left:1.5rem;margin-bottom:1rem}li{margin-bottom:.4rem}
 a.text-link{color:var(--gold-dim);font-weight:600;text-decoration:none}a.text-link:hover{text-decoration:underline}
@@ -33,20 +33,15 @@ a.text-link{color:var(--gold-dim);font-weight:600;text-decoration:none}a.text-li
 .callout .label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem}
 .callout .label.gold{color:var(--gold-dim)}.callout .label.red{color:var(--red)}.callout .label.green{color:var(--green)}.callout .label.amber{color:var(--amber)}
 .callout p{font-size:15px;color:var(--ink-soft);margin:0;font-style:italic}
-.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.875rem;margin:1.25rem 0}
-.card{background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;padding:1.1rem 1.25rem}
-.card-num{font-family:var(--serif);font-size:2rem;font-weight:700;color:var(--gold);line-height:1}
-.card-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin:.2rem 0 .4rem}
-.card-desc{font-size:14px;color:var(--ink-soft);line-height:1.55}
+.callout p.plain{font-style:normal}
 .step-list{list-style:none;padding:0;counter-reset:s}
 .step-list li{counter-increment:s;display:flex;gap:.875rem;align-items:flex-start;margin-bottom:1.1rem}
 .step-list li::before{content:counter(s);background:var(--gold);color:#fff;min-width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;margin-top:3px;flex-shrink:0}
 .step-list li span{color:var(--ink-soft)}
 .faq-item{border-bottom:1px solid var(--cream-dark);padding:1.1rem 0}
-.faq-q{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+.faq-q{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
 .faq-a{font-size:15px;color:var(--ink-soft)}
 .romeo-sig{display:flex;align-items:center;gap:1rem;padding:1rem 0;margin:1.5rem 0;border-top:1px solid var(--cream-dark);border-bottom:1px solid var(--cream-dark)}
-.romeo-sig-avatar{width:90px;height:90px;background:var(--gold-muted);border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:18px;font-weight:700;color:var(--gold-dim);flex-shrink:0}
 .romeo-sig-text{font-size:13px;color:var(--ink-muted);line-height:1.5}
 .romeo-sig-name{font-weight:700;font-size:15px;color:var(--ink)}
 .source-tag{display:inline-block;background:var(--cream-warm);border:1px solid var(--cream-dark);border-radius:3px;font-size:11px;font-weight:600;color:var(--ink-muted);padding:2px 8px;letter-spacing:.05em;margin-bottom:.4rem}
@@ -59,26 +54,36 @@ a.text-link{color:var(--gold-dim);font-weight:600;text-decoration:none}a.text-li
 .cta-btn{display:inline-block;background:var(--gold);color:var(--ink);text-decoration:none;padding:13px 30px;border-radius:2px;font-weight:700;font-size:15px;letter-spacing:.04em}
 footer{background:var(--ink);color:rgba(255,255,255,.5);text-align:center;padding:2rem;font-size:13px}
 footer a{color:var(--gold);text-decoration:none}
-@media(max-width:640px){.nav{gap:1rem}.nav a:not(.nav-cta){display:none}.card-grid{grid-template-columns:1fr}}
+
+/* Data tables */
+.data-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:15px;background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;overflow:hidden}
+.data-table th{background:var(--cream-warm);text-align:left;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);padding:.65rem .9rem;border-bottom:1px solid var(--cream-dark)}
+.data-table td{padding:.65rem .9rem;border-bottom:1px solid var(--cream-dark);color:var(--ink-soft);vertical-align:top}
+.data-table tr:last-child td{border-bottom:none}
+.data-table td:first-child{font-weight:600;color:var(--ink)}
+.table-scroll{overflow-x:auto}
 
 .emergency-hero{background:var(--ink);padding:120px 2rem 56px;border-bottom:3px solid var(--red)}
-.emergency-hero .wrap{position:relative}
 .emergency-eyebrow{display:inline-block;background:var(--red);color:#fff;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:2px;margin-bottom:1.25rem}
 .emergency-hero h1{font-family:var(--serif);font-size:clamp(2rem,5vw,3.2rem);font-weight:700;color:#fff;line-height:1.15;margin-bottom:1.25rem}
+.byline{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 1.5rem;font-size:14px;color:rgba(255,255,255,.6)}
+.byline a{color:var(--gold);font-weight:600;text-decoration:none}
 .answer-box{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-left:4px solid var(--red);border-radius:0 6px 6px 0;padding:1.1rem 1.4rem;margin-bottom:2rem}
-.answer-box p{color:rgba(255,255,255,.85);font-size:16px;margin:0;line-height:1.65}
+.answer-box p{color:rgba(255,255,255,.85);font-size:16px;margin:0 0 .6rem;line-height:1.65}
+.answer-box p:last-child{margin-bottom:0}
 .answer-box strong{color:#fff}
-.situation-cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem}
+.situation-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem}
 .sit-card{border-radius:6px;padding:1.25rem}
 .sit-card.refund{background:rgba(26,92,42,.3);border:1px solid rgba(26,92,42,.4)}
 .sit-card.owe{background:rgba(192,57,43,.3);border:1px solid rgba(192,57,43,.4)}
+.sit-card.ext{background:rgba(146,80,10,.3);border:1px solid rgba(146,80,10,.45)}
 .sit-card h3{font-family:var(--serif);font-size:1.2rem;font-weight:700;margin-bottom:.5rem}
-.sit-card.refund h3{color:#6ee7a7}.sit-card.owe h3{color:#fca5a5}
+.sit-card.refund h3{color:#6ee7a7}.sit-card.owe h3{color:#fca5a5}.sit-card.ext h3{color:#fcd38d}
 .sit-card p{font-size:14px;color:rgba(255,255,255,.75);margin:0}
 .penalty-stack{margin:1.5rem 0}
 .penalty-row{display:flex;align-items:stretch;gap:0;margin-bottom:3px}
-.penalty-label{background:var(--ink);color:var(--ink-muted);font-size:13px;font-weight:600;padding:.6rem 1rem;border:1px solid rgba(255,255,255,.1);border-right:none;border-radius:4px 0 0 4px;min-width:160px}
-.penalty-bar{background:var(--red);height:auto;display:flex;align-items:center;padding:.6rem 1rem;font-size:13px;font-weight:700;color:#fff;border-radius:0 4px 4px 0;min-width:120px}
+.penalty-label{background:var(--ink);color:#d9cdb8;font-size:13px;font-weight:600;padding:.6rem 1rem;border:1px solid rgba(255,255,255,.1);border-right:none;border-radius:4px 0 0 4px;min-width:160px}
+.penalty-bar{background:var(--red);display:flex;align-items:center;padding:.6rem 1rem;font-size:13px;font-weight:700;color:#fff;border-radius:0 4px 4px 0;flex:1}
 .penalty-bar.pay{background:var(--amber)}
 .penalty-bar.int{background:#6b7280}
 .penalty-total{margin-top:.75rem;text-align:right;font-size:15px;font-weight:700;color:var(--red)}
@@ -88,41 +93,58 @@ footer a{color:var(--gold);text-decoration:none}
 .threshold-card.t2{background:var(--amber-bg);border:1.5px solid #e8c870}
 .threshold-card.t3{background:var(--red-bg);border:1.5px solid #e8b0b0}
 .threshold-card.t4{background:var(--cream-warm);border:1.5px solid var(--cream-dark)}
-.threshold-card .amt{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--ink);line-height:1}
+.threshold-card .amt{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--ink);line-height:1.1}
 .threshold-card .desc{font-size:13px;color:var(--ink-soft);margin-top:.3rem;line-height:1.5}
-@media(max-width:560px){.situation-cards{grid-template-columns:1fr}.threshold-grid{grid-template-columns:1fr 1fr}}
-  
-/* DROPDOWN NAV */
-.nav-item { position: relative; }
-.nav-item > a { display: flex; align-items: center; gap: 4px; }
-.nav-item > a::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid currentColor; opacity: 0.5; margin-top: 1px; flex-shrink: 0; }
-.dropdown { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; box-shadow: 0 12px 32px rgba(26,20,16,0.14); min-width: 580px; z-index: 300; padding: 1.75rem 0 1.25rem; }
-.nav-item { padding-bottom: 12px; margin-bottom: -12px; }
-.nav-item:hover .dropdown, .nav-item:focus-within .dropdown { display: block; }
-.dropdown::before { content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 12px; background: transparent; }
-.dropdown-cols { display: grid; grid-template-columns: 1fr 1fr; }
-.dropdown-col { padding: 0 1.25rem; }
-.dropdown-col:first-child { border-right: 1px solid var(--cream-dark); }
-.dropdown-col-head { font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dim); padding: 0 0 0.625rem; margin-bottom: 0.375rem; border-bottom: 1px solid var(--cream-dark); }
-.dropdown a { display: block; font-size: 15px; color: var(--ink-muted) !important; text-decoration: none; padding: 4px 0; line-height: 1.4; transition: color 0.15s; letter-spacing: 0; }
-.dropdown a:hover { color: var(--gold-dim) !important; }
-.dropdown a::after { display: none !important; }
-.dropdown-services { min-width: 260px; }
-.dropdown-services .dropdown-col { padding: 0 1.25rem; border-right: none; }
-/* Mobile: hide dropdowns on small screens, show all nav links */
-@media (max-width: 900px) { .dropdown { display: none !important; } .nav-item > a::after { display: none; } }
-@media (max-width: 640px) { .nav { gap: 0.875rem; } .nav a:not(.nav-cta) { display: none; } }
 
+/* DROPDOWN NAV */
+.nav-item{position:relative;padding-bottom:12px;margin-bottom:-12px}
+.nav-item > a{display:flex;align-items:center;gap:4px}
+.nav-item > a::after{content:'';display:inline-block;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;opacity:.5;margin-top:1px;flex-shrink:0}
+.dropdown{display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;box-shadow:0 12px 32px rgba(26,20,16,.14);min-width:580px;z-index:300;padding:1.75rem 0 1.25rem}
+.nav-item:hover .dropdown,.nav-item:focus-within .dropdown{display:block}
+.dropdown::before{content:'';position:absolute;top:-12px;left:0;right:0;height:12px;background:transparent}
+.dropdown-cols{display:grid;grid-template-columns:1fr 1fr}
+.dropdown-col{padding:0 1.25rem}
+.dropdown-col:first-child{border-right:1px solid var(--cream-dark)}
+.dropdown-col-head{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dim);padding:0 0 .625rem;margin-bottom:.375rem;border-bottom:1px solid var(--cream-dark)}
+.dropdown a{display:block;font-size:15px;color:var(--ink-muted)!important;text-decoration:none;padding:4px 0;line-height:1.4;transition:color .15s;letter-spacing:0}
+.dropdown a:hover{color:var(--gold-dim)!important}
+.dropdown a::after{display:none!important}
+.dropdown-services{min-width:260px}
+.dropdown-services .dropdown-col{padding:0 1.25rem;border-right:none}
+@media (max-width:900px){.dropdown{display:none!important}.nav-item > a::after{display:none}.situation-cards{grid-template-columns:1fr}}
+@media (max-width:640px){.nav{gap:.875rem}.nav a:not(.nav-cta){display:none}.penalty-label{min-width:120px}}
+@media (max-width:560px){.threshold-grid{grid-template-columns:1fr}}
+
+/* GOOGLE REVIEWS (social proof) */
+.gr-wrap{background:#fff;border:1px solid #d9cdb8;border-radius:8px;padding:1.5rem 1.5rem 1.25rem;margin:2.5rem 0}
+.gr-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:.75rem;margin-bottom:1.1rem}
+.gr-head h2.gr-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.5rem;font-weight:700;color:#1a1410;margin:0;padding:0;border:none}
+.gr-sub{font-size:13px;color:#7a6e60;margin:.2rem 0 0;line-height:1.5}
+.gr-score{display:flex;align-items:center;gap:.5rem;font-size:13px;color:#7a6e60;text-decoration:none;white-space:nowrap}
+.gr-score strong{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.6rem;color:#1a1410;line-height:1}
+.gr-stars{color:#d9971a;letter-spacing:1px;font-size:15px}
+.gr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.875rem}
+.gr-card{background:#f5f0e8;border:1px solid #d9cdb8;border-radius:6px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem;margin:0}
+.gr-card .gr-quote{margin:0;font-size:14px;line-height:1.6;color:#4a3f32;font-style:normal}
+.gr-card .gr-name{font-weight:700;color:#1a1410;font-size:14px;margin:0}
+.gr-card .gr-meta{font-size:12px;color:#7a6e60;margin:0}
+.gr-card a.gr-link{font-size:12px;font-weight:600;color:#8a6e2f;text-decoration:none;margin-top:auto}
+.gr-foot{margin:1rem 0 0;font-size:13px;color:#7a6e60}
+.gr-foot a{color:#8a6e2f;font-weight:600;text-decoration:none}
+.gr-badge{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:600}
+.gr-badge .gr-stars{font-size:13px}
 </style>
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "I Missed the Tax Deadline \u2014 What Do I Do Now? | Former IRS Auditor",
-  "description": "Missed the April 15 tax deadline? Former IRS Auditor Romeo Razi explains the three stacking penalties, how to stop them immediately, and your payment options.",
+  "headline": "Missed the Tax Deadline (April 15 or October 15)? Penalties and What to Do Now",
+  "description": "Former IRS Tax Examiner Romeo Razi, CPA explains the failure-to-file and failure-to-pay penalties, the $525 minimum penalty after 60 days, current 7% IRS interest, the October 15 extension deadline, automatic penalty relief (AEP), and payment plan options.",
   "url": "https://irsresolutionservice.com/missed-tax-deadline",
-  "dateModified": "2026-07-14",
+  "datePublished": "2026-07-14",
+  "dateModified": "2026-10-26",
   "author": {
     "@type": "Person",
     "@id": "https://irsresolutionservice.com/#romeo-razi",
@@ -131,13 +153,9 @@ footer a{color:var(--gold);text-decoration:none}
     "jobTitle": "Former IRS Tax Examiner, CPA",
     "sameAs": "https://www.linkedin.com/in/romeo-razi/"
   },
-  "publisher": {
-    "@id": "https://irsresolutionservice.com/#organization"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://irsresolutionservice.com/missed-tax-deadline"
-  }
+  "publisher": {"@id": "https://irsresolutionservice.com/#organization"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://irsresolutionservice.com/missed-tax-deadline"},
+  "about": ["Failure-to-file penalty", "Failure-to-pay penalty", "IRS interest", "Form 4868 extension", "IRS installment agreement", "Automatic Exemption from Penalty"]
 }
 </script>
 <script type="application/ld+json">
@@ -145,38 +163,35 @@ footer a{color:var(--gold);text-decoration:none}
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "I'm owed a refund \u2014 is there really no penalty for filing late?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Correct. The failure-to-file and failure-to-pay penalties are calculated as a percentage of the unpaid tax. If there's no unpaid tax (because you're getting a refund), there's nothing to calculate the penalty on. The only risk is the 3-year window \u2014 if you don't file within 3 years of the original due date, the IRS keeps your refund permanently."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "I filed an extension \u2014 does that protect me from penalties?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "A valid extension eliminates the failure-to-file penalty for the extended period (typically 6 months, to October 15). But an extension to FILE is not an extension to PAY \u2014 if you owe taxes, the failure-to-pay penalty and interest still run from the original April 15 deadline even with a valid extension. You need to estimate and pay your liability by April 15 even if you file later."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can I just pay without filing?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Paying without filing is almost always the wrong move. The failure-to-file penalty (5%/month) vastly exceeds the failure-to-pay penalty (0.5%/month). The return has to be filed to stop the larger penalty. Once you've filed, you can arrange payment on the balance regardless of whether you can pay in full right now."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What if I make a mistake on the rushed return?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "You can file an amended return (Form 1040-X) to correct it. Filing an imperfect return now and amending later is the right strategy. The amendment doesn't restart the failure-to-file clock \u2014 what matters is that something was filed. Don't let perfectionism cost you months of 5%/month penalty accumulation."
-      }
-    }
+    {"@type": "Question", "name": "What happens if I miss the tax deadline?",
+     "acceptedAnswer": {"@type": "Answer", "text": "If you owe tax, the IRS charges a failure-to-file penalty of 5% of the unpaid tax per month (maximum 25%), a failure-to-pay penalty of 0.5% per month (maximum 25%), and interest at 7% per year compounded daily (rate for Q4 2026). When both penalties apply in the same month the combined charge is 5%. If you are owed a refund there is no penalty, but you must file within 3 years to claim it."}},
+    {"@type": "Question", "name": "I missed the October 15 extension deadline. What happens now?",
+     "acceptedAnswer": {"@type": "Answer", "text": "The extension only protected you from the failure-to-file penalty through October 15, 2026. Starting October 16, the 5%-per-month failure-to-file penalty applies to any unpaid tax. If the return is filed more than 60 days late (after December 14, 2026 for extended 2025 returns), a minimum penalty of the lesser of $525 or 100% of the unpaid tax applies. The failure-to-pay penalty and interest have been running since April 15, 2026."}},
+    {"@type": "Question", "name": "What is the penalty for filing taxes late if I don't owe anything?",
+     "acceptedAnswer": {"@type": "Answer", "text": "There is no failure-to-file or failure-to-pay penalty if you owe no tax, because both are calculated on unpaid tax. The only risk is losing your refund: you generally must file within 3 years of the original due date to claim it. For 2023 returns, that window closes April 15, 2027."}},
+    {"@type": "Question", "name": "I filed an extension. Does that protect me from penalties?",
+     "acceptedAnswer": {"@type": "Answer", "text": "A valid extension (Form 4868) protects you from the failure-to-file penalty until October 15. It does not extend the time to pay. If you owed tax, the failure-to-pay penalty and interest have run since April 15 on whatever you did not pay by then."}},
+    {"@type": "Question", "name": "Can I just pay without filing?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Paying reduces what penalties and interest are calculated on, but only filing stops the failure-to-file penalty, which is ten times larger per month than the failure-to-pay penalty. File first, then pay what you can and set up a payment plan for the rest."}},
+    {"@type": "Question", "name": "Will the IRS waive my late filing penalty?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Possibly. Starting with 2025 tax-year returns, the IRS is phasing in Automatic Exemption from Penalty (AEP), which waives failure-to-file and failure-to-pay penalties automatically for taxpayers with a clean three-year compliance history, replacing First Time Abate. During the transition you may still receive a penalty notice and can request First Time Abate. If you don't qualify, you can request reasonable-cause relief."}},
+    {"@type": "Question", "name": "What if I make a mistake on a rushed return?",
+     "acceptedAnswer": {"@type": "Answer", "text": "File an amended return (Form 1040-X) to correct it. Filing an imperfect return now and amending later is usually the right strategy, because the original filing is what stops the failure-to-file penalty."}},
+    {"@type": "Question", "name": "What is the estimated tax underpayment penalty?",
+     "acceptedAnswer": {"@type": "Answer", "text": "It is a separate charge for not paying enough tax during the year through withholding or quarterly estimated payments, calculated on Form 2210 at the IRS underpayment interest rate (7% in Q4 2026). You generally avoid it if you paid at least 90% of this year's tax or 100% of last year's tax (110% if your prior-year AGI was over $150,000)."}},
+    {"@type": "Question", "name": "Can I lose my passport for missing the tax deadline?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Only in serious cases. The IRS can certify seriously delinquent tax debt to the State Department when total assessed tax, penalties and interest exceed $66,000 (2026 threshold) and a lien has been filed or a levy issued. A payment plan in good standing prevents certification."}}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://irsresolutionservice.com/"},
+    {"@type": "ListItem", "position": 2, "name": "IRS Guides", "item": "https://irsresolutionservice.com/cp2000"},
+    {"@type": "ListItem", "position": 3, "name": "Missed the Tax Deadline", "item": "https://irsresolutionservice.com/missed-tax-deadline"}
   ]
 }
 </script>
@@ -184,229 +199,346 @@ footer a{color:var(--gold);text-decoration:none}
 <body>
 <header class="site-header"><div class="header-inner">
   <a href="/" class="logo"><div class="logo-mark">IRS</div><span class="logo-text">Resolution <span>Service</span></span></a>
-          <nav class="nav">
-      <a href="/#founders">About</a>
-      <div class="nav-item">
-        <a href="/cp2000">IRS Guides</a>
-        <div class="dropdown">
-          <div class="dropdown-cols" style="grid-template-columns:1fr 1fr 1fr">
-            <div class="dropdown-col">
-              <div class="dropdown-col-head">IRS Notices Explained</div>
-              <a href="/cp2000">CP2000 — Proposed Adjustment</a>
-              <a href="/cp14">CP14 — First Balance Due</a>
-              <a href="/cp504">CP504 — Intent to Levy</a>
-              <a href="/lt11">LT11 — Final Levy Notice</a>
-              <a href="/cp3219a">CP3219A — Notice of Deficiency</a>
-              <a href="/cp59">CP59 — Unfiled Return</a>
-              <a href="/cp523">CP523 — Payment Plan Terminated</a>
-              <a href="/missed-tax-deadline">Missed the Tax Deadline</a>
-              <a href="/havent-filed-taxes">Haven't Filed in Years</a>
-            </div>
-            <div class="dropdown-col">
-              <div class="dropdown-col-head">IRS Resolution &amp; Collection</div>
-              <a href="/irs-installment-agreement">Payment Plans Explained</a>
-              <a href="/irs-offer-in-compromise">Offer in Compromise</a>
-              <a href="/irs-offer-in-compromise-deemed-accepted">OIC Deemed Accepted Rule</a>
-              <a href="/irs-collection-statute">10-Year Collection Statute</a>
-              <a href="/irs-penalty-abatement">Penalty Abatement</a>
-              <a href="/irs-automatic-penalty-relief">NEW: Automatic Penalty Relief (AEP)</a>
-              <a href="/irs-covid-penalty-refund-kwong">NEW: Kwong COVID Penalty Refunds</a>
-              <a href="/missed-july-10-kwong-deadline">Missed the July 10 Kwong Deadline?</a>
-              <a href="/irs-currently-not-collectible">Currently Not Collectible</a>
-              <a href="/irs-wage-garnishment">Wage Garnishment</a>
-              <a href="/irs-bank-levy">Bank Levy — 21-Day Window</a>
-              <a href="/irs-tax-lien">Federal Tax Lien</a>
-              <a href="/irs-revenue-officer">Revenue Officer Assigned</a>
-              <a href="/irs-audit-appeals-strategy">Audit &amp; Appeals Strategy</a>
-              <a href="/irs-office-audit-preparation">Prepare for Office Audit</a>
-              <a href="/irs-budget-cuts-2025">IRS Budget Cuts 2025</a>
-            </div>
-            <div class="dropdown-col">
-              <div class="dropdown-col-head">Tax Law &amp; Planning</div>
-              <a href="/one-big-beautiful-act">One Big Beautiful Act — 9 Changes</a>
-              <a href="/irs-tips-overtime-tax">Tax-Free Tips &amp; Overtime</a>
-              <a href="/salt-deduction-2025">SALT Deduction Raised to $40K</a>
-              <a href="/bonus-depreciation-2025">100% Bonus Depreciation</a>
-              <a href="/rd-expense-deduction">R&amp;D Expense Deduction</a>
-              <a href="/qualified-small-business-stock">QSBS Exclusion Changes</a>
-              <a href="/year-end-tax-planning">Year-End Business Planning</a>
-              <a href="/tax-brackets-2026">2026 Tax Brackets</a>
-              <a href="/trump-accounts">NEW: Trump Accounts — $1,000 for Newborns</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="nav-item">
-        <a href="/#services">Services</a>
-        <div class="dropdown dropdown-services">
-          <div class="dropdown-col">
-            <div class="dropdown-col-head">What We Handle</div>
-            <a href="/#services">Unfiled Tax Returns</a>
-            <a href="/#services">Back Taxes &amp; Collections</a>
-            <a href="/#services">IRS Audits &amp; Appeals</a>
-            <a href="/#services">Offer in Compromise</a>
-            <a href="/#services">Installment Agreements</a>
-            <a href="/#services">Penalty Abatement</a>
-            <a href="/#services">IRS Notice Response</a>
-            <a href="/#services">Tax Catch-Up Filing</a>
-          </div>
-        </div>
-      </div>
-      <a href="/#tool">Notice Decoder</a>
-      <a href="/#faq">FAQ</a>
-      <a href="/#contact" class="nav-cta">Get Help Now</a>
-    </nav>
-</div></header>
-<div class="header-inner">
-  <a href="/" class="logo"><div class="logo-mark">IRS</div><span class="logo-text">Resolution <span>Service</span></span></a>
   <nav class="nav">
-    <a href="/#services">Services</a><a href="/#founders">About</a>
-    <a href="/#tool">Notice Decoder</a><a href="/#faq">FAQ</a>
+    <a href="/#founders">About</a>
+    <div class="nav-item">
+      <a href="/cp2000">IRS Guides</a>
+      <div class="dropdown">
+        <div class="dropdown-cols" style="grid-template-columns:1fr 1fr 1fr">
+          <div class="dropdown-col">
+            <div class="dropdown-col-head">IRS Notices Explained</div>
+            <a href="/cp2000">CP2000 — Proposed Adjustment</a>
+            <a href="/cp14">CP14 — First Balance Due</a>
+            <a href="/cp504">CP504 — Intent to Levy</a>
+            <a href="/lt11">LT11 — Final Levy Notice</a>
+            <a href="/cp3219a">CP3219A — Notice of Deficiency</a>
+            <a href="/cp59">CP59 — Unfiled Return</a>
+            <a href="/cp523">CP523 — Payment Plan Terminated</a>
+            <a href="/missed-tax-deadline">Missed the Tax Deadline</a>
+            <a href="/havent-filed-taxes">Haven't Filed in Years</a>
+          </div>
+          <div class="dropdown-col">
+            <div class="dropdown-col-head">IRS Resolution &amp; Collection</div>
+            <a href="/irs-installment-agreement">Payment Plans Explained</a>
+            <a href="/irs-offer-in-compromise">Offer in Compromise</a>
+            <a href="/irs-offer-in-compromise-deemed-accepted">OIC Deemed Accepted Rule</a>
+            <a href="/irs-collection-statute">10-Year Collection Statute</a>
+            <a href="/irs-penalty-abatement">Penalty Abatement</a>
+            <a href="/irs-automatic-penalty-relief">NEW: Automatic Penalty Relief (AEP)</a>
+            <a href="/irs-covid-penalty-refund-kwong">NEW: Kwong COVID Penalty Refunds</a>
+            <a href="/missed-july-10-kwong-deadline">Missed the July 10 Kwong Deadline?</a>
+            <a href="/irs-currently-not-collectible">Currently Not Collectible</a>
+            <a href="/irs-wage-garnishment">Wage Garnishment</a>
+            <a href="/irs-bank-levy">Bank Levy — 21-Day Window</a>
+            <a href="/irs-tax-lien">Federal Tax Lien</a>
+            <a href="/irs-revenue-officer">Revenue Officer Assigned</a>
+            <a href="/irs-audit-appeals-strategy">Audit &amp; Appeals Strategy</a>
+            <a href="/irs-office-audit-preparation">Prepare for Office Audit</a>
+            <a href="/irs-budget-cuts-2025">IRS Budget Cuts 2025</a>
+          </div>
+          <div class="dropdown-col">
+            <div class="dropdown-col-head">Tax Law &amp; Planning</div>
+            <a href="/one-big-beautiful-act">One Big Beautiful Act — 9 Changes</a>
+            <a href="/irs-tips-overtime-tax">Tax-Free Tips &amp; Overtime</a>
+            <a href="/salt-deduction-2025">SALT Deduction Raised to $40K</a>
+            <a href="/bonus-depreciation-2025">100% Bonus Depreciation</a>
+            <a href="/rd-expense-deduction">R&amp;D Expense Deduction</a>
+            <a href="/qualified-small-business-stock">QSBS Exclusion Changes</a>
+            <a href="/year-end-tax-planning">Year-End Business Planning</a>
+            <a href="/tax-brackets-2026">2026 Tax Brackets</a>
+            <a href="/trump-accounts">NEW: Trump Accounts — $1,000 for Newborns</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="/#services">Services</a>
+      <div class="dropdown dropdown-services">
+        <div class="dropdown-col">
+          <div class="dropdown-col-head">What We Handle</div>
+          <a href="/#services">Unfiled Tax Returns</a>
+          <a href="/#services">Back Taxes &amp; Collections</a>
+          <a href="/#services">IRS Audits &amp; Appeals</a>
+          <a href="/#services">Offer in Compromise</a>
+          <a href="/#services">Installment Agreements</a>
+          <a href="/#services">Penalty Abatement</a>
+          <a href="/#services">IRS Notice Response</a>
+          <a href="/#services">Tax Catch-Up Filing</a>
+        </div>
+      </div>
+    </div>
+    <a href="/#tool">Notice Decoder</a>
+    <a href="/#faq">FAQ</a>
     <a href="/#contact" class="nav-cta">Get Help Now</a>
   </nav>
 </div></header>
+
 <div class="emergency-hero">
   <div class="wrap">
     <div class="emergency-eyebrow">&#9888; Missed Tax Deadline — Act Now</div>
-    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 1.5rem;font-size:14px;color:#7a6e60">
+    <div class="byline">
       <img src="/romeo-razi.png" alt="Romeo Razi, CPA — Former IRS Tax Examiner" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid #c9a84c">
-      <span>By <a href="/#founders" style="color:#8a6e2f;font-weight:600;text-decoration:none">Romeo Razi, CPA</a> &mdash; Former IRS Tax Examiner</span>
-      <span>&middot;</span><span>Updated July 14, 2026</span>
+      <span>By <a href="/#founders">Romeo Razi, CPA</a> &mdash; Former IRS Tax Examiner</span>
+      <span>&middot;</span><span>Updated October 26, 2026</span>
       <span>&middot;</span><span>Fact-checked against IRS primary sources</span>
+      <span>&middot;</span><a class="gr-badge" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener" style="color:#e8c97a"><span class="gr-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.0 on Google (8 client reviews)</a>
     </div>
-    <div style="background:rgba(201,168,76,0.1);border:1px solid #d9cdb8;border-left:4px solid #c9a84c;border-radius:0 6px 6px 0;padding:1.1rem 1.4rem;margin:0 0 1.5rem">
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#8a6e2f;margin-bottom:0.4rem">Deadline calendar — from Romeo's July 14 newsletter</div>
-      <p style="font-size:15px;color:#4a3f32;line-height:1.7;margin:0">Coming up: <strong>July 31</strong> &mdash; Form 5500-series retirement plan returns (your 401(k) provider handles it, unless you run a solo 401(k) &mdash; then read our <a href='/form-5500-ez-late-filing-penalty' style='color:#8a6e2f'>Form 5500-EZ guide</a>; the late penalty is $250/day). <strong>August</strong> &mdash; nothing, you're clear. <strong>September 15</strong> &mdash; Q3 estimated taxes AND extended S-corp/partnership returns.</p>
-    </div>
-    <h1>You missed the tax deadline.<br>Here's exactly what happens next.</h1>
+    <h1>Missed the tax deadline?<br>Here's exactly what happens next.</h1>
     <div class="answer-box">
-      <p><strong>First: don't panic.</strong> This is far more common than you think — people don't announce it at dinner parties, but it happens constantly. There are two situations you might be in, and they have very different consequences. The key is knowing which one you're in and acting in the next 48 hours.</p>
+      <p><strong>Short answer:</strong> If you owe tax and missed the deadline, file your return as soon as possible. The IRS charges a <strong>failure-to-file penalty of 5% of the unpaid tax per month</strong> (max 25%), a <strong>failure-to-pay penalty of 0.5% per month</strong>, and <strong>interest at 7% a year, compounded daily</strong> (Q4 2026 rate). File more than 60 days late and a <strong>minimum penalty of $525</strong> (or 100% of the tax, if less) kicks in.</p>
+      <p>If the IRS owes <em>you</em> a refund, there's no penalty &mdash; but you have 3 years to file or the refund is gone.</p>
     </div>
     <div class="situation-cards">
       <div class="sit-card refund">
-        <h3>&#10003; Situation A: IRS owes YOU</h3>
-        <p>No penalties. No problem. You just need to file. But you only have 3 years before the IRS legally keeps your refund — the statute runs both ways.</p>
+        <h3>&#10003; A: IRS owes you</h3>
+        <p>No penalty. Just file. You have 3 years from the original due date to claim the refund &mdash; after that the Treasury keeps it.</p>
       </div>
       <div class="sit-card owe">
-        <h3>&#9888; Situation B: You owe the IRS</h3>
-        <p>Three penalties are stacking right now: failure to file, failure to pay, and interest — all accruing simultaneously. File immediately, even imperfectly.</p>
+        <h3>&#9888; B: You owe, no extension</h3>
+        <p>Penalties have run since April 16, 2026. The 5%/month failure-to-file penalty already hit its 25% cap in September. File now; interest and the payment penalty keep running.</p>
+      </div>
+      <div class="sit-card ext">
+        <h3>&#9888; C: Extension, missed Oct 15</h3>
+        <p>Your filing protection ended October 15. File by <strong>December 14, 2026</strong> to stay under the 60-day line and avoid the $525 minimum penalty.</p>
       </div>
     </div>
   </div>
 </div>
-<div class="nav-links-bar"><a href="/cp2000">CP2000</a><span>·</span><a href="/cp14">CP14</a><span>·</span><a href="/cp504">CP504</a><span>·</span><a href="/lt11">LT11</a><span>·</span><a href="/cp3219a">CP3219A</a><span>·</span><a href="/cp59">CP59</a><span>·</span><a href="/cp523">CP523</a><span>·</span><a href="/irs-installment-agreement">Payment Plans</a><span>·</span><a href="/irs-offer-in-compromise">OIC</a><span>·</span><a href="/irs-collection-statute">10-Year Statute</a><span>·</span><a href="/irs-budget-cuts-2025">IRS Cuts 2025</a><span>·</span><a href="/irs-audit-appeals-strategy">Audit Appeals</a></div>
+<div class="nav-links-bar"><a href="/cp2000">CP2000</a><span>·</span><a href="/cp14">CP14</a><span>·</span><a href="/cp504">CP504</a><span>·</span><a href="/lt11">LT11</a><span>·</span><a href="/cp59">CP59</a><span>·</span><a href="/havent-filed-taxes">Haven't Filed in Years</a><span>·</span><a href="/irs-installment-agreement">Payment Plans</a><span>·</span><a href="/irs-automatic-penalty-relief">Automatic Penalty Relief</a><span>·</span><a href="/irs-penalty-abatement">Penalty Abatement</a><span>·</span><a href="/irs-collection-statute">10-Year Statute</a></div>
 <div class="body-wrap">
 
-  <h2 class="section-head">The three penalties that are running right now if you owe money</h2>
-  <p>If you owe the IRS and didn't file, three separate penalties began accruing on the day after the deadline. They don't replace each other — they stack.</p>
+  <h2 class="section-head">Missed-deadline penalties at a glance (2026)</h2>
+  <p>These are the numbers that apply to 2025 tax returns that were due in 2026.</p>
+  <div class="table-scroll">
+  <table class="data-table">
+    <thead><tr><th>Charge</th><th>Rate</th><th>Maximum</th><th>How to stop it</th></tr></thead>
+    <tbody>
+      <tr><td>Failure-to-file penalty</td><td>5% of unpaid tax per month or part of a month (4.5% in months when the failure-to-pay penalty also applies)</td><td>25% of unpaid tax</td><td>File the return</td></tr>
+      <tr><td>Minimum late-filing penalty</td><td>Lesser of $525 or 100% of the unpaid tax</td><td>Applies only if filed more than 60 days late</td><td>File within 60 days of the due date (or extended due date)</td></tr>
+      <tr><td>Failure-to-pay penalty</td><td>0.5% of unpaid tax per month; drops to 0.25% while you're on a payment plan (if you filed on time); rises to 1% after a final notice of intent to levy</td><td>25% of unpaid tax</td><td>Pay the balance in full</td></tr>
+      <tr><td>Interest</td><td>7% per year, compounded daily (Oct 1 &ndash; Dec 31, 2026); reset quarterly</td><td>No cap</td><td>Pay the balance in full &mdash; interest also accrues on penalties</td></tr>
+      <tr><td>Combined penalty ceiling</td><td colspan="3">47.5% of the tax (22.5% late filing + 25% late payment), before interest</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2 class="section-head">The three charges running right now if you owe</h2>
+  <p>If you owe the IRS and didn't file, three separate charges began the day after the deadline. They don't replace each other &mdash; they stack.</p>
   <div class="penalty-stack">
     <div class="penalty-row">
       <div class="penalty-label">Failure to File</div>
-      <div class="penalty-bar">5% per month → max 25%</div>
+      <div class="penalty-bar">5% per month &rarr; max 25%</div>
     </div>
     <div class="penalty-row">
       <div class="penalty-label">Failure to Pay</div>
-      <div class="penalty-bar pay">0.5% per month → max 6%</div>
+      <div class="penalty-bar pay">0.5% per month &rarr; max 25%</div>
     </div>
     <div class="penalty-row">
       <div class="penalty-label">Interest</div>
-      <div class="penalty-bar int">~6–8% annually (Fed rate)</div>
+      <div class="penalty-bar int">7% a year, compounded daily (Q4 2026)</div>
     </div>
-    <div class="penalty-total">All three apply simultaneously on your unpaid balance.</div>
+    <div class="penalty-total">All three apply at the same time on your unpaid balance.</div>
   </div>
+  <p>One detail most guides skip: when both penalties apply in the same month, the IRS reduces the failure-to-file penalty by the failure-to-pay amount, so the combined charge is 5% a month, not 5.5%. Even one day late counts as a full month.</p>
   <div class="callout callout-red">
     <div class="label red">Romeo Razi, CPA — "What to Do if You Missed the Tax Deadline"</div>
     <p>"Failure to file is 5% per month. That is a penalty created by Satan. The failure to file penalty alone can become as large as the underlying tax itself if you let it run for 3 or 4 years. I've seen it. Get something filed as soon as possible — even if it's not perfect. Stop that penalty immediately."</p>
   </div>
   <div class="romeo-sig">
-  <img src="/romeo-razi.png" alt="Romeo Razi, CPA" style="width:90px;height:90px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--gold);display:block">
-  <div><div class="romeo-sig-name">Romeo Razi, CPA</div><div class="romeo-sig-text">Former IRS Auditor · 15+ years private practice · 10,000+ returns<br><a class="source-tag" href="https://www.youtube.com/watch?v=X72vEtA_b0s" target="_blank" rel="noopener">Watch: What to Do If You Missed the Deadline</a></div></div>
-</div>
+    <img src="/romeo-razi.png" alt="Romeo Razi, CPA" style="width:90px;height:90px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--gold);display:block">
+    <div><div class="romeo-sig-name">Romeo Razi, CPA</div><div class="romeo-sig-text">Former IRS Tax Examiner · 15+ years private practice · 10,000+ returns<br><a class="source-tag" href="https://www.youtube.com/watch?v=X72vEtA_b0s" target="_blank" rel="noopener">Watch: What to Do If You Missed the Deadline</a></div></div>
+  </div>
 
-  <h2 class="section-head">The most important thing you can do in the next 48 hours</h2>
-  <p>File your return. Even if you don't have everything. Even if you'll need to amend it later. The moment a return is filed, the failure-to-file penalty stops. The failure-to-pay penalty and interest continue until you pay — but the 5%/month monster stops the day the return is filed.</p>
+  <h2 class="section-head">What it actually costs: two worked examples</h2>
+  <h3 class="sub">Example 1 &mdash; No extension, owe $5,000, file October 30, 2026</h3>
+  <ul>
+    <li><strong>Failure-to-file:</strong> capped at 22.5% (five months at 4.5%) = <strong>$1,125</strong></li>
+    <li><strong>Failure-to-pay:</strong> 7 months &times; 0.5% = <strong>$175</strong>, and still growing until paid</li>
+    <li><strong>Interest:</strong> roughly <strong>$180</strong> (6% for April&ndash;June, 7% since July)</li>
+    <li><strong>Total added to the $5,000:</strong> about <strong>$1,480</strong> &mdash; nearly 30% of the original tax in six and a half months</li>
+  </ul>
+  <h3 class="sub">Example 2 &mdash; Filed an extension, owe $5,000, missed October 15</h3>
+  <p>Here the 60-day line matters. Filing in mid-December produces two different penalties a day apart:</p>
+  <div class="table-scroll">
+  <table class="data-table">
+    <thead><tr><th>Filed on</th><th>Months late</th><th>Failure-to-file penalty</th></tr></thead>
+    <tbody>
+      <tr><td>December 14, 2026</td><td>2 (within 60 days)</td><td>2 &times; 4.5% &times; $5,000 = <strong>$450</strong></td></tr>
+      <tr><td>December 15, 2026</td><td>2 (over 60 days)</td><td>Minimum penalty applies = <strong>$525</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>On top of either figure, the failure-to-pay penalty and interest have been running on the unpaid $5,000 since April 15. If you'd paid most of your tax with the extension, the penalties shrink accordingly &mdash; they're calculated only on what remained unpaid.</p>
+
+  <h2 class="section-head">What to do in the next 48 hours</h2>
+  <p>File your return. Even if you don't have everything. Even if you'll need to amend it later. The moment a return is filed, the failure-to-file penalty stops. The failure-to-pay penalty and interest continue until you pay &mdash; but the 5%/month penalty stops the day the return is filed.</p>
   <div class="callout callout-gold">
     <div class="label gold">Romeo Razi, CPA — Missed Deadline Video</div>
     <p>"Now is not the moment where you're trying to get the perfect haircut. Don't try to get the hard part in and the fade lined up. Just grab a clipper and shave it. File something. You can amend later. Stop that penalty now."</p>
   </div>
   <ol class="step-list">
-    <li><span><strong>File your return today</strong> — or as close to it as possible. Use last year's return as a template. Gather what you have. An imperfect filed return is infinitely better than a perfect unfiled one.</span></li>
-    <li><span><strong>Pay what you can</strong> even if you can't pay in full. Every dollar paid reduces the penalty and interest base going forward. Partial payment stops nothing, but it reduces what's accumulating.</span></li>
-    <li><span><strong>Request a payment plan</strong> based on your balance (see thresholds below). An active installment agreement stops active collection actions — levies, liens, <a href="/irs-wage-garnishment">wage garnishments</a>.</span></li>
-    <li><span><strong>Consider penalty abatement</strong> once you're in compliance. First Time Abatement (FTA) is available if you have a clean prior 3-year compliance history. You must request it — the IRS won't offer it. See our <a class="text-link" href="/cp14">CP14 page</a> for details.</span></li>
+    <li><span><strong>Check whether your deadline was postponed.</strong> If you live in a federally declared disaster area, your deadline may have moved. Counties in West Virginia, Indiana, Nebraska, Mississippi, Ohio and Washington currently have filing deadlines postponed to February 1, 2027 &mdash; including for 2025 returns on extension. Check the <a class="text-link" href="https://www.irs.gov/newsroom/tax-relief-in-disaster-situations" target="_blank" rel="noopener">IRS disaster relief list</a> for your county before you assume you're late.</span></li>
+    <li><span><strong>File your return now</strong> &mdash; e-file if you can, since it's fastest. Use last year's return as a template and gather what you have. An imperfect filed return beats a perfect unfiled one; you can fix errors later with Form 1040-X.</span></li>
+    <li><span><strong>Pay what you can today.</strong> Partial payment doesn't stop any penalty, but every dollar paid shrinks the base that the failure-to-pay penalty and interest are calculated on.</span></li>
+    <li><span><strong>Set up a payment plan for the rest</strong> (options below). An approved plan generally keeps the IRS from levying while it's in effect and, if you filed on time, cuts the failure-to-pay penalty in half. Note the IRS won't approve a plan while you have unfiled returns &mdash; another reason to file first.</span></li>
+    <li><span><strong>Watch for penalty relief.</strong> With a clean three-year record, your penalties may be waived automatically or on request (see the next section). If something outside your control caused the delay &mdash; serious illness, a disaster, a death in the family &mdash; ask for <a class="text-link" href="/irs-penalty-abatement">reasonable-cause relief</a>.</span></li>
+    <li><span><strong>Don't forget your state return.</strong> State deadlines and penalties run separately from the IRS. Filing your federal return doesn't stop state penalties.</span></li>
   </ol>
 
-  <h2 class="section-head">Payment plan options — pick your situation</h2>
+  <h2 class="section-head">Penalty relief: First Time Abate is being replaced</h2>
+  <p>In July 2026 the IRS announced <strong>Automatic Exemption from Penalty (AEP)</strong>, which replaces the long-standing First Time Abate (FTA) program. Under AEP, the IRS doesn't assess the failure-to-file or failure-to-pay penalty at all if you meet the three-year timely-compliance test &mdash; you no longer have to call and ask.</p>
+  <ul>
+    <li><strong>Who it covers:</strong> original returns starting with tax year 2025 (the returns due in 2026), and quarterly returns from 2026 on.</li>
+    <li><strong>Who qualifies:</strong> taxpayers with no penalties (other than the estimated tax penalty) in the prior three years, or whose earlier penalties were removed for reasonable cause or IRS error.</li>
+    <li><strong>Transition catch:</strong> during the changeover, some eligible taxpayers will still get a penalty notice for 2025 returns. If that's you, you can still call the IRS and request First Time Abate. AEP fully replaces FTA for returns originally due on or after January 1, 2027.</li>
+    <li><strong>What it doesn't cover:</strong> the tax itself and interest. Interest is only reduced when the penalty it was charged on is removed.</li>
+  </ul>
+  <p>Full details: <a class="text-link" href="/irs-automatic-penalty-relief">our AEP guide</a>.</p>
+
+  <h2 class="section-head">Payment plan options &mdash; pick your situation</h2>
   <div class="threshold-grid">
     <div class="threshold-card t1">
-      <div class="amt">Under $10K</div>
-      <div class="desc"><strong>Guaranteed streamline.</strong> DIY at IRS.gov. No need to hire anyone. Guaranteed acceptance.</div>
+      <div class="amt">Can pay in 180 days</div>
+      <div class="desc"><strong>Short-term plan.</strong> Owe less than $100,000 in tax, penalties and interest. No setup fee. Apply online at IRS.gov in minutes.</div>
     </div>
     <div class="threshold-card t2">
-      <div class="amt">$10K–$50K</div>
-      <div class="desc"><strong>Streamline (not guaranteed, but almost always approved).</strong> Still do it online at IRS.gov. Rarely rejected.</div>
+      <div class="amt">Owe $50K or less</div>
+      <div class="desc"><strong>Long-term plan, online.</strong> Monthly payments; approval is typically immediate once all returns are filed. Setup fee is lowest online with direct debit.</div>
     </div>
     <div class="threshold-card t3">
-      <div class="amt">$50K–$100K</div>
-      <div class="desc"><strong>Long-term plan. Call the IRS.</strong> Passport restriction possible here. Tip: pay down to under $50K first to streamline online.</div>
+      <div class="amt">Owe over $50K</div>
+      <div class="desc"><strong>Call the IRS or file Form 9465 with Form 433-F</strong> (financial disclosure). Tip: pay the balance down to $50K first to qualify for the online plan.</div>
     </div>
     <div class="threshold-card t4">
-      <div class="amt">Over $100K</div>
-      <div class="desc"><strong>Special IRS officer assignment.</strong> Full financial disclosure required. Romeo has gotten clients on plans at $440,000.</div>
+      <div class="amt">Over $66K + lien/levy</div>
+      <div class="desc"><strong>Passport risk.</strong> The IRS can certify the debt to the State Department. A payment plan in good standing prevents certification. Romeo has gotten clients on plans at $440,000.</div>
     </div>
   </div>
   <div class="callout callout-gold">
     <div class="label gold">Romeo Razi, CPA — Missed Deadline Video</div>
     <p>"I once had a client that owed $440,000 to the IRS. I got them on a payment plan. If I could get that person on a payment plan, you could get on a payment plan with $100,000 or $120,000. If you owe over $50,000, sometimes people will make a quick payment to get under $50,000 so they can just streamline it online."</p>
   </div>
+  <p>If you can't afford any monthly payment, look at <a class="text-link" href="/irs-currently-not-collectible">Currently Not Collectible status</a> or an <a class="text-link" href="/irs-offer-in-compromise">Offer in Compromise</a>. Full breakdown: <a class="text-link" href="/irs-installment-agreement">IRS payment plans explained</a>.</p>
+
+  <h2 class="section-head">Deadlines still ahead</h2>
+  <div class="table-scroll">
+  <table class="data-table">
+    <thead><tr><th>Date</th><th>What it means</th></tr></thead>
+    <tbody>
+      <tr><td>December 14, 2026</td><td>Last day to file an extended 2025 return without triggering the $525 minimum late-filing penalty</td></tr>
+      <tr><td>January 15, 2027</td><td>Q4 2026 estimated tax payment due (self-employed, investors, anyone without enough withholding)</td></tr>
+      <tr><td>February 1, 2027</td><td>Postponed filing and payment deadline for taxpayers in covered disaster counties (WV, IN, NE, MS, OH, WA and others)</td></tr>
+      <tr><td>April 15, 2027</td><td>2026 returns due &mdash; and the last day to claim a refund on a 2023 return</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout callout-gold">
+    <div class="label gold">Romeo Razi, CPA &mdash; to <a href="https://money.usnews.com/money/personal-finance/taxes/articles/beating-the-irs-how-to-dodge-the-surge-penalty" target="_blank" rel="noopener" style="color:inherit">U.S. News &amp; World Report</a>, September 2024</div>
+    <p class="plain">Asked about clients who are too cash-strapped to make a quarterly estimated payment on time, Romeo told U.S. News he tells them to pay as soon as they can &mdash; because <em>&ldquo;it's better to pay a few days late instead of missing the entire quarter.&rdquo;</em> The estimated-tax penalty is calculated day by day, so a short delay costs far less than skipping the payment.</p>
+  </div>
 
   <h2 class="section-head">What if you haven't filed for multiple years?</h2>
-  <p>This is more common than you'd ever guess. People go years without filing — not out of malice, but because life happens, the problem feels overwhelming, and avoiding it feels easier than facing it. Romeo has helped clients who were 3, 4, even 5 years behind.</p>
+  <p>This is more common than you'd guess. People go years without filing &mdash; not out of malice, but because life happens, the problem feels overwhelming, and avoiding it feels easier than facing it. Romeo has helped clients who were 3, 4, even 5 years behind.</p>
   <div class="callout callout-gold">
     <div class="label gold">Romeo Razi, CPA — Missed Deadline Video</div>
     <p>"In the last three weeks of tax season, I had three different people contact me. One hadn't filed for three years. One hadn't filed for five years. The other hadn't filed trust returns for four years. I was able to help all three of those people. People always talk about their highs. They never talk about their lows. This is more common than you think."</p>
   </div>
-  <p>The IRS compliance requirement is typically the <strong>last 6 years</strong> of returns — not every year back to the beginning. If you're several years behind, you generally need to file the last 6 years to be considered in compliance. See our full guide at <a class="text-link" href="/cp59">CP59 unfiled returns</a> for the full strategy.</p>
+  <p>The IRS generally requires the <strong>last 6 years</strong> of returns to consider you in compliance &mdash; not every year back to the beginning. Two warnings: if you don't file, the IRS can file a substitute return for you with no deductions or credits, and any refunds older than 3 years are lost. See <a class="text-link" href="/havent-filed-taxes">Haven't filed in years</a> and <a class="text-link" href="/cp59">CP59 unfiled returns</a> for the full strategy.</p>
 
-  
-<div style="margin:3rem 0;padding:1.6rem 1.8rem;background:rgba(201,168,76,0.07);border:1px solid #d9cdb8;border-left:4px solid #c9a84c;border-radius:0 6px 6px 0">
-  <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.55rem;font-weight:700;color:#1a1410;margin:0 0 0.75rem;border:none;padding:0">Sources, and how this guide was researched</h2>
-  <p style="font-size:15px;color:#4a3f32;line-height:1.7;margin:0 0 0.75rem">This guide was written by Romeo Razi, CPA &mdash; a former IRS Tax Examiner in the Individual &amp; Employment Tax Division who handled these situations from the government's side before representing taxpayers in 15+ years of private practice (10,000+ returns). Penalty math and payment-plan thresholds come from the primary sources below:</p>
-  <ul style="font-size:15px;color:#4a3f32;line-height:1.7;padding-left:1.25rem;margin:0 0 0.75rem">
-    <li style="margin-bottom:6px"><a href="https://www.irs.gov/payments/failure-to-file-penalty" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Failure to File penalty</a> &mdash; the 5%/month penalty that stops when you file</li>
-    <li style="margin-bottom:6px"><a href="https://www.irs.gov/payments/failure-to-pay-penalty" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Failure to Pay penalty</a> &mdash; the 0.5%/month companion penalty</li>
-    <li style="margin-bottom:6px"><a href="https://www.irs.gov/payments/payment-plans-installment-agreements" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Payment plans</a> &mdash; the streamline thresholds discussed above</li>
-  </ul>
-  <p style="font-size:14px;color:#7a6e60;line-height:1.65;margin:0">Every figure and deadline above was checked against these primary sources at the time of the last update &mdash; not against secondary coverage. Tax rules change; confirm current guidance at the linked source (or <a href="/#contact" style="color:#8a6e2f">ask us directly</a>) before acting.</p>
-</div>
-<h2 class="section-head">Frequently asked questions — missed tax deadline</h2>
+  <div style="margin:3rem 0;padding:1.6rem 1.8rem;background:rgba(201,168,76,0.07);border:1px solid #d9cdb8;border-left:4px solid #c9a84c;border-radius:0 6px 6px 0">
+    <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.55rem;font-weight:700;color:#1a1410;margin:0 0 0.75rem;border:none;padding:0">Sources, and how this guide was researched</h2>
+    <p style="font-size:15px;color:#4a3f32;line-height:1.7;margin:0 0 0.75rem">Written by Romeo Razi, CPA &mdash; a former IRS Tax Examiner in the Individual &amp; Employment Tax Division who handled these situations from the government's side before representing taxpayers in 15+ years of private practice (10,000+ returns). Penalty math, interest rates and payment-plan thresholds come from these primary sources:</p>
+    <ul style="font-size:15px;color:#4a3f32;line-height:1.7;padding-left:1.25rem;margin:0 0 0.75rem">
+      <li><a href="https://www.irs.gov/payments/failure-to-file-penalty" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Failure to File penalty</a> &mdash; 5%/month rate and the $525 minimum for returns due in 2026</li>
+      <li><a href="https://www.irs.gov/payments/failure-to-pay-penalty" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Failure to Pay penalty</a> &mdash; 0.5%/month, 0.25% on a payment plan, 1% after levy notice</li>
+      <li><a href="https://www.irs.gov/newsroom/interest-rates-remain-the-same-for-the-fourth-quarter-of-2026" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Interest rates for Q4 2026 (IR-2026-98)</a> &mdash; 7% compounded daily</li>
+      <li><a href="https://www.irs.gov/newsroom/irs-simplifies-penalty-relief-introduces-automatic-process-for-eligible-taxpayers" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Automatic Exemption from Penalty announcement</a> &mdash; AEP replacing First Time Abate</li>
+      <li><a href="https://www.irs.gov/payments/payment-plans-installment-agreements" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Payment plans</a> &mdash; short-term and long-term thresholds</li>
+      <li><a href="https://www.irs.gov/passports" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Passport certification</a> &mdash; $66,000 seriously delinquent threshold for 2026</li>
+      <li><a href="https://www.irs.gov/newsroom/tax-relief-in-disaster-situations" target="_blank" rel="noopener" style="color:#8a6e2f">IRS: Tax relief in disaster situations</a> &mdash; postponed deadlines by county</li>
+    </ul>
+    <p style="font-size:14px;color:#7a6e60;line-height:1.65;margin:0">Every figure and deadline above was checked against these primary sources on October 26, 2026. Tax rules change; confirm current guidance at the linked source (or <a href="/#contact" style="color:#8a6e2f">ask us directly</a>) before acting.</p>
+  </div>
+
+  <h2 class="section-head">Frequently asked questions &mdash; missed tax deadline</h2>
   <div class="faq-item">
-    <div class="faq-q">I'm owed a refund — is there really no penalty for filing late?</div>
-    <div class="faq-a">Correct. The failure-to-file and failure-to-pay penalties are calculated as a percentage of the unpaid tax. If there's no unpaid tax (because you're getting a refund), there's nothing to calculate the penalty on. The only risk is the 3-year window — if you don't file within 3 years of the original due date, the IRS keeps your refund permanently.</div>
+    <div class="faq-q">What happens if I miss the tax deadline?</div>
+    <div class="faq-a">If you owe tax, the IRS charges a failure-to-file penalty of 5% of the unpaid tax per month (maximum 25%), a failure-to-pay penalty of 0.5% per month (maximum 25%), and interest at 7% per year compounded daily (Q4 2026). When both penalties apply in the same month the combined charge is 5%. If you're owed a refund, there's no penalty, but you must file within 3 years to claim it.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">I filed an extension — does that protect me from penalties?</div>
-    <div class="faq-a">A valid extension eliminates the failure-to-file penalty for the extended period (typically 6 months, to October 15). But an extension to FILE is not an extension to PAY — if you owe taxes, the failure-to-pay penalty and interest still run from the original April 15 deadline even with a valid extension. You need to estimate and pay your liability by April 15 even if you file later.</div>
+    <div class="faq-q">I missed the October 15 extension deadline. What happens now?</div>
+    <div class="faq-a">The extension only protected you from the failure-to-file penalty through October 15, 2026. Starting October 16, the 5%-per-month penalty applies to any unpaid tax. File by December 14, 2026 to avoid the minimum penalty (lesser of $525 or 100% of the unpaid tax) that applies to returns more than 60 days late. The failure-to-pay penalty and interest have been running since April 15.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What is the penalty for filing taxes late if I don't owe anything?</div>
+    <div class="faq-a">None. Both penalties are calculated on unpaid tax, so if you owe nothing there's nothing to penalize. The only risk is losing your refund: you generally have 3 years from the original due date to claim it. For 2023 returns, that window closes April 15, 2027.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">I filed an extension. Does that protect me from penalties?</div>
+    <div class="faq-a">Partly. A valid extension (Form 4868) protects you from the failure-to-file penalty until October 15. It never extended the time to pay &mdash; if you owed tax, the failure-to-pay penalty and interest have run since April 15 on whatever you didn't pay by then.</div>
   </div>
   <div class="faq-item">
     <div class="faq-q">Can I just pay without filing?</div>
-    <div class="faq-a">Paying without filing is almost always the wrong move. The failure-to-file penalty (5%/month) vastly exceeds the failure-to-pay penalty (0.5%/month). The return has to be filed to stop the larger penalty. Once you've filed, you can arrange payment on the balance regardless of whether you can pay in full right now.</div>
+    <div class="faq-a">Paying shrinks what penalties and interest are calculated on, but only filing stops the failure-to-file penalty, which is ten times larger per month than the failure-to-pay penalty. File first, then pay what you can and set up a payment plan for the rest.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">What if I make a mistake on the rushed return?</div>
-    <div class="faq-a">You can file an amended return (Form 1040-X) to correct it. Filing an imperfect return now and amending later is the right strategy. The amendment doesn't restart the failure-to-file clock — what matters is that something was filed. Don't let perfectionism cost you months of 5%/month penalty accumulation.</div>
+    <div class="faq-q">Will the IRS waive my late filing penalty?</div>
+    <div class="faq-a">Possibly. Starting with 2025 returns, the IRS is phasing in Automatic Exemption from Penalty (AEP), which waives failure-to-file and failure-to-pay penalties automatically if you have a clean three-year record. During the transition you may still get a penalty notice &mdash; if so, call and request First Time Abate. If you don't qualify, request <a class="text-link" href="/irs-penalty-abatement">reasonable-cause relief</a>.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What if I make a mistake on a rushed return?</div>
+    <div class="faq-a">File an amended return (Form 1040-X) to correct it. Filing an imperfect return now and amending later is usually the right strategy, because the original filing is what stops the failure-to-file penalty. Don't let perfectionism cost you months at 5% a month.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What is the estimated tax underpayment penalty?</div>
+    <div class="faq-a">It's a separate charge for not paying enough during the year through withholding or quarterly estimates, calculated on Form 2210 at the IRS underpayment rate (7% in Q4 2026). You generally avoid it if you paid at least 90% of this year's tax or 100% of last year's tax (110% if your prior-year AGI was over $150,000). It applies even if you filed on time.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Can I lose my passport for missing the tax deadline?</div>
+    <div class="faq-a">Only in serious cases. The IRS can certify "seriously delinquent" debt to the State Department when total assessed tax, penalties and interest exceed $66,000 (2026 threshold) and a lien has been filed or a levy issued. A payment plan in good standing prevents certification.</div>
   </div>
 
-  <div class="cta-box">
+  <section class="gr-wrap" id="client-reviews" aria-labelledby="gr-title">
+  <div class="gr-head">
+    <div>
+      <h2 class="gr-title" id="gr-title">Romeo's clients on Google</h2>
+      <p class="gr-sub">Unedited reviews from the Google Business Profile of Taxed Right (<a href="https://taxedright.com" target="_blank" rel="noopener" style="color:#8a6e2f">TaxedRight.com</a>), the CPA practice Romeo founded in 2015.</p>
+    </div>
+    <a class="gr-score" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener"><strong>5.0</strong><span><span class="gr-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span><br>8 reviews on Google</span></a>
+  </div>
+  <div class="gr-grid">
+    <figure class="gr-card">
+      <span class="gr-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <blockquote class="gr-quote">&ldquo;I reached out to Romeo about an IRS penalty on my small business retirement plan, and he got back to me quickly. He took the time to review my documents, walked me through my options on a phone call, and gave clear, practical advice on next&hellip;&rdquo;</blockquote>
+      <figcaption><p class="gr-name">Julie Barton</p><p class="gr-meta">Google review &middot; 2026</p></figcaption>
+      <a class="gr-link" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener">Read full review on Google &rarr;</a>
+    </figure>
+    <figure class="gr-card">
+      <span class="gr-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <blockquote class="gr-quote">&ldquo;Mr. Razi helped me through several years of complicated income tax returns. He is the most personable accountant I've ever worked with, in addition to being responsive and extremely knowledgeable about a variety of tax situations. He made my tax filing process as painless as possible -- I highly recommend him to others.&rdquo;</blockquote>
+      <figcaption><p class="gr-name">Alison Golensky</p><p class="gr-meta">Google review &middot; 2025</p></figcaption>
+      <a class="gr-link" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener">View on Google &rarr;</a>
+    </figure>
+    <figure class="gr-card">
+      <span class="gr-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <blockquote class="gr-quote">&ldquo;Had an IRS question and matter I was dealing with and Romeo solved the issue for me in a letter of minutes. He was clear, knowledgeable, and incredibly attentive to my issues. Highly recommend.&rdquo;</blockquote>
+      <figcaption><p class="gr-name">Antonio Mastromauro</p><p class="gr-meta">Google review &middot; 2026</p></figcaption>
+      <a class="gr-link" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener">View on Google &rarr;</a>
+    </figure>
+  </div>
+  <p class="gr-foot"><a href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener">See all 8 reviews on Google &rarr;</a></p>
+</section>
+<div class="cta-box">
     <h2>Missed the deadline? Romeo has seen this hundreds of times.</h2>
-    <p>He knows which penalties can be reduced, when to rush and when to be strategic, and how to get the IRS off your back with minimal damage.</p>
+    <p>He knows which penalties can be removed, when to rush and when to be strategic, and how to get the IRS off your back with minimal damage.</p>
     <a href="/#contact" class="cta-btn">Get a Free Case Review &rarr;</a>
   </div>
 
 </div>
 <footer>
   <p>IRS Resolution Service LLC &middot; Las Vegas, NV &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a></p>
-  <p style="margin-top:.5rem">Romeo Razi, CPA is a Former IRS Auditor. Informational only — not legal or tax advice.</p>
+  <p style="margin-top:.5rem">Romeo Razi, CPA is a former IRS Tax Examiner. Informational only — not legal or tax advice.</p>
 </footer>
 </body>
 </html>

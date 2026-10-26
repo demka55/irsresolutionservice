@@ -129,6 +129,25 @@ footer a { color: var(--gold); text-decoration: none; }
 
 .g-badge{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #d9cdb8;border-radius:999px;padding:7px 14px 7px 11px;text-decoration:none;color:#1a1410;font-family:inherit;box-shadow:0 6px 16px -10px rgba(26,20,16,.25);transition:border-color .2s,transform .2s;white-space:nowrap}.g-badge:hover{border-color:#c9a84c;transform:translateY(-1px)}.g-badge .gn{font-weight:600;font-size:15px}.g-badge .gs{color:#FBBC04;letter-spacing:1px;font-size:14px}.g-badge .gl{font-size:13.5px;color:#4a3f32;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#d9cdb8}.g-badge .ga{color:#8a6e2f;font-weight:600}
 @media(max-width:400px){.g-badge{gap:6px;padding:6px 11px 6px 9px}.g-badge .gs{font-size:12px}.g-badge .gl{font-size:12.5px}}
+
+/* GOOGLE REVIEWS (social proof) */
+.gr-wrap{background:#fff;border:1px solid #d9cdb8;border-radius:8px;padding:1.5rem 1.5rem 1.25rem;margin:2.5rem 0}
+.gr-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:.75rem;margin-bottom:1.1rem}
+.gr-head h2.gr-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.5rem;font-weight:700;color:#1a1410;margin:0;padding:0;border:none}
+.gr-sub{font-size:13px;color:#7a6e60;margin:.2rem 0 0;line-height:1.5}
+.gr-score{display:flex;align-items:center;gap:.5rem;font-size:13px;color:#7a6e60;text-decoration:none;white-space:nowrap}
+.gr-score strong{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.6rem;color:#1a1410;line-height:1}
+.gr-stars{color:#d9971a;letter-spacing:1px;font-size:15px}
+.gr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.875rem}
+.gr-card{background:#f5f0e8;border:1px solid #d9cdb8;border-radius:6px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem;margin:0}
+.gr-card .gr-quote{margin:0;font-size:14px;line-height:1.6;color:#4a3f32;font-style:normal}
+.gr-card .gr-name{font-weight:700;color:#1a1410;font-size:14px;margin:0}
+.gr-card .gr-meta{font-size:12px;color:#7a6e60;margin:0}
+.gr-card a.gr-link{font-size:12px;font-weight:600;color:#8a6e2f;text-decoration:none;margin-top:auto}
+.gr-foot{margin:1rem 0 0;font-size:13px;color:#7a6e60}
+.gr-foot a{color:#8a6e2f;font-weight:600;text-decoration:none}
+.gr-badge{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:600}
+.gr-badge .gr-stars{font-size:13px}
 </style>
 <script type="application/ld+json">
 {
@@ -960,7 +979,37 @@ footer a { color: var(--gold); text-decoration: none; }
     </ul>
   </div>
 
-  <div class="cta-box">
+  <section class="gr-wrap" id="client-reviews" aria-labelledby="gr-title">
+  <div class="gr-head">
+    <div>
+      <h2 class="gr-title" id="gr-title">Romeo's clients on Google</h2>
+      <p class="gr-sub">Unedited reviews from the Google Business Profile of Taxed Right (<a href="https://taxedright.com" target="_blank" rel="noopener" style="color:#8a6e2f">TaxedRight.com</a>), the CPA practice Romeo founded in 2015.</p>
+    </div>
+    <a class="gr-score" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener"><strong>5.0</strong><span><span class="gr-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span><br>8 reviews on Google</span></a>
+  </div>
+  <div class="gr-grid">
+    <figure class="gr-card">
+      <span class="gr-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <blockquote class="gr-quote">&ldquo;Had an IRS question and matter I was dealing with and Romeo solved the issue for me in a letter of minutes. He was clear, knowledgeable, and incredibly attentive to my issues. Highly recommend.&rdquo;</blockquote>
+      <figcaption><p class="gr-name">Antonio Mastromauro</p><p class="gr-meta">Google review &middot; 2026</p></figcaption>
+      <a class="gr-link" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener">View on Google &rarr;</a>
+    </figure>
+    <figure class="gr-card">
+      <span class="gr-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <blockquote class="gr-quote">&ldquo;I reached out to Romeo about an IRS penalty on my small business retirement plan, and he got back to me quickly. He took the time to review my documents, walked me through my options on a phone call, and gave clear, practical advice on next&hellip;&rdquo;</blockquote>
+      <figcaption><p class="gr-name">Julie Barton</p><p class="gr-meta">Google review &middot; 2026</p></figcaption>
+      <a class="gr-link" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener">Read full review on Google &rarr;</a>
+    </figure>
+    <figure class="gr-card">
+      <span class="gr-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <blockquote class="gr-quote">&ldquo;Romeo Razi, CPA, recently helped me with a tax audit with the IRS. Romeo formerly worked for the IRS. His advice was spot on. I finished the normally 2-hour tax audit in 30 minutes with no-change in my return. I highly recommend his services with anything to do with tax returns or tax audits. Marinus Baadsgaard&rdquo;</blockquote>
+      <figcaption><p class="gr-name">Vicki Baadsgaard</p><p class="gr-meta">Google review &middot; 2019</p></figcaption>
+      <a class="gr-link" href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener">View on Google &rarr;</a>
+    </figure>
+  </div>
+  <p class="gr-foot"><a href="https://share.google/u6YprVfCwuo0XRleg" target="_blank" rel="noopener">See all 8 reviews on Google &rarr;</a></p>
+</section>
+<div class="cta-box">
     <h2>Need a lien withdrawn, discharged, or subordinated?</h2>
     <p>Romeo Razi has navigated federal tax lien issues for clients who needed to sell a home, secure financing, or clear their public record. The right form matters. The right timing matters more.</p>
     <a href="/#contact" class="cta-btn">Get a Free Consultation</a>
