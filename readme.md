@@ -1,89 +1,26 @@
-# IRS Resolution Service
+# AI Bot Tracker + /seo fixes, for irsresolutionservice.com
 
-Full-stack application powering an IRS notice resolution service, built by Romeo Razi (CPA, ex-IRS Auditor) and Dmitry Dragilev (4× SaaS founder).
+Copy these files into your site repo at the same paths, then push or deploy as usual.
 
-**Free tier:** IRS notice decoder — static HTML, no backend needed
-**Premium tier:** Stripe payment → IRS transcript pull → AI response letter drafting
+| File | New or changed | What it does |
+|---|---|---|
+| `seo.html` | changed | Adds the **AI Overviews / AI Bots** tabs. Open `/seo#bots` to land on the bots tab. |
+| `netlify/edge-functions/ai-bot-tracker.js` | new | Runs on every page. Logs visits from ChatGPT, Claude, Google, Bing, Perplexity and other bots, plus people who arrive from AI answers. |
+| `netlify/functions/ai-bot-hits.mjs` | new | `/api/ai-bot-hits`: the data behind the AI Bots tab. Uses the same admin password as /seo. |
+| `netlify/lib/bots.js` | new | Bot list, IP verification, shared helpers. |
+| `netlify/functions/seo-api.mjs` | changed | **Fixes the 504.** It reads keyword results in parallel instead of one at a time. |
+| `netlify/functions/seo-track.mjs` | changed | **Fixes the daily 6am run.** It checks keywords in chunks so each run stays under Netlify's 30-second limit. |
+| `netlify/lib/seo-core.mjs` | new | One shared keyword list and checker for "Run now" and the daily run. |
 
-## Architecture
+There are no new environment variables. Everything uses `ADMIN_PASSWORD` and `VALUESERP_API`, which you already have.
+Data is stored in Netlify Blobs (store `ai-bot-hits`), which your site already uses.
 
-```
-/
-├── public/
-│   ├── index.html        ← Landing page with free notice decoder
-│   └── resolve.html      ← Premium resolution flow (post-payment)
-└── netlify/
-    └── functions/
-        ├── stripe-create-checkout.mjs  ← POST /api/stripe/create-checkout
-        ├── stripe-session.mjs          ← GET  /api/stripe/session/:id
-        ├── transcript-fetch.mjs        ← POST /api/transcript/fetch
-        ├── letter-draft.mjs            ← POST /api/letter/draft (SSE streaming)
-        ├── webhook.mjs                 ← POST /api/webhook
-        └── health.mjs                  ← GET  /api/health
-```
-
-## Tech Stack
-
-- **Hosting:** Netlify (static site + serverless functions)
-- **Frontend:** Vanilla HTML/CSS/JS (no framework)
-- **Payments:** Stripe Checkout
-- **AI:** Anthropic Claude (streaming letter drafting)
-- **IRS Integration:** IRS e-Services Transcript Delivery System (TDS) API
-
-## Prerequisites
-
-- A **Stripe** account — [stripe.com](https://stripe.com)
-- An **Anthropic** API key — [console.anthropic.com](https://console.anthropic.com)
-- An **IRS e-Services** account with TDS access (optional until approved) — [irs.gov/e-services](https://la.www4.irs.gov/e-services/)
-
-## Environment Variables
-
-Set these in the Netlify dashboard under Site Settings → Environment Variables:
-
-```
-# Required
-STRIPE_SECRET_KEY=sk_live_...
-STRIPE_PUBLISHABLE_KEY=pk_live_...
-STRIPE_WEBHOOK_SECRET=whsec_...
-STRIPE_PRICE_ID=price_...
-ANTHROPIC_API_KEY=sk-ant-...
-APP_URL=https://your-site.netlify.app
-
-# IRS TDS API (optional until e-Services approved)
-IRS_CLIENT_ID=...
-IRS_CLIENT_SECRET=...
-IRS_API_BASE_URL=https://api.irs.gov/v1
-IRS_EFIN=...
-```
-
-## Local Development
-
-```bash
-npm install
-netlify dev
-```
-
-Requires [Netlify CLI](https://docs.netlify.com/cli/get-started/). Visit [http://localhost:8888](http://localhost:8888).
-
-## Stripe Setup
-
-1. Create a product at [dashboard.stripe.com/products](https://dashboard.stripe.com/products): **"IRS Notice Resolution"** at **$29.00 USD**
-2. Copy the Price ID → set as `STRIPE_PRICE_ID`
-3. Add a webhook endpoint at `https://your-site.netlify.app/api/webhook` for events: `checkout.session.completed`, `payment_intent.payment_failed`, `charge.refunded`
-4. Copy the webhook signing secret → set as `STRIPE_WEBHOOK_SECRET`
-
-## Payment Flow
-
-```
-User clicks "Unlock Premium"
-  → POST /api/stripe/create-checkout
-  → Redirects to Stripe Checkout
-  → On success: /resolve.html?session_id=...&notice=CP2000
-  → GET /api/stripe/session/:id  (verify payment)
-  → POST /api/transcript/fetch   (pull IRS transcript)
-  → POST /api/letter/draft       (stream AI response letter)
-```
-
-## Legal Disclaimer
-
-This service provides general informational guidance only and does not constitute legal or tax advice. For complex tax matters, consult a licensed enrolled agent or tax attorney. Not affiliated with the IRS.
+## Notes
+- The tracker runs at Netlify's edge, before the cache, so it counts cached pages too.
+  If the tracker ever errors, pages are served normally (`onError: "bypass"`).
+- Normal visitors pass straight through and nothing is logged for them.
+  For bots it stores the IP and user agent. For visitors who arrive from AI answers it stores only the page and country.
+- Each bot hit is checked against the IP list its company publishes (OpenAI, Anthropic, Google, Bing, Perplexity, Apple).
+  A hit that claims to be a bot but comes from an IP outside that company's list is marked **fake** and hidden by default.
+- Pages come from `/sitemap.xml` at view time. New pages show up automatically.
+- The daily keyword run now goes every 5 minutes from 06:00 to 08:55 UTC and finishes in about 1–2 hours.

@@ -152,6 +152,72 @@ table.kw tr:hover td{background:#faf8f4}
 .empty{text-align:center;padding:3rem;color:var(--ink-muted);font-size:14px}
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--cream-dark);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── View tabs (AI Overviews | AI Bots) ── */
+.vtabs{display:flex;gap:4px;border-bottom:1px solid var(--cream-dark);margin:-.5rem 0 1.5rem}
+.vtab{padding:10px 18px;font-family:var(--sans);font-size:14px;font-weight:500;color:var(--ink-muted);background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer}
+.vtab:hover{color:var(--ink)}
+.vtab.active{color:var(--ink);border-bottom-color:var(--gold)}
+/* ── AI Bots tab ── */
+
+.abt{--abt-surface:#fff;--abt-plane:#f5f0e8;--abt-ink:#1a1410;--abt-ink2:#4a3f32;--abt-muted:#7a6e60;
+  --abt-line:#e8dfcf;--abt-axis:#d9cdb8;--abt-gold:#8a6e2f;
+  --abt-s1:#2a78d6;--abt-s2:#eb6834;--abt-s3:#1baf7a;--abt-s4:#eda100;
+  --abt-f1:#1c5cab;--abt-f2:#6da7ec;--abt-f3:#cde2fb;
+  --abt-good:#0c7a0c;--abt-bad:#d03b3b;--abt-warn:#b07400;
+  color:var(--abt-ink);font-family:Outfit,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.45}
+.abt *{box-sizing:border-box}
+.abt h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:28px;font-weight:600;margin:0}
+.abt h3{font-size:15px;font-weight:600;margin:0 0 4px}
+.abt .abt-sub{color:var(--abt-ink2);font-size:13px;margin:0 0 12px}
+.abt-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px}
+.abt-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.abt-seg{display:inline-flex;border:1px solid var(--abt-line);border-radius:8px;overflow:hidden;background:var(--abt-surface)}
+.abt-seg button{border:0;background:none;padding:6px 12px;font:inherit;font-size:13px;color:var(--abt-ink2);cursor:pointer}
+.abt-seg button[aria-pressed=true]{background:var(--abt-ink);color:#fff}
+.abt-btn{border:1px solid var(--abt-line);background:var(--abt-surface);border-radius:8px;padding:6px 12px;font:inherit;font-size:13px;color:var(--abt-ink);cursor:pointer}
+.abt-btn:hover{border-color:var(--abt-axis)}
+.abt label.abt-check{display:inline-flex;gap:6px;align-items:center;font-size:13px;color:var(--abt-ink2);cursor:pointer}
+.abt-card{background:var(--abt-surface);border:1px solid var(--abt-axis);border-radius:6px;padding:16px;margin-bottom:16px}
+.abt-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.abt-tile{background:var(--abt-surface);border:1px solid var(--abt-axis);border-radius:6px;padding:12px 14px}
+.abt-tile .k{font-size:12px;color:var(--abt-ink2);display:flex;align-items:center;gap:6px}
+.abt-tile .v{font-size:26px;font-weight:500;margin-top:2px}
+.abt-tile .d{font-size:12px;color:var(--abt-muted)}
+.abt-sw{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
+.abt-chart{position:relative}
+.abt-chart svg{display:block;width:100%;height:auto;overflow:visible}
+.abt-legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--abt-ink2);margin:4px 0 8px}
+.abt-legend span{display:inline-flex;align-items:center;gap:6px}
+.abt-tip{display:none;position:absolute;left:0;top:0;pointer-events:none;background:var(--abt-ink);color:#fff;border-radius:8px;padding:8px 10px;font-size:12px;white-space:nowrap;opacity:0;transition:opacity .1s;z-index:5}
+.abt-tip b{font-weight:600}
+.abt-tip .row{display:flex;align-items:center;gap:6px;justify-content:space-between}
+.abt-tablewrap{overflow-x:auto;margin:0 -16px;padding:0 16px}
+.abt table{border-collapse:separate;border-spacing:0;width:100%;font-size:13px}
+.abt th,.abt td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--abt-line);white-space:nowrap}
+.abt thead th{font-size:11px;font-weight:600;color:var(--abt-ink2);text-transform:uppercase;letter-spacing:.04em;background:var(--abt-surface);position:sticky;top:0}
+.abt thead tr.grp th{border-bottom:0;padding-bottom:0;color:var(--abt-ink)}
+.abt td.num,.abt th.num{text-align:right;font-variant-numeric:tabular-nums}
+.abt td.page{max-width:240px;overflow:hidden;text-overflow:ellipsis}
+.abt td.page a{color:var(--abt-ink);text-decoration:none}
+.abt td.page a:hover{text-decoration:underline}
+.abt td.cell{text-align:center;padding:4px}
+.abt .pill{display:inline-block;min-width:46px;padding:3px 6px;border-radius:6px;font-size:12px;font-variant-numeric:tabular-nums;cursor:default}
+.abt .f1{background:var(--abt-f1);color:#fff}.abt .f2{background:var(--abt-f2);color:#0b0b0b}.abt .f3{background:var(--abt-f3);color:#0b0b0b}
+.abt .f0{color:var(--abt-muted)}
+.abt .err{box-shadow:inset 0 0 0 2px var(--abt-bad)}
+.abt .tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:999px;border:1px solid var(--abt-line);color:var(--abt-ink2);margin-left:6px}
+.abt .ok{color:var(--abt-good)}.abt .fake{color:var(--abt-bad)}.abt .unk{color:var(--abt-muted)}
+.abt .abt-key{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--abt-ink2);margin:8px 0 10px}
+.abt .abt-key span{display:inline-flex;gap:6px;align-items:center}
+.abt-grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:16px}
+.abt-grid2>*{min-width:0}
+.abt-grid2 .abt-card{margin-bottom:0}
+.abt .empty{color:var(--abt-muted);font-size:13px;padding:8px 0}
+.abt input[type=search]{border:1px solid var(--abt-line);border-radius:8px;padding:6px 10px;font:inherit;font-size:13px;background:var(--abt-surface);min-width:180px}
+.abt .abt-scroll{max-height:360px;overflow:auto}
+.abt-status{padding:24px;text-align:center;color:var(--abt-ink2)}
+@media (max-width:600px){.abt h2{font-size:24px}.abt-tile .v{font-size:22px}}
 </style>
 </head>
 <body>
@@ -169,7 +235,7 @@ table.kw tr:hover td{background:#faf8f4}
 <div id="app">
   <div class="topbar">
     <div>
-      <h1>AI Overview Tracker</h1>
+      <h1 id="viewTitle">AI Overview Tracker</h1>
       <p id="lastChecked">Loading keyword count… · irsresolutionservice.com · Updated daily 6am UTC</p>
     </div>
     <div class="actions">
@@ -177,6 +243,13 @@ table.kw tr:hover td{background:#faf8f4}
       <button class="btn gold" id="runBtn" onclick="runNow()">↻ Run now</button>
     </div>
   </div>
+
+  <div class="vtabs" role="tablist">
+    <button class="vtab active" role="tab" data-view="aio" onclick="showView('aio')">AI Overviews</button>
+    <button class="vtab" role="tab" data-view="bots" onclick="showView('bots')">AI Bots</button>
+  </div>
+
+  <div id="view-aio">
 
   <div class="sbar">
     <span class="dot" id="statusDot"></span>
@@ -201,6 +274,26 @@ table.kw tr:hover td{background:#faf8f4}
     <div class="tbl-count" id="tblCount"></div>
     <div id="tblBody"><div class="empty">Loading…</div></div>
   </div>
+  </div><!-- /view-aio -->
+
+  <div id="view-bots" hidden>
+<section class="abt" id="abt-root">
+  <div class="abt-head">
+    <div>
+      <p class="abt-sub" id="abt-subtitle" style="margin:0">When ChatGPT, Claude, Google and Bing crawl each page on the site.</p>
+    </div>
+    <div class="abt-controls">
+      <div class="abt-seg" role="group" aria-label="Date range" id="abt-range">
+        <button data-days="7">7 days</button><button data-days="30" aria-pressed="true">30 days</button><button data-days="90">90 days</button>
+      </div>
+      <label class="abt-check"><input type="checkbox" id="abt-fake"> Include fake bots</label>
+      <button class="abt-btn" id="abt-csv">Export CSV</button>
+      <button class="abt-btn" id="abt-refresh">Refresh</button>
+    </div>
+  </div>
+  <div id="abt-body"><div class="abt-status">Loading bot activity…</div></div>
+</section>
+  </div><!-- /view-bots -->
 </div>
 
 <!-- AIO detail modal -->
@@ -635,6 +728,317 @@ function slugify(url) {
     return u.hostname.replace('www.','') + u.pathname;
   } catch { return url; }
 }
+</script>
+
+<script>
+// ── View tabs ────────────────────────────────────────────────────────────────
+window.AIBotsTab = { manual: true, getKey: function () { return apw; } };
+let botsLoaded = false;
+function showView(v) {
+  document.querySelectorAll('.vtab').forEach(t => t.classList.toggle('active', t.dataset.view === v));
+  document.getElementById('view-aio').hidden  = v !== 'aio';
+  document.getElementById('view-bots').hidden = v !== 'bots';
+  document.getElementById('runBtn').style.display = v === 'aio' ? '' : 'none';
+  document.getElementById('lastChecked').style.display = v === 'aio' ? '' : 'none';
+  document.getElementById('viewTitle').textContent = v === 'aio' ? 'AI Overview Tracker' : 'AI Bot Tracker';
+  try { history.replaceState(null, '', v === 'bots' ? '#bots' : location.pathname); } catch (e) {}
+  if (v === 'bots' && !botsLoaded && apw) { botsLoaded = true; window.AIBotsTab.load(); }
+}
+// open straight to the bots tab with /seo#bots (after login)
+const _origShowApp = showApp;
+showApp = function () { _origShowApp(); if (location.hash === '#bots') showView('bots'); };
+</script>
+<script>
+(function () {
+  var COLORS = { OpenAI: "var(--abt-s1)", Anthropic: "var(--abt-s2)", Google: "var(--abt-s3)", Microsoft: "var(--abt-s4)" };
+  var OPS = [
+    { op: "OpenAI", name: "ChatGPT" }, { op: "Anthropic", name: "Claude" },
+    { op: "Google", name: "Google" }, { op: "Microsoft", name: "Bing / Copilot" }
+  ];
+  var COLS = [
+    { grp: "ChatGPT", ids: ["chatgpt-user"], label: "Live", hint: "ChatGPT-User: fetched because someone asked ChatGPT a question" },
+    { grp: "ChatGPT", ids: ["oai-searchbot"], label: "Search", hint: "OAI-SearchBot: ChatGPT search index (citations)" },
+    { grp: "ChatGPT", ids: ["gptbot"], label: "Training", hint: "GPTBot: training crawl" },
+    { grp: "Claude", ids: ["claude-user"], label: "Live", hint: "Claude-User: fetched because someone asked Claude" },
+    { grp: "Claude", ids: ["claude-search"], label: "Search", hint: "Claude-SearchBot: Claude search index" },
+    { grp: "Claude", ids: ["claudebot"], label: "Training", hint: "ClaudeBot: training crawl" },
+    { grp: "Google", ids: ["googlebot"], label: "Googlebot", hint: "Googlebot: Search, AI Overviews, AI Mode" },
+    { grp: "Google", ids: ["google-other"], label: "Other", hint: "GoogleOther / Gemini / Vertex fetches" },
+    { grp: "Bing", ids: ["bingbot"], label: "Bingbot", hint: "Bingbot: Bing + Copilot" },
+    { grp: "Perplexity", ids: ["perplexitybot", "perplexity-user"], label: "All", hint: "PerplexityBot + Perplexity-User" }
+  ];
+  var DAY = 86400000;
+  var state = { raw: null, days: 30, fake: false, q: "", sort: "sitemap" };
+  var root = document.getElementById("abt-root");
+  var body = document.getElementById("abt-body");
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function ago(ts) {
+    var s = (Date.now() - ts) / 1000;
+    if (s < 60) return "now"; if (s < 3600) return Math.floor(s / 60) + "m";
+    if (s < 86400) return Math.floor(s / 3600) + "h"; return Math.floor(s / 86400) + "d";
+  }
+  function when(ts) { return new Date(ts).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }); }
+  function fresh(ts) { var a = Date.now() - ts; return a < DAY ? "f1" : a < 7 * DAY ? "f2" : "f3"; }
+  function vBadge(v) {
+    return v === "y" ? '<span class="ok" title="IP is on the company\'s published list">✓ verified</span>'
+      : v === "n" ? '<span class="fake" title="Claims to be this bot but the IP is not on the company\'s published list">⚠ fake</span>'
+      : v === "-" ? "" : '<span class="unk" title="This company does not publish IPs, or the list could not be fetched">? unverifiable</span>';
+  }
+
+  // ---------- data ----------
+  function getKey() {
+    var k = null;
+    try { k = sessionStorage.getItem("abt-key"); } catch (e) {}
+    if (!k) { k = window.prompt("Dashboard password"); if (k) try { sessionStorage.setItem("abt-key", k); } catch (e) {} }
+    return k || "";
+  }
+  function load() {
+    body.innerHTML = '<div class="abt-status">Loading bot activity…</div>';
+    if (window.AIBotsTab && window.AIBotsTab.sampleData) { state.raw = window.AIBotsTab.sampleData; return render(); }
+    var headers = { "x-seo-key": (window.AIBotsTab && window.AIBotsTab.getKey ? window.AIBotsTab.getKey() : getKey()) };
+    fetch("/api/ai-bot-hits?days=90", { headers: headers, cache: "no-store" })
+      .then(function (r) {
+        if (r.status === 401) { try { sessionStorage.removeItem("abt-key"); } catch (e) {} throw new Error("Wrong password. Refresh to try again."); }
+        if (!r.ok) throw new Error("Couldn't load data (" + r.status + ").");
+        return r.json();
+      })
+      .then(function (d) { state.raw = d; render(); })
+      .catch(function (e) { body.innerHTML = '<div class="abt-status">' + esc(e.message) + "</div>"; });
+  }
+
+  function derive() {
+    var d = state.raw, since = Date.now() - state.days * DAY;
+    var bots = {}; d.bots.forEach(function (b) { bots[b.id] = b; });
+    var all = d.events.map(function (r) { return { ts: r[0], who: r[1], v: r[2], status: r[3], path: r[4] }; })
+      .filter(function (e) { return e.ts >= since; });
+    var fakes = all.filter(function (e) { return e.v === "n"; });
+    var ev = all.filter(function (e) { return state.fake || e.v !== "n"; });
+    var botEv = ev.filter(function (e) { return bots[e.who]; });
+    var refs = ev.filter(function (e) { return e.who.indexOf("ref:") === 0; });
+    return { bots: bots, all: all, ev: ev, botEv: botEv, refs: refs, fakes: fakes, sitemap: d.sitemap || [] };
+  }
+
+  // ---------- render ----------
+  function render() {
+    var D = derive();
+    var h = "";
+    h += tiles(D);
+    h += '<div class="abt-card"><h3>Daily bot visits</h3><p class="abt-sub">Every page request from each company\'s crawlers, by day.</p>' + chart(D) + "</div>";
+    h += pageTable(D);
+    h += '<div class="abt-grid2">' + liveList(D) + problems(D) + "</div><div style='height:16px'></div>";
+    h += '<div class="abt-grid2">' + referrals(D) + recent(D) + "</div>";
+    body.innerHTML = h;
+    wireChart(D);
+    var s = document.getElementById("abt-q");
+    if (s) { s.value = state.q; s.oninput = function () { state.q = s.value; var t = document.getElementById("abt-ptable"); t.outerHTML = pageTable(D, true); }; }
+    var so = document.getElementById("abt-sort");
+    if (so) so.onchange = function () { state.sort = so.value; document.getElementById("abt-ptable").outerHTML = pageTable(D, true); };
+    document.getElementById("abt-subtitle").textContent =
+      "When ChatGPT, Claude, Google and Bing crawl each of your " + D.sitemap.length + " sitemap pages. Updated " + when(state.raw.generated) + ".";
+  }
+
+  function tiles(D) {
+    var h = '<div class="abt-tiles">';
+    OPS.forEach(function (o) {
+      var e = D.botEv.filter(function (x) { return D.bots[x.who].op === o.op; });
+      var pages = {}; e.forEach(function (x) { pages[x.path] = 1; });
+      h += '<div class="abt-tile"><div class="k"><i class="abt-sw" style="background:' + COLORS[o.op] + '"></i>' + o.name + '</div><div class="v">' + e.length.toLocaleString() +
+        '</div><div class="d">' + Object.keys(pages).length + " pages · last " + (e.length ? ago(e[0].ts) + " ago" : "never") + "</div></div>";
+    });
+    var live = D.botEv.filter(function (x) { return D.bots[x.who].type === "live"; });
+    h += '<div class="abt-tile"><div class="k">Live AI fetches</div><div class="v">' + live.length + '</div><div class="d">someone\'s AI question pulled a page</div></div>';
+    h += '<div class="abt-tile"><div class="k">Visitors from AI answers</div><div class="v">' + D.refs.length + '</div><div class="d">humans clicking through</div></div>';
+    h += '<div class="abt-tile"><div class="k">Fake bot hits</div><div class="v">' + D.fakes.length + '</div><div class="d">' + (state.fake ? "included above" : "hidden from totals") + "</div></div>";
+    return h + "</div>";
+  }
+
+  function series(D) {
+    var n = state.days, start = new Date(); start.setHours(0, 0, 0, 0);
+    var days = []; for (var i = n - 1; i >= 0; i--) days.push(start.getTime() - i * DAY);
+    var s = {}; OPS.forEach(function (o) { s[o.op] = days.map(function () { return 0; }); });
+    D.botEv.forEach(function (e) {
+      var op = D.bots[e.who].op; if (!s[op]) return;
+      var d0 = new Date(e.ts); d0.setHours(0, 0, 0, 0);
+      var idx = days.indexOf(d0.getTime()); if (idx >= 0) s[op][idx]++;
+    });
+    return { days: days, s: s };
+  }
+  function niceMax(m) { if (m <= 4) return 4; var p = Math.pow(10, Math.floor(Math.log10(m))); var f = m / p; return (f <= 2 ? 2 : f <= 5 ? 5 : 10) * p; }
+
+  var W = 760, H = 220, PL = 36, PR = 96, PT = 10, PB = 24;
+  function chart(D) {
+    var S = series(D), n = S.days.length, max = 0;
+    OPS.forEach(function (o) { S.s[o.op].forEach(function (v) { if (v > max) max = v; }); });
+    max = niceMax(max);
+    var x = function (i) { return PL + (n === 1 ? 0 : i * (W - PL - PR) / (n - 1)); };
+    var y = function (v) { return PT + (H - PT - PB) * (1 - v / max); };
+    var g = '<div class="abt-legend">' + OPS.map(function (o) { return '<span><i class="abt-sw" style="background:' + COLORS[o.op] + '"></i>' + o.name + "</span>"; }).join("") + "</div>";
+    g += '<div class="abt-chart" id="abt-chart"><svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Daily bot visits by company">';
+    for (var t = 0; t <= 4; t++) {
+      var v = max * t / 4, yy = y(v);
+      g += '<line x1="' + PL + '" x2="' + (W - PR) + '" y1="' + yy + '" y2="' + yy + '" stroke="' + (t ? "var(--abt-line)" : "var(--abt-axis)") + '" stroke-width="1"/>';
+      g += '<text x="' + (PL - 6) + '" y="' + (yy + 4) + '" text-anchor="end" font-size="11" fill="var(--abt-muted)">' + v + "</text>";
+    }
+    var step = Math.ceil(n / 6);
+    S.days.forEach(function (d, i) {
+      if ((n - 1 - i) % step === 0) g += '<text x="' + x(i) + '" y="' + (H - 6) + '" text-anchor="middle" font-size="11" fill="var(--abt-muted)">' +
+        new Date(d).toLocaleDateString([], { month: "short", day: "numeric" }) + "</text>";
+    });
+    // direct labels at line ends, nudged apart
+    var ends = OPS.map(function (o) { return { o: o, y: y(S.s[o.op][n - 1]) }; }).sort(function (a, b) { return a.y - b.y; });
+    for (var k = 1; k < ends.length; k++) if (ends[k].y - ends[k - 1].y < 13) ends[k].y = ends[k - 1].y + 13;
+    OPS.forEach(function (o) {
+      var pts = S.s[o.op].map(function (v, i) { return x(i).toFixed(1) + "," + y(v).toFixed(1); }).join(" ");
+      g += '<polyline points="' + pts + '" fill="none" stroke="' + COLORS[o.op] + '" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+    });
+    ends.forEach(function (e) { g += '<text x="' + (W - PR + 8) + '" y="' + (e.y + 4) + '" font-size="11" fill="var(--abt-ink2)">' + e.o.name + "</text>"; });
+    g += '<line id="abt-cross" x1="0" x2="0" y1="' + PT + '" y2="' + (H - PB) + '" stroke="var(--abt-axis)" stroke-width="1" visibility="hidden"/>';
+    OPS.forEach(function (o) { g += '<circle class="abt-dot" data-op="' + o.op + '" r="4" fill="' + COLORS[o.op] + '" stroke="var(--abt-surface)" stroke-width="2" visibility="hidden"/>'; });
+    g += '<rect id="abt-hit" x="' + PL + '" y="0" width="' + (W - PL - PR) + '" height="' + H + '" fill="transparent"/>';
+    g += '</svg><div class="abt-tip" id="abt-tip"></div></div>';
+    return g;
+  }
+  function wireChart(D) {
+    var S = series(D), n = S.days.length, wrap = document.getElementById("abt-chart");
+    if (!wrap) return;
+    var svg = wrap.querySelector("svg"), hit = document.getElementById("abt-hit"), tip = document.getElementById("abt-tip"), cross = document.getElementById("abt-cross");
+    var max = 0; OPS.forEach(function (o) { S.s[o.op].forEach(function (v) { if (v > max) max = v; }); }); max = niceMax(max);
+    function move(ev) {
+      var r = svg.getBoundingClientRect(), sx = (ev.clientX - r.left) * W / r.width;
+      var i = Math.round((sx - PL) / ((W - PL - PR) / Math.max(n - 1, 1))); i = Math.max(0, Math.min(n - 1, i));
+      var cx = PL + (n === 1 ? 0 : i * (W - PL - PR) / (n - 1));
+      cross.setAttribute("x1", cx); cross.setAttribute("x2", cx); cross.setAttribute("visibility", "visible");
+      svg.querySelectorAll(".abt-dot").forEach(function (c) {
+        var v = S.s[c.getAttribute("data-op")][i];
+        c.setAttribute("cx", cx); c.setAttribute("cy", PT + (H - PT - PB) * (1 - v / max)); c.setAttribute("visibility", "visible");
+      });
+      tip.innerHTML = "<b>" + new Date(S.days[i]).toLocaleDateString([], { weekday: "short", month: "short", day: "numeric" }) + "</b>" +
+        OPS.map(function (o) { return '<div class="row"><span><i class="abt-sw" style="background:' + COLORS[o.op] + '"></i> ' + o.name + "</span><span>" + S.s[o.op][i] + "</span></div>"; }).join("");
+      tip.style.display = "block";
+      var px = cx * r.width / W, tw = tip.offsetWidth, left = px + 12; if (left + tw > r.width) left = px - tw - 12;
+      tip.style.left = Math.max(0, left) + "px"; tip.style.top = "8px"; tip.style.opacity = 1;
+    }
+    function out() { tip.style.opacity = 0; tip.style.display = "none"; cross.setAttribute("visibility", "hidden"); svg.querySelectorAll(".abt-dot").forEach(function (c) { c.setAttribute("visibility", "hidden"); }); }
+    hit.addEventListener("mousemove", move); hit.addEventListener("mouseleave", out);
+    hit.addEventListener("touchstart", function (e) { move(e.touches[0]); }, { passive: true });
+  }
+
+  function pageRows(D) {
+    var map = {}, order = [];
+    D.sitemap.forEach(function (p) { if (!map[p]) { map[p] = { path: p, inMap: true, cells: {}, total: 0, last: 0 }; order.push(p); } });
+    D.botEv.forEach(function (e) {
+      var r = map[e.path];
+      if (!r) { r = map[e.path] = { path: e.path, inMap: false, cells: {}, total: 0, last: 0 }; order.push(e.path); }
+      r.total++; if (e.ts > r.last) r.last = e.ts;
+      COLS.forEach(function (c, ci) {
+        if (c.ids.indexOf(e.who) < 0) return;
+        var cell = r.cells[ci] || (r.cells[ci] = { n: 0, last: 0, status: 0, who: "" });
+        cell.n++; if (e.ts > cell.last) { cell.last = e.ts; cell.status = e.status; cell.who = e.who; }
+      });
+    });
+    var rows = order.map(function (p) { return map[p]; });
+    if (state.q) { var q = state.q.toLowerCase(); rows = rows.filter(function (r) { return r.path.toLowerCase().indexOf(q) >= 0; }); }
+    if (state.sort === "most") rows.sort(function (a, b) { return b.total - a.total; });
+    else if (state.sort === "stale") rows.sort(function (a, b) { return a.last - b.last; });
+    else if (state.sort === "recent") rows.sort(function (a, b) { return b.last - a.last; });
+    else rows.sort(function (a, b) { return (b.inMap - a.inMap); });
+    return rows;
+  }
+  function pageTable(D, inner) {
+    var rows = pageRows(D);
+    var never = rows.filter(function (r) { return r.inMap && !r.total; }).length;
+    var t = '<div id="abt-ptable">';
+    if (!inner) t = '<div class="abt-card"><div class="abt-head" style="margin-bottom:4px"><div><h3>Last crawled, by page</h3><p class="abt-sub" style="margin:0">Time since each bot last fetched the page. Hover a cell for details.</p></div>' +
+      '<div class="abt-controls"><input type="search" id="abt-q" placeholder="Filter pages…"><select class="abt-btn" id="abt-sort">' +
+      ['sitemap:Sitemap order', 'recent:Most recently crawled', 'stale:Least recently crawled', 'most:Most crawled'].map(function (o) { var p = o.split(":"); return '<option value="' + p[0] + '"' + (state.sort === p[0] ? " selected" : "") + ">" + p[1] + "</option>"; }).join("") +
+      '</select></div></div><div class="abt-key"><span><i class="pill f1" style="min-width:18px">&nbsp;</i> last 24h</span><span><i class="pill f2" style="min-width:18px">&nbsp;</i> last 7 days</span><span><i class="pill f3" style="min-width:18px">&nbsp;</i> older</span><span>— not in this range</span><span><i class="pill err" style="min-width:18px">&nbsp;</i> last hit got an error</span></div>' + t;
+    t += (never ? '<p class="abt-sub">' + never + " sitemap page" + (never > 1 ? "s" : "") + " got no bot visits in this range.</p>" : "");
+    t += '<div class="abt-tablewrap"><table><thead><tr class="grp"><th></th>';
+    var grps = []; COLS.forEach(function (c) { var last = grps[grps.length - 1]; if (last && last.g === c.grp) last.n++; else grps.push({ g: c.grp, n: 1 }); });
+    grps.forEach(function (g) { t += '<th colspan="' + g.n + '" style="text-align:center">' + g.g + "</th>"; });
+    t += '<th></th></tr><tr><th>Page</th>' + COLS.map(function (c) { return '<th style="text-align:center" title="' + esc(c.hint) + '">' + c.label + "</th>"; }).join("") + '<th class="num">Hits</th></tr></thead><tbody>';
+    rows.forEach(function (r) {
+      t += '<tr><td class="page"><a href="' + esc(r.path) + '" target="_blank" rel="noopener">' + esc(r.path) + "</a>" + (r.inMap ? "" : '<span class="tag">not in sitemap</span>') + "</td>";
+      COLS.forEach(function (c, ci) {
+        var cell = r.cells[ci];
+        if (!cell) { t += '<td class="cell"><span class="pill f0">—</span></td>'; return; }
+        var bad = cell.status >= 400;
+        var title = c.hint + "\n" + cell.n + " hit" + (cell.n > 1 ? "s" : "") + " · last " + when(cell.last) + " · HTTP " + cell.status;
+        t += '<td class="cell"><span class="pill ' + fresh(cell.last) + (bad ? " err" : "") + '" title="' + esc(title) + '">' + ago(cell.last) + (bad ? " · " + cell.status : "") + "</span></td>";
+      });
+      t += '<td class="num">' + r.total + "</td></tr>";
+    });
+    t += "</tbody></table></div></div>";
+    return inner ? t : t + "</div>";
+  }
+
+  function list(title, sub, rows, empty) {
+    return '<div class="abt-card"><h3>' + title + '</h3><p class="abt-sub">' + sub + '</p><div class="abt-scroll">' +
+      (rows.length ? "<table><tbody>" + rows.join("") + "</tbody></table>" : '<div class="empty">' + empty + "</div>") + "</div></div>";
+  }
+  function liveList(D) {
+    var rows = D.botEv.filter(function (e) { return D.bots[e.who].type === "live"; }).slice(0, 60).map(function (e) {
+      return "<tr><td>" + when(e.ts) + "</td><td>" + esc(D.bots[e.who].label) + '</td><td class="page">' + esc(e.path) + "</td></tr>";
+    });
+    return list("Live AI fetches", "An AI fetched the page while answering someone's question, the closest signal to a citation.", rows, "None in this range yet.");
+  }
+  function problems(D) {
+    var g = {};
+    D.botEv.filter(function (e) { return e.status >= 400; }).forEach(function (e) {
+      var k = e.path + "|" + e.status, r = g[k] || (g[k] = { path: e.path, status: e.status, n: 0, bots: {}, last: 0 });
+      r.n++; r.bots[D.bots[e.who].label] = 1; if (e.ts > r.last) r.last = e.ts;
+    });
+    var rows = Object.keys(g).map(function (k) { return g[k]; }).sort(function (a, b) { return b.n - a.n; }).map(function (r) {
+      return '<tr><td class="page">' + esc(r.path) + '</td><td class="fake">' + r.status + '</td><td class="num">' + r.n + "×</td><td>" + esc(Object.keys(r.bots).join(", ")) + "</td></tr>";
+    });
+    return list("Errors bots hit", "Pages that returned 4xx/5xx to a crawler. Fix or redirect these.", rows, "No errors. Every bot got a working page.");
+  }
+  function referrals(D) {
+    var g = {};
+    D.refs.forEach(function (e) { var k = e.who.slice(4) + "|" + e.path; g[k] = (g[k] || 0) + 1; });
+    var rows = Object.keys(g).sort(function (a, b) { return g[b] - g[a]; }).slice(0, 40).map(function (k) {
+      var p = k.split("|"); return "<tr><td>" + esc(p[0]) + '</td><td class="page">' + esc(p[1]) + '</td><td class="num">' + g[k] + "</td></tr>";
+    });
+    return list("Visitors from AI answers", "People who clicked through to you from ChatGPT, Claude, Perplexity, Gemini or Copilot.", rows, "No AI referral visits in this range yet.");
+  }
+  function recent(D) {
+    var src = state.fake ? D.all : D.all.filter(function (e) { return e.v !== "n"; });
+    var rows = src.filter(function (e) { return D.bots[e.who]; }).slice(0, 150).map(function (e) {
+      return "<tr><td>" + when(e.ts) + "</td><td>" + esc(D.bots[e.who].label) + '</td><td class="page">' + esc(e.path) + "</td><td>" + (e.status >= 400 ? '<span class="fake">' + e.status + "</span>" : e.status) + "</td><td>" + vBadge(e.v) + "</td></tr>";
+    });
+    return list("Recent bot activity", "Every crawler request, newest first. IPs are checked against each company's published list.", rows, "No bot visits yet. They'll appear here as soon as one arrives.");
+  }
+
+  function csv() {
+    if (!state.raw) return;
+    var D = derive(), lines = [["time_utc", "bot_or_referral", "company", "type", "verified", "http_status", "page"].join(",")];
+    D.ev.forEach(function (e) {
+      var b = D.bots[e.who];
+      lines.push([new Date(e.ts).toISOString(), b ? b.label : e.who, b ? b.op : "", b ? b.type : "referral", e.v, e.status, '"' + e.path.replace(/"/g, '""') + '"'].join(","));
+    });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([lines.join("\n")], { type: "text/csv" }));
+    a.download = "ai-bot-hits-" + state.days + "d.csv"; a.click();
+  }
+
+  // ---------- controls ----------
+  root.querySelectorAll("#abt-range button").forEach(function (b) {
+    b.onclick = function () {
+      state.days = +b.getAttribute("data-days");
+      root.querySelectorAll("#abt-range button").forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+      if (state.raw) render();
+    };
+  });
+  document.getElementById("abt-fake").onchange = function (e) { state.fake = e.target.checked; if (state.raw) render(); };
+  document.getElementById("abt-csv").onclick = csv;
+  document.getElementById("abt-refresh").onclick = load;
+
+  window.AIBotsTab = window.AIBotsTab || {};
+  window.AIBotsTab.load = load;
+  // Lazy: load when the tab is first shown (call AIBotsTab.load()), or right away if visible.
+  if (root.offsetParent !== null && !window.AIBotsTab.manual) load();
+})();
 </script>
 </body>
 </html>
