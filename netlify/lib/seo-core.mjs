@@ -1,569 +1,229 @@
 // netlify/lib/seo-core.mjs
-// Shared by seo-api.mjs (manual "Run now") and seo-track.mjs (daily schedule),
-// so the keyword list and the checking logic can't drift apart.
+// The rank tracker behind the /seo "SEO" tab.
+//
+// Process:
+//   1. Read the last 30 days of bot visits (logged by the ai-bot-tracker edge function).
+//   2. Focus = pages that an AI assistant (ChatGPT, Claude, DuckDuckGo, Perplexity, Gemini) fetched.
+//   3. For each focus page's keywords, check Google (ValueSERP, incl. AI Overview) and Bing (SerpApi).
+//   4. Save one record per page, keeping the previous position so the dashboard can show movement.
 import { getStore } from '@netlify/blobs'
+import { BRANDS, BRAND_OF, normPath } from './bots.js'
+import { listEvents } from './bot-events.mjs'
+import { DEFAULT_KEYWORDS } from './seo-keywords.mjs'
 
 export const STORE       = 'seo-tracking'
-export const RESULTS_KEY = 'latest-results'
-export const HISTORY_KEY = 'history'
 export const SITE        = 'irsresolutionservice.com'
+export const FOCUS_DAYS  = 30
+const KWMAP_KEY   = 'v2:keyword-map'
+const STATUS_KEY  = 'v2:run-status'
+const HISTORY_KEY = 'v2:history'
+export const pageKey = (path) => `v2:page:${path}`
+
+const CALL_TIMEOUT  = 60000          // ValueSERP's AI Overview can take up to ~60s
+const PAGE_WORKERS  = 4              // pages checked at the same time
+const TIME_BUDGET   = 13 * 60 * 1000 // stop starting new pages before the 15-min background limit
 
 export const tryParse = (r) => { try { return r ? JSON.parse(r) : null } catch { return null } }
-export const slugFor  = (kw) => kw.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 60)
+const AI_BRANDS = new Set(BRANDS.filter((b) => b.ai).map((b) => b.id))
 
-// Read every stored kw: result IN PARALLEL (batches of 50).
-// The old code read ~360 blobs one after another, which took longer than
-// Netlify's function time limit and caused the 504 on /seo.
-export async function readAllKeywordResults(store = getStore(STORE)) {
-  const out = new Array(KEYWORDS.length).fill(null)
-  const BATCH = 50
-  for (let i = 0; i < KEYWORDS.length; i += BATCH) {
-    await Promise.all(KEYWORDS.slice(i, i + BATCH).map(async (kw, j) => {
-      out[i + j] = tryParse(await store.get(`kw:${slugFor(kw)}`).catch(() => null))
-    }))
-  }
-  return out // same order as KEYWORDS, null where never checked
+// ── Keywords per page ────────────────────────────────────────────────────────
+export async function getKeywordMap(store = getStore(STORE)) {
+  const saved = tryParse(await store.get(KWMAP_KEY).catch(() => null)) || {}
+  return { ...DEFAULT_KEYWORDS, ...saved }
+}
+export async function setPageKeywords(path, list, store = getStore(STORE)) {
+  const saved = tryParse(await store.get(KWMAP_KEY).catch(() => null)) || {}
+  const clean = [...new Set((list || []).map((k) => String(k).trim()).filter(Boolean))].slice(0, 10)
+  saved[normPath(path)] = clean
+  await store.set(KWMAP_KEY, JSON.stringify(saved))
+  return clean
 }
 
-export function summarize(results) {
-  return {
-    total:      results.length,
-    in_aio:     results.filter(r => r.in_aio).length,
-    site_cited: results.filter(r => r.site_cited).length,
-    ranked:     results.filter(r => r.our_pages && r.our_pages.length > 0).length,
+// ── Bot visits per page ──────────────────────────────────────────────────────
+// Fake bots (IP not on the company's published list) are left out.
+export function pageStats(events) {
+  const stats = new Map()
+  for (const e of events) {
+    if (e.verified === 'n') continue
+    const brand = BRAND_OF[e.who]
+    if (!brand) continue
+    let s = stats.get(e.path)
+    if (!s) stats.set(e.path, (s = { brands: {}, ai: 0, total: 0, lastAI: 0, last: 0 }))
+    s.brands[brand] = (s.brands[brand] || 0) + 1
+    s.total++
+    if (e.ts > s.last) s.last = e.ts
+    if (AI_BRANDS.has(brand)) { s.ai++; if (e.ts > s.lastAI) s.lastAI = e.ts }
+  }
+  return stats
+}
+export function focusPaths(stats) {
+  return [...stats.entries()].filter(([, s]) => s.ai > 0)
+    .sort((a, b) => b[1].ai - a[1].ai || b[1].total - a[1].total).map(([p]) => p)
+}
+
+// ── Result parsing helpers ───────────────────────────────────────────────────
+function ours(link) {
+  try { const h = new URL(link).hostname.toLowerCase(); return h === SITE || h.endsWith('.' + SITE) } catch { return false }
+}
+function samePage(link, path) {
+  try { return ours(link) && normPath(new URL(link).pathname) === path } catch { return false }
+}
+// From an organic list [{position, link}] → our best position and this page's position (top 10 only).
+function rankFrom(list, path) {
+  const out = { pos: null, url: null, pagePos: null }
+  ;(list || []).forEach((r, i) => {
+    const link = String(r.link || r.url || '')
+    if (!ours(link)) return
+    const pos = Number(r.position) || i + 1
+    if (out.pos === null || pos < out.pos) { out.pos = pos; out.url = link }
+    if (samePage(link, path) && (out.pagePos === null || pos < out.pagePos)) out.pagePos = pos
+  })
+  return out
+}
+
+async function getJSON(url) {
+  const res = await fetch(url, { signal: AbortSignal.timeout(CALL_TIMEOUT) })
+  const text = await res.text().catch(() => '')
+  if (!res.ok) {
+    let msg = `HTTP ${res.status}`
+    try { msg += ': ' + (JSON.parse(text).error || JSON.parse(text).message || text.slice(0, 150)) } catch { msg += text ? ': ' + text.slice(0, 150) : '' }
+    const err = new Error(msg); err.retry = res.status >= 500 || res.status === 429; throw err
+  }
+  if (!text.trim()) { const e = new Error('Empty response'); e.retry = true; throw e }
+  return JSON.parse(text)
+}
+
+// One retry for timeouts, 5xx and rate limits.
+async function withRetry(fn) {
+  try { return await fn() } catch (e) {
+    const retry = e.retry || /timeout|aborted|fetch failed|ECONN|socket/i.test(e.message || '')
+    if (!retry) throw e
+    await new Promise((r) => setTimeout(r, 3000))
+    return fn()
   }
 }
 
-// Save the final summary + one history point per day (re-running the same day replaces that day's point).
-export async function saveSummary(store, results, checkedAt = new Date().toISOString()) {
-  const data = { checkedAt, summary: summarize(results), keywords: results }
-  await store.set(RESULTS_KEY, JSON.stringify(data))
-  let history = tryParse(await store.get(HISTORY_KEY).catch(() => null)) || []
-  const day = checkedAt.slice(0, 10)
-  history = history.filter(h => h.date !== day)
-  history.unshift({ date: day, in_aio: data.summary.in_aio, site_cited: data.summary.site_cited, total: results.length })
-  if (history.length > 30) history = history.slice(0, 30)
-  await store.set(HISTORY_KEY, JSON.stringify(history))
-  return data
-}
-
-export const KEYWORDS = [
-  // IRS Installment Agreement / Payment Plan
-  "IRS got client on payment plan $440000",
-  "IRS expense table Bentley example",
-  "IRS expense tables Bentley car payment",
-  // Offer in Compromise
-  "offer in compromise 2 year rule",
-  "offer in compromise 2 year deemed accepted rule",
-  "IRS OIC deemed accepted",
-
-  "when does irs start garnishing wages",
-  "when does irs garnish wages",
-  "can irs garnish wages",
-  "irs garnish paycheck",
-  "notice of intent to levy",
-  "irs notice of intent to levy",
-  "non-collectible status",
-  "irc section 7122(f) offer in compromise automatic acceptance",
-  "irs penalty abatement request letter",
-  "irc section 6331 levy",
-  "irs csed expiration date",
-  "what is csed irs",
-  "irs collection statute expiration",
-  "irs installment agreement default",
-  "irs cp523 reinstatement",
-  "irs tax lien subordination",
-  "irs lien discharge",
-  "how to release irs bank levy",
-  "irs revenue officer first visit",
-  "irs diff score how returns get selected for audit",
-  "irs officer compensation s corp audit",
-  "vehicle deduction irs audit trigger",
-  "irs worker reclassification audit 1099 vs w2",
-  "tigta complaint against irs agent",
-  "how to write irs audit rebuttal",
-  "irs audit appeals overturned",
-  "irs examination vs collections division",
-  "irs power of attorney rights audit",
-  "s corp salary irs audit",
-  "90 of irs letters are nothing",
-  "how long does irs audit take",
-  "remove irs tax lien",
-  "how to get a tax lien removed from credit report",
-  "can you have two installment agreements with the irs",
-  "irs revenue officer at my business",
-  "how to prepare for irs audit",
-  "irc section 7122 f offer in compromise automatic acceptance 24 months",
-  "irs wage garnishment exempt amount",
-  "how much does irs garnish from social security",
-  "irs federal payment levy program",
-  "cp504 vs lt11 difference",
-  "irs accounts receivable levy",
-  "irs lien on credit report 2026",
-  "cdp hearing form 12153",
-  "irs levy social security benefits",
-  "IRS offer in compromise deemed accepted 2 years",
-  // Collection Statute (CSED)
-  "do nothing IRS collection statute expiring",
-  "do nothing IRS CSED expiring strategy",
-  "how long does IRS have to collect tax debt",
-  // Audit & Appeals
-  "IRS hasn't replied to appeal 45 days",
-  "tax court petition before appeals strategy",
-  "IRS appeal officer 45 days review financials themselves",
-  // CP523
-  "cp523 installment agreement terminated",
-  "cp523 installment agreement terminated what happens",
-  // Unfiled Taxes / Compliance
-  "haven't filed taxes in 5 years what happens",
-  "IRS compliance last 6 years",
-  "IRS compliance last 6 years not 10",
-  // Budget Cuts
-  "IRS revenue officers Las Vegas budget cuts",
-  // CP2000
-  "cp2000 IRS wrong how to dispute",
-  // Office Audit
-  "how to prepare for IRS office audit",
-  // Wage Garnishment
-  "IRS wage garnishment how to stop",
-  "stop IRS wage garnishment payment plan",
-  "irs wage garnishment",
-  "can the irs garnish your wages",
-  "irs wage garnishment hardship",
-  "how much can the irs garnish from your wages",
-  // IRS Notices
-  "cp14 IRS notice what to do",
-  "cp504 IRS final notice levy",
-  "LT11 IRS notice intent to levy",
-  "cp59 IRS unfiled tax return notice",
-  // Other pages
-  "missed IRS tax deadline what happens",
-  "one big beautiful act tax changes 2025",
-  "IRS tips and overtime tax exempt 2025",
-  "2026 tax brackets income thresholds",
-  // NEW PAGES
-  "IRS first time penalty abatement",
-  "IRS penalty abatement reasonable cause",
-  "remove IRS penalties first time abatement",
-  "irs penalty abatement",
-  "irs first time abatement",
-  "IRS currently not collectible status",
-  "IRS hardship status can't pay",
-  "currently not collectible IRS qualification",
-  "irs currently not collectible",
-  "irs hardship program",
-  "IRS revenue officer assigned to my case",
-  "IRS revenue officer showed up at my door",
-  "irs revenue officer",
-  "what does an irs revenue officer do",
-  "irs revenue officer visit",
-  "IRS bank levy how to release",
-  "IRS bank account frozen 21 days",
-  "IRS bank levy release funds",
-  "irs bank levy",
-  "irs levy bank account",
-  "how to stop irs bank levy",
-  "irs bank levy exempt funds",
-  "IRS federal tax lien withdrawal",
-  "IRS tax lien how to remove",
-  "federal tax lien selling home",
-  "irs tax lien",
-  "federal tax lien",
-  "irs tax lien on property",
-  // NEW: Trump Accounts (July 2026) + Form 5500-EZ penalty
-  "Trump accounts $1000 newborn",
-  "how to open a Trump account",
-  "Form 4547 instructions",
-  "Trump account eligibility",
-  "Trump account vs 529",
-  "Trump account contribution limit",
-  "Trump account taxes at 18",
-  "trumpaccounts.gov how to apply",
-  "Trump account SSN requirement",
-  "Trump account employer contribution 2500",
-  "is the 1000 Trump account automatic",
-  "Trump account for kids not born 2025",
-  "Section 530A account",
-  "Trump account excess contribution",
-  "Form 4547 line 6 line 7",
-  "Form 5500-EZ late filing penalty",
-  "solo 401k 5500-EZ deadline July 31",
-  "5500-EZ penalty relief Rev Proc 2015-32",
-  "Form 14704 late 5500-EZ",
-  "CP 283 penalty notice 5500",
-  "5500-EZ $250 per day penalty",
-  "solo 401k over 250000 filing requirement",
-  "5500-EZ final return plan termination",
-  "missed form 5500-EZ what to do",
-  "5500-EZ reasonable cause abatement",
-  "how to get irs lien removed",
-  // NEW: Automatic Penalty Relief (AEP) — IR-2026-83 — 43 comprehensive keywords for announcement
-  "IRS automatic penalty relief 2026",
-  "automatic exemption from penalty AEP",
-  "IR-2026-83",
-  "IRS news July 8 2026",
-  "first time penalty abatement replaced",
-  "first time abate vs AEP",
-  "AEP replacing FTA",
-  "IRS phasing out first time penalty abatement",
-  "when FTA ends 2027",
-  "IRS automatic penalty relief what is",
-  "automatic penalty relief IRS explained",
-  "AEP automatic exemption penalty",
-  "IRS systemic penalty relief",
-  "no request penalty relief IRS",
-  "AEP eligibility three year history",
-  "automatic penalty relief qualifications",
-  "who qualifies for AEP",
-  "12 consecutive quarters AEP",
-  "clean filing history penalty relief",
-  "failure to file automatic relief",
-  "failure to pay automatic relief",
-  "failure to deposit automatic relief",
-  "IRS automatic failure penalties 2026",
-  "estimated tax penalty AEP",
-  "Form 706 709 AEP eligible",
-  "information returns AEP",
-  "AEP eligible return forms",
-  "AEP 1040 1065 1120 941",
-  "summer 2026 AEP phase in",
-  "January 1 2027 AEP full effective",
-  "when does automatic penalty relief start",
-  "AEP implementation date",
-  "penalty notice 2025 returns AEP transition",
-  "still get penalty notice 2026 AEP",
-  "call IRS request first time abate 2026",
-  "what if I get penalty AEP qualified",
-  "how much penalty relief AEP",
-  "penalty savings automatic abatement",
-  "IRS penalty waived clean record",
-  "should I request reasonable cause or AEP",
-  "preserve AEP reasonable cause",
-  "business penalty relief IRS 2026",
-  "individual penalty relief IRS 2026",
-  // RESCUED: these were stuck in a broken fallback array and never actually tracked — moved here
-  "social security benefits for children under 18",
-  "social security dependent benefit calculator",
-  "can my child get social security if I retire at 62",
-  "social security child in care benefits",
-  "social security family maximum calculator",
-  "should I claim social security early with young children",
-  "social security spousal benefit child in care",
-  "how much social security does a child get from a parent",
-  "social security dependent benefit family maximum",
-  "claiming social security early for kids benefits",
-  "social security benefits for children",
-  "how much social security will my child get",
-  "social security claiming strategy",
-  "are social security dependent benefits taxable",
-  "social security 1099 child benefit",
-  "social security family maximum 2026",
-  "kiddie tax social security benefits",
-  "social security child benefit application",
-
-  // NEW: CP504 long-tail (from live SERP related searches + PAA)
-  "what comes after cp504",
-  "is cp504 the final notice",
-  "cp504 example",
-  "cp504 reddit",
-  "cp504 notice meaning",
-  "irs notice cp504 phone number",
-  "cp504 payment plan",
-  "how long does it take to respond to cp504",
-  "how serious is a cp504",
-  "cp504 passport",
-  "cp504 state tax refund levy",
-  "cp504 vs cp503",
-
-  // NEW: CP2000 long-tail (from live SERP related searches + PAA)
-  "cp2000 letter",
-  "cp2000 penalty",
-  "irs cp2000 response form pdf",
-  "is cp2000 an audit",
-  "irs cp2000 response letter sample",
-  "fake cp2000 notice",
-  "cp2000 pdf",
-  "how do i check the status of my cp2000",
-  "what is a cp2000 notice from the irs",
-  "does a cp2000 trigger an audit",
-  "what should i do if i get a cp2000",
-  "what happens if i don't respond to cp2000",
-  "cp2000 reconsideration",
-  "cp2501 vs cp2000",
-  "irs document upload tool cp2000",
-
-  // NEW: CP14 long-tail (from live SERP related searches + PAA)
-  "irs cp14 pay online",
-  "cp14 notice",
-  "irs cp14 phone number",
-  "irs gov cp14 login",
-  "cp14 notice but already paid",
-  "is cp14 a civil penalty",
-  "cp14 notice example",
-  "irs notice cp14 payment stub",
-  "what does cp14 mean from the irs",
-  "what if i received cp14 but already paid",
-  "what comes after a cp14 notice",
-  "how do i pay my irs notice cp14 online",
-  "cp14 10 day deadline",
-  "cp14 100000 balance",
-
-  // NEW: CP523 long-tail (from live SERP related searches + PAA)
-  "cp523 notice phone number",
-  "how to pay cp523 online",
-  "what comes after a cp523 notice",
-  "cp523 certified mail",
-  "cp523 notice reddit",
-  "cp523 irs",
-  "cp523 pdf",
-  "cp523d",
-  "what is a cp523 notice from the irs",
-  "what comes after irs notice cp523",
-  "how to fix cp523 notice",
-  "how do i call the irs about cp523",
-  "cp523 reinstatement fee",
-  "cp523h notice",
-
-  // NEW: CP59 long-tail (from live SERP related searches + PAA)
-  "irs cp59 phone number",
-  "cp59 reddit",
-  "irs notice cp59 in error",
-  "irs notice cp59 sample",
-  "irs notice cp59 2024",
-  "cp59 letter",
-  "irs form 15103 where to mail",
-  "irs gov f15103 form",
-  "what is a cp59 notice",
-  "how to respond to irs notice cp59",
-  "how long do i have to respond to a cp59 notice",
-  "what does cp stand for in irs notices",
-  "cp59 8 week rule",
-  "cp59sn notice",
-  "false cp59 notices",
-
-  // NEW: CP3219A long-tail
-  "cp3219a notice of deficiency",
-  "notice of deficiency response",
-  "statutory notice of deficiency",
-  "tax court petition fee",
-  "notice of deficiency vs cp2000",
-  "90 day letter tax court",
-  "form 5564 notice of deficiency",
-  "tax court filing fee waiver",
-  "equitable tolling tax court deadline",
-
-  // NEW: LT11 long-tail
-  "lt11 vs letter 1058",
-  "irs letter 1058",
-  "notice of intent to levy and your right to a hearing",
-  "lt11 notice irs",
-  "final notice of intent to levy 30 days",
-  "lt11 last known address",
-  "form 12153 cdp hearing",
-  // NEW BATCH: approved "People also search for" style long-tail (CP2000, CP504, CP14, CP523, CP59)
-  // -- CP2000 (real PAA/related-search terms) --
-  // -- CP2000 (2x expansion, same style) --
-  "cp2000 notice sample",
-  "cp2000 timeline",
-  "cp2000 phone number",
-  "cp2000 extension request",
-  "cp2000 already paid",
-  "cp2000 how long to respond",
-  "cp2000 reddit",
-  "cp2000 crypto",
-  "cp2000 1099 mismatch",
-  "cp2000 disagree",
-  "cp2000 interest calculation",
-  "cp2000 vs audit letter",
-  "cp2000 second notice",
-  "cp2000 what happens if ignored",
-  "cp2000 tax attorney",
-  "cp2000 amended return",
-
-  // -- CP504 (real PAA/related-search terms) --
-  "what comes after cp504 reddit",
-  "cp504 vs lt11",
-  "cp504 1400",
-  // -- CP504 (2x expansion, same style) --
-  "cp504 tax attorney",
-  "cp504 wage garnishment",
-  "cp504 bank levy",
-  "cp504 30 days",
-  "cp504 already paid",
-  "cp504 dispute",
-  "cp504 how serious",
-  "cp504 timeline",
-  "cp504 social security",
-  "cp504 sample letter",
-  "cp504 what to do",
-  "cp504 ignore",
-  "cp504 phone call",
-  "cp504 espanol",
-  "cp504 state refund",
-
-  // -- CP14 (real PAA/related-search terms) --
-  // -- CP14 (2x expansion, same style) --
-  "cp14 balance due",
-  "cp14 already paid reddit",
-  "cp14 payment plan",
-  "cp14 dispute",
-  "cp14 interest",
-  "cp14 60 days",
-  "cp14 sample",
-  "cp14 espanol",
-  "cp14 large balance",
-  "cp14 scam",
-  "cp14 fake",
-  "cp14 how to respond",
-  "cp14 first time abatement",
-  "cp14 online account",
-  "cp14 mailed late",
-  "cp14 100000",
-
-  // -- CP523 (real PAA/related-search terms) --
-  // -- CP523 (2x expansion, same style) --
-  "cp523 reinstate",
-  "cp523 installment agreement default",
-  "cp523 30 days",
-  "cp523 appeal",
-  "cp523 sample",
-  "cp523 already paid",
-  "cp523 how to fix",
-  "cp523 payment plan restructure",
-  "cp523 offer in compromise",
-  "cp523 currently not collectible",
-  "cp523 espanol",
-  "cp523 letter sample",
-  "cp523 bank levy",
-  "cp523 wage garnishment",
-  "cp523 fee",
-
-  // -- CP59 (real PAA/related-search terms) --
-  // -- CP59 (2x expansion, same style) --
-  "cp59 already filed",
-  "cp59 8 weeks",
-  "cp59 form 15103",
-  "cp59 substitute for return",
-  "cp59 how to respond",
-  "cp59 sample",
-  "cp59 already paid",
-  "cp59 espanol",
-  "cp59 non filer",
-  "cp59 expat",
-  "cp59sn",
-  "cp59 penalty",
-  "cp59 ignore",
-  "cp59 old return",
-  "cp59 tax preparer",
-  "cp59 phone",
-
-]
-
-// ── Check one keyword — handles page_token for deferred AIO ──────────────────
-// No client-side timeout — let ValueSERP take up to 60s per Google's recommendation
-export async function checkKeyword(keyword, apiKey, opts = {}) {
-  const result = {
-    keyword, in_aio: false, site_cited: false,
-    aio_text: null, aio_sources: [], our_pages: [],
-    organic_rank: null, error: null,
-    checkedAt: new Date().toISOString(),
-  }
+// ── Google (ValueSERP) ───────────────────────────────────────────────────────
+export async function checkGoogle(keyword, path, apiKey) {
+  const out = { pos: null, url: null, pagePos: null, inAio: false, cited: false, citedUrl: null, error: null, checkedAt: new Date().toISOString() }
+  if (!apiKey) { out.error = 'VALUESERP_API not set'; return out }
   try {
     const params = new URLSearchParams({
-      api_key: apiKey, q: keyword, engine: 'google',
-      google_domain: 'google.com', gl: 'us', hl: 'en',
+      api_key: apiKey, q: keyword, google_domain: 'google.com', gl: 'us', hl: 'en',
       device: 'desktop', include_ai_overview: 'true', num: '10',
     })
-    if (opts.location) params.set('location', opts.location)
-    const res = await fetch(`https://api.valueserp.com/search?${params}`, { signal: AbortSignal.timeout(opts.timeoutMs || 25000) })
-
-    if (!res.ok) {
-      let e = `ValueSERP HTTP ${res.status}`
+    const data = await withRetry(() => getJSON(`https://api.valueserp.com/search?${params}`))
+    // AI Overview sometimes arrives later via page_token
+    const token = data.page_token || data.ai_overview?.page_token
+    if (token && !data.ai_overview?.text_blocks?.length && !data.ai_overview?.snippet) {
       try {
-        const t = await res.text()
-        if (t) { try { e += ': ' + (JSON.parse(t).message || t.slice(0, 150)) } catch { e += ': ' + t.slice(0, 150) } }
+        const t = await getJSON(`https://api.valueserp.com/search?api_key=${encodeURIComponent(apiKey)}&page_token=${encodeURIComponent(token)}`)
+        if (t.ai_overview) data.ai_overview = t.ai_overview
       } catch {}
-      result.error = e
-      return result
     }
-
-    let data
-    try {
-      const text = await res.text()
-      if (!text?.trim()) { result.error = 'Empty response'; return result }
-      data = JSON.parse(text)
-    } catch (e) { result.error = 'Parse error: ' + e.message; return result }
-
-    // ── page_token: AIO was deferred — follow up immediately ─────────────
-    const pageToken = data.page_token || data.ai_overview?.page_token
-    if (pageToken && !(data.ai_overview?.text_blocks?.length) && !(data.ai_overview?.snippet)) {
-      try {
-        const tRes = await fetch(`https://api.valueserp.com/search?api_key=${encodeURIComponent(apiKey)}&page_token=${encodeURIComponent(pageToken)}`, { signal: AbortSignal.timeout(opts.timeoutMs || 25000) })
-        if (tRes.ok) {
-          const tText = await tRes.text()
-          if (tText?.trim()) {
-            const tData = JSON.parse(tText)
-            if (tData.ai_overview) data.ai_overview = tData.ai_overview
-          }
-        }
-      } catch (e) {
-        console.warn('[seo-api] page_token follow-up failed:', e.message)
-      }
-    }
-
-    // ── Parse AI Overview ─────────────────────────────────────────────────
+    Object.assign(out, rankFrom(data.organic_results, path))
     const aio = data.ai_overview
     if (aio) {
-      result.in_aio = true
-      const parts = []
-      if (aio.text_blocks) {
-        for (const b of aio.text_blocks) {
-          if (b.snippet) parts.push(b.snippet)
-          if (b.list) for (const item of b.list) if (item.snippet) parts.push('• ' + item.snippet)
-        }
-      }
-      if (!parts.length && aio.snippet) parts.push(aio.snippet)
-      result.aio_text = parts.join('\n\n').slice(0, 3000) || null
-
-      const srcs = [...(aio.ai_overview_sources||[]), ...(aio.sources||[]), ...(aio.references||[])]
-      result.aio_sources = srcs
-        .map(s => ({ title: s.title||s.name||'', link: s.link||s.url||'' }))
-        .filter(s => s.link).slice(0, 10)
-      result.site_cited = result.aio_sources.some(s => String(s.link||"").includes(SITE)) ||
-                          JSON.stringify(aio).toLowerCase().includes(SITE)
-
-      if (result.site_cited) {
-        const ours = result.aio_sources.filter(s => String(s.link||"").includes(SITE))
-        ours.length
-          ? ours.forEach(p => result.our_pages.push({ where: 'AIO source', link: p.link, title: p.title }))
-          : result.our_pages.push({ where: 'AIO mention', link: '', title: 'Domain mentioned in AIO text' })
-      }
+      out.inAio = true
+      const srcs = [...(aio.ai_overview_sources || []), ...(aio.sources || []), ...(aio.references || [])]
+      const hit = srcs.map((s) => String(s.link || s.url || '')).find(ours)
+      out.cited = !!hit || JSON.stringify(aio).toLowerCase().includes(SITE)
+      out.citedUrl = hit || null
     }
+  } catch (e) { out.error = e.name === 'TimeoutError' ? 'Google check timed out twice' : e.message }
+  return out
+}
 
-    // ── Organic results ───────────────────────────────────────────────────
-    ;(data.organic_results || []).forEach((r, i) => {
-      if (r.link && String(r.link).includes(SITE)) {
-        const pos = r.position || i + 1
-        if (!result.organic_rank || pos < result.organic_rank) result.organic_rank = pos
-        result.our_pages.push({ where: `Organic #${pos}`, link: r.link, title: r.title || '' })
-      }
-    })
+// ── Bing (SerpApi) ───────────────────────────────────────────────────────────
+export async function checkBing(keyword, path, apiKey) {
+  const out = { pos: null, url: null, pagePos: null, error: null, checkedAt: new Date().toISOString() }
+  if (!apiKey) { out.error = 'SERPAPI_KEY not set'; return out }
+  try {
+    const params = new URLSearchParams({ engine: 'bing', q: keyword, cc: 'US', mkt: 'en-US', device: 'desktop', api_key: apiKey })
+    const data = await withRetry(() => getJSON(`https://serpapi.com/search.json?${params}`))
+    if (data.error && !/hasn't returned any results/i.test(data.error)) throw new Error(data.error)
+    Object.assign(out, rankFrom(data.organic_results, path))
+  } catch (e) { out.error = e.name === 'TimeoutError' ? 'Bing check timed out twice' : e.message }
+  return out
+}
 
-    // ── Everything else: top stories, local, knowledge graph ─────────────
-    const extras = [
-      ...(data.top_stories || []),
-      ...(data.local_results || []),
-      ...((data.knowledge_graph?.links) || []),
-    ]
-    extras.forEach(item => {
-      const link = item.link || item.url || ''
-      if (String(link||"").includes(SITE)) result.our_pages.push({ where: 'Other result', link: String(link||""), title: item.title || '' })
-    })
+// ── One page: all its keywords, Google + Bing, in parallel ───────────────────
+async function checkPage(store, path, keywords, keys) {
+  const old = tryParse(await store.get(pageKey(path)).catch(() => null))
+  const rec = { path, checkedAt: new Date().toISOString(), keywords: {} }
+  await Promise.all(keywords.map(async (kw) => {
+    const [google, bing] = await Promise.all([checkGoogle(kw, path, keys.google), checkBing(kw, path, keys.bing)])
+    const prev = old?.keywords?.[kw]
+    // keep yesterday's position for the movement arrow; on an error keep the last good result
+    for (const [name, r] of [['google', google], ['bing', bing]]) {
+      const p = prev?.[name]
+      if (r.error && p && !p.error) { rec.keywords[kw] = rec.keywords[kw] || {}; rec.keywords[kw][name] = { ...p, staleError: r.error }; continue }
+      if (p && !p.error) { r.prevPos = p.pos; r.prevAt = p.checkedAt }
+      rec.keywords[kw] = rec.keywords[kw] || {}
+      rec.keywords[kw][name] = r
+    }
+  }))
+  await store.set(pageKey(path), JSON.stringify(rec))
+  return rec
+}
 
-    // ── Final catch-all ───────────────────────────────────────────────────
-    if (!result.our_pages.length && JSON.stringify(data).toLowerCase().includes(SITE))
-      result.our_pages.push({ where: 'SERP mention', link: '', title: 'Found in raw response' })
+export async function readStatus(store = getStore(STORE)) {
+  return tryParse(await store.get(STATUS_KEY).catch(() => null))
+}
+export async function readHistory(store = getStore(STORE)) {
+  return tryParse(await store.get(HISTORY_KEY).catch(() => null)) || []
+}
 
-  } catch (e) { result.error = e.message }
-  return result
+// ── Full run (or one page with { only: '/path' }) ────────────────────────────
+export async function runChecks({ only = null } = {}) {
+  const t0 = Date.now()
+  const store = getStore(STORE)
+  const keys = { google: Netlify.env.get('VALUESERP_API') || '', bing: Netlify.env.get('SERPAPI_KEY') || '' }
+
+  const [events, map] = await Promise.all([listEvents(FOCUS_DAYS), getKeywordMap(store)])
+  const stats = pageStats(events)
+  const paths = only ? [normPath(only)] : focusPaths(stats)
+  const queue = paths.filter((p) => (map[p] || []).length)
+
+  const status = {
+    state: 'running', only, startedAt: new Date().toISOString(),
+    pages: queue.length, pagesDone: 0, keywords: queue.reduce((n, p) => n + map[p].length, 0), errors: 0,
+  }
+  await store.set(STATUS_KEY, JSON.stringify(status))
+
+  const results = []
+  let i = 0, stopped = false
+  const worker = async () => {
+    while (i < queue.length) {
+      if (Date.now() - t0 > TIME_BUDGET) { stopped = true; return }
+      const path = queue[i++]
+      const rec = await checkPage(store, path, map[path], keys)
+      results.push(rec)
+      status.pagesDone++
+      status.errors += Object.values(rec.keywords).reduce((n, k) => n + (k.google?.error || k.google?.staleError ? 1 : 0) + (k.bing?.error || k.bing?.staleError ? 1 : 0), 0)
+      await store.set(STATUS_KEY, JSON.stringify(status)).catch(() => {})
+    }
+  }
+  await Promise.all(Array.from({ length: PAGE_WORKERS }, worker))
+
+  status.state = stopped ? 'partial' : 'done'
+  status.finishedAt = new Date().toISOString()
+  await store.set(STATUS_KEY, JSON.stringify(status))
+
+  if (!only) {
+    // one trend point per day
+    const kws = results.flatMap((r) => Object.values(r.keywords))
+    const point = {
+      date: status.finishedAt.slice(0, 10),
+      pages: queue.length,
+      keywords: kws.length,
+      googleTop10: kws.filter((k) => k.google?.pos).length,
+      bingTop10: kws.filter((k) => k.bing?.pos).length,
+      aioCited: kws.filter((k) => k.google?.cited).length,
+    }
+    let hist = (await readHistory(store)).filter((h) => h.date !== point.date)
+    hist.unshift(point)
+    await store.set(HISTORY_KEY, JSON.stringify(hist.slice(0, 90)))
+  }
+  return status
 }

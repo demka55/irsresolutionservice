@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI Overview Tracker — IRS Resolution Service</title>
+<title>SEO &amp; AI Bot Tracker — IRS Resolution Service</title>
 <meta name="robots" content="noindex,nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -153,7 +153,7 @@ table.kw tr:hover td{background:#faf8f4}
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--cream-dark);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── View tabs (AI Overviews | AI Bots) ── */
+/* ── View tabs (SEO | AI Log | AI Bots) ── */
 .vtabs{display:flex;gap:4px;border-bottom:1px solid var(--cream-dark);margin:-.5rem 0 1.5rem}
 .vtab{padding:10px 18px;font-family:var(--sans);font-size:14px;font-weight:500;color:var(--ink-muted);background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer}
 .vtab:hover{color:var(--ink)}
@@ -218,6 +218,68 @@ table.kw tr:hover td{background:#faf8f4}
 .abt .abt-scroll{max-height:360px;overflow:auto}
 .abt-status{padding:24px;text-align:center;color:var(--abt-ink2)}
 @media (max-width:600px){.abt h2{font-size:24px}.abt-tile .v{font-size:22px}}
+
+/* ── SEO tab ── */
+.sx-bar{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--cream-dark);border-radius:4px;padding:9px 16px;font-size:13px;color:var(--ink-muted);margin-bottom:1rem;flex-wrap:wrap}
+.sx-warn{background:var(--amber-bg);border:1px solid #f3d9a4;color:#7a4f0e;border-radius:4px;padding:9px 16px;font-size:13px;margin-bottom:1rem}
+.sx-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:.75rem}
+.sx-tools .left{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--cream-dark);border-radius:6px;overflow:hidden;background:var(--white)}
+.seg button{border:0;background:none;padding:6px 12px;font:inherit;font-size:13px;color:var(--ink-muted);cursor:pointer;font-family:var(--sans)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--white)}
+.sx-search{border:1px solid var(--cream-dark);border-radius:6px;padding:6px 10px;font:inherit;font-size:13px;background:var(--white);min-width:200px;font-family:var(--sans)}
+.sx-note{font-size:12px;color:var(--ink-muted)}
+.sx-wrap{background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;overflow-x:auto;margin-bottom:1.25rem}
+table.sx{width:100%;border-collapse:collapse;font-size:13px}
+table.sx th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-muted);padding:8px 12px;text-align:left;background:var(--cream);border-bottom:1px solid var(--cream-dark);white-space:nowrap}
+table.sx td{padding:8px 12px;border-bottom:1px solid #eee6d8;vertical-align:top;color:var(--ink-soft)}
+table.sx tr.pg-first td{border-top:1px solid var(--cream-dark)}
+table.sx tbody tr:first-child td{border-top:0}
+table.sx .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.sx td.pg{min-width:220px;max-width:300px}
+.pg a{color:var(--ink);font-weight:600;text-decoration:none;word-break:break-word}
+.pg a:hover{text-decoration:underline}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.chip{font-size:11px;padding:1px 7px;border-radius:999px;background:var(--cream);color:var(--ink-soft);white-space:nowrap}
+.chip b{font-weight:600;color:var(--ink)}
+.pg-meta{font-size:11px;color:var(--ink-muted);margin-top:5px}
+.linkbtn{background:none;border:0;padding:0;font:inherit;font-size:12px;color:var(--gold-dim);text-decoration:underline;text-underline-offset:2px;cursor:pointer;font-family:var(--sans)}
+.big{font-size:20px;font-weight:600;color:var(--ink);font-family:var(--sans)}
+td.kwc{min-width:200px;color:var(--ink)}
+.rk{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.rk .pos{font-weight:700;font-size:14px;color:var(--ink);font-variant-numeric:tabular-nums}
+.rk .pos.top3{color:var(--green)}
+.rk .none{color:var(--ink-muted)}
+.mv{font-size:11px;font-weight:600}
+.mv.up{color:var(--green)}.mv.down{color:var(--red)}.mv.new{color:var(--blue)}
+.rk-url{display:block;font-size:11px;color:var(--ink-muted);margin-top:2px;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rk-err{color:var(--red);font-size:12px;cursor:help;border-bottom:1px dotted var(--red)}
+.stale{color:var(--amber);cursor:help;font-weight:700}
+.aiob{display:inline-block;margin-top:4px;font-size:11px;font-weight:600;padding:2px 7px;border-radius:3px}
+.aiob.cited{background:var(--green-bg);color:var(--green)}
+.aiob.shown{background:var(--cream);color:var(--ink-muted);font-weight:500}
+.editor{background:#faf8f4;padding:12px}
+.editor textarea{width:100%;max-width:600px;display:block;min-height:110px;border:1px solid var(--cream-dark);border-radius:4px;padding:8px 10px;font:13px/1.5 var(--sans);background:var(--white)}
+.editor .row{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
+details.sx-other{background:var(--white);border:1px solid var(--cream-dark);border-radius:6px;margin-bottom:1.25rem}
+details.sx-other summary{cursor:pointer;padding:12px 16px;font-size:13px;color:var(--ink-soft)}
+details.sx-other[open] summary{border-bottom:1px solid var(--cream-dark)}
+/* ── AI Log tab ── */
+.lg-count{font-size:13px;color:var(--ink-muted);padding:10px 16px;border-bottom:1px solid var(--cream-dark)}
+table.lg{width:100%;border-collapse:collapse;font-size:13px}
+table.lg th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-muted);padding:8px 12px;text-align:left;background:var(--cream);border-bottom:1px solid var(--cream-dark);position:sticky;top:0;z-index:1}
+table.lg td{padding:6px 12px;border-bottom:1px solid #f0e9dc;white-space:nowrap}
+table.lg tr.day td{background:#faf6ee;font-weight:600;color:var(--ink);font-size:12px;padding:6px 12px;border-bottom:1px solid var(--cream-dark)}
+table.lg td.when{color:var(--ink-muted);font-variant-numeric:tabular-nums;width:80px}
+table.lg td.page a{color:var(--ink);text-decoration:none}
+table.lg td.page a:hover{text-decoration:underline}
+.kind{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:3px}
+.kind.click{background:var(--green-bg);color:var(--green)}
+.kind.fetch{background:var(--blue-bg);color:var(--blue)}
+.kind.crawl{background:var(--cream);color:var(--ink-muted);font-weight:500}
+.fakeb{color:var(--red);font-size:11px;margin-left:6px}
+.lg-more{display:block;margin:12px auto}
+@media (max-width:600px){.sx-search{min-width:0;width:100%}}
 </style>
 </head>
 <body>
@@ -225,7 +287,7 @@ table.kw tr:hover td{background:#faf8f4}
 <div id="login">
   <div class="lbox">
     <h2>IRS Resolution Service</h2>
-    <p>AI Overview Tracker — internal tool</p>
+    <p>SEO &amp; AI Bot Tracker — internal tool</p>
     <input type="password" class="linput" id="pw" placeholder="Admin password">
     <button class="lbtn" onclick="doLogin()">Sign in →</button>
     <div class="lerr" id="lerr">Incorrect password</div>
@@ -235,46 +297,51 @@ table.kw tr:hover td{background:#faf8f4}
 <div id="app">
   <div class="topbar">
     <div>
-      <h1 id="viewTitle">AI Overview Tracker</h1>
-      <p id="lastChecked">Loading keyword count… · irsresolutionservice.com · Updated daily 6am UTC</p>
+      <h1 id="viewTitle">SEO</h1>
+      <p id="viewSub">Pages ChatGPT, Claude, DuckDuckGo, Perplexity and Gemini fetch, and where they rank on Google &amp; Bing · irsresolutionservice.com · checked daily 6am UTC</p>
     </div>
     <div class="actions">
       <button class="btn" onclick="logout()">Sign out</button>
-      <button class="btn gold" id="runBtn" onclick="runNow()">↻ Run now</button>
+      <button class="btn gold" id="runBtn" onclick="SX.run()">↻ Check ranks now</button>
     </div>
   </div>
 
   <div class="vtabs" role="tablist">
-    <button class="vtab active" role="tab" data-view="aio" onclick="showView('aio')">AI Overviews</button>
+    <button class="vtab active" role="tab" data-view="seo" onclick="showView('seo')">SEO</button>
+    <button class="vtab" role="tab" data-view="log" onclick="showView('log')">AI Log</button>
     <button class="vtab" role="tab" data-view="bots" onclick="showView('bots')">AI Bots</button>
   </div>
 
-  <div id="view-aio">
-
-  <div class="sbar">
-    <span class="dot" id="statusDot"></span>
-    <span id="statusText">Loading…</span>
+<div id="view-seo">
+  <div class="sx-bar"><span class="dot" id="sxDot"></span><span id="sxStatus">Loading…</span></div>
+  <div id="sxWarn"></div>
+  <div class="kpis" id="sxKpis"></div>
+  <div class="sx-tools">
+    <div class="left">
+      <div class="seg" id="sxRange"><button data-days="7">7 days</button><button data-days="30" aria-pressed="true">30 days</button><button data-days="90">90 days</button></div>
+      <input type="search" class="sx-search" id="sxQ" placeholder="Filter pages or keywords…">
+    </div>
+    <span class="sx-note">Sorted by AI-assistant requests. Ranks = Google &amp; Bing top 10, US desktop.</span>
   </div>
+  <div id="sxBody"><div class="empty">Loading…</div></div>
+</div>
 
-  <div class="kpis" id="kpis"></div>
-
-  <div class="hist" id="histWrap" style="display:none">
-    <h3>30-day trend
-      <span class="hist-legend">
-        <span><span class="hdot" style="background:#b3d4f0"></span>AIO shown <span id="legend-aio" style="font-weight:700;color:var(--ink)"></span></span>
-        <span><span class="hdot" style="background:var(--green)"></span>We appear <span id="legend-cited" style="font-weight:700;color:var(--green)"></span></span>
-      </span>
-    </h3>
-    <div class="hchart" id="hchart"></div>
+<div id="view-log" hidden>
+  <div class="sx-tools">
+    <div class="left">
+      <div class="seg" id="lgKind"><button data-kind="all" aria-pressed="true">All requests</button><button data-kind="answer">In answers</button></div>
+      <div class="seg" id="lgRange"><button data-days="7">7 days</button><button data-days="30" aria-pressed="true">30 days</button><button data-days="90">90 days</button></div>
+      <select class="btn" id="lgBrand"><option value="">All bots</option></select>
+      <input type="search" class="sx-search" id="lgQ" placeholder="Filter by page…">
+    </div>
+    <div class="left">
+      <label class="sx-note" style="display:inline-flex;gap:6px;align-items:center;cursor:pointer"><input type="checkbox" id="lgFake"> Include fake bots</label>
+      <button class="btn" id="lgCsv">Export CSV</button>
+    </div>
   </div>
-
-  <div class="filters" id="filterBar"></div>
-
-  <div class="tbl-wrap">
-    <div class="tbl-count" id="tblCount"></div>
-    <div id="tblBody"><div class="empty">Loading…</div></div>
-  </div>
-  </div><!-- /view-aio -->
+  <div class="sx-wrap" id="lgBody"><div class="empty">Loading…</div></div>
+  <p class="sx-note" style="margin-top:-.5rem"><b>Clicked from answer</b> = a person clicked your link inside a ChatGPT, Claude, Perplexity, Gemini or Copilot answer, so the page was definitely shown. <b>Fetched for answer</b> = the AI opened the page while answering someone's question (ChatGPT-User, Claude-User, Perplexity-User, DuckAssistBot, Gemini). Sites can't see whether it was then cited. <b>Crawl</b> = indexing or training.</p>
+</div>
 
   <div id="view-bots" hidden>
 <section class="abt" id="abt-root">
@@ -293,461 +360,291 @@ table.kw tr:hover td{background:#faf8f4}
   </div>
   <div id="abt-body"><div class="abt-status">Loading bot activity…</div></div>
 </section>
-  </div><!-- /view-bots -->
-</div>
-
-<!-- AIO detail modal -->
-<div class="modal-bg" id="aioModal">
-  <div class="modal">
-    <div class="modal-hd">
-      <h2>AI Overview</h2>
-      <button class="modal-x" onclick="closeAio()">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-kw" id="aioKw"></div>
-      <div id="aioBody"></div>
-    </div>
   </div>
 </div>
 
 <script>
+// ── Auth (same /api/admin-auth + ADMIN_PASSWORD as before) ─────────────────────
 const PW_KEY = 'seo_pw';
-let apw = '', allResults = [], curFilter = 'all', sortCol = null, sortDir = 'asc';
-
-// ── Auth ──────────────────────────────────────────────────────────────────────
+let apw = '';
 async function doLogin() {
   const pw = document.getElementById('pw').value.trim();
   if (!pw) return;
-  const r = await fetch('/api/admin-auth', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pw})});
+  const r = await fetch('/api/admin-auth', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: pw }) });
   if (r.ok) { apw = pw; sessionStorage.setItem(PW_KEY, pw); showApp(); }
   else document.getElementById('lerr').style.display = 'block';
 }
 function logout() { sessionStorage.removeItem(PW_KEY); location.reload(); }
-document.getElementById('pw').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
-const saved = sessionStorage.getItem(PW_KEY);
-if (saved) {
-  fetch('/api/admin-auth', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:saved})})
-    .then(r => { if(r.ok){apw=saved;showApp();} else sessionStorage.removeItem(PW_KEY); })
-    .catch(() => {});
-}
+document.getElementById('pw').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 
-// ── App ───────────────────────────────────────────────────────────────────────
+// ── Views ────────────────────────────────────────────────────────────────────
+const VIEWS = {
+  seo:  { title: 'SEO', sub: 'Pages ChatGPT, Claude, DuckDuckGo, Perplexity and Gemini fetch, and where they rank on Google & Bing · checked daily 6am UTC', loaded: false, load: () => SX.load() },
+  log:  { title: 'AI Log', sub: 'Every request from AI bots, newest first, and which ones were for an answer', loaded: false, load: () => LG.load() },
+  bots: { title: 'AI Bots', sub: 'Which bots crawl which pages, how often, and errors they hit', loaded: false, load: () => window.AIBotsTab.load() },
+};
+function showView(v) {
+  if (!VIEWS[v]) v = 'seo';
+  document.querySelectorAll('.vtab').forEach(t => t.classList.toggle('active', t.dataset.view === v));
+  Object.keys(VIEWS).forEach(k => { document.getElementById('view-' + k).hidden = k !== v; });
+  document.getElementById('runBtn').style.display = v === 'seo' ? '' : 'none';
+  document.getElementById('viewTitle').textContent = VIEWS[v].title;
+  document.getElementById('viewSub').textContent = VIEWS[v].sub;
+  try { history.replaceState(null, '', v === 'seo' ? location.pathname : '#' + v); } catch (e) {}
+  if (!VIEWS[v].loaded && apw) { VIEWS[v].loaded = true; VIEWS[v].load(); }
+}
 function showApp() {
   document.getElementById('login').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  loadResults();
+  showView((location.hash || '').slice(1) || 'seo');
 }
-
-async function loadResults() {
-  setStatus('amber', 'Fetching latest results…');
-  try {
-    const r = await fetch('/api/seo-track?action=results');
-    if (!r.ok) { setStatus('amber', `Server error ${r.status} — check Netlify function logs`); return; }
-    let d;
-    try { d = await r.json(); }
-    catch(e) { setStatus('amber', 'Response parse error — function may have crashed. Check Netlify logs.'); return; }
-
-    if (d.results && d.results.keywords && d.results.keywords.length) {
-      allResults = d.results.keywords.map(r => ({
-        ...r,
-        our_pages: (r.our_pages || []).map(p => ({
-          where: String(p.where || ''),
-          link: String(p.link || ''),
-          title: String(p.title || '')
-        }))
-      }));
-      renderKpis(d.results);
-      renderFilters();
-      renderTable(curFilter);
-      renderHistory(d.history || []);
-      
-      const dt = new Date(d.results.checkedAt);
-      const dtStr = isNaN(dt) ? '—' : `${dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})} at ${dt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}`;
-      const totalKw = d.results.summary?.total || d.results.keywords.length;
-      const isPartial = d.results.partial && d.results.keywords.length < totalKw;
-      document.getElementById('lastChecked').textContent =
-        isPartial 
-          ? `${d.results.keywords.length}/${totalKw} keywords checked · last updated ${dtStr} · incomplete run`
-          : `${totalKw} keywords · last checked ${dtStr}`;
-
-      const appearing = d.results.keywords.filter(k => k.our_pages && k.our_pages.length > 0).length;
-      const errCount  = d.results.keywords.filter(k => k.error).length;
-
-      if (isPartial) {
-        setStatus('amber', `Partial results: ${d.results.keywords.length}/${totalKw} keywords · click "Run now" to complete (will resume where left off)`);
-      } else {
-        setStatus('green', `We appear in ${appearing} searches · ${d.results.summary.site_cited} cited in AI Overview${errCount ? ` · ${errCount} errors` : ''}`);
-      }
-
-      // If the full run completed but summary wasn't saved (walked away), save it now
-      if (d.results.partial === false && !d.results.checkedAt.startsWith('200')) {
-        fetch(`/api/seo-track?action=finish&password=${encodeURIComponent(apw)}`).catch(() => {});
-      }
-    } else {
-      setStatus('amber', 'No data yet — click "Run now" to check all keywords');
-      document.getElementById('tblBody').innerHTML = '<div class="empty">No results yet. Click "Run now" above to run the first check.</div>';
-      renderFilters();
-    }
-  } catch(e) { setStatus('amber', 'Fetch error: ' + e.message); }
-}
-
-// ── Run now: browser drives keyword loop, one fetch per keyword ──────────────
-let runAborted = false;
-const SESSION_KEY = 'seo_run_results_v2';  // v2 = null-safe our_pages
-
-async function runNow() {
-  const btn = document.getElementById('runBtn');
-  runAborted = false;
-  btn.disabled = true;
-
-  // Fetch keyword list
-  let keywords;
-  try {
-    const r = await fetch('/api/seo-track?action=keywords');
-    const d = await r.json();
-    keywords = d.keywords || [];
-  } catch(e) { setStatus('amber', 'Could not fetch keyword list: ' + e.message); btn.disabled=false; btn.innerHTML='↻ Run now'; return; }
-
-  // Resume: load any already-completed results from sessionStorage
-  let savedResults = [];
-  try { savedResults = JSON.parse(sessionStorage.getItem(SESSION_KEY) || '[]'); } catch {}
-  // Sanitize our_pages on restore — old cached data may have non-string link/where
-  savedResults = savedResults.map(r => ({
-    ...r,
-    our_pages: (r.our_pages || []).map(p => ({
-      where: String(p.where || ''),
-      link: String(p.link || ''),
-      title: String(p.title || '')
-    }))
-  }));
-  const doneKeywords = new Set(savedResults.map(r => r.keyword));
-  const results = [...savedResults];
-  if (savedResults.length > 0) {
-    setStatus('amber', `Resuming from keyword ${savedResults.length + 1}/${keywords.length}…`);
-  }
-
-  for (let i = 0; i < keywords.length; i++) {
-    if (runAborted) break;
-    const kw = keywords[i];
-    
-    // Skip already-done keywords
-    if (doneKeywords.has(kw)) continue;
-
-    btn.innerHTML = `<span class="spinner"></span> ${results.length+1}/${keywords.length}`;
-    setStatus('amber', `Checking ${results.length+1} of ${keywords.length} — "${kw.substring(0,50)}…"`);
-
-    try {
-      // Try up to 2 times — ValueSERP can hit Netlify's 40s limit
-      let r, result, attempts = 0;
-      while (attempts < 2) {
-        attempts++;
-        r = await fetch(`/api/seo-track?action=check&password=${encodeURIComponent(apw)}&kw=${encodeURIComponent(kw)}`);
-        if (r.status === 502 && attempts < 2) {
-          setStatus('amber', `Keyword ${results.length+1}/${keywords.length} timed out — retrying…`);
-          await sleep(3000);
-          continue;
-        }
-        try { result = await r.json(); } catch(e) { result = { error: `HTTP ${r.status}: ${e.message}` }; }
-        break;
-      }
-      const okResult = r.ok ? result : { keyword: kw, error: result?.error || `HTTP ${r.status}`, our_pages: [], in_aio: false, checkedAt: new Date().toISOString() };
-      if (okResult.our_pages) okResult.our_pages = okResult.our_pages.map(p => ({ where: String(p.where||''), link: String(p.link||''), title: String(p.title||'') }));
-      results.push(okResult);
-    } catch(e) {
-      results.push({ keyword: kw, error: e.message, our_pages: [], in_aio: false, checkedAt: new Date().toISOString() });
-    }
-
-    // Save progress to sessionStorage after each keyword (survives page refresh)
-    try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(results)); } catch {}
-
-    // Update table live
-    allResults = results;
-    renderTable(curFilter);
-    renderKpis({ keywords: results, summary: {
-      total: keywords.length,
-      in_aio: results.filter(r=>r.in_aio).length,
-      site_cited: results.filter(r=>r.site_cited).length,
-      ranked: results.filter(r=>r.our_pages&&r.our_pages.length>0).length,
-    }});
-
-    if (i < keywords.length - 1) await sleep(500);
-  }
-
-  // Save final summary to blobs
-  try { await fetch(`/api/seo-track?action=finish&password=${encodeURIComponent(apw)}`); } catch {}
-
-  // Clear session storage on completion
-  try { sessionStorage.removeItem(SESSION_KEY); } catch {}
-
-  const appeared = results.filter(r => r.our_pages && r.our_pages.length > 0).length;
-  const cited    = results.filter(r => r.site_cited).length;
-  const errors   = results.filter(r => r.error).length;
-  setStatus('green', `Complete — we appear in ${appeared} searches · ${cited} cited in AIO${errors ? ` · ${errors} errors` : ''}`);
-  btn.disabled = false;
-  btn.innerHTML = '↻ Run now';
-  allResults = results;
-  renderTable(curFilter);
-}
-
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-function setStatus(state, text) {
-  document.getElementById('statusDot').className = 'dot ' + (state === 'green' ? 'green' : 'amber');
-  document.getElementById('statusText').textContent = text;
-}
-
-// ── KPIs ──────────────────────────────────────────────────────────────────────
-function renderKpis(data) {
-  const kw = data.keywords || [], t = kw.length;
-  const appearing = kw.filter(r => r.our_pages && r.our_pages.length > 0).length;
-  const inAio     = kw.filter(r => r.in_aio).length;
-  const cited     = kw.filter(r => r.site_cited).length;
-  const organic   = kw.filter(r => r.organic_rank).length;
-  const errs      = kw.filter(r => r.error).length;
-  document.getElementById('kpis').innerHTML = `
-    <div class="kpi"><div class="kpi-l">Keywords tracked</div><div class="kpi-v">${t}</div><div class="kpi-s">daily check</div></div>
-    <div class="kpi"><div class="kpi-l">We appear</div><div class="kpi-v ${appearing>0?'green':''}">${appearing}</div><div class="kpi-s">anywhere in results</div></div>
-    <div class="kpi"><div class="kpi-l">AIO shown</div><div class="kpi-v ${inAio>0?'amber':''}">${inAio}</div><div class="kpi-s">${t?Math.round(inAio/t*100):0}% of keywords</div></div>
-    <div class="kpi"><div class="kpi-l">Cited in AIO</div><div class="kpi-v ${cited>0?'green':''}">${cited}</div><div class="kpi-s">${inAio?Math.round(cited/inAio*100):0}% of AIO results</div></div>
-    <div class="kpi"><div class="kpi-l">Organic rank</div><div class="kpi-v">${organic}</div><div class="kpi-s">in top 10</div></div>
-    ${errs ? `<div class="kpi"><div class="kpi-l">Errors</div><div class="kpi-v red">${errs}</div><div class="kpi-s">check API key</div></div>` : ''}`;
-}
-
-// ── History ───────────────────────────────────────────────────────────────────
-function renderHistory(hist) {
-  if (!hist.length) { document.getElementById('histWrap').style.display='none'; return; }
-  document.getElementById('histWrap').style.display = 'block';
-  const maxA = Math.max(...hist.map(h=>h.in_aio), 1);
-  const maxC = Math.max(...hist.map(h=>h.site_cited), 1);
-
-  // Update legend with latest totals
-  const latest = hist[0] || {};
-  const legAio = document.getElementById('legend-aio');
-  const legCited = document.getElementById('legend-cited');
-  if (legAio) legAio.textContent = latest.in_aio != null ? `(${latest.in_aio})` : '';
-  if (legCited) legCited.textContent = latest.site_cited != null ? `(${latest.site_cited})` : '';
-
-  document.getElementById('hchart').innerHTML = [...hist].reverse().map(h => {
-    const ah = Math.round((h.in_aio / maxA) * 56);
-    const ch = Math.round((h.site_cited / maxC) * 56);
-    const dateLabel = h.date ? h.date.slice(5) : '—';
-
-    // Build tooltip — show which keywords appeared on this day if available
-    const kwsOnDay = (h.keywords || []);
-    const aioKws   = kwsOnDay.filter(k => k.in_aio);
-    const citedKws = kwsOnDay.filter(k => k.site_cited);
-
-    let tipRows = '';
-    if (citedKws.length) {
-      tipRows += citedKws.map(k => `<div class="htip-row cited">✓ ${esc(k.keyword.substring(0,38))}</div>`).join('');
-    }
-    if (aioKws.length && !citedKws.length) {
-      tipRows += aioKws.slice(0,5).map(k => `<div class="htip-row aio">AIO ${esc(k.keyword.substring(0,36))}</div>`).join('');
-    }
-    if (!tipRows) {
-      tipRows = `<div class="htip-row aio">AIO shown: ${h.in_aio}</div><div class="htip-row cited">We appear: ${h.site_cited}</div>`;
-    }
-
-    return `<div class="hcol">
-      <div class="htip">
-        <div class="htip-date">${dateLabel}</div>
-        <div class="htip-row aio">AIO shown: <strong>${h.in_aio}</strong></div>
-        <div class="htip-row cited">We appear: <strong>${h.site_cited}</strong></div>
-        ${tipRows !== `<div class="htip-row aio">AIO shown: ${h.in_aio}</div><div class="htip-row cited">We appear: ${h.site_cited}</div>` ? '<div style="border-top:1px solid rgba(255,255,255,.15);margin:5px 0"></div>' + tipRows : ''}
-      </div>
-      <div style="display:flex;align-items:flex-end;gap:1px;height:58px">
-        <div class="hbar" style="height:${ah}px;background:#b3d4f0"></div>
-        <div class="hbar" style="height:${ch}px;background:var(--green)"></div>
-      </div>
-      <div class="hdate">${esc(dateLabel)}</div>
-    </div>`;
-  }).join('');
-}
-
-// ── Filters ───────────────────────────────────────────────────────────────────
-function renderFilters() {
-  const appearing = allResults.filter(r => r.our_pages && r.our_pages.length > 0).length;
-  const filters = [
-    {id:'all',     label:`All (${allResults.length || 30})`},
-    {id:'we_appear', label:'✓ We appear'},
-    {id:'cited',   label:'In AIO'},
-    {id:'organic', label:'Organic rank'},
-    {id:'no_us',   label:'Not found'},
-    {id:'error',   label:'Errors'},
-  ];
-  document.getElementById('filterBar').innerHTML = filters.map(f =>
-    `<button class="ftab ${curFilter===f.id?'active':''}" onclick="setF('${f.id}',this)">${esc(f.label)}</button>`
-  ).join('');
-}
-
-function setF(f, el) {
-  curFilter = f;
-  document.querySelectorAll('.ftab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  renderTable(f);
-}
-
-// ── Table ─────────────────────────────────────────────────────────────────────
-function sortByCol(col) {
-  if (sortCol === col) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
-  else { sortCol = col; sortDir = 'desc'; }
-  renderTable(curFilter);
-}
-
-function renderTable(filter) {
-  let rows = allResults;
-  if (filter === 'we_appear') rows = rows.filter(r => r.our_pages && r.our_pages.length > 0);
-  if (filter === 'cited')     rows = rows.filter(r => r.site_cited);
-  if (filter === 'organic')   rows = rows.filter(r => r.organic_rank);
-  if (filter === 'no_us')     rows = rows.filter(r => !r.our_pages || r.our_pages.length === 0);
-  if (filter === 'error')     rows = rows.filter(r => r.error);
-
-  // Sort
-  if (sortCol === 'appear') {
-    rows = [...rows].sort((a, b) => {
-      const av = (a.our_pages||[]).length, bv = (b.our_pages||[]).length;
-      return sortDir === 'desc' ? bv - av : av - bv;
-    });
-  } else if (sortCol === 'organic') {
-    rows = [...rows].sort((a, b) => {
-      const av = a.organic_rank || 999, bv = b.organic_rank || 999;
-      return sortDir === 'asc' ? av - bv : bv - av;
-    });
-  } else if (sortCol === 'aio') {
-    rows = [...rows].sort((a, b) => {
-      const av = a.in_aio ? 1 : 0, bv = b.in_aio ? 1 : 0;
-      return sortDir === 'desc' ? bv - av : av - bv;
-    });
-  }
-
-  document.getElementById('tblCount').textContent = `${rows.length} keyword${rows.length !== 1 ? 's' : ''}`;
-
-  if (!rows.length) {
-    document.getElementById('tblBody').innerHTML = '<div class="empty">No keywords match this filter</div>';
-    return;
-  }
-
-  const arr = (col) => sortCol === col ? `<span class="sort-arr">${sortDir==='desc'?'↓':'↑'}</span>` : '<span class="sort-arr" style="opacity:.25">↕</span>';
-
-  const html = `<table class="kw">
-    <thead><tr>
-      <th style="width:30%">Keyword</th>
-      <th style="width:70px">Checked</th>
-      <th class="th-sort" onclick="sortByCol('aio')" style="width:90px">AI Overview ${arr('aio')}</th>
-      <th class="th-sort" onclick="sortByCol('appear')">Where we appear ${arr('appear')}</th>
-      <th class="th-sort" onclick="sortByCol('organic')" style="width:90px">Organic ${arr('organic')}</th>
-    </tr></thead>
-    <tbody>${rows.map(r => {
-      const dt = r.checkedAt ? r.checkedAt.slice(5, 10) : '—';
-      const rowBg = r.site_cited ? 'background:linear-gradient(90deg,#edf7f0 0%,transparent 100%)'
-                  : r.in_aio     ? 'background:linear-gradient(90deg,#fffbeb 0%,transparent 100%)'
-                  : '';
-      const aioBadge = r.error
-        ? `<span class="badge err" title="${esc(r.error)}">Error</span>`
-        : r.in_aio ? `<span class="badge aio">✓ AIO</span>` : `<span class="badge no-aio">No AIO</span>`;
-      const errorDetail = r.error
-        ? `<span style="font-size:12px;color:var(--red);font-family:monospace">${esc(r.error.substring(0,120))}</span>`
-        : null;
-      const aioBtn = (r.in_aio && (r.aio_text || (r.aio_sources && r.aio_sources.length)))
-        ? `<button class="btn-aio" onclick='openAio(this)' data-r='${esc(JSON.stringify(r))}'>View full AIO ↗</button>`
-        : '';
-      let appearHtml = '';
-      if (errorDetail) {
-        appearHtml = errorDetail;
-      } else if (r.our_pages && r.our_pages.length > 0) {
-        appearHtml = `<div class="our-pages">${r.our_pages.map(p => {
-          const whereStr = String(p.where || '');
-          const linkStr = String(p.link || '');
-          const isAio = whereStr.startsWith('AIO');
-          const isOrg = whereStr.startsWith('Organic');
-          const col = isAio ? 'var(--green)' : isOrg ? 'var(--blue)' : 'var(--amber)';
-          const linkPart = linkStr ? `<a class="our-page-link" href="${esc(linkStr)}" target="_blank" rel="noopener">${esc(slugify(linkStr))}</a>` : '';
-          const titlePart = p.title ? `<span class="our-page-title"> — ${esc(String(p.title).substring(0,50))}</span>` : '';
-          return `<div class="our-page"><span class="our-page-where" style="color:${col}">${esc(whereStr)}</span>${linkPart}${titlePart}</div>`;
-        }).join('')}</div>`;
-      } else {
-        appearHtml = `<span class="not-found">Not found in this search</span>`;
-      }
-      const orgBadge = r.organic_rank ? `<span class="badge rank">#${r.organic_rank}</span>` : `<span class="badge no-rank">—</span>`;
-      return `<tr style="${rowBg}">
-        <td><strong style="font-size:14px">${esc(r.keyword)}</strong></td>
-        <td style="color:var(--ink-muted);font-size:12px;white-space:nowrap">${dt}</td>
-        <td>${aioBadge}${aioBtn}</td>
-        <td>${appearHtml}</td>
-        <td>${orgBadge}</td>
-      </tr>`;
-    }).join('')}</tbody></table>`;
-
-  document.getElementById('tblBody').innerHTML = html;
-}
-
-
-// ── AIO modal ─────────────────────────────────────────────────────────────────
-function openAio(btn) {
-  let r;
-  try { r = JSON.parse(btn.dataset.r || '{}'); } catch { return; }
-  document.getElementById('aioKw').textContent = `Keyword: "${r.keyword}" · checked ${r.checkedAt ? new Date(r.checkedAt).toLocaleString() : '—'}`;
-
-  const sources = (r.aio_sources || []).map((s, i) => {
-    const sLink = String(s.link || '');
-    const isOurs = sLink.includes('irsresolutionservice.com');
-    let dom = '';
-    try { dom = new URL(sLink).hostname.replace('www.',''); } catch { dom = sLink; }
-    return `<div class="src-row">
-      <span class="src-num">${i+1}</span>
-      <div>
-        <a href="${esc(s.link)}" target="_blank" rel="noopener" class="${isOurs?'ours':''}">${esc(s.title || dom)}</a>
-        <div class="src-domain">${esc(dom)}${isOurs?' ← our site':''}</div>
-      </div>
-    </div>`;
-  }).join('');
-
-  document.getElementById('aioBody').innerHTML = `
-    ${r.aio_text
-      ? `<div class="aio-fulltext">${esc(r.aio_text)}</div>`
-      : '<p style="color:var(--ink-muted);font-size:13px;margin-bottom:1rem">No AIO text captured — re-run to fetch.</p>'}
-    ${sources
-      ? `<div class="src-heading">Sources cited in AI Overview (${(r.aio_sources||[]).length})</div>${sources}`
-      : '<p style="color:var(--ink-muted);font-size:13px">No sources recorded</p>'}`;
-
-  document.getElementById('aioModal').classList.add('open');
-}
-
-function closeAio() { document.getElementById('aioModal').classList.remove('open'); }
-document.getElementById('aioModal').addEventListener('click', e => {
-  if (e.target === document.getElementById('aioModal')) closeAio();
-});
-
-// ── Utilities ─────────────────────────────────────────────────────────────────
-function esc(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function slugify(url) {
-  try {
-    const u = new URL(url);
-    return u.hostname.replace('www.','') + u.pathname;
-  } catch { return url; }
-}
+window.AIBotsTab = { manual: true, getKey: function () { return apw; } };
 </script>
 
 <script>
-// ── View tabs ────────────────────────────────────────────────────────────────
-window.AIBotsTab = { manual: true, getKey: function () { return apw; } };
-let botsLoaded = false;
-function showView(v) {
-  document.querySelectorAll('.vtab').forEach(t => t.classList.toggle('active', t.dataset.view === v));
-  document.getElementById('view-aio').hidden  = v !== 'aio';
-  document.getElementById('view-bots').hidden = v !== 'bots';
-  document.getElementById('runBtn').style.display = v === 'aio' ? '' : 'none';
-  document.getElementById('lastChecked').style.display = v === 'aio' ? '' : 'none';
-  document.getElementById('viewTitle').textContent = v === 'aio' ? 'AI Overview Tracker' : 'AI Bot Tracker';
-  try { history.replaceState(null, '', v === 'bots' ? '#bots' : location.pathname); } catch (e) {}
-  if (v === 'bots' && !botsLoaded && apw) { botsLoaded = true; window.AIBotsTab.load(); }
+// ── shared helpers ───────────────────────────────────────────────────────────
+function h(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+function api(path, opts) {
+  opts = opts || {};
+  opts.headers = Object.assign({ 'x-seo-key': apw }, opts.headers || {});
+  opts.cache = 'no-store';
+  return fetch(path, opts);
 }
-// open straight to the bots tab with /seo#bots (after login)
-const _origShowApp = showApp;
-showApp = function () { _origShowApp(); if (location.hash === '#bots') showView('bots'); };
+function fmtWhen(ts) { const d = new Date(ts); return isNaN(d) ? '—' : d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }); }
+function agoTxt(ts) { const s = (Date.now() - ts) / 1000; return s < 3600 ? Math.max(1, Math.floor(s / 60)) + 'm ago' : s < 86400 ? Math.floor(s / 3600) + 'h ago' : Math.floor(s / 86400) + 'd ago'; }
+function segWire(id, attr, cb) {
+  const el = document.getElementById(id);
+  el.querySelectorAll('button').forEach(b => b.onclick = () => {
+    el.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    cb(b.getAttribute(attr));
+  });
+}
+
+// ── SEO tab ──────────────────────────────────────────────────────────────────
+const SX = {
+  data: null, days: 30, q: '', editing: null, polling: null,
+
+  load() {
+    document.getElementById('sxStatus').textContent = 'Loading…';
+    return api('/api/seo?action=dashboard&days=' + SX.days)
+      .then(r => r.ok ? r.json() : Promise.reject(new Error('Server error ' + r.status + ' — check Netlify function logs')))
+      .then(d => { SX.data = d; SX.render(); if (d.status && d.status.state === 'running' && Date.now() - Date.parse(d.status.startedAt) < 16 * 60000) SX.poll(); })
+      .catch(e => { SX.setStatus('amber', e.message); document.getElementById('sxBody').innerHTML = '<div class="empty">' + h(e.message) + '</div>'; });
+  },
+
+  setStatus(cls, text) {
+    document.getElementById('sxDot').className = 'dot ' + cls;
+    document.getElementById('sxStatus').textContent = text;
+  },
+
+  statusText(s) {
+    if (!s) return ['amber', 'Ranks not checked yet — click "Check ranks now".'];
+    if (s.state === 'running') return ['amber', `Checking ranks… ${s.pagesDone}/${s.pages} pages done${s.only ? ' (' + s.only + ')' : ''}`];
+    const when = fmtWhen(s.finishedAt);
+    const err = s.errors ? ` · ${s.errors} failed check${s.errors > 1 ? 's' : ''}` : ' · no errors';
+    return [s.errors ? 'amber' : 'green', `${s.only ? 'Page ' + s.only + ' checked' : 'Last rank check'} ${when} · ${s.pages} page${s.pages === 1 ? '' : 's'} · ${s.keywords} keywords${err}${s.state === 'partial' ? ' · stopped early (time limit), rest runs tomorrow' : ''}`];
+  },
+
+  render() {
+    const d = SX.data;
+    const st = SX.statusText(d.status); SX.setStatus(st[0], st[1]);
+    const w = [];
+    if (!d.keys.bing) w.push('Bing ranks are off: add <b>SERPAPI_KEY</b> in Netlify → Site configuration → Environment variables.');
+    if (!d.keys.google) w.push('Google ranks are off: <b>VALUESERP_API</b> is not set.');
+    document.getElementById('sxWarn').innerHTML = w.map(x => '<div class="sx-warn">' + x + '</div>').join('');
+
+    const focus = d.pages.filter(p => p.ai > 0), other = d.pages.filter(p => p.ai === 0);
+    const kws = focus.flatMap(p => p.keywords);
+    const checked = kws.filter(k => k.google || k.bing);
+    const gTop = kws.filter(k => k.google && (k.google.pagePos || k.google.pos)).length;
+    const bTop = kws.filter(k => k.bing && (k.bing.pagePos || k.bing.pos)).length;
+    const cited = kws.filter(k => k.google && k.google.cited).length;
+    const sitemapN = d.pages.filter(p => p.inSitemap).length;
+    const kpi = (l, v, s, cls) => `<div class="kpi"><div class="kpi-l">${l}</div><div class="kpi-v ${cls || ''}">${v}</div><div class="kpi-s">${s}</div></div>`;
+    document.getElementById('sxKpis').innerHTML =
+      kpi('Pages AI fetched', focus.length, `of ${sitemapN} sitemap pages · ${d.days}d`) +
+      kpi('AI requests', focus.reduce((n, p) => n + p.ai, 0).toLocaleString(), 'ChatGPT, Claude, DuckDuckGo, Perplexity, Gemini') +
+      kpi('Google top 10', gTop, `of ${kws.length} keywords`, gTop ? 'green' : '') +
+      kpi('Bing top 10', bTop, d.keys.bing ? `of ${kws.length} keywords` : 'needs SERPAPI_KEY', bTop ? 'green' : '') +
+      kpi('Cited in AI Overview', cited, 'Google AI Overview', cited ? 'green' : '') +
+      kpi('Keywords checked', checked.length, `of ${kws.length} on AI-fetched pages`);
+
+    const q = SX.q.toLowerCase();
+    const match = p => !q || p.path.toLowerCase().includes(q) || p.keywords.some(k => k.kw.toLowerCase().includes(q));
+    const rows = focus.filter(match);
+    let t = '';
+    if (!focus.length) t = `<div class="empty">No AI-assistant visits in the last ${d.days} days yet. Pages appear here as soon as ChatGPT, Claude, DuckDuckGo, Perplexity or Gemini fetch them.</div>`;
+    else {
+      t = '<div class="sx-wrap"><table class="sx"><thead><tr><th>Page</th><th class="num">AI requests</th><th class="num">Google crawls</th><th class="num">Bing crawls</th><th>Keyword</th><th>Google</th><th>Bing</th></tr></thead><tbody>';
+      rows.forEach(p => { t += SX.pageRows(p); });
+      if (!rows.length) t += '<tr><td colspan="7" class="sx-note">No pages match that filter.</td></tr>';
+      t += '</tbody></table></div>';
+    }
+    if (other.length) {
+      t += `<details class="sx-other"><summary>${other.length} page${other.length > 1 ? 's' : ''} with no AI-assistant visits in ${d.days} days (ranks not checked)</summary><div style="overflow-x:auto"><table class="sx"><thead><tr><th>Page</th><th class="num">Google crawls</th><th class="num">Bing crawls</th><th class="num">All bot requests</th></tr></thead><tbody>` +
+        other.filter(match).map(p => `<tr><td class="pg"><a href="${h(p.path)}" target="_blank" rel="noopener">${h(p.path)}</a></td><td class="num">${p.brands.google || 0}</td><td class="num">${p.brands.bing || 0}</td><td class="num">${p.total}</td></tr>`).join('') +
+        '</tbody></table></div></details>';
+    }
+    document.getElementById('sxBody').innerHTML = t;
+  },
+
+  pageRows(p) {
+    const d = SX.data;
+    const chips = d.brands.filter(b => b.ai && p.brands[b.id]).map(b => `<span class="chip">${h(b.label)} <b>${p.brands[b.id]}</b></span>`).join('');
+    const kw = p.keywords.length ? p.keywords : [{ kw: null }];
+    const n = kw.length + (SX.editing === p.path ? 1 : 0);
+    let r = '';
+    kw.forEach((k, i) => {
+      r += `<tr class="${i === 0 ? 'pg-first' : ''}">`;
+      if (i === 0) {
+        r += `<td class="pg" rowspan="${n}"><a href="${h(p.path)}" target="_blank" rel="noopener">${h(p.path)}</a>${p.inSitemap ? '' : ' <span class="chip">not in sitemap</span>'}
+          <div class="chips">${chips}</div>
+          <div class="pg-meta">Last AI visit ${p.lastAI ? agoTxt(p.lastAI) : '—'} · <button class="linkbtn" data-path="${h(p.path)}" onclick="SX.edit(this.dataset.path)">${SX.editing === p.path ? 'Close' : 'Edit keywords'}</button></div></td>
+          <td class="num" rowspan="${n}"><span class="big">${p.ai}</span></td>
+          <td class="num" rowspan="${n}">${p.brands.google || 0}</td>
+          <td class="num" rowspan="${n}">${p.brands.bing || 0}</td>`;
+      }
+      if (!k.kw) r += '<td class="kwc sx-note" colspan="3">No keywords yet. Click "Edit keywords".</td>';
+      else r += `<td class="kwc">${h(k.kw)}</td><td>${SX.rank(k.google, p.path, true)}</td><td>${SX.rank(k.bing, p.path, false)}</td>`;
+      r += '</tr>';
+    });
+    if (SX.editing === p.path) {
+      r += `<tr><td colspan="3" class="editor"><div class="sx-note" style="margin-bottom:6px">One keyword per line (max 10). Each keyword costs one Google + one Bing check per day.</div>
+        <textarea id="sxEdit">${h(p.keywords.map(k => k.kw).join('\n'))}</textarea>
+        <div class="row"><button class="btn gold" data-path="${h(p.path)}" onclick="SX.save(this.dataset.path, true)">Save &amp; check now</button><button class="btn" data-path="${h(p.path)}" onclick="SX.save(this.dataset.path, false)">Save</button><span class="sx-note" id="sxEditMsg"></span></div></td></tr>`;
+    }
+    return r;
+  },
+
+  rank(r, path, google) {
+    if (!r) return '<span class="rk"><span class="none" title="Runs on the next check">not checked yet</span></span>';
+    if (r.error) return `<span class="rk-err" title="${h(r.error)}">check failed</span>`;
+    const pos = r.pagePos || r.pos;
+    let out = '<span class="rk">';
+    if (!pos) out += '<span class="none" title="Not in the top 10 results">not in top 10</span>';
+    else out += `<span class="pos ${pos <= 3 ? 'top3' : ''}">#${pos}</span>`;
+    if (pos && r.prevPos) { const dlt = r.prevPos - pos; if (dlt) out += `<span class="mv ${dlt > 0 ? 'up' : 'down'}" title="was #${r.prevPos}">${dlt > 0 ? '▲' : '▼'}${Math.abs(dlt)}</span>`; }
+    else if (pos && r.prevAt && !r.prevPos) out += '<span class="mv new" title="Not in top 10 last check">new</span>';
+    else if (!pos && r.prevPos) out += `<span class="mv down" title="was #${r.prevPos}">dropped</span>`;
+    if (r.staleError) out += `<span class="stale" title="Latest check failed (${h(r.staleError)}). Showing the previous result.">!</span>`;
+    out += '</span>';
+    if (pos && !r.pagePos && r.url) { let u = r.url; try { u = new URL(r.url).pathname; } catch (e) {} out += `<span class="rk-url" title="${h(r.url)}">another page ranks: ${h(u)}</span>`; }
+    if (google && r.cited) out += '<br><span class="aiob cited">✓ Cited in AI Overview</span>';
+    else if (google && r.inAio) out += '<br><span class="aiob shown">AI Overview, not cited</span>';
+    return out;
+  },
+
+  edit(path) { SX.editing = SX.editing === path ? null : path; SX.render(); const t = document.getElementById('sxEdit'); if (t) t.focus(); },
+
+  save(path, check) {
+    const list = document.getElementById('sxEdit').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const msg = document.getElementById('sxEditMsg'); msg.textContent = 'Saving…';
+    api('/api/seo?action=keywords', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ path, keywords: list }) })
+      .then(r => r.ok ? r.json() : Promise.reject(new Error('Save failed (' + r.status + ')')))
+      .then(() => { SX.editing = null; return check ? SX.run(path) : SX.load(); })
+      .catch(e => { msg.textContent = e.message; });
+  },
+
+  run(path) {
+    const btn = document.getElementById('runBtn');
+    btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Starting…';
+    return api('/api/seo-run', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(path ? { path } : {}) })
+      .then(r => { if (r.status !== 202 && !r.ok) throw new Error('Could not start (' + r.status + ')'); SX.runStart = Date.now(); SX.poll(); })
+      .catch(e => { SX.setStatus('amber', e.message); btn.disabled = false; btn.innerHTML = '↻ Check ranks now'; });
+  },
+
+  poll() {
+    const btn = document.getElementById('runBtn');
+    btn.disabled = true;
+    clearTimeout(SX.polling);
+    api('/api/seo?action=status').then(r => r.json()).then(({ status: s }) => {
+      const fresh = s && (!SX.runStart || Date.parse(s.startedAt) >= SX.runStart - 60000);
+      if (!fresh || s.state === 'running') {
+        btn.innerHTML = `<span class="spinner"></span> ${fresh ? s.pagesDone + '/' + s.pages + ' pages' : 'Starting…'}`;
+        if (fresh) { const st = SX.statusText(s); SX.setStatus(st[0], st[1]); }
+        SX.polling = setTimeout(SX.poll, 4000);
+      } else {
+        SX.runStart = null; btn.disabled = false; btn.innerHTML = '↻ Check ranks now';
+        SX.load();
+      }
+    }).catch(() => { SX.polling = setTimeout(SX.poll, 6000); });
+  },
+};
+segWire('sxRange', 'data-days', v => { SX.days = +v; SX.load(); });
+document.getElementById('sxQ').oninput = e => { SX.q = e.target.value; if (SX.data) SX.render(); };
+
+// ── AI Log tab ───────────────────────────────────────────────────────────────
+const LG = {
+  raw: null, kind: 'all', days: 30, brand: '', q: '', fake: false, limit: 500,
+  BRAND: { 'chatgpt-user': 'ChatGPT', 'oai-searchbot': 'ChatGPT', 'gptbot': 'ChatGPT', 'claude-user': 'Claude', 'claude-search': 'Claude', 'claudebot': 'Claude',
+    'duckassist': 'DuckDuckGo', 'duckduckbot': 'DuckDuckGo', 'perplexity-user': 'Perplexity', 'perplexitybot': 'Perplexity', 'google-other': 'Gemini',
+    'googlebot': 'Google', 'bingbot': 'Bing / Copilot' },
+  REF: { ChatGPT: 'ChatGPT', Claude: 'Claude', Perplexity: 'Perplexity', Gemini: 'Gemini', Copilot: 'Bing / Copilot', DeepSeek: 'Other', 'You.com': 'Other' },
+
+  load() {
+    if (LG.raw) return LG.render();
+    api('/api/ai-bot-hits?days=90').then(r => r.ok ? r.json() : Promise.reject(new Error('Server error ' + r.status)))
+      .then(d => {
+        LG.raw = d; LG.bots = {}; d.bots.forEach(b => LG.bots[b.id] = b);
+        const brands = ['ChatGPT', 'Claude', 'DuckDuckGo', 'Perplexity', 'Gemini', 'Google', 'Bing / Copilot', 'Other'];
+        document.getElementById('lgBrand').innerHTML = '<option value="">All bots</option>' + brands.map(b => `<option>${b}</option>`).join('');
+        LG.render();
+      })
+      .catch(e => { document.getElementById('lgBody').innerHTML = '<div class="empty">' + h(e.message) + '</div>'; });
+  },
+
+  rows() {
+    const since = Date.now() - LG.days * 864e5, q = LG.q.toLowerCase();
+    return LG.raw.events.map(([ts, who, v, status, path]) => {
+      const ref = who.indexOf('ref:') === 0, bot = LG.bots[who];
+      const brand = ref ? (LG.REF[who.slice(4)] || 'Other') : (LG.BRAND[who] || 'Other');
+      const kind = ref ? 'click' : bot && bot.type === 'live' ? 'fetch' : 'crawl';
+      return { ts, path, v, status, brand, kind, label: ref ? 'Visitor from ' + who.slice(4) : bot ? bot.label : who };
+    }).filter(e => e.ts >= since && (LG.fake || e.v !== 'n') && (LG.kind === 'all' || e.kind !== 'crawl') &&
+      (!LG.brand || e.brand === LG.brand) && (!q || e.path.toLowerCase().includes(q)));
+  },
+
+  render() {
+    const rows = LG.rows(), shown = rows.slice(0, LG.limit);
+    const inAns = rows.filter(e => e.kind !== 'crawl').length;
+    const KIND = { click: 'Clicked from answer', fetch: 'Fetched for answer', crawl: 'Crawl' };
+    let t = `<div class="lg-count">${rows.length.toLocaleString()} request${rows.length === 1 ? '' : 's'} · ${inAns.toLocaleString()} in answers</div>`;
+    if (!rows.length) t += '<div class="empty">Nothing here for these filters yet.</div>';
+    else {
+      t += '<table class="lg"><thead><tr><th>Time</th><th>Page</th><th>Bot</th><th>Answer</th></tr></thead><tbody>';
+      let day = '';
+      shown.forEach(e => {
+        const d = new Date(e.ts), dk = d.toDateString();
+        if (dk !== day) { day = dk; t += `<tr class="day"><td colspan="4">${d.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}</td></tr>`; }
+        t += `<tr><td class="when">${d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</td>
+          <td class="page"><a href="${h(e.path)}" target="_blank" rel="noopener">${h(e.path)}</a>${e.status >= 400 ? ` <span class="fakeb">${e.status}</span>` : ''}</td>
+          <td>${h(e.brand)} <span class="sx-note">· ${h(e.label)}</span>${e.v === 'n' ? '<span class="fakeb">⚠ fake</span>' : ''}</td>
+          <td><span class="kind ${e.kind}">${KIND[e.kind]}</span></td></tr>`;
+      });
+      t += '</tbody></table>';
+      if (rows.length > shown.length) t += `<button class="btn lg-more" onclick="LG.limit += 500; LG.render()">Show ${Math.min(500, rows.length - shown.length)} more</button>`;
+    }
+    document.getElementById('lgBody').innerHTML = t;
+  },
+
+  csv() {
+    if (!LG.raw) return;
+    const KIND = { click: 'Clicked from answer', fetch: 'Fetched for answer', crawl: 'Crawl' };
+    const lines = ['time,page,company,bot,answer,http_status,verified'].concat(LG.rows().map(e =>
+      [new Date(e.ts).toISOString(), '"' + e.path.replace(/"/g, '""') + '"', e.brand, e.label, KIND[e.kind], e.status, e.v].join(',')));
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/csv' }));
+    a.download = `ai-bot-log-${LG.days}d.csv`; a.click();
+  },
+};
+segWire('lgKind', 'data-kind', v => { LG.kind = v; LG.limit = 500; LG.raw && LG.render(); });
+segWire('lgRange', 'data-days', v => { LG.days = +v; LG.limit = 500; LG.raw && LG.render(); });
+document.getElementById('lgBrand').onchange = e => { LG.brand = e.target.value; LG.limit = 500; LG.render(); };
+document.getElementById('lgQ').oninput = e => { LG.q = e.target.value; LG.limit = 500; LG.raw && LG.render(); };
+document.getElementById('lgFake').onchange = e => { LG.fake = e.target.checked; LG.raw && LG.render(); };
+document.getElementById('lgCsv').onclick = () => LG.csv();
 </script>
+
 <script>
 (function () {
   var COLORS = { OpenAI: "var(--abt-s1)", Anthropic: "var(--abt-s2)", Google: "var(--abt-s3)", Microsoft: "var(--abt-s4)" };
@@ -1039,6 +936,14 @@ showApp = function () { _origShowApp(); if (location.hash === '#bots') showView(
   // Lazy: load when the tab is first shown (call AIBotsTab.load()), or right away if visible.
   if (root.offsetParent !== null && !window.AIBotsTab.manual) load();
 })();
+</script>
+<script>
+const _saved = sessionStorage.getItem(PW_KEY);
+if (_saved) {
+  fetch('/api/admin-auth', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: _saved }) })
+    .then(r => { if (r.ok) { apw = _saved; showApp(); } else sessionStorage.removeItem(PW_KEY); })
+    .catch(() => {});
+}
 </script>
 </body>
 </html>

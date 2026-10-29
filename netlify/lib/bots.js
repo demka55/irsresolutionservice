@@ -25,10 +25,24 @@ export const BOTS = [
   { id: "meta",           label: "Meta AI",          op: "Meta",      type: "train",  re: /meta-externalagent|meta-externalfetcher|FacebookBot/i },
   { id: "amazonbot",      label: "Amazonbot",        op: "Amazon",    type: "train",  re: /Amazonbot/i },
   { id: "duckassist",     label: "DuckAssistBot",    op: "DuckDuckGo",type: "live",   re: /DuckAssistBot/i },
+  { id: "duckduckbot",    label: "DuckDuckBot",      op: "DuckDuckGo",type: "search", re: /DuckDuckBot/i },
   { id: "mistral",        label: "MistralAI-User",   op: "Mistral",   type: "live",   re: /MistralAI-User/i },
   { id: "ccbot",          label: "CCBot (Common Crawl)", op: "Common Crawl", type: "train", re: /CCBot/i },
   { id: "bytespider",     label: "Bytespider",       op: "ByteDance", type: "train",  re: /Bytespider/i },
 ];
+
+// Brand groups used by the SEO tab. "ai" = an AI assistant (decides which pages get rank-tracked).
+// Copilot has no crawler of its own: it answers from Bing's index, so Bingbot = "Bing / Copilot".
+export const BRANDS = [
+  { id: "chatgpt",    label: "ChatGPT",        ai: true,  bots: ["chatgpt-user", "oai-searchbot", "gptbot"] },
+  { id: "claude",     label: "Claude",         ai: true,  bots: ["claude-user", "claude-search", "claudebot"] },
+  { id: "duckduckgo", label: "DuckDuckGo",     ai: true,  bots: ["duckassist", "duckduckbot"] },
+  { id: "perplexity", label: "Perplexity",     ai: true,  bots: ["perplexity-user", "perplexitybot"] },
+  { id: "gemini",     label: "Gemini",         ai: true,  bots: ["google-other"] },
+  { id: "google",     label: "Google",         ai: false, bots: ["googlebot"] },
+  { id: "bing",       label: "Bing / Copilot", ai: false, bots: ["bingbot"] },
+];
+export const BRAND_OF = Object.fromEntries(BRANDS.flatMap((b) => b.bots.map((id) => [id, b.id])));
 
 export function classifyBot(ua) {
   if (!ua) return null;

@@ -1,95 +1,58 @@
-// netlify/functions/seo-api.mjs
-// GET /api/seo-track?action=keywords            — list all keywords (public)
-// GET /api/seo-track?action=results             — stored results (public)
-// GET /api/seo-track?action=check&kw=X&password — check ONE keyword, store + return
-// GET /api/seo-track?action=finish&password     — assemble final summary from kw: blobs
-// Browser calls check() for each keyword sequentially — no server-side loop needed
-
+// netlify/functions/seo-api.mjs — data for the /seo "SEO" tab (all actions need the admin password)
+// GET  /api/seo?action=dashboard&days=30  → pages with AI-bot visits, keywords, Google + Bing ranks
+// GET  /api/seo?action=status             → progress of the current/last rank run
+// POST /api/seo?action=keywords  {path, keywords: [...]} → save a page's keyword list
 import { getStore } from '@netlify/blobs'
+import { BRANDS, normPath } from '../lib/bots.js'
+import { listEvents } from '../lib/bot-events.mjs'
+import { isAuthorized, sitemapPaths, json } from '../lib/http.mjs'
 import {
-  STORE, RESULTS_KEY, HISTORY_KEY, KEYWORDS,
-  tryParse, slugFor, readAllKeywordResults, summarize, saveSummary, checkKeyword,
+  STORE, pageKey, tryParse, getKeywordMap, setPageKeywords, pageStats, readStatus, readHistory,
 } from '../lib/seo-core.mjs'
 
-const H = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Content-Type': 'application/json',
-}
-const ok   = (d)    => new Response(JSON.stringify(d), { status: 200, headers: H })
-const fail = (m, s) => new Response(JSON.stringify({ error: m }), { status: s || 500, headers: H })
-
 export default async (req) => {
-  if (req.method === 'OPTIONS') return new Response(null, { status: 200, headers: H })
+  if (!isAuthorized(req)) return json({ error: 'unauthorized' }, 401)
+  const url = new URL(req.url)
+  const action = url.searchParams.get('action') || 'dashboard'
+  const store = getStore(STORE)
 
-  const url    = new URL(req.url)
-  const action = url.searchParams.get('action') || 'results'
-  const pw     = url.searchParams.get('password') || ''
+  if (action === 'status') return json({ status: await readStatus(store) })
 
-  const ADMIN_PW = Netlify.env.get('ADMIN_PASSWORD') || ''
-  const API_KEY  = Netlify.env.get('VALUESERP_API')  || ''
+  if (action === 'keywords' && req.method === 'POST') {
+    const body = await req.json().catch(() => ({}))
+    if (!body.path) return json({ error: 'path required' }, 400)
+    const keywords = await setPageKeywords(body.path, body.keywords, store)
+    return json({ ok: true, path: normPath(body.path), keywords })
+  }
 
-  // ── Public endpoints ──────────────────────────────────────────────────────
-  if (action === 'keywords') return ok({ keywords: KEYWORDS })
+  if (action === 'dashboard') {
+    const days = Math.min(Math.max(parseInt(url.searchParams.get('days') || '30', 10) || 30, 1), 90)
+    const [events, sitemap, map, status, history] = await Promise.all([
+      listEvents(days), sitemapPaths(url.origin), getKeywordMap(store), readStatus(store), readHistory(store),
+    ])
+    const stats = pageStats(events)
+    const inMap = new Set(sitemap)
+    const paths = [...new Set([...sitemap, ...stats.keys()])]
+      .filter((p) => inMap.has(p) || (stats.get(p)?.ai || 0) > 0) // non-sitemap URLs only if AI fetched them
+    const recs = await Promise.all(paths.map((p) => store.get(pageKey(p)).then(tryParse).catch(() => null)))
 
-  if (action === 'results') {
-    try {
-      const store = getStore(STORE)
-      const [raw, histRaw, perKw] = await Promise.all([
-        store.get(RESULTS_KEY).catch(() => null),
-        store.get(HISTORY_KEY).catch(() => null),
-        readAllKeywordResults(store), // parallel now — this was the 504
-      ])
-      const stored     = tryParse(raw)
-      const kwResults  = perKw.filter(Boolean)
-
-      // If individual results are newer than the summary (partial or fresh run), return them merged
-      let results = stored
-      if (kwResults.length > 0) {
-        const summaryDate = stored?.checkedAt || '2000-01-01'
-        const latestKw = kwResults.reduce((l, r) => ((r.checkedAt || '') > l ? (r.checkedAt || '') : l), '')
-        if (!stored || latestKw > summaryDate || kwResults.length === KEYWORDS.length) {
-          results = {
-            checkedAt: latestKw,
-            partial: kwResults.length < KEYWORDS.length,
-            summary: { ...summarize(kwResults), total: KEYWORDS.length },
-            keywords: kwResults,
-          }
-        }
+    const pages = paths.map((path, i) => {
+      const s = stats.get(path) || { brands: {}, ai: 0, total: 0, lastAI: 0, last: 0 }
+      const rec = recs[i]
+      return {
+        path, inSitemap: inMap.has(path), ...s, checkedAt: rec?.checkedAt || null,
+        keywords: (map[path] || []).map((kw) => ({ kw, google: rec?.keywords?.[kw]?.google || null, bing: rec?.keywords?.[kw]?.bing || null })),
       }
-      return ok({ results, history: tryParse(histRaw) || [] })
-    } catch (e) {
-      return ok({ results: null, history: [], error: e.message })
-    }
+    }).sort((a, b) => b.ai - a.ai || b.total - a.total || a.path.localeCompare(b.path))
+
+    return json({
+      generated: Date.now(), days, status, history,
+      brands: BRANDS.map(({ id, label, ai }) => ({ id, label, ai })),
+      keys: { google: !!Netlify.env.get('VALUESERP_API'), bing: !!Netlify.env.get('SERPAPI_KEY') },
+      pages,
+    })
   }
-
-  // ── Auth required ─────────────────────────────────────────────────────────
-  if (!pw || pw !== ADMIN_PW) return fail('Unauthorized', 401)
-
-  // ── Finish: assemble summary from stored kw: blobs ────────────────────────
-  if (action === 'finish') {
-    try {
-      const store   = getStore(STORE)
-      const perKw   = await readAllKeywordResults(store)
-      const results = perKw.map((r, i) => r || { keyword: KEYWORDS[i], error: 'no data', our_pages: [], in_aio: false, site_cited: false })
-      const data    = await saveSummary(store, results)
-      return ok({ ok: true, summary: data.summary })
-    } catch (e) { return fail(e.message) }
-  }
-
-  if (!API_KEY) return fail('VALUESERP_API not configured in Netlify env vars', 500)
-
-  // ── Check ONE keyword ─────────────────────────────────────────────────────
-  if (action === 'check') {
-    const kw = url.searchParams.get('kw') || ''
-    if (!kw) return fail('Missing kw param', 400)
-    const result = await checkKeyword(kw, API_KEY)
-    await getStore(STORE).set(`kw:${slugFor(kw)}`, JSON.stringify(result)).catch(() => {})
-    return ok(result)
-  }
-
-  return fail('Unknown action', 400)
+  return json({ error: 'unknown action' }, 400)
 }
 
-export const config = { path: '/api/seo-track', method: ['GET', 'OPTIONS'] }
+export const config = { path: '/api/seo' }
