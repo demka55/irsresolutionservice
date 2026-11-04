@@ -453,7 +453,8 @@ const SX = {
     if (!d.keys.google) w.push('Google ranks are off: <b>VALUESERP_API</b> is not set.');
     document.getElementById('sxWarn').innerHTML = w.map(x => '<div class="sx-warn">' + x + '</div>').join('');
 
-    const focus = d.pages.filter(p => p.ai > 0), other = d.pages.filter(p => p.ai === 0);
+    const tracked = p => p.ai > 0 || p.keywords.some(k => k.google || k.bing);
+    const focus = d.pages.filter(tracked), other = d.pages.filter(p => !tracked(p));
     const kws = focus.flatMap(p => p.keywords);
     const checked = kws.filter(k => k.google || k.bing);
     const gTop = kws.filter(k => k.google && (k.google.pagePos || k.google.pos)).length;

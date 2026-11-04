@@ -3,13 +3,14 @@
 //
 // Process:
 //   1. Read the last 30 days of bot visits (logged by the ai-bot-tracker edge function).
-//   2. Focus = pages that an AI assistant (ChatGPT, Claude, DuckDuckGo, Perplexity, Gemini) fetched.
+//   2. Focus = pages that an AI assistant (ChatGPT, Claude, DuckDuckGo, Perplexity, Gemini) fetched,
+//      plus the new pages in ALWAYS_TRACK (seo-keywords.mjs).
 //   3. For each focus page's keywords, check Google (ValueSERP, incl. AI Overview) and Bing (SerpApi).
 //   4. Save one record per page, keeping the previous position so the dashboard can show movement.
 import { getStore } from '@netlify/blobs'
 import { BRANDS, BRAND_OF, normPath } from './bots.js'
 import { listEvents } from './bot-events.mjs'
-import { DEFAULT_KEYWORDS } from './seo-keywords.mjs'
+import { DEFAULT_KEYWORDS, ALWAYS_TRACK } from './seo-keywords.mjs'
 
 export const STORE       = 'seo-tracking'
 export const SITE        = 'irsresolutionservice.com'
@@ -57,8 +58,10 @@ export function pageStats(events) {
   return stats
 }
 export function focusPaths(stats) {
-  return [...stats.entries()].filter(([, s]) => s.ai > 0)
+  const fetched = [...stats.entries()].filter(([, s]) => s.ai > 0)
     .sort((a, b) => b[1].ai - a[1].ai || b[1].total - a[1].total).map(([p]) => p)
+  const extra = ALWAYS_TRACK.map(normPath).filter((p) => !fetched.includes(p))
+  return [...fetched, ...extra]
 }
 
 // ── Result parsing helpers ───────────────────────────────────────────────────

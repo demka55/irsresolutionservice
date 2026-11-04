@@ -41,4 +41,13 @@ export const DEFAULT_KEYWORDS = {
   '/tax-brackets-2027': ['2027 tax brackets', 'tax brackets 2027'],
   '/social-security-dependent-benefits': ['social security dependent benefits', 'social security benefits for children', 'social security family maximum calculator'],
   '/trump-accounts': ['Trump account', 'how to open a Trump account', 'Trump account eligibility'],
+  '/irs-tax-code-explained': ['irs tax code explained', 'tax code in plain english', 'internal revenue code explained', 'what is the irs tax code'],
+  '/s-corp-reasonable-salary-calculator': ['s corp reasonable salary calculator', 'reasonable compensation s corp', 'how much should i pay myself s corp', 's corp salary calculator'],
 };
+
+// New pages to rank-track every day even before an AI assistant has fetched them.
+// Once a page shows up in the AI-fetched list on its own, it can come off this list.
+export const ALWAYS_TRACK = [
+  '/irs-tax-code-explained',
+  '/s-corp-reasonable-salary-calculator',
+];
