@@ -253,6 +253,9 @@ table.sw tr.cur td{background:var(--gold-muted);font-weight:600}
 .ni{background:var(--white);border:1px solid var(--cream-dark);border-left:4px solid var(--gold);border-radius:6px;padding:1rem 1.2rem}
 .nd{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dim)}
 .ni h3{margin:.2rem 0 .4rem!important;font-size:1.2rem!important}.ni p{font-size:15.5px}.ni .src{font-size:13.5px}.ni .src a{color:var(--gold-dim)}
+.disclose{background:#fff4e5;border:2px solid #c98a1b;border-radius:10px;padding:1.1rem 1.3rem;margin:0 0 1.25rem}
+.disclose-h{font-weight:800;font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:#8a5a00;margin-bottom:.45rem}
+.disclose p{font-size:15.5px;line-height:1.55;color:var(--ink);margin:0 0 .5rem!important}.disclose p:last-child{margin:0!important}
 #memo{display:none}
 @media print{
  body.printing>*{display:none!important}
@@ -639,6 +642,11 @@ table.sw tr.cur td{background:var(--gold-muted);font-weight:600}
 
 <div class="notice-body">
 
+<div class="disclose" role="note" aria-label="Important disclosure">
+  <div class="disclose-h">&#9888; Please read before you use this calculator</div>
+  <p><strong>This is an educational estimate, not tax advice and not a salary recommendation.</strong> The numbers it shows are not a reasonable compensation determination by Romeo Razi, CPA, IRS Resolution Service or anyone else. Using it does not create a CPA–client relationship.</p>
+  <p>What counts as a reasonable salary depends on facts this tool doesn't know: your exact duties, your market, your industry, your history and more. <strong>Don't set your salary from this page alone.</strong> Review your numbers with your own CPA, enrolled agent or tax attorney before you act.</p>
+</div>
 <div class="calc" id="calculator">
   <div class="steps-nav"><span>1 · Your business</span><span>2 · Your jobs</span><span>3 · Your salary</span><span>4 · Your defense</span></div>
 
