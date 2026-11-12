@@ -11,6 +11,7 @@
   gtag('config', 'G-MK4W6BCP46');
 </script>
 <meta charset="UTF-8">
+<script src="/attribution.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <title>IRS Tax Lien Help & Lookup Guide: 4 Ways to Remove It (2026)</title>
@@ -385,14 +386,15 @@ footer a { color: var(--gold); text-decoration: none; }
 <div><label for="lnB">What you owe the IRS ($)</label><input id="lnB" type="number" min="0" step="500" value="34000" inputmode="decimal"></div></div>
 <div class="rc-out" id="lnO" aria-live="polite"></div>
 <p class="rc-note">The 45 days comes from IRS Publication 783 (discharge applications). The $25,000 line is the usual ceiling for lien withdrawal with a direct-debit installment agreement. Always confirm with the IRS.</p></div>
-<script>(function(){function f(n){return '$'+Math.round(n).toLocaleString('en-US')}
+<script>(function(){var rec=false;function f(n){return '$'+Math.round(n).toLocaleString('en-US')}
 function go(){var d=document.getElementById('lnD').value,b=parseFloat(document.getElementById('lnB').value),o=document.getElementById('lnO'),h='';
+rec&&window.irsCtx&&irsCtx.set('lien_countdown',{closing_date:d||'',balance:isNaN(b)?'':b});
 if(d){var c=new Date(d+'T12:00:00'),a=new Date(c.getTime()-45*86400000),t=new Date();t.setHours(12,0,0,0);var left=Math.round((a-t)/86400000),ds=a.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
 h+='Apply by <span class="big">'+ds+'</span>. '+(left>=0?'That is <b>'+left+' days from today</b>.':'<b class="bad">That date has passed.</b> You are already inside the 45 days, so call the IRS lien unit and your title company now.')}
 else{h+='Pick your closing date to see your apply-by date.'}
 if(!isNaN(b)&&b>0){h+='<br>'+(b<=25000?'At <b>'+f(b)+'</b> you are at or under the $25,000 line, so lien withdrawal with a direct-debit plan may be possible.':'To get under the $25,000 line you would need to pay down about <b>'+f(b-25000)+'</b>.')}
 o.innerHTML=h}
-['lnD','lnB'].forEach(function(id){document.getElementById(id).addEventListener('input',go)});go()})();</script>
+['lnD','lnB'].forEach(function(id){document.getElementById(id).addEventListener('input',function(){rec=true;go()})});go()})();</script>
 <div class="raw-take"><img src="/romeo-razi.png" alt="Romeo Razi, CPA, former IRS Tax Examiner"><div><b class="tk-h">Romeo's take</b><p>Everyone worries about their credit score and nobody thinks about the closing table. The lien doesn't hurt you the day it's filed. It hurts you the day you try to sell or refinance, and by then the 45 days the IRS asks for is already ticking against your closing date.</p><p>So if you have a lien and you're even thinking about moving, call before you list the house, not after you have a buyer.</p></div></div>
 <div class="raw-new"><b class="t">New in the last week</b><ul><li><b>No new lien rule this week.</b> The IRS's November news releases so far cover other topics, so the lien rules below are unchanged.</li><li><b>Nov. 6:</b> the IRS let tax pros make certain payments for business clients through Tax Pro Account, including full or partial balances. That can help clear a business balance faster. Payment plans for businesses were not confirmed (<a href="https://www.irs.gov/newsroom/irs-expands-tax-pro-account-for-business-client-payments" target="_blank" rel="noopener">IR-2026-134</a>).</li><li><b>Interest is 7%</b> through Dec. 31 while any balance sits unpaid (<a href="https://www.irs.gov/newsroom/interest-rates-remain-the-same-for-the-fourth-quarter-of-2026" target="_blank" rel="noopener">IRS</a>).</li></ul></div>
 <p class="raw-fine">Illustrative example: the people and dollar amounts are made up so the math is easy to follow, and the rules are real. Not tax advice. Discharge timing is from <a href="https://www.irs.gov/pub/irs-pdf/p783.pdf" target="_blank" rel="noopener">IRS Publication 783 (Rev. 12-2022)</a>.</p>

@@ -10,7 +10,8 @@
 
   gtag('config', 'G-MK4W6BCP46');
 </script>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<script src="/attribution.js"></script><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <title>2027 Tax Brackets: Official IRS Numbers &amp; Deductions</title>
 <meta name="description" content="Official 2027 IRS tax brackets for every filing status, plus the standard deduction, a free calculator and answers from a former IRS examiner.">
@@ -547,16 +548,17 @@ h3.qa-group{font-family:var(--serif);font-size:1.9rem;font-weight:800;margin:3re
 <div><label for="bkG">Yearly income ($)</label><input id="bkG" type="number" min="0" step="1000" value="70000" inputmode="decimal"></div></div>
 <div class="rc-out" id="bkO" aria-live="polite"></div>
 <p class="rc-note">Standard deduction only, before credits, other deductions and state tax. Official figures from IRS Rev. Proc. 2026-35.</p></div>
-<script>(function(){function f(n){return '$'+Math.round(n).toLocaleString('en-US')}
+<script>(function(){var rec=false;function f(n){return '$'+Math.round(n).toLocaleString('en-US')}
 var B26={single:[[0,.10],[12400,.12],[50400,.22],[105700,.24],[201775,.32],[256225,.35],[640600,.37]],mfj:[[0,.10],[24800,.12],[100800,.22],[211400,.24],[403550,.32],[512450,.35],[768700,.37]],hoh:[[0,.10],[17700,.12],[67450,.22],[105700,.24],[201750,.32],[256200,.35],[640600,.37]]};
 var B27={single:[[0,.10],[12800,.12],[52025,.22],[109125,.24],[208325,.32],[264550,.35],[661375,.37]],mfj:[[0,.10],[25600,.12],[104050,.22],[218250,.24],[416650,.32],[529100,.35],[793650,.37]],hoh:[[0,.10],[18250,.12],[69650,.22],[109100,.24],[208300,.32],[264550,.35],[661350,.37]]};
 var D26={single:16100,mfj:32200,hoh:24150},D27={single:16600,mfj:33200,hoh:24925};
 function tax(i,b){var t=0;for(var k=0;k<b.length;k++){var lo=b[k][0],hi=k+1<b.length?b[k+1][0]:1e12;if(i>lo)t+=(Math.min(i,hi)-lo)*b[k][1]}return t}
 function go(){var s=document.getElementById('bkS').value,g=parseFloat(document.getElementById('bkG').value),o=document.getElementById('bkO');
 if(isNaN(g)||g<=0){o.innerHTML='Enter your yearly income.';return}
+rec&&window.irsCtx&&irsCtx.set('bracket_calc',{status:s,income:g});
 var t26=tax(Math.max(0,g-D26[s]),B26[s]),t27=tax(Math.max(0,g-D27[s]),B27[s]),d=Math.round(t26)-Math.round(t27);
 o.innerHTML='2026 tax <b>'+f(t26)+'</b> &rarr; 2027 tax <b>'+f(t27)+'</b>.<br>On the same income you keep about <span class="big">'+f(d)+'</span> more in 2027.'}
-['bkS','bkG'].forEach(function(id){document.getElementById(id).addEventListener('input',go)});go()})();</script>
+['bkS','bkG'].forEach(function(id){document.getElementById(id).addEventListener('input',function(){rec=true;go()})});go()})();</script>
 <div class="raw-take"><img src="/romeo-razi.png" alt="Romeo Razi, CPA, former IRS Tax Examiner"><div><b class="tk-h">Romeo's take</b><p>The 3.2% sounds big and the savings are not. For most W-2 workers the real change is somewhere between <b>$70 and $560 a year</b>. That is nice, but it is not a reason to change your withholding.</p><p>Remember the bucket rule: a bigger bracket does not tax your whole paycheck at a higher rate. Only the dollars that spill into the next bucket do. And here's the part nobody says out loud: Social Security rises <b>3.6%</b> while brackets rise <b>3.2%</b>, so over time your income can creep into higher buckets even if you never get a real raise.</p></div></div>
 <div class="raw-new"><b class="t">New in the last week</b><ul><li><b>Nov. 10:</b> the IRS reminded taxpayers that the <b>charitable deduction for people who do not itemize</b> is permanent. Up to <b>$1,000 single / $2,000 married filing jointly</b>, <b>cash only</b> (no donor-advised funds), starting with 2026 gifts on returns filed in 2027. Keep receipts (<a href="https://www.irs.gov/newsroom/irs-reminder-permanent-charitable-contribution-deduction-begins-for-returns-filed-next-year-for-taxpayers-who-do-not-itemize" target="_blank" rel="noopener">IR-2026-135</a>).</li><li><b>Nov. 6:</b> the IRS expanded Tax Pro Account so tax pros can make certain payments for business clients (<a href="https://www.irs.gov/newsroom/irs-expands-tax-pro-account-for-business-client-payments" target="_blank" rel="noopener">IR-2026-134</a>).</li><li><b>Nov. 5:</b> the official 2027 brackets came out (<a href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts" target="_blank" rel="noopener">IR-2026-133</a>), the same day as the Opportunity Zone designations.</li></ul></div>
 <p class="raw-fine">Examples use the 2026 and 2027 standard deductions ($16,100 / $16,600 single, $24,150 / $24,925 head of household, $32,200 / $33,200 married joint) and ignore credits, other deductions and state tax. Not tax advice.</p>

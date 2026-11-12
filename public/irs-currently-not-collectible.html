@@ -11,6 +11,7 @@
   gtag('config', 'G-MK4W6BCP46');
 </script>
 <meta charset="UTF-8">
+<script src="/attribution.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <title>IRS Currently Not Collectible (Non-Collectible) Status | CNC Guide</title>
@@ -320,14 +321,15 @@ footer a { color: var(--gold); text-decoration: none; }
 <div><label for="cnB">What you owe ($)</label><input id="cnB" type="number" min="0" step="500" value="18000" inputmode="decimal"></div></div>
 <div class="rc-out" id="cnO" aria-live="polite"></div>
 <p class="rc-note">Rough screen only. The IRS counts many expenses by its own standard amounts, not your actual bills, and decides case by case. Interest estimate uses 7% compounded daily with no rate changes.</p></div>
-<script>(function(){function f(n){return '$'+Math.round(n).toLocaleString('en-US')}
+<script>(function(){var rec=false;function f(n){return '$'+Math.round(n).toLocaleString('en-US')}
 function go(){var i=parseFloat(document.getElementById('cnI').value),e=parseFloat(document.getElementById('cnE').value),b=parseFloat(document.getElementById('cnB').value),o=document.getElementById('cnO');
 if(isNaN(i)||isNaN(e)||isNaN(b)){o.innerHTML='Fill in all three boxes.';return}
+rec&&window.irsCtx&&irsCtx.set('cnc_check',{take_home:i,expenses:e,balance:b,monthly_gap:i-e});
 var g=function(y){return b*Math.exp(365*Math.log(1+0.07/365)*y)},d=i-e,msg;
 if(d<0){msg='You are short <span class="big bad">'+f(-d)+'</span> a month. That is the pattern the IRS looks for when it considers CNC. Expect to prove it with Form 433-F or 433-A and bank statements.'}
 else{msg='You have about <span class="big">'+f(d)+'</span> a month left over. The IRS will more likely expect a payment plan around that amount than CNC.'}
 o.innerHTML=msg+'<br>Meanwhile the balance grows to about <b>'+f(g(3))+'</b> in 3 years and <b>'+f(g(5))+'</b> in 5 years, before penalties.'}
-['cnI','cnE','cnB'].forEach(function(id){document.getElementById(id).addEventListener('input',go)});go()})();</script>
+['cnI','cnE','cnB'].forEach(function(id){document.getElementById(id).addEventListener('input',function(){rec=true;go()})});go()})();</script>
 <div class="raw-take"><img src="/romeo-razi.png" alt="Romeo Razi, CPA, former IRS Tax Examiner"><div><b class="tk-h">Romeo's take</b><p>I tell people CNC is a hospital bed, not a cure. It buys you time, and it is real relief, but the debt keeps growing at 7% while you recover, so the question is what you do with the pause.</p><p>And the paperwork is where people lose. The IRS does not take "I can't pay" on faith. The taxpayer in the <em>Whigham</em> case below had a spouse with a terminal illness and still lost, because he never sent the records for six months. Bring paper.</p></div></div>
 <div class="raw-new"><b class="t">New in the last week</b><ul><li><b>Interest is 7%</b> through Dec. 31 (<a href="https://www.irs.gov/newsroom/interest-rates-remain-the-same-for-the-fourth-quarter-of-2026" target="_blank" rel="noopener">IRS, Aug. 21</a>). No 2027 first-quarter rate was on the IRS's news list as of Nov. 10.</li><li><b>Nov. 4:</b> coverage of an Oct. 29 IRS report says collections hit a record <b>$5.6 trillion</b> in fiscal 2026. It does not say how many people were placed in CNC (<a href="https://www.cpapracticeadvisor.com/2026/11/04/irs-reports-record-tax-collections-larger-refunds-in-2026/193171/" target="_blank" rel="noopener">CPA Practice Advisor</a>).</li><li><b>Passports:</b> the Taxpayer Advocate reminds taxpayers that the IRS must certify seriously delinquent debt to the State Department but has discretion to exclude debts in CNC status (<a href="https://www.taxpayeradvocate.irs.gov/get-help/paying-taxes/currently-not-collectible/" target="_blank" rel="noopener">TAS</a>).</li></ul></div>
 <p class="raw-fine">Illustrative example: the people and dollar amounts are made up so the math is easy to follow, and the rules are real. Not tax advice. Interest is approximate and compounds daily; actual rates change each quarter.</p>

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script src="/attribution.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <title>Form 5500 Late Filing Penalty 2026: IRS &amp; DOL Fines</title>
@@ -358,12 +359,13 @@ table.cmp tr:hover td:not(:first-child){filter:brightness(0.98)}
 <div><label for="fdN">How many late returns?</label><input id="fdN" type="number" min="1" max="20" step="1" value="1" inputmode="numeric"></div></div>
 <div class="rc-out" id="fdO" aria-live="polite"></div>
 <p class="rc-note">Worst-case IRS math: $250 a day per return, capped at $150,000 per return. Real penalties are often abated, and the $500 program is unavailable once a CP283 notice has been issued for that return. DOL penalties apply separately to plans covered by ERISA Title I.</p></div>
-<script>(function(){function f(n){return '$'+Math.round(n).toLocaleString('en-US')}
+<script>(function(){var rec=false;function f(n){return '$'+Math.round(n).toLocaleString('en-US')}
 function go(){var d=parseFloat(document.getElementById('fdD').value),n=parseFloat(document.getElementById('fdN').value),o=document.getElementById('fdO');
 if(isNaN(d)||isNaN(n)||d<0||n<1){o.innerHTML='Enter the days late and the number of returns.';return}
+rec&&window.irsCtx&&irsCtx.set('f5500_calc',{days_late:d,late_returns:n});
 var one=Math.min(d*250,150000),fix=Math.min(n*500,1500);
 o.innerHTML='Worst case for your oldest return: <span class="big bad">'+f(one)+'</span>'+(one>=150000?' (the cap)':'')+'.<br>The IRS late-filer program for one-participant plans would cost <b>'+f(fix)+'</b> in total ($500 a return, $1,500 maximum), filed on paper with Form 14704.'}
-['fdD','fdN'].forEach(function(id){document.getElementById(id).addEventListener('input',go)});go()})();</script>
+['fdD','fdN'].forEach(function(id){document.getElementById(id).addEventListener('input',function(){rec=true;go()})});go()})();</script>
 <div class="raw-take"><img src="/romeo-razi.png" alt="Romeo Razi, CPA, former IRS Tax Examiner"><div><b class="tk-h">Romeo's take</b><p>Two things sink people here. First, they hear "under $250,000, no filing needed" and stop reading, but the final-year return is the exception. Second, they fix a mistake the wrong way. That 2017-versus-2021 mix-up shows how one typed digit becomes a six-figure letter.</p><p>If you have not received a CP283, you are in the cheap lane. Do not use EFAST2. File on paper, include the check, and be done. After the CP283 arrives, that door closes and you are in abatement territory.</p></div></div>
 <div class="raw-new"><b class="t">New in the last week</b><ul><li><b>Nov. 9:</b> the IRS bulletin published <b>Rev. Proc. 2026-34</b>, the updated EPCRS retirement-plan correction program (effective Oct. 22), and <b>Rev. Proc. 2026-33</b>, a new IRA correction program starting May 1, 2027. Neither changes the late-5500-EZ relief rules on the IRS's page (<a href="https://www.morganlewis.com/blogs/mlbenebits/2026/10/irs-issues-new-epcrs-revenue-procedure-and-finally-establishes-ira-correction-program" target="_blank" rel="noopener">Morgan Lewis summary</a>).</li><li><b>DOL side:</b> the Department of Labor's late-5500 penalty stayed at <b>$2,739 per day</b> into 2026 (<a href="https://global.lockton.com/us/en/news-insights/department-of-labor-announces-benefit-plan-penalties-for-2026-with-only-a" target="_blank" rel="noopener">Lockton, Mar. 2</a>). It applies to plans covered by ERISA Title I; one-participant plans use the IRS program.</li><li><b>IRS relief rules, as written now:</b> not available once a CP283 is issued for that return; CP403 and CP406 notices do not disqualify you (<a href="https://www.irs.gov/node/111706" target="_blank" rel="noopener">IRS FAQs</a>).</li></ul></div>
 <p class="raw-fine">The 2022 story is real and public; names are omitted. The 30-, 90- and 600-day figures are simple $250-a-day math, not a prediction for your case. Not tax or legal advice.</p>

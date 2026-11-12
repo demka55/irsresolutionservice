@@ -11,6 +11,7 @@
   gtag('config', 'G-MK4W6BCP46');
 </script>
 <meta charset="UTF-8">
+<script src="/attribution.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <title>IRS CP504 Notice: Final Notice Before Levy</title>
@@ -419,12 +420,13 @@ try {
 <div><label for="c4m">Months you might wait</label><input id="c4m" type="number" min="0" max="60" step="1" value="6" inputmode="numeric"></div></div>
 <div class="rc-out" id="c4o" aria-live="polite"></div>
 <p class="rc-note">Estimates: 7% yearly interest (Q4 2026 rate), 0.5% a month late-payment penalty (capped at 25%), simple monthly math. Your notice shows the exact figure.</p></div>
-<script>(function(){function f(n){return '$'+Math.round(n).toLocaleString('en-US')}
+<script>(function(){var rec=false;function f(n){return '$'+Math.round(n).toLocaleString('en-US')}
 function go(){var b=parseFloat(document.getElementById('c4b').value),m=parseFloat(document.getElementById('c4m').value),o=document.getElementById('c4o');
 if(isNaN(b)||isNaN(m)||b<=0||m<0){o.innerHTML='Enter your balance to see the cost.';return}
+rec&&window.irsCtx&&irsCtx.set('cp504_cost_calc',{balance:b,months_to_wait:m});
 var i=b*0.07/12,p=b*0.005,pp=b*0.0025,cap=b*0.25,add=m*i+Math.min(m*p,cap),addPlan=m*i+Math.min(m*pp,cap);
 o.innerHTML='Each month you wait adds about <span class="big">'+f(i+p)+'</span> ('+f(i)+' interest + '+f(p)+' penalty).<br>Wait <b>'+m+' months</b> and you owe roughly <b>'+f(b+add)+'</b>. On a payment plan the penalty halves, so about <b>'+f(b+addPlan)+'</b>.'}
-['c4b','c4m'].forEach(function(id){document.getElementById(id).addEventListener('input',go)});go()})();</script>
+['c4b','c4m'].forEach(function(id){document.getElementById(id).addEventListener('input',function(){rec=true;go()})});go()})();</script>
 <div class="raw-take"><img src="/romeo-razi.png" alt="Romeo Razi, CPA, former IRS Tax Examiner"><div><b class="tk-h">Romeo's take</b><p>I have watched good people freeze on this notice because it sounds like the IRS is at the door. It isn't, not yet. A CP504 means the friendly letters are over and the IRS has moved from asking to planning.</p><p>The worst move is the quiet one, because it is the only choice that costs you money every month. Call the number on the notice or set up the plan online before the LT11 shows up. And when the LT11 does show up, treat the 30-day hearing deadline as sacred.</p></div></div>
 <div class="raw-new"><b class="t">New in the last week</b><ul><li><b>Nov. 6:</b> the IRS let tax pros make certain payments for <b>business</b> clients through Tax Pro Account: full or partial balance, extensions, proposed assessments and federal tax deposits. The release does not confirm payment plans for businesses. <a href="https://www.irs.gov/newsroom/irs-expands-tax-pro-account-for-business-client-payments" target="_blank" rel="noopener">IR-2026-134</a></li><li><b>Interest is 7%</b> through Dec. 31, unchanged from last quarter (<a href="https://www.irs.gov/newsroom/interest-rates-remain-the-same-for-the-fourth-quarter-of-2026" target="_blank" rel="noopener">IRS, Aug. 21</a>). The IRS's Nov. 10 news list shows no 2027 first-quarter rate yet; last year it came out in November.</li><li><b>Nov. 4:</b> news coverage of an Oct. 29 IRS report says it collected a record <b>$5.6 trillion</b> in fiscal 2026. The coverage gives no levy or notice counts, so don't read it as proof of a crackdown (<a href="https://www.cpapracticeadvisor.com/2026/11/04/irs-reports-record-tax-collections-larger-refunds-in-2026/193171/" target="_blank" rel="noopener">CPA Practice Advisor</a>).</li></ul></div>
 <p class="raw-fine">Illustrative example: the people and dollar amounts are made up so the math is easy to follow, and the rules are real. Not tax advice. Interest is approximate and the penalty is simplified.</p>
