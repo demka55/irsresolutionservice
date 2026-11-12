@@ -1,0 +1,18 @@
+{
+  "updated": "Nov. 12, 2026",
+  "updated_iso": "2026-11-12",
+  "headline": "What changed at the IRS this week, and what it means for you",
+  "intro": "The short version for anyone holding an IRS letter or sitting on unfiled returns. Every item links to the IRS or a named source.",
+  "take": [
+    "Most weeks the IRS changes very little that touches an ordinary taxpayer with a notice. This is one of those weeks, and I would rather tell you that than invent urgency.",
+    "What does not change: the deadlines printed on your letter. Open it, write down the date, and answer before it. Everything else can be fixed with a former examiner on your side, but a missed deadline cannot."
+  ],
+  "items": [
+    {"tag": "Interest rate", "html": "<b>7% through Dec. 31</b>, unchanged from last quarter (<a href=\"https://www.irs.gov/newsroom/interest-rates-remain-the-same-for-the-fourth-quarter-of-2026\" target=\"_blank\" rel=\"noopener\">IRS, Aug. 21</a>). No 2027 first-quarter rate was on the IRS news list as of Nov. 10."},
+    {"tag": "Nov. 10", "html": "The permanent charitable deduction for people who do not itemize begins with 2026 gifts: up to <b>$1,000 single / $2,000 joint</b>, cash only (<a href=\"https://www.irs.gov/newsroom/irs-reminder-permanent-charitable-contribution-deduction-begins-for-returns-filed-next-year-for-taxpayers-who-do-not-itemize\" target=\"_blank\" rel=\"noopener\">IR-2026-135</a>)."},
+    {"tag": "Nov. 6", "html": "Tax pros can now make certain payments for <b>business</b> clients through Tax Pro Account. Individual rules are unchanged (<a href=\"https://www.irs.gov/newsroom/irs-expands-tax-pro-account-for-business-client-payments\" target=\"_blank\" rel=\"noopener\">IR-2026-134</a>)."},
+    {"tag": "Nov. 5", "html": "The official <b>2027 tax brackets</b> were released (<a href=\"https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts\" target=\"_blank\" rel=\"noopener\">IR-2026-133</a>). See our <a href=\"/tax-brackets-2027\">2027 brackets page</a>."}
+  ],
+  "fine": "Not tax advice. Each topic page has its own raw example and what is new for that topic.",
+  "faq_answer": "As of Nov. 12, 2026: interest on unpaid tax stays at 7% through Dec. 31; the IRS released 2027 tax brackets on Nov. 5; a permanent charitable deduction for non-itemizers ($1,000 single, $2,000 joint, cash only) starts with 2026 gifts; and tax pros can now make certain payments for business clients through Tax Pro Account. Romeo Razi, CPA, a former IRS Tax Examiner, says none of this changes what to do if you have a notice: open it, note the date, and respond before the deadline."
+}
